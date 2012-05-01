@@ -1,7 +1,6 @@
 /// <reference path="../../toastr.js" />
 /// <reference path="../qunit/qunit.js" />
 (function ($, toastr) {
-
 	var 
 		iconClasses = {
 			error: 'toast-error',
