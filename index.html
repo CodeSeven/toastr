@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<title>toastR examples</title>
+		<title>toastr examples</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet"/>
 		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"/>
 		<link href="toastr.css" rel="stylesheet" type="text/css" />
@@ -16,7 +17,7 @@
 
 	<body style="padding: 30px" class="container">
 		<section class="row">
-			<h1>toastR</h1>
+			<h1>toastr</h1>
 
 			<div class="well row">
 				<div class="row span11">
@@ -93,8 +94,8 @@
 			<h2>Links</h2>
 			
 			<ul>
-				<li><a href="https://github.com/downloads/KnockedUp/toastR/toastr.zip">Download</a></li>
-				<li><a href="https://github.com/KnockedUp/toastR">GitHub</a></li>
+				<li><a href="https://github.com/downloads/CodeSeven/toastr/toastr.zip">Download</a></li>
+				<li><a href="https://github.com/CodeSeven/toastr">GitHub</a></li>
 			</ul>
 		</footer>
 
@@ -108,7 +109,7 @@
 					toastCount = 0,
 					getMessage = function() {
 						var msgs = ['My name is Inigo Montoya. You killed my father. Prepare to die!',
-							'<div><input class="input-small" value="textbox"/></div><div><a href="http://johnpapa.net" target="_blank">This is a hyperlink</a></div><div><label>Check me</label><input type="checkbox"/><button type="button" id="okBtn" class="btn btn-primary">Close me</button></div>',
+							'<div><input class="input-small" value="textbox"/>&nbsp;<a href="http://johnpapa.net" target="_blank">This is a hyperlink</a></div><div><button type="button" id="okBtn" class="btn btn-primary">Close me</button><button type="button" id="surpriseBtn" class="btn" style="margin: 0 8px 0 8px">Surprise me</button></div>',
 							'Are you the six fingered man?',
 							'Inconceivable!',
 							'I do not think that means what you think it means.',
@@ -132,29 +133,29 @@
 						toastIndex = toastCount++
 
 
-					toastR.options = {
+					toastr.options = {
 						debug: $('#debugInfo').prop('checked'),
 						tapToDismiss: $('#tapToDismiss').prop('checked'),
 						positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right'
 					}
 
 					if ($fadeIn.val().length) {
-						toastR.options.fadeIn = +$fadeIn.val()
+						toastr.options.fadeIn = +$fadeIn.val()
 					}
 
 					if ($fadeOut.val().length) {
-						toastR.options.fadeOut = +$fadeOut.val()
+						toastr.options.fadeOut = +$fadeOut.val()
 					}
 
 					if ($timeOut.val().length) {
-						toastR.options.timeOut = +$timeOut.val()
+						toastr.options.timeOut = +$timeOut.val()
 					}
 
 					if (!msg) {
 						msg = getMessage()
 					}
 
-					var $toast = toastR[shortCutFunction](msg, title)
+					var $toast = toastr[shortCutFunction](msg, title)
 
 					// Wire up an event handler to a button in the toast, if it exists
 					if ($toast.find('#okBtn').length) {
@@ -163,6 +164,12 @@
 					        $toast.remove()
 					    })
 					}
+					if ($toast.find('#surpriseBtn').length) {
+					    $toast.on('click', '#surpriseBtn', function () {
+					        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.')
+					    })
+					}
+					
 				})
 			})
 		</script>
