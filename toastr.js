@@ -1,19 +1,19 @@
 // By: Hans Fjällemark and John Papa
-// https://github.com/CodeSeven/toastr
+// https://github.com/KnockedUp/toastr
 // 
 // Modified to support css styling instead of inline styling
 // Based on original version at https://github.com/Srirangan/notifer.js/
 
-(function (window, $) {
-    window.toastr = (function () {
-        var  
+(function(window, $) {
+    window.toastr = (function() {
+        var 
             defaults = {
                 tapToDismiss: true,
                 toastClass: 'toast',
                 containerId: 'toast-container',
                 debug: false,
                 fadeIn: 300,
-                fadeOut: 300,
+                fadeOut: 1000,
                 iconClasses: {
                     error: 'toast-error',
                     info: 'toast-info',
@@ -27,8 +27,8 @@
                 messageClass: 'toast-message'
             },
 
-        
-            error = function (message, title) {
+
+            error = function(message, title) {
                 return notify({
                     iconClass: getOptions().iconClasses.error,
                     message: message,
@@ -36,7 +36,7 @@
                 })
             },
 
-            getContainer = function (options) {
+            getContainer = function(options) {
                 var $container = $('#' + options.containerId)
 
                 if ($container.length)
@@ -51,11 +51,11 @@
                 return $container
             },
 
-            getOptions = function () {
+            getOptions = function() {
                 return $.extend({}, defaults, toastr.options)
             },
 
-            info = function (message, title) {
+            info = function(message, title) {
                 return notify({
                     iconClass: getOptions().iconClasses.info,
                     message: message,
@@ -63,10 +63,11 @@
                 })
             },
 
-            notify = function (map) {
+            notify = function(map) {
                 var 
                     options = getOptions(),
                     iconClass = map.iconClass || options.iconClass,
+                    intervalId = null,
                     $container = getContainer(options),
                     $toastElement = $('<div/>'),
                     $titleElement = $('<div/>'),
@@ -86,18 +87,26 @@
                     $messageElement.append(map.message).addClass(options.messageClass)
                     $toastElement.append($messageElement)
                 }
-                
-                var fadeAway = function () {
-                    var fade = function () {
+
+                var fadeAway = function() {
+                    var fade = function() {
                         return $toastElement.fadeOut(options.fadeOut)
                     }
 
-                    $.when(fade()).done(function () {
+                    $.when(fade()).done(function() {
+                        if ($toastElement.is(':visible')) {
+                            return
+                        }
                         $toastElement.remove()
-
                         if ($container.children().length === 0)
                             $container.remove()
                     })
+                }
+
+                var stickAround = function() {
+                    clearTimeout(intervalId)
+                    $toastElement.stop(true, true)
+                        .fadeIn(options.fadeIn)
                 }
 
                 $toastElement.hide()
@@ -105,8 +114,10 @@
                 $toastElement.fadeIn(options.fadeIn)
 
                 if (options.timeOut > 0) {
-                    setTimeout(fadeAway, options.timeOut)
+                    intervalId = setTimeout(fadeAway, options.timeOut)
                 }
+
+                $toastElement.hover(stickAround, fadeAway)
 
                 if (options.tapToDismiss) {
                     $toastElement.click(fadeAway)
@@ -118,7 +129,7 @@
                 return $toastElement
             },
 
-            success = function (message, title) {
+            success = function(message, title) {
                 return notify({
                     iconClass: getOptions().iconClasses.success,
                     message: message,
@@ -126,7 +137,7 @@
                 })
             },
 
-            warning = function (message, title) {
+            warning = function(message, title) {
                 return notify({
                     iconClass: getOptions().iconClasses.warning,
                     message: message,

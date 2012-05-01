@@ -1,7 +1,6 @@
 /// <reference path="../../toastr.js" />
 /// <reference path="../qunit/qunit.js" />
-(function ($, toastR) {
-
+(function ($, toastr) {
 	var 
 		iconClasses = {
 			error: 'toast-error',
@@ -25,14 +24,14 @@
 			toastSuccess: 'div#toast-container > div.toast-success'
 		}
 
-		//toastR.options.timeOut = 0
-		toastR.options.debug = true
+		//toastr.options.timeOut = 0
+		toastr.options.debug = true
 
     module('info')
     test('info - pass title and message', 3, function () {
 	    //Arrange
 	    //Act
-	    var $toast = toastR.info(sampleMsg, sampleTitle)
+	    var $toast = toastr.info(sampleMsg, sampleTitle)
 	    //Assert
 	    equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title')
 	    equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -44,7 +43,7 @@
 	test('info - pass message, but no title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.info(sampleMsg)
+		var $toast = toastr.info(sampleMsg)
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets null title')
 		equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -56,7 +55,7 @@
 	test('info - pass no message nor title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.info()
+		var $toast = toastr.info()
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets null title')
 		equal($toast.find('div.toast-message').html(), null, 'Sets message')
@@ -69,7 +68,7 @@
     test('warning - pass message and title', 3, function () {
 		    //Arrange
 		    //Act
-		    var $toast = toastR.warning(sampleMsg, sampleTitle)
+		    var $toast = toastr.warning(sampleMsg, sampleTitle)
 		    //Assert
 		    equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title')
 		    equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -81,7 +80,7 @@
 	test('warning - pass message, but no title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.warning(sampleMsg)
+		var $toast = toastr.warning(sampleMsg)
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets empty title')
 		equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -93,7 +92,7 @@
 	test('warning - no message nor title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.warning('')
+		var $toast = toastr.warning('')
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets null title')
 		equal($toast.find('div.toast-message').length, 0, 'Sets empty message')
@@ -106,7 +105,7 @@
     test('error - pass message and title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.error(sampleMsg, sampleTitle)
+		var $toast = toastr.error(sampleMsg, sampleTitle)
 		//Assert
 		equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title')
 		equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -118,7 +117,7 @@
 	test('error - pass message, but no title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.error(sampleMsg)
+		var $toast = toastr.error(sampleMsg)
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets empty title')
 		equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -130,7 +129,7 @@
 	test('error - no message nor title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.error('')
+		var $toast = toastr.error('')
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets empty title')
 		equal($toast.find('div.toast-message').length, 0, 'Sets empty message')
@@ -143,7 +142,7 @@
     test('success - pass message and title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.success(sampleMsg, sampleTitle)
+		var $toast = toastr.success(sampleMsg, sampleTitle)
 		//Assert
 		equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title')
 		equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -155,7 +154,7 @@
 	test('success - pass message, but no title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.success(sampleMsg)
+		var $toast = toastr.success(sampleMsg)
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets empty title')
 		equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message')
@@ -167,7 +166,7 @@
 	test('success - no message nor title', 3, function () {
 		//Arrange
 		//Act
-		var $toast = toastR.success('')
+		var $toast = toastr.success('')
 		//Assert
 		equal($toast.find('div.toast-title').length, 0, 'Sets null title')
 		equal($toast.find('div.toast-message').length, 0, 'Sets empty message')
@@ -180,9 +179,9 @@
     test('Container - position top-right', 1, function () {
 		//Arrange
 		$(selectors.container).remove()
-		toastR.options.positionClass = positionClasses.topRight
+		toastr.options.positionClass = positionClasses.topRight
 		//Act
-		var $toast = toastR.success(sampleMsg)
+		var $toast = toastr.success(sampleMsg)
 		var $container = $(selectors.container)
 		//Assert
 		ok($container.hasClass(positionClasses.topRight), 'Has position top right')
@@ -194,9 +193,9 @@
 	test('Container - position bottom-right', 1, function () {
 		//Arrange
 		$(selectors.container).remove()
-		toastR.options.positionClass = positionClasses.bottomRight
+		toastr.options.positionClass = positionClasses.bottomRight
 		//Act
-		var $toast = toastR.success(sampleMsg)
+		var $toast = toastr.success(sampleMsg)
 		var $container = $(selectors.container)
 		//Assert
 		ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right')
@@ -208,9 +207,9 @@
 	test('Container - position bottom-left', 1, function () {
 		//Arrange
 		$(selectors.container).remove()
-		toastR.options.positionClass = positionClasses.bottomLeft
+		toastr.options.positionClass = positionClasses.bottomLeft
 		//Act
-		var $toast = toastR.success(sampleMsg)
+		var $toast = toastr.success(sampleMsg)
 		var $container = $(selectors.container)
 		//Assert
 		ok($container.hasClass(positionClasses.bottomLeft), 'Has position bottom left')
@@ -222,9 +221,9 @@
 	test('Container - position top-left', 1, function () {
 		//Arrange
 		$(selectors.container).remove()
-		toastR.options.positionClass = positionClasses.topLeft
+		toastr.options.positionClass = positionClasses.topLeft
 		//Act
-		var $toast = toastR.success(sampleMsg)
+		var $toast = toastr.success(sampleMsg)
 		var $container = $(selectors.container)
 		//Assert
 		ok($container.hasClass(positionClasses.topLeft), 'Has position top left')
@@ -235,4 +234,4 @@
 
 
 
-})(jQuery, toastR)
+})(jQuery, toastr)
