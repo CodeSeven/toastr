@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>toastR examples</title>
+		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet"/>
+		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"/>
+		<link href="toastr.css" rel="stylesheet" type="text/css" />
+        <link href="toastr-responsive.css" rel="stylesheet" type="text/css" />
+		<style>
+			.row {
+				margin-left: 0;
+			}
+		</style>
+	</head>
+
+	<body style="padding: 30px" class="container">
+		<section class="row">
+			<h1>toastR</h1>
+
+			<div class="well row">
+				<div class="row span11">
+					<div class="span4">
+						<div class="control-group">
+							<div class="controls">
+								<label class="control-label" for="title">Title</label>
+								<input id="title" type="text" class="input-large" placeholder="Enter a title ..."/>
+								<label class="control-label" for="message">Message</label>
+								<textarea class="input-large" id="message" rows="3" placeholder="Enter a message ..."></textarea>
+							</div>
+						</div>
+					</div>
+					
+					<div class="span2">
+						<div class="control-group" id="toastTypeGroup">
+							<div class="controls">
+								<label >Toast Type</label>
+								<label class="radio"><input type="radio" name="toasts" value="success" checked/>Success</label>
+								<label class="radio"><input type="radio" name="toasts" value="info"/>Info</label>
+								<label class="radio"><input type="radio" name="toasts" value="warning"/>Warning</label>
+								<label class="radio"><input type="radio" name="toasts" value="error"/>Error</label>
+							</div>
+						</div>
+						<div class="control-group" id="positionGroup">
+							<div class="controls">
+								<label>Position</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-top-right" checked/>Top Right</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-bottom-right"/>Bottom Right</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-bottom-left"/>Bottom Left</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-top-left"/>Top Left</label>
+							</div>                         
+						</div>                                                                
+					</div>
+					
+					<div class="span2" >
+						<div class="control-group">
+							<div class="controls">
+								<label class="control-label" for="fadeOut">Fade in</label>
+								<input id="fadeIn" type="text" placeholder="ms" class="input-mini" value="300"/>
+
+								<label class="control-label" for="fadeOut">Fade out</label>
+								<input id="fadeOut" type="text" placeholder="ms" class="input-mini" value="300"/>
+
+								<label class="control-label" for="timeOut">Time out</label>
+								<input id="timeOut" type="text" placeholder="ms" class="input-mini" value="5000"/>
+							</div>
+						</div>
+					</div>
+
+					<div class="span2">
+						<div class="control-group">
+							<div class="controls">
+								<label class="checkbox" for="debugInfo">
+									<input id="debugInfo" type="checkbox" checked="checked" class="input-mini"/>Debug
+								</label>
+							</div>
+							<div class="controls">
+								<label class="checkbox" for="tapToDismiss">
+									<input id="tapToDismiss" type="checkbox" checked="checked" class="input-mini"/>Tap to dismiss toast
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row span11">
+					<button type="button" class="btn btn-primary" id="showtoast">Show Toast</button>                
+				</div>
+			</div>
+		</section>
+
+		<footer class="row">
+			<h2>Links</h2>
+			
+			<ul>
+				<li><a href="https://github.com/downloads/KnockedUp/toastR/toastr.zip">Download</a></li>
+				<li><a href="https://github.com/KnockedUp/toastR">GitHub</a></li>
+			</ul>
+		</footer>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="toastr.js"></script>
+		
+		<script type="text/javascript">
+			$(function() {
+				var
+					i = -1,
+					toastCount = 0,
+					getMessage = function() {
+						var msgs = ['My name is Inigo Montoya. You killed my father. Prepare to die!',
+							'<div><input class="input-small" value="textbox"/></div><div><a href="http://johnpapa.net" target="_blank">This is a hyperlink</a></div><div><label>Check me</label><input type="checkbox"/><button type="button" id="okBtn" class="btn btn-primary">Close me</button></div>',
+							'Are you the six fingered man?',
+							'Inconceivable!',
+							'I do not think that means what you think it means.',
+							'Have fun storming the castle!'
+					    ]
+				        i++
+						if (i === msgs.length) {
+							i = 0
+						}
+
+						return msgs[i]
+					}
+
+				$('#showtoast').click(function() {
+					var shortCutFunction = $("#toastTypeGroup input:radio:checked").val(),
+						msg = $('#message').val(),
+						title = $('#title').val() || '',
+						$fadeIn = $('#fadeIn'),
+						$fadeOut = $('#fadeOut'),
+						$timeOut = $('#timeOut'),
+						toastIndex = toastCount++
+
+
+					toastR.options = {
+						debug: $('#debugInfo').prop('checked'),
+						tapToDismiss: $('#tapToDismiss').prop('checked'),
+						positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right'
+					}
+
+					if ($fadeIn.val().length) {
+						toastR.options.fadeIn = +$fadeIn.val()
+					}
+
+					if ($fadeOut.val().length) {
+						toastR.options.fadeOut = +$fadeOut.val()
+					}
+
+					if ($timeOut.val().length) {
+						toastR.options.timeOut = +$timeOut.val()
+					}
+
+					if (!msg) {
+						msg = getMessage()
+					}
+
+					var $toast = toastR[shortCutFunction](msg, title)
+
+					// Wire up an event handler to a button in the toast, if it exists
+					if ($toast.find('#okBtn').length) {
+					    $toast.on('click', '#okBtn', function () {
+					        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!')
+					        $toast.remove()
+					    })
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

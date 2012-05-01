@@ -4,12 +4,12 @@
 *** toastr is currently a pre-release but will be going v1.0.0 beta very soon. We welcome any feedback.
 
 ## Demo
-Demo can be found at http://knockedup.github.com/toastr
+Demo can be found at http://CodeSeven.github.com/toastr
 
 ## Quick start
 
 ###3 Easy Steps
-For other API calls, see the [demo](http://knockedup.github.com/toastr).
+For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
 
 1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>`
 
