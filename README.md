@@ -1,35 +1,35 @@
-# toastR
-**toastR** is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
+# toastr
+**toastr** is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
 
-*** toastR is currently a pre-release but will be going v1.0.0 beta very soon. We welcome any feedback.
+*** toastr is currently a pre-release but will be going v1.0.0 beta very soon. We welcome any feedback.
 
 ## Demo
-Demo can be found at http://knockedup.github.com/toastR
+Demo can be found at http://knockedup.github.com/toastr
 
 ## Quick start
 
 ###3 Easy Steps
-For other API calls, see the [demo](http://knockedup.github.com/toastR).
+For other API calls, see the [demo](http://knockedup.github.com/toastr).
 
 1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>`
 
 2. Link to toastr.js `<script src="toastr.js"></script>`
 
-3. use toastR to display a toast for info, success, warning or error
+3. use toastr to display a toast for info, success, warning or error
 
         // Display an info toast with no title
-        toastR.info('Are you the 6 fingered man?')
+        toastr.info('Are you the 6 fingered man?')
 
 ### Other Options
 
     // Display a warning toast, with no title
-    toastR.warning('My name is Inigo Montoya. You Killed my father, prepare to die!')
+    toastr.warning('My name is Inigo Montoya. You Killed my father, prepare to die!')
     
     // Display a success toast, with a title
-    toastR.success('Have fun storming the castle!', 'Miracle Max Says')
+    toastr.success('Have fun storming the castle!', 'Miracle Max Says')
     
     // Display an error toast, with a title
-    toastR.error('I do not think that word means what you tink it means.', 'Inconceivable!')
+    toastr.error('I do not think that word means what you tink it means.', 'Inconceivable!')
 
 
 ## Authors
@@ -52,4 +52,4 @@ Copyright © 2012 [Hans Fjällemark](http://twitter.com/hfjallemark) & [John Pap
 
 ## License 
 
-toastR is under MIT license - http://www.opensource.org/licenses/mit-license.php
+toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php
