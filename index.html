@@ -1,74 +1,177 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>toastR examples</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet"/>
+		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"/>
+		<link href="toastr.css" rel="stylesheet" type="text/css" />
+        <link href="toastr-responsive.css" rel="stylesheet" type="text/css" />
+		<style>
+			.row {
+				margin-left: 0;
+			}
+		</style>
+	</head>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="toastr : Simple javascript toast notifications" />
+	<body style="padding: 30px" class="container">
+		<section class="row">
+			<h1>toastR</h1>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+			<div class="well row">
+				<div class="row span11">
+					<div class="span4">
+						<div class="control-group">
+							<div class="controls">
+								<label class="control-label" for="title">Title</label>
+								<input id="title" type="text" class="input-large" placeholder="Enter a title ..."/>
+								<label class="control-label" for="message">Message</label>
+								<textarea class="input-large" id="message" rows="3" placeholder="Enter a message ..."></textarea>
+							</div>
+						</div>
+					</div>
+					
+					<div class="span2">
+						<div class="control-group" id="toastTypeGroup">
+							<div class="controls">
+								<label >Toast Type</label>
+								<label class="radio"><input type="radio" name="toasts" value="success" checked/>Success</label>
+								<label class="radio"><input type="radio" name="toasts" value="info"/>Info</label>
+								<label class="radio"><input type="radio" name="toasts" value="warning"/>Warning</label>
+								<label class="radio"><input type="radio" name="toasts" value="error"/>Error</label>
+							</div>
+						</div>
+						<div class="control-group" id="positionGroup">
+							<div class="controls">
+								<label>Position</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-top-right" checked/>Top Right</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-bottom-right"/>Bottom Right</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-bottom-left"/>Bottom Left</label>
+								<label class="radio"><input type="radio" name="positions" value="toast-top-left"/>Top Left</label>
+							</div>                         
+						</div>                                                                
+					</div>
+					
+					<div class="span2" >
+						<div class="control-group">
+							<div class="controls">
+								<label class="control-label" for="fadeOut">Fade in</label>
+								<input id="fadeIn" type="text" placeholder="ms" class="input-mini" value="300"/>
 
-    <title>toastr</title>
-  </head>
+								<label class="control-label" for="fadeOut">Fade out</label>
+								<input id="fadeOut" type="text" placeholder="ms" class="input-mini" value="300"/>
 
-  <body>
+								<label class="control-label" for="timeOut">Time out</label>
+								<input id="timeOut" type="text" placeholder="ms" class="input-mini" value="5000"/>
+							</div>
+						</div>
+					</div>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/CodeSeven/toastr">Fork Me on GitHub</a>
+					<div class="span2">
+						<div class="control-group">
+							<div class="controls">
+								<label class="checkbox" for="debugInfo">
+									<input id="debugInfo" type="checkbox" checked="checked" class="input-mini"/>Debug
+								</label>
+							</div>
+							<div class="controls">
+								<label class="checkbox" for="tapToDismiss">
+									<input id="tapToDismiss" type="checkbox" checked="checked" class="input-mini"/>Tap to dismiss toast
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
 
-          <h1 id="project_title">toastr</h1>
-          <h2 id="project_tagline">Simple javascript toast notifications</h2>
+				<div class="row span11">
+					<button type="button" class="btn btn-primary" id="showtoast">Show Toast</button>                
+				</div>
+			</div>
+		</section>
 
-          <section id="downloads">
-            <a class="zip_download_link" href="https://github.com/CodeSeven/toastr/zipball/master">Download this project as a .zip file</a>
-            <a class="tar_download_link" href="https://github.com/CodeSeven/toastr/tarball/master">Download this project as a tar.gz file</a>
-          </section>
-        </header>
-    </div>
+		<footer class="row">
+			<h2>Links</h2>
+			
+			<ul>
+				<li><a href="https://github.com/downloads/KnockedUp/toastR/toastr.zip">Download</a></li>
+				<li><a href="https://github.com/KnockedUp/toastR">GitHub</a></li>
+			</ul>
+		</footer>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="toastr.js"></script>
+		
+		<script type="text/javascript">
+			$(function() {
+				var
+					i = -1,
+					toastCount = 0,
+					getMessage = function() {
+						var msgs = ['My name is Inigo Montoya. You killed my father. Prepare to die!',
+							'<div><input class="input-small" value="textbox"/>&nbsp;<a href="http://johnpapa.net" target="_blank">This is a hyperlink</a></div><div><button type="button" id="okBtn" class="btn btn-primary">Close me</button><button type="button" id="surpriseBtn" class="btn" style="margin: 0 8px 0 8px">Surprise me</button></div>',
+							'Are you the six fingered man?',
+							'Inconceivable!',
+							'I do not think that means what you think it means.',
+							'Have fun storming the castle!'
+					    ]
+				        i++
+						if (i === msgs.length) {
+							i = 0
+						}
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+						return msgs[i]
+					}
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+				$('#showtoast').click(function() {
+					var shortCutFunction = $("#toastTypeGroup input:radio:checked").val(),
+						msg = $('#message').val(),
+						title = $('#title').val() || '',
+						$fadeIn = $('#fadeIn'),
+						$fadeOut = $('#fadeOut'),
+						$timeOut = $('#timeOut'),
+						toastIndex = toastCount++
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
-<h3>Designer Templates</h3>
+					toastR.options = {
+						debug: $('#debugInfo').prop('checked'),
+						tapToDismiss: $('#tapToDismiss').prop('checked'),
+						positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right'
+					}
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+					if ($fadeIn.val().length) {
+						toastR.options.fadeIn = +$fadeIn.val()
+					}
 
-<h3>Rather Drive Stick?</h3>
+					if ($fadeOut.val().length) {
+						toastR.options.fadeOut = +$fadeOut.val()
+					}
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+					if ($timeOut.val().length) {
+						toastR.options.timeOut = +$timeOut.val()
+					}
 
-<h3>Authors and Contributors</h3>
+					if (!msg) {
+						msg = getMessage()
+					}
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+					var $toast = toastR[shortCutFunction](msg, title)
 
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">toastr maintained by <a href="https://github.com/CodeSeven">CodeSeven</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+					// Wire up an event handler to a button in the toast, if it exists
+					if ($toast.find('#okBtn').length) {
+					    $toast.on('click', '#okBtn', function () {
+					        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!')
+					        $toast.remove()
+					    })
+					}
+					if ($toast.find('#surpriseBtn').length) {
+					    $toast.on('click', '#surpriseBtn', function () {
+					        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.')
+					    })
+					}
+					
+				})
+			})
+		</script>
+	</body>
 </html>
