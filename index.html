@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<title>toastR examples</title>
+		<title>toastr examples</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet"/>
 		<link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"/>
@@ -17,7 +17,7 @@
 
 	<body style="padding: 30px" class="container">
 		<section class="row">
-			<h1>toastR</h1>
+			<h1>toastr</h1>
 
 			<div class="well row">
 				<div class="row span11">
@@ -94,8 +94,8 @@
 			<h2>Links</h2>
 			
 			<ul>
-				<li><a href="https://github.com/downloads/KnockedUp/toastR/toastr.zip">Download</a></li>
-				<li><a href="https://github.com/KnockedUp/toastR">GitHub</a></li>
+				<li><a href="https://github.com/downloads/CodeSeven/toastr/toastr.zip">Download</a></li>
+				<li><a href="https://github.com/CodeSeven/toastr">GitHub</a></li>
 			</ul>
 		</footer>
 
@@ -133,29 +133,29 @@
 						toastIndex = toastCount++
 
 
-					toastR.options = {
+					toastr.options = {
 						debug: $('#debugInfo').prop('checked'),
 						tapToDismiss: $('#tapToDismiss').prop('checked'),
 						positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right'
 					}
 
 					if ($fadeIn.val().length) {
-						toastR.options.fadeIn = +$fadeIn.val()
+						toastr.options.fadeIn = +$fadeIn.val()
 					}
 
 					if ($fadeOut.val().length) {
-						toastR.options.fadeOut = +$fadeOut.val()
+						toastr.options.fadeOut = +$fadeOut.val()
 					}
 
 					if ($timeOut.val().length) {
-						toastR.options.timeOut = +$timeOut.val()
+						toastr.options.timeOut = +$timeOut.val()
 					}
 
 					if (!msg) {
 						msg = getMessage()
 					}
 
-					var $toast = toastR[shortCutFunction](msg, title)
+					var $toast = toastr[shortCutFunction](msg, title)
 
 					// Wire up an event handler to a button in the toast, if it exists
 					if ($toast.find('#okBtn').length) {

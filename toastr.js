@@ -1,11 +1,11 @@
 // By: Hans Fjällemark and John Papa
-// https://github.com/KnockedUp/toastR
+// https://github.com/CodeSeven/toastr
 // 
 // Modified to support css styling instead of inline styling
 // Based on original version at https://github.com/Srirangan/notifer.js/
 
 (function (window, $) {
-    window.toastR = (function () {
+    window.toastr = (function () {
         var  
             defaults = {
                 tapToDismiss: true,
@@ -52,7 +52,7 @@
             },
 
             getOptions = function () {
-                return $.extend({}, defaults, toastR.options)
+                return $.extend({}, defaults, toastr.options)
             },
 
             info = function (message, title) {
