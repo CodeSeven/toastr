@@ -11,7 +11,7 @@ Demo can be found at http://CodeSeven.github.com/toastr
 ###3 Easy Steps
 For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
 
-1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>`
+1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>` and toastr-responsive.css `<link href="toastr-responsive.css" rel="stylesheet"/>`
 
 2. Link to toastr.js `<script src="toastr.js"></script>`
 
