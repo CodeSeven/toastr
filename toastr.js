@@ -1,10 +1,14 @@
+// By: Hans Fj�llemark and John Papa
+// https://github.com/CodeSeven/toastr
+// 
+// Modified to support css styling instead of inline styling
+// Inspired by https://github.com/Srirangan/notifer.js/
+
 (function(window, $) {
     window.toastr = (function() {
         var 
             defaults = {
                 tapToDismiss: true,
-                hoverOffToDismiss: true,
-                stickIfFocused: true,
                 toastClass: 'toast',
                 containerId: 'toast-container',
                 debug: false,
@@ -116,10 +120,8 @@
                     intervalId = setTimeout(fadeAway, options.timeOut)
                 }
 
-                if (options.hoverOffToDismiss) {
-                	$toastElement.hover(stickAround, fadeAway)
-                }
-                
+                $toastElement.hover(stickAround, fadeAway)
+
                 if (options.tapToDismiss) {
                     $toastElement.click(fadeAway)
                 }
