@@ -89,6 +89,9 @@
                 }
 
                 var fadeAway = function() {
+                    if ($(':focus', $toastElement).length > 0)
+                		return
+                	
                     var fade = function() {
                         return $toastElement.fadeOut(options.fadeOut)
                     }
