@@ -4,7 +4,7 @@
 // Modified to support css styling instead of inline styling
 // Inspired by https://github.com/Srirangan/notifer.js/
 
-(function(window, $) {
+;(function(window, $) {
     window.toastr = (function() {
         var 
             defaults = {
@@ -156,4 +156,4 @@
             warning: warning
         }
     })()
-} (window, jQuery))
+} (window, jQuery));
