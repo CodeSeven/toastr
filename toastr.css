@@ -2,6 +2,7 @@
 	font-weight: bold;
 }
 .toast-message {
+    word-wrap: break-word;
 }
 
 .toast-message a,
