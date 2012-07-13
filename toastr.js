@@ -14,6 +14,7 @@
                 debug: false,
                 fadeIn: 300,
                 fadeOut: 1000,
+                extendedTimeOut: 1000,
                 iconClasses: {
                     error: 'toast-error',
                     info: 'toast-info',
@@ -106,6 +107,13 @@
                     })
                 }
 
+                var delayedFadeAway = function()
+                {
+                    intervalId = setTimeout(fadeAway, options.extendedTimeOut)
+                }
+
+
+
                 var stickAround = function() {
                     clearTimeout(intervalId)
                     $toastElement.stop(true, true)
@@ -120,7 +128,8 @@
                     intervalId = setTimeout(fadeAway, options.timeOut)
                 }
 
-                $toastElement.hover(stickAround, fadeAway)
+                //$toastElement.hover(stickAround, fadeAway);
+                $toastElement.hover(stickAround, delayedFadeAway)
 
                 if (options.tapToDismiss) {
                     $toastElement.click(fadeAway)
