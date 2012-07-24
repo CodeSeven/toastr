@@ -107,12 +107,11 @@
                     })
                 }
 
-                var delayedFadeAway = function()
-                {
-                    intervalId = setTimeout(fadeAway, options.extendedTimeOut)
+                var delayedFadeAway = function() {
+                    if (options.extendedTimeOut > 0) {
+                        intervalId = setTimeout(fadeAway, options.extendedTimeOut)
+                    }
                 }
-
-
 
                 var stickAround = function() {
                     clearTimeout(intervalId)
@@ -128,7 +127,6 @@
                     intervalId = setTimeout(fadeAway, options.timeOut)
                 }
 
-                //$toastElement.hover(stickAround, fadeAway);
                 $toastElement.hover(stickAround, delayedFadeAway)
 
                 if (options.tapToDismiss) {
