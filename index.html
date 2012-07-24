@@ -64,6 +64,9 @@
 
 								<label class="control-label" for="timeOut">Time out</label>
 								<input id="timeOut" type="text" placeholder="ms" class="input-mini" value="5000"/>
+
+								<label class="control-label" for="timeOut">Extended time out</label>
+								<input id="extendedTimeOut" type="text" placeholder="ms" class="input-mini" value="1000"/>
 							</div>
 						</div>
 					</div>
@@ -130,6 +133,7 @@
 						$fadeIn = $('#fadeIn'),
 						$fadeOut = $('#fadeOut'),
 						$timeOut = $('#timeOut'),
+					    $extendedTimeOut = $('#extendedTimeOut'),
 						toastIndex = toastCount++
 
 
@@ -140,15 +144,19 @@
 					}
 
 					if ($fadeIn.val().length) {
-						toastr.options.fadeIn = +$fadeIn.val()
+						toastr.options.fadeIn = + $fadeIn.val()
 					}
 
 					if ($fadeOut.val().length) {
-						toastr.options.fadeOut = +$fadeOut.val()
+						toastr.options.fadeOut = + $fadeOut.val()
 					}
 
 					if ($timeOut.val().length) {
-						toastr.options.timeOut = +$timeOut.val()
+						toastr.options.timeOut = + $timeOut.val()
+					}
+
+					if ($extendedTimeOut.val().length) {
+					    toastr.options.extendedTimeOut = +$extendedTimeOut.val()
 					}
 
 					if (!msg) {
