@@ -108,7 +108,7 @@
                 }
 
                 var delayedFadeAway = function() {
-                    if (options.extendedTimeOut > 0) {
+                    if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.extendedTimeOut)
                     }
                 }
