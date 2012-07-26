@@ -29,6 +29,25 @@
 	bottom: 12px;
 }
 
+.toast-top-middle {
+  top: 12px;
+  left: 50%;
+  margin-left: -186px;
+}
+
+.toast-bottom-middle {
+  bottom: 12px;
+  left: 50%;
+  margin-left: -186px;
+}
+/* approximate only since we don't really know the height of every toast, we could get exact with JS */
+.toast-center {
+   left: 50%;
+  margin-left: -186px;
+  top: 49%;
+  margin-top:-25px;
+}
+
 #toast-container  {
 	position: fixed;
 	z-index: 9999;
