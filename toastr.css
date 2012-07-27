@@ -29,13 +29,13 @@
 	bottom: 12px;
 }
 
-.toast-top-middle {
+.toast-top-center {
   top: 12px;
   left: 50%;
   margin-left: -186px;
 }
 
-.toast-bottom-middle {
+.toast-bottom-center {
   bottom: 12px;
   left: 50%;
   margin-left: -186px;
@@ -43,7 +43,7 @@
 /* approximate only since we don't really know the height of every toast, we could get exact with JS */
 .toast-center {
    left: 50%;
-  margin-left: -186px;
+  margin-left: -184px;
   top: 49%;
   margin-top:-25px;
 }
