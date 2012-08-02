@@ -1,4 +1,4 @@
-// By: Hans Fj�llemark and John Papa
+// By: Hans Fjällemark and John Papa
 // https://github.com/CodeSeven/toastr
 // 
 // Modified to support css styling instead of inline styling
@@ -129,13 +129,20 @@
 
                 $toastElement.hover(stickAround, delayedFadeAway)
 
-                if (options.tapToDismiss) {
+                if (!options.onclick && options.tapToDismiss) {
                     $toastElement.click(fadeAway)
+                }
+
+                if (options.onclick) {
+                    $toastElement.click(function() {
+                        options.onclick() && fadeAway()
+                    })
                 }
 
                 if (options.debug) {
                     console.log(response)
                 }
+
                 return $toastElement
             },
 
