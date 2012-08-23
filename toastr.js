@@ -160,6 +160,28 @@
                     message: message,
                     title: title
                 })
+            },
+			
+            show = function (type, message, title) {
+                var iconClass;
+                if (type === 'success') {
+                    iconClass = 'toast-success';
+                }
+                else if (type === 'info') {
+                    iconClass = 'toast-info';
+                }
+                else if (type == 'warning') {
+                    iconClass = 'toast-warning';
+                }
+                else if (type == 'error') {
+                    iconClass = 'toast-error';
+                }
+
+                toastr.notify({
+                    iconClass: iconClass,
+                    message: message,
+                    title: title
+                });
             }
 
         return {
@@ -167,7 +189,8 @@
             info: info,
             options: {},
             success: success,
-            warning: warning
+            warning: warning,
+            show: show
         }
     })()
 } (window, jQuery));
