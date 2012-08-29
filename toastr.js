@@ -4,9 +4,11 @@
 // Modified to support css styling instead of inline styling
 // Inspired by https://github.com/Srirangan/notifer.js/
 
-;(function(window, $) {
-    window.toastr = (function() {
-        var 
+;(function(define) {
+define(['jquery'], function ($) {
+
+        var toastr = (function() {
+        var
             defaults = {
                 tapToDismiss: true,
                 toastClass: 'toast',
@@ -65,7 +67,7 @@
             },
 
             notify = function(map) {
-                var 
+                var
                     options = getOptions(),
                     iconClass = map.iconClass || options.iconClass,
                     intervalId = null,
@@ -92,7 +94,7 @@
                 var fadeAway = function() {
                     if ($(':focus', $toastElement).length > 0)
                 		return
-                	
+
                     var fade = function() {
                         return $toastElement.fadeOut(options.fadeOut)
                     }
@@ -169,5 +171,13 @@
             success: success,
             warning: warning
         }
-    })()
-} (window, jQuery));
+    })();
+    return toastr;
+});
+}(typeof define === 'function' && define.amd ? define : function (deps, factory) {
+    if (typeof module !== 'undefined' && module.exports) { //Node
+        module.exports = factory(require(deps[0]));
+    } else {
+        window['toastr'] = factory(window['jQuery']);
+    }
+}));
