@@ -4,7 +4,7 @@
 // Modified to support css styling instead of inline styling
 // Inspired by https://github.com/Srirangan/notifer.js/
 
-;(function(window, $) {
+(function(window, $) {
     window.toastr = (function() {
         var 
             defaults = {
@@ -29,12 +29,13 @@
             },
 
 
-            error = function(message, title) {
+            error = function(message, title, timeOut) {
+
                 return notify({
                     iconClass: getOptions().iconClasses.error,
                     message: message,
                     title: title
-                })
+                }, timeOut)
             },
 
             getContainer = function(options) {
@@ -56,15 +57,15 @@
                 return $.extend({}, defaults, toastr.options)
             },
 
-            info = function(message, title) {
+            info = function(message, title, timeOut) {
                 return notify({
                     iconClass: getOptions().iconClasses.info,
                     message: message,
                     title: title
-                })
+                }, timeOut)
             },
 
-            notify = function(map) {
+            notify = function(map, timeOut) {
                 var 
                     options = getOptions(),
                     iconClass = map.iconClass || options.iconClass,
@@ -91,7 +92,7 @@
 
                 var fadeAway = function() {
                     if ($(':focus', $toastElement).length > 0)
-                		return
+                    	return
                 	
                     var fade = function() {
                         return $toastElement.fadeOut(options.fadeOut)
@@ -107,8 +108,11 @@
                     })
                 }
 
+		if (typeof timeOut === 'undefined')
+                    timeOut = options.timeOut;
+
                 var delayedFadeAway = function() {
-                    if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+                    if (timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.extendedTimeOut)
                     }
                 }
@@ -123,8 +127,8 @@
                 $container.prepend($toastElement)
                 $toastElement.fadeIn(options.fadeIn)
 
-                if (options.timeOut > 0) {
-                    intervalId = setTimeout(fadeAway, options.timeOut)
+                if (timeOut > 0) {
+                    intervalId = setTimeout(fadeAway, timeOut)
                 }
 
                 $toastElement.hover(stickAround, delayedFadeAway)
@@ -146,20 +150,20 @@
                 return $toastElement
             },
 
-            success = function(message, title) {
+            success = function(message, title, timeOut) {
                 return notify({
                     iconClass: getOptions().iconClasses.success,
                     message: message,
                     title: title
-                })
+                }, timeOut)
             },
 
-            warning = function(message, title) {
+            warning = function(message, title, timeOut) {
                 return notify({
                     iconClass: getOptions().iconClasses.warning,
                     message: message,
                     title: title
-                })
+                }, timeOut)
             }
 
         return {
