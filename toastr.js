@@ -4,9 +4,9 @@
 // Modified to support css styling instead of inline styling
 // Inspired by https://github.com/Srirangan/notifer.js/
 
-;(function(window, $) {
-    window.toastr = (function() {
-        var 
+(function (window, $) {
+    window.toastr = (function () {
+        var
             defaults = {
                 tapToDismiss: true,
                 toastClass: 'toast',
@@ -29,15 +29,16 @@
             },
 
 
-            error = function(message, title) {
+            error = function (message, title, optionsOverride) {
+
                 return notify({
                     iconClass: getOptions().iconClasses.error,
                     message: message,
                     title: title
-                })
+                }, optionsOverride)
             },
 
-            getContainer = function(options) {
+            getContainer = function (options) {
                 var $container = $('#' + options.containerId)
 
                 if ($container.length)
@@ -52,21 +53,25 @@
                 return $container
             },
 
-            getOptions = function() {
+            getOptions = function () {
                 return $.extend({}, defaults, toastr.options)
             },
 
-            info = function(message, title) {
+            info = function (message, title, optionsOverride) {
                 return notify({
                     iconClass: getOptions().iconClasses.info,
                     message: message,
                     title: title
-                })
+                }, optionsOverride)
             },
 
-            notify = function(map) {
+            notify = function (map, optionsOverride) {
+                var options = getOptions();
+                if(typeof (optionsOverride) != "undefined") {
+                    options = $.extend({ }, options, optionsOverride);
+                }
+
                 var 
-                    options = getOptions(),
                     iconClass = map.iconClass || options.iconClass,
                     intervalId = null,
                     $container = getContainer(options),
@@ -89,15 +94,15 @@
                     $toastElement.append($messageElement)
                 }
 
-                var fadeAway = function() {
+                var fadeAway = function () {
                     if ($(':focus', $toastElement).length > 0)
-                		return
-                	
-                    var fade = function() {
+                        return
+
+                    var fade = function () {
                         return $toastElement.fadeOut(options.fadeOut)
                     }
 
-                    $.when(fade()).done(function() {
+                    $.when(fade()).done(function () {
                         if ($toastElement.is(':visible')) {
                             return
                         }
@@ -107,13 +112,13 @@
                     })
                 }
 
-                var delayedFadeAway = function() {
-                    if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+                var delayedFadeAway = function () {
+                    if (timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.extendedTimeOut)
                     }
                 }
 
-                var stickAround = function() {
+                var stickAround = function () {
                     clearTimeout(intervalId)
                     $toastElement.stop(true, true)
                         .fadeIn(options.fadeIn)
@@ -123,8 +128,8 @@
                 $container.prepend($toastElement)
                 $toastElement.fadeIn(options.fadeIn)
 
-                if (options.timeOut > 0) {
-                    intervalId = setTimeout(fadeAway, options.timeOut)
+                if (timeOut > 0) {
+                    intervalId = setTimeout(fadeAway, timeOut)
                 }
 
                 $toastElement.hover(stickAround, delayedFadeAway)
@@ -134,7 +139,7 @@
                 }
 
                 if (options.onclick) {
-                    $toastElement.click(function() {
+                    $toastElement.click(function () {
                         options.onclick() && fadeAway()
                     })
                 }
@@ -146,20 +151,20 @@
                 return $toastElement
             },
 
-            success = function(message, title) {
+            success = function (message, title, optionsOverride) {
                 return notify({
                     iconClass: getOptions().iconClasses.success,
                     message: message,
                     title: title
-                })
+                }, optionsOverride)
             },
 
-            warning = function(message, title) {
+            warning = function (message, title, optionsOverride) {
                 return notify({
                     iconClass: getOptions().iconClasses.warning,
                     message: message,
                     title: title
-                })
+                }, optionsOverride)
             }
 
         return {
@@ -170,4 +175,4 @@
             warning: warning
         }
     })()
-} (window, jQuery));
+}(window, jQuery));
