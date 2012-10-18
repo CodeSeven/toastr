@@ -113,7 +113,7 @@
                 }
 
                 var delayedFadeAway = function () {
-                    if (timeOut > 0 || options.extendedTimeOut > 0) {
+                    if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.extendedTimeOut)
                     }
                 }
@@ -128,8 +128,8 @@
                 $container.prepend($toastElement)
                 $toastElement.fadeIn(options.fadeIn)
 
-                if (timeOut > 0) {
-                    intervalId = setTimeout(fadeAway, timeOut)
+                if (options.timeOut > 0)  {
+                    intervalId = setTimeout(fadeAway, options.timeOut)
                 }
 
                 $toastElement.hover(stickAround, delayedFadeAway)
