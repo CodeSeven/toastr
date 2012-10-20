@@ -1,0 +1,162 @@
+/*------------------------------------------------------------------------------------------------------------------------
+	Author: Sean Goresht
+	www: http://seangoresht.com/
+	github: https://github.com/srsgores
+	twitter: http://twitter.com/S.Goresht
+	
+	Licensed under the GNU GENERAL PUBLIC LICENSE
+	
+	=============================================================================
+	Filename:  toastr.less
+	=============================================================================
+	This file is the LESS version of toastr, with some modifications.  No images are used, and icons from icomoon are used instead.
+	Notes
+	---------------------------------
+	--To see all icons used by icomoon, please view the indes.html inside the icomoon folder.
+	--This file includes the responsive toastr.  Feel free to remove it if you don't want a responsive toastr.
+--------------------------------------------------------------------------------------------------------------------- */
+
+/* =============================================================================
+Imports
+========================================================================== */
+@import "mixins.less"; //for general mixins.  Note that the length of the file will not affect the compiled css; only mixins USED will be outputted to the resulting file
+@import "icomoon/icomoon.less"; //remove this if you have already set up icomoon.  If you do, remember to set the icons to have the appropriate "content", using the toastr-left-icon mixin appropriately!
+@import "toastr-responsive.less";
+
+/* =============================================================================
+Variables
+========================================================================== */
+@border-radius: 0.4em;
+@toastrSpacing: 0.8em; //This is the spacing between the toastr container and the screen
+@toastrMessageColour: @white; //colour of text inside the toastr message
+@toastrShadowColour: #999999; //shadow colour for the toastr notification
+@toastrDarkerShadowColour: darken(@toastrShadowColour, 60%); //darker shadow for toastr notification
+@toastrWidth: 15em; //starting width for screens larger than 769px.  Will be relative to your base font size.
+@toastrPadding: 1em 1em 1em 3.5em; //starting spacing between notification and notification container.  The 3.5 is the padding needed for the icon to be separated from the message.
+
+/* Varibles from the twitter bootstrap variables. */
+@white: #FFF;
+/* =============================================================================
+Mixins
+========================================================================== */
+/* Mixin for toastr icon */
+.toastr-left-icon(@ascii-letter, @colour: #FFF) { //colour is the colour of the box-shadows and such.  It will also appear on the icon.
+	content: @ascii-letter;
+	font-size: 2em;
+	font-family: "IcoMoon";
+	position: absolute;
+	left: 0.4em;
+	color: @colour;
+	text-shadow: 0 0 33px @colour, 0 1px #444343;
+}
+
+/* =============================================================================
+Toastr style
+========================================================================== */
+
+.toast-title {
+	font-weight: 500;
+	font-family: Raleway;
+	font-size: 1.7em;
+	letter-spacing: 0.02em;
+}
+
+.toast-message {
+	//style here, as needed
+}
+
+.toast-message a,
+.toast-message label {
+	color: @toastrMessageColour;
+}
+
+.toast-message a:hover {
+	color: #CCC;
+	text-decoration: none;
+}
+
+.toast-top-left {
+	top: @toastrSpacing;
+	left: @toastrSpacing;
+}
+
+.toast-bottom-right {
+	right: @toastrSpacing;
+	bottom: @toastrSpacing;
+}
+
+.toast-bottom-left {
+	left: @toastrSpacing;
+	bottom: @toastrSpacing;
+}
+
+#toast-container {
+	position: fixed;
+	z-index: 9999;
+}
+
+#toast-container > div {
+	.rounded-corners(@border-radius);
+	.box-shadow(0 0 @toastrSpacing @toastrShadowColour);
+	color: @toastrMessageColour;
+	.opacity(80);
+	padding: @toastrPadding;
+	width: @toastrWidth;
+	margin-bottom: 0.5em;
+	&:hover {
+		.box-shadow(inset 0 -4px 14px @white);
+	}
+}
+
+.toast {
+	background-color: #030303;
+}
+
+.toast-success {
+	background-color: #51A351;
+}
+
+.toast-error {
+	background-color: #BD362F;
+}
+
+.toast-info {
+	background-color: #2F96B4;
+}
+
+.toast-warning {
+	background-color: #F89406;
+}
+
+.toast-top-right {
+	top: @toastrSpacing;
+	right: @toastrSpacing;
+}
+
+#toast-container > :hover {
+	.box-shadow(0 0 @toastrSpacing @toastrDarkerShadowColour);
+	.opacity(100);
+	cursor: pointer;
+}
+
+#toast-container > .toast-info {
+	&:before {
+		.toastr-left-icon(@icon-info);
+	}
+}
+
+#toast-container > .toast-error {
+	.toastr-left-icon(@icon-cancel-2, #dd2400);
+}
+
+#toast-container > .toast-success {
+	&:before {
+		.toastr-left-icon(@icon-checkmark-2);
+	}
+}
+
+#toast-container > .toast-warning {
+	&:before {
+		.toastr-left-icon(@icon-warning, #f7f31a);
+	}
+}

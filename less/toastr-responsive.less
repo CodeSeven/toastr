@@ -1,0 +1,60 @@
+/*------------------------------------------------------------------------------------------------------------------------
+	Author: Sean Goresht
+	www: http://seangoresht.com/
+	github: https://github.com/srsgores
+	twitter: http://twitter.com/S.Goresht
+	
+	Licensed under the GNU GENERAL PUBLIC LICENSE
+	
+	=============================================================================
+	Filename:  toastr-responsive.less
+	=============================================================================
+	This file includes media queries used for the toastr library.
+--------------------------------------------------------------------------------------------------------------------- */
+@media all and (max-width: 240px) {
+	#toast-container {
+		font-size: 50%;
+		div {
+			padding: 0.3em 0.3em 0.3em 3.1em;
+			width: (@toastrWidth / 2.5);
+		}
+	}
+}
+
+@media all and (min-width: 241px) and (max-width: 320px) {
+	#toast-container {
+		font-size: 60%;
+		div {
+			padding: 0.4em 0.4em 0.4em 3.3em;
+			width: (@toastrWidth / 2.25);
+		}
+	}
+}
+
+@media all and (min-width: 321px) and (max-width: 480px) {
+	#toast-container {
+		font-size: 70%;
+		div {
+			padding: 0.5em 0.5em 0.5em 3.5em;
+			width: (@toastrWidth / 2);
+		}
+	}
+}
+
+@media all and (min-width: 481px) and (max-width: 768px) {
+	#toast-container{
+		font-size: 80%;
+		div {
+			padding: @toastrPadding;
+			width: (@toastrWidth / 1.5);
+		}
+	}
+
+}
+
+@media all and (min-width: 769px) {
+	#toast-container > div {
+		padding: @toastrPadding;
+		width: @toastrWidth;
+	}
+}
