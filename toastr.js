@@ -160,6 +160,17 @@
                     message: message,
                     title: title
                 })
+            },
+
+            clear = function(){
+                var options = getOptions()
+                var $container = $('#' + options.containerId)
+                if ($container.length) {
+                    $container.fadeOut(options.fadeOut, function(){
+                        $container.remove()
+                    })
+                }
+
             }
 
         return {
@@ -167,7 +178,8 @@
             info: info,
             options: {},
             success: success,
-            warning: warning
+            warning: warning,
+            clear: clear
         }
     })()
 } (window, jQuery));
