@@ -30,11 +30,11 @@
                 },
 
 
-                error = function (message, title, timeOut) {
+                error = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.error,
                         message: message,
-                        timeOut: timeOut,
+                        optionsOverride: optionsOverride,
                         title: title
                     })
                 },
@@ -58,26 +58,30 @@
                     return $.extend({}, defaults, toastr.options)
                 },
 
-                info = function (message, title, timeOut) {
+                info = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.info,
                         message: message,
-                        timeOut: timeOut,
+                        optionsOverride: optionsOverride,
                         title: title
                     })
                 },
 
                 notify = function (map) {
-                    var
-                        options = getOptions(),
+                    var options = $.extend({}, getOptions())
+
+                    if (typeof (map.optionsOverride) !== 'undefined') {
+                        options = $.extend({}, getOptions(), map.optionsOverride)
+                    }
+
+                    var 
                         iconClass = map.iconClass || options.iconClass,
                         intervalId = null,
                         $container = getContainer(options),
                         $toastElement = $('<div/>'),
                         $titleElement = $('<div/>'),
                         $messageElement = $('<div/>'),
-                        response = { options: options, map: map },
-                        timeOut = options.timeOut
+                        response = { options: options, map: map }
 
                     if (map.iconClass) {
                         $toastElement.addClass(options.toastClass).addClass(iconClass)
@@ -91,10 +95,6 @@
                     if (map.message) {
                         $messageElement.append(map.message).addClass(options.messageClass)
                         $toastElement.append($messageElement)
-                    }
-
-                    if (map.timeOut) {
-                        timeOut = map.timeOut
                     }
 
                     var fadeAway = function () {
@@ -118,7 +118,7 @@
                     }
 
                     var delayedFadeAway = function () {
-                        if (timeOut > 0 || options.extendedTimeOut > 0) {
+                        if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                             intervalId = setTimeout(fadeAway, options.extendedTimeOut)
                         }
                     }
@@ -133,8 +133,8 @@
                     $container.prepend($toastElement)
                     $toastElement.fadeIn(options.fadeIn)
 
-                    if (timeOut > 0) {
-                        intervalId = setTimeout(fadeAway, timeOut)
+                    if (options.timeOut > 0) {
+                        intervalId = setTimeout(fadeAway, options.timeOut)
                     }
 
                     $toastElement.hover(stickAround, delayedFadeAway)
@@ -149,20 +149,20 @@
                     return $toastElement
                 },
 
-                success = function (message, title, timeOut) {
+                success = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.success,
                         message: message,
-                        timeOut: timeOut,
+                        optionsOverride: optionsOverride,
                         title: title
                     })
                 },
 
-                warning = function (message, title, timeOut) {
+                warning = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.warning,
                         message: message,
-                        timeOut: timeOut,
+                        optionsOverride: optionsOverride,
                         title: title
                     })
                 },
