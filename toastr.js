@@ -190,6 +190,7 @@
                 info: info,
                 options: {},
                 success: success,
+                version: '1.0.3',
                 warning: warning
             }
         })()
