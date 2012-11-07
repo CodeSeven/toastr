@@ -1,4 +1,4 @@
-// By: Hans Fjällemark and John Papa
+// By: Hans Fj�llemark and John Papa
 // https://github.com/CodeSeven/toastr
 // 
 // Modified to support css styling instead of inline styling
@@ -93,18 +93,20 @@
                     if ($(':focus', $toastElement).length > 0)
                 		return
                 	
-                    var fade = function() {
-                        return $toastElement.fadeOut(options.fadeOut)
+                    var fade = function(callback) {
+                        return $toastElement.fadeOut(options.fadeOut, callback)
                     }
 
-                    $.when(fade()).done(function() {
+                    var removeToast = function () {
                         if ($toastElement.is(':visible')) {
                             return
                         }
                         $toastElement.remove()
                         if ($container.children().length === 0)
                             $container.remove()
-                    })
+                    }
+
+                    fade(removeToast)
                 }
 
                 var delayedFadeAway = function() {
@@ -129,20 +131,13 @@
 
                 $toastElement.hover(stickAround, delayedFadeAway)
 
-                if (!options.onclick && options.tapToDismiss) {
+                if (options.tapToDismiss) {
                     $toastElement.click(fadeAway)
-                }
-
-                if (options.onclick) {
-                    $toastElement.click(function() {
-                        options.onclick() && fadeAway()
-                    })
                 }
 
                 if (options.debug) {
                     console.log(response)
                 }
-
                 return $toastElement
             },
 
