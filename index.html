@@ -102,7 +102,7 @@
 			</ul>
 		</footer>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
 		<script src="toastr.js"></script>
 		
 		<script type="text/javascript">
@@ -138,8 +138,9 @@
 
 
 					toastr.options = {
-						debug: $('#debugInfo').prop('checked'),
-						tapToDismiss: $('#tapToDismiss').prop('checked'),
+					    //debug: $('#debugInfo').prop('checked'),
+					    debug: ($('#debugInfo').attr('checked') === 'checked'),
+					    tapToDismiss: ($('#tapToDismiss').attr('checked') === 'checked'),
 						positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right'
 					}
 
@@ -167,13 +168,13 @@
 
 					// Wire up an event handler to a button in the toast, if it exists
 					if ($toast.find('#okBtn').length) {
-					    $toast.on('click', '#okBtn', function () {
+					    $toast.delegate('#okBtn', 'click', function () {
 					        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!')
 					        $toast.remove()
 					    })
 					}
 					if ($toast.find('#surpriseBtn').length) {
-					    $toast.on('click', '#surpriseBtn', function () {
+					    $toast.delegate('#surpriseBtn', 'click', function () {
 					        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.')
 					    })
 					}

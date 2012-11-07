@@ -93,18 +93,20 @@
                     if ($(':focus', $toastElement).length > 0)
                 		return
                 	
-                    var fade = function() {
-                        return $toastElement.fadeOut(options.fadeOut)
+                    var fade = function(callback) {
+                        return $toastElement.fadeOut(options.fadeOut, callback)
                     }
 
-                    $.when(fade()).done(function() {
+                    var removeToast = function () {
                         if ($toastElement.is(':visible')) {
                             return
                         }
                         $toastElement.remove()
                         if ($container.children().length === 0)
                             $container.remove()
-                    })
+                    }
+
+                    fade(removeToast)
                 }
 
                 var delayedFadeAway = function() {
