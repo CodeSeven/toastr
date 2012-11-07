@@ -156,9 +156,21 @@
                         message: message,
                         title: title
                     })
+                },
+
+
+            clear = function () {
+                var options = getOptions()
+                var $container = $('#' + options.containerId)
+                if ($container.length) {
+                    $container.fadeOut(options.fadeOut, function () {
+                        $container.remove()
+                    })
                 }
+            }
 
             return {
+                clear: clear,
                 error: error,
                 info: info,
                 options: {},
