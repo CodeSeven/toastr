@@ -30,10 +30,11 @@
                 },
 
 
-                error = function (message, title) {
+                error = function (message, title, timeOut) {
                     return notify({
                         iconClass: getOptions().iconClasses.error,
                         message: message,
+                        timeOut: timeOut,
                         title: title
                     })
                 },
@@ -57,10 +58,11 @@
                     return $.extend({}, defaults, toastr.options)
                 },
 
-                info = function (message, title) {
+                info = function (message, title, timeOut) {
                     return notify({
                         iconClass: getOptions().iconClasses.info,
                         message: message,
+                        timeOut: timeOut,
                         title: title
                     })
                 },
@@ -74,7 +76,8 @@
                         $toastElement = $('<div/>'),
                         $titleElement = $('<div/>'),
                         $messageElement = $('<div/>'),
-                        response = { options: options, map: map }
+                        response = { options: options, map: map },
+                        timeOut = options.timeOut
 
                     if (map.iconClass) {
                         $toastElement.addClass(options.toastClass).addClass(iconClass)
@@ -88,6 +91,10 @@
                     if (map.message) {
                         $messageElement.append(map.message).addClass(options.messageClass)
                         $toastElement.append($messageElement)
+                    }
+
+                    if (map.timeOut) {
+                        timeOut = map.timeOut
                     }
 
                     var fadeAway = function () {
@@ -111,7 +118,7 @@
                     }
 
                     var delayedFadeAway = function () {
-                        if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+                        if (timeOut > 0 || options.extendedTimeOut > 0) {
                             intervalId = setTimeout(fadeAway, options.extendedTimeOut)
                         }
                     }
@@ -126,8 +133,8 @@
                     $container.prepend($toastElement)
                     $toastElement.fadeIn(options.fadeIn)
 
-                    if (options.timeOut > 0) {
-                        intervalId = setTimeout(fadeAway, options.timeOut)
+                    if (timeOut > 0) {
+                        intervalId = setTimeout(fadeAway, timeOut)
                     }
 
                     $toastElement.hover(stickAround, delayedFadeAway)
@@ -142,18 +149,20 @@
                     return $toastElement
                 },
 
-                success = function (message, title) {
+                success = function (message, title, timeOut) {
                     return notify({
                         iconClass: getOptions().iconClasses.success,
                         message: message,
+                        timeOut: timeOut,
                         title: title
                     })
                 },
 
-                warning = function (message, title) {
+                warning = function (message, title, timeOut) {
                     return notify({
                         iconClass: getOptions().iconClasses.warning,
                         message: message,
+                        timeOut: timeOut,
                         title: title
                     })
                 },
