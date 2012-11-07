@@ -88,6 +88,7 @@
 
 				<div class="row span11">
 					<button type="button" class="btn btn-primary" id="showtoast">Show Toast</button>                
+                    <button type="button" class="btn btn-danger" id="cleartoasts">Clear Toasts</button> 
 				</div>
 			</div>
 		</section>
@@ -177,7 +178,10 @@
 					        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.')
 					    })
 					}
-					
+
+					$('#cleartoasts').click(function() {
+					    toastr.clear()
+					})
 				})
 			})
 		</script>
