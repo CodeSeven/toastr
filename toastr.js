@@ -139,8 +139,14 @@
 
                     $toastElement.hover(stickAround, delayedFadeAway)
 
-                    if (options.tapToDismiss) {
+                    if (!options.onclick && options.tapToDismiss) {
                         $toastElement.click(fadeAway)
+                    }
+
+                    if (options.onclick) {
+                        $toastElement.click(function () {
+                            options.onclick() && fadeAway()
+                        })
                     }
 
                     if (options.debug) {
