@@ -31,7 +31,7 @@ For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
     toastr.success('Have fun storming the castle!', 'Miracle Max Says')
     
     // Display an error toast, with a title
-    toastr.error('I do not think that word means what you tink it means.', 'Inconceivable!')
+    toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
 		
     // Clears the current list of toasts
 
