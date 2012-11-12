@@ -1,4 +1,4 @@
-/// <reference path="../../toastr.js" />
+// <reference path="../../toastr.js" />
 /// <reference path="../qunit/qunit.js" />
 (function ($, toastr) {
 	var 
@@ -16,6 +16,7 @@
 		},
 		sampleMsg = 'I don\'t think they really exist',
 		sampleTitle = 'ROUS',
+		sampleMetaData = {x: 1, y: "a"},
 		selectors = {
 			container: 'div#toast-container',
 			toastInfo: 'div#toast-container > div.toast-info',
@@ -232,6 +233,85 @@
 		$container.remove();
 	})
 
+    module('meta data')
+    test('info - pass meta data', 1, function () {
+            	//Arrange
+		var dfd = $.Deferred();
+		toastr.options = {
+			dfd: dfd,
+			onclick: function(t) {
+				console.log("clickety click!");
+				this.dfd.resolve(t.metaData);
+			}
+		};
+		//Act
+		var $toast = toastr.info(sampleMsg, sampleTitle, null, sampleMetaData);
+	        $($toast).trigger('click');
+		dfd.done(function(result) {
+             		equal(result, sampleMetaData, 'Sets metadata');
 
+		});                                                       
+		$toast.remove();     
+    })
+
+    test('warning - pass meta data', 1, function () {
+            	//Arrange
+		var dfd = $.Deferred();
+		toastr.options = {
+			dfd: dfd,
+			onclick: function(t) {
+				console.log("clickety click!");
+				this.dfd.resolve(t.metaData);
+			}
+		};
+		//Act
+		var $toast = toastr.warning(sampleMsg, sampleTitle, null, sampleMetaData);
+	        $($toast).trigger('click');
+		dfd.done(function(result) {
+             		equal(result, sampleMetaData, 'Sets metadata');
+
+		});                                                       
+		$toast.remove();     
+    })
+
+    test('error - pass meta data', 1, function () {
+            	//Arrange
+		var dfd = $.Deferred();
+		toastr.options = {
+			dfd: dfd,
+			onclick: function(t) {
+				console.log("clickety click!");
+				this.dfd.resolve(t.metaData);
+			}
+		};
+		//Act
+		var $toast = toastr.error(sampleMsg, sampleTitle, null, sampleMetaData);
+	        $($toast).trigger('click');
+		dfd.done(function(result) {
+             		equal(result, sampleMetaData, 'Sets metadata');
+
+		});                                                       
+		$toast.remove();     
+    })
+
+    test('success - pass meta data', 1, function () {
+            	//Arrange
+		var dfd = $.Deferred();
+		toastr.options = {
+			dfd: dfd,
+			onclick: function(t) {
+				console.log("clickety click!");
+				this.dfd.resolve(t.metaData);
+			}
+		};
+		//Act
+		var $toast = toastr.success(sampleMsg, sampleTitle, null, sampleMetaData);
+	        $($toast).trigger('click');
+		dfd.done(function(result) {
+             		equal(result, sampleMetaData, 'Sets metadata');
+
+		});                                                       
+		$toast.remove();     
+    })
 
 })(jQuery, toastr)

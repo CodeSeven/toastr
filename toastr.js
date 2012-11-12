@@ -30,12 +30,13 @@
                 },
 
 
-                error = function (message, title, optionsOverride) {
+                error = function (message, title, optionsOverride, metaData) {
                     return notify({
                         iconClass: getOptions().iconClasses.error,
                         message: message,
                         optionsOverride: optionsOverride,
-                        title: title
+                        title: title,
+                        metaData: metaData
                     })
                 },
 
@@ -58,12 +59,13 @@
                     return $.extend({}, defaults, toastr.options)
                 },
 
-                info = function (message, title, optionsOverride) {
+                info = function (message, title, optionsOverride, metaData) {
                     return notify({
                         iconClass: getOptions().iconClasses.info,
                         message: message,
                         optionsOverride: optionsOverride,
-                        title: title
+                        title: title,
+                        metaData: metaData
                     })
                 },
 
@@ -95,6 +97,10 @@
                     if (map.message) {
                         $messageElement.append(map.message).addClass(options.messageClass)
                         $toastElement.append($messageElement)
+                    }
+
+                    if (typeof (map.metaData) !== 'undefined') {
+                        $toastElement.metaData = map.metaData;
                     }
 
                     var fadeAway = function () {
@@ -145,7 +151,7 @@
 
                     if (options.onclick) {
                         $toastElement.click(function () {
-                            options.onclick() && fadeAway()
+                            options.onclick($toastElement) && fadeAway()
                         })
                     }
 
@@ -155,21 +161,23 @@
                     return $toastElement
                 },
 
-                success = function (message, title, optionsOverride) {
+                success = function (message, title, optionsOverride, metaData) {
                     return notify({
                         iconClass: getOptions().iconClasses.success,
                         message: message,
                         optionsOverride: optionsOverride,
-                        title: title
+                        title: title,
+                        metaData: metaData
                     })
                 },
 
-                warning = function (message, title, optionsOverride) {
+                warning = function (message, title, optionsOverride, metaData) {
                     return notify({
                         iconClass: getOptions().iconClasses.warning,
                         message: message,
                         optionsOverride: optionsOverride,
-                        title: title
+                        title: title,
+                        metaData: metaData
                     })
                 },
 
