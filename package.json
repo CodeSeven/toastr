@@ -4,11 +4,8 @@
   "description": "**toastr** is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.",
   "main": "toastr.js",
   "homepage": "http://github.com/CodeSeven/toastr",
-  "directories": {
-    "test": "tests"
-  },
   "scripts": {
-    "test": "grunt qunit"
+    "test": "grunt qunit jshint"
   },
   "repository": {
     "type": "git",
@@ -26,6 +23,8 @@
     "grunt": "~0.4.0a",
     "grunt-contrib-jshint": "~0.1.0",
     "grunt-contrib-qunit": "~0.1.0",
-    "grunt-contrib-uglify": "~0.1.0"
+    "grunt-contrib-uglify": "~0.1.0",
+    "grunt-contrib-mincss": "~0.3.2",
+    "grunt-cli": "~0.1.0"
   }
 }
