@@ -3,6 +3,7 @@
   "version": "1.1.1",
   "description": "**toastr** is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.",
   "main": "toastr.js",
+  "homepage": "http://github.com/CodeSeven/toastr",
   "directories": {
     "test": "tests"
   },
@@ -14,7 +15,12 @@
     "url": "https://github.com/CodeSeven/toastr.git"
   },
   "author": "Hans Fjällemark, John Papa",
-  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/CodeSeven/toastr/blob/master/MIT-LICENSE.txt"
+    }
+  ],
   "readmeFilename": "README.md",
   "devDependencies": {
     "grunt": "~0.4.0a",
