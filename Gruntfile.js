@@ -22,7 +22,11 @@ module.exports = function(grunt) {
     },
     jshint: {
       options: {
-        curly: true,
+        smarttabs: true, //Fix and remove
+        expr: true, //Fix and remove
+        strict: false, //Fix and remove
+        asi: true, //Fix and remove
+        curly: false, //Fix and remove
         eqeqeq: true,
         immed: true,
         latedef: true,
@@ -33,9 +37,11 @@ module.exports = function(grunt) {
         unused: true,
         boss: true,
         eqnull: true,
+        node: true,
         browser: true,
         globals: {
-          jQuery: true
+          jQuery: true,
+          define: true
         }
       },
       gruntfile: {
