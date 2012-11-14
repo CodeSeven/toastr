@@ -1,4 +1,4 @@
-// By: Hans Fj�llemark and John Papa
+// By: Hans Fjällemark and John Papa
 // https://github.com/CodeSeven/toastr
 // 
 // Modified to support css styling instead of inline styling
