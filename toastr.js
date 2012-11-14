@@ -1,4 +1,4 @@
-// By: Hans Fjällemark and John Papa
+// By: Hans Fj�llemark and John Papa
 // https://github.com/CodeSeven/toastr
 // 
 // Modified to support css styling instead of inline styling
@@ -29,33 +29,29 @@
                     messageClass: 'toast-message'
                 },
 
-
                 error = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.error,
                         message: message,
                         optionsOverride: optionsOverride,
                         title: title
-                    })
+                    });
                 },
 
                 getContainer = function (options) {
-                    var $container = $('#' + options.containerId)
-
-                    if ($container.length)
-                        return $container
-
+                    var $container = $('#' + options.containerId);
+                    if ($container.length) {
+                        return $container;
+                    }
                     $container = $('<div/>')
                         .attr('id', options.containerId)
-                        .addClass(options.positionClass)
-
-                    $container.appendTo($('body'))
-
-                    return $container
+                        .addClass(options.positionClass);
+                    $container.appendTo($('body'));
+                    return $container;
                 },
 
                 getOptions = function () {
-                    return $.extend({}, defaults, toastr.options)
+                    return $.extend({}, defaults, toastr.options);
                 },
 
                 info = function (message, title, optionsOverride) {
@@ -64,95 +60,90 @@
                         message: message,
                         optionsOverride: optionsOverride,
                         title: title
-                    })
+                    });
                 },
 
                 notify = function (map) {
-                    var options = $.extend({}, getOptions())
+                    var 
+                        options = getOptions(),
+                        iconClass = map.iconClass || options.iconClass;
 
                     if (typeof (map.optionsOverride) !== 'undefined') {
-                        options = $.extend({}, getOptions(), map.optionsOverride)
+                        options = $.extend(options, map.optionsOverride);
+                        iconClass = map.optionsOverride.iconClass || iconClass;
                     }
 
                     var 
-                        iconClass = map.iconClass || options.iconClass,
                         intervalId = null,
                         $container = getContainer(options),
                         $toastElement = $('<div/>'),
                         $titleElement = $('<div/>'),
                         $messageElement = $('<div/>'),
-                        response = { options: options, map: map }
+                        response = { options: options, map: map };
 
                     if (map.iconClass) {
-                        $toastElement.addClass(options.toastClass).addClass(iconClass)
+                        $toastElement.addClass(options.toastClass).addClass(iconClass);
                     }
 
                     if (map.title) {
-                        $titleElement.append(map.title).addClass(options.titleClass)
-                        $toastElement.append($titleElement)
+                        $titleElement.append(map.title).addClass(options.titleClass);
+                        $toastElement.append($titleElement);
                     }
 
                     if (map.message) {
-                        $messageElement.append(map.message).addClass(options.messageClass)
-                        $toastElement.append($messageElement)
+                        $messageElement.append(map.message).addClass(options.messageClass);
+                        $toastElement.append($messageElement);
                     }
 
                     var fadeAway = function () {
-                        if ($(':focus', $toastElement).length > 0)
-                            return
-
-                        var fade = function (callback) {
-                            return $toastElement.fadeOut(options.fadeOut, callback)
+                        if ($(':focus', $toastElement).length > 0) {
+                            return;
                         }
-
+                        var fade = function (callback) {
+                            return $toastElement.fadeOut(options.fadeOut, callback);
+                        };
                         var removeToast = function () {
                             if ($toastElement.is(':visible')) {
-                                return
+                                return;
                             }
-                            $toastElement.remove()
-                            if ($container.children().length === 0)
-                                $container.remove()
-                        }
-
-                        fade(removeToast)
-                    }
-
+                            $toastElement.remove();
+                            if ($container.children().length === 0) {
+                                $container.remove();
+                            }
+                        };
+                        fade(removeToast);
+                    };
                     var delayedFadeAway = function () {
                         if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-                            intervalId = setTimeout(fadeAway, options.extendedTimeOut)
+                            intervalId = setTimeout(fadeAway, options.extendedTimeOut);
                         }
-                    }
-
+                    };
                     var stickAround = function () {
-                        clearTimeout(intervalId)
-                        $toastElement.stop(true, true)
-                            .fadeIn(options.fadeIn)
-                    }
-
-                    $toastElement.hide()
-                    $container.prepend($toastElement)
-                    $toastElement.fadeIn(options.fadeIn)
-
+                        clearTimeout(intervalId);
+                        $toastElement.stop(true, true).fadeIn(options.fadeIn);
+                    };
+                    $toastElement.hide();
+                    $container.prepend($toastElement);
+                    $toastElement.fadeIn(options.fadeIn);
                     if (options.timeOut > 0) {
-                        intervalId = setTimeout(fadeAway, options.timeOut)
+                        intervalId = setTimeout(fadeAway, options.timeOut);
                     }
 
-                    $toastElement.hover(stickAround, delayedFadeAway)
-
+                    $toastElement.hover(stickAround, delayedFadeAway);
                     if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(fadeAway)
+                        $toastElement.click(fadeAway);
                     }
 
                     if (options.onclick) {
                         $toastElement.click(function () {
-                            options.onclick() && fadeAway()
-                        })
+                            options.onclick() && fadeAway();
+                        });
                     }
 
-                    if (options.debug) {
-                        console.log(response)
+                    if (options.debug && console) {
+                        console.log(response);
                     }
-                    return $toastElement
+                    return $toastElement;
                 },
 
                 success = function (message, title, optionsOverride) {
@@ -161,7 +152,7 @@
                         message: message,
                         optionsOverride: optionsOverride,
                         title: title
-                    })
+                    });
                 },
 
                 warning = function (message, title, optionsOverride) {
@@ -170,20 +161,19 @@
                         message: message,
                         optionsOverride: optionsOverride,
                         title: title
-                    })
+                    });
                 },
 
 
             clear = function () {
-                var options = getOptions()
-                var $container = $('#' + options.containerId)
+                var options = getOptions();
+                var $container = $('#' + options.containerId);
                 if ($container.length) {
                     $container.fadeOut(options.fadeOut, function () {
-                        $container.remove()
-                    })
+                        $container.remove();
+                    });
                 }
-            }
-
+            };
             return {
                 clear: clear,
                 error: error,
@@ -192,10 +182,10 @@
                 success: success,
                 version: '1.1.1',
                 warning: warning
-            }
-        })()
-        return toastr
-    })
+            };
+        })();
+        return toastr;
+    });
 }(typeof define === 'function' && define.amd ? define : function (deps, factory) {
     if (typeof module !== 'undefined' && module.exports) { //Node
         module.exports = factory(require(deps[0]));
@@ -203,4 +193,3 @@
         window['toastr'] = factory(window['jQuery']);
     }
 }));
-//} (window, jQuery));
