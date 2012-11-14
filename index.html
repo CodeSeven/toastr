@@ -118,16 +118,15 @@
 							'Inconceivable!',
 							'I do not think that means what you think it means.',
 							'Have fun storming the castle!'
-					    ]
-				        i++
-						if (i === msgs.length) {
-							i = 0
-						}
+					    ];
+					    i++;
+					    if (i === msgs.length) {
+							i = 0;
+					    }
 
-						return msgs[i]
-					}
-
-				$('#showtoast').click(function() {
+						return msgs[i];
+					};
+		        $('#showtoast').click(function() {
 					var shortCutFunction = $("#toastTypeGroup input:radio:checked").val(),
 						msg = $('#message').val(),
 						title = $('#title').val() || '',
@@ -135,61 +134,56 @@
 						$fadeOut = $('#fadeOut'),
 						$timeOut = $('#timeOut'),
 					    $extendedTimeOut = $('#extendedTimeOut'),
-						toastIndex = toastCount++
-
-
-					toastr.options = {
+						toastIndex = toastCount++;
+		            toastr.options = {
 					    debug: ($('#debugInfo').attr('checked') === 'checked'),
 					    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                         onclick: null
-					}
-
-					if (($('#addBehaviorOnToastClick').attr('checked') === 'checked')) {
+					};
+		            if (($('#addBehaviorOnToastClick').attr('checked') === 'checked')) {
 					    toastr.options.onclick = function () {
 					        alert('You can perform some custom action after a toast goes away');
-					    }
-					}
+					    };
+		            }
 
 					if ($fadeIn.val().length) {
-						toastr.options.fadeIn = + $fadeIn.val()
+						toastr.options.fadeIn = + $fadeIn.val();
 					}
 
 					if ($fadeOut.val().length) {
-						toastr.options.fadeOut = + $fadeOut.val()
+						toastr.options.fadeOut = + $fadeOut.val();
 					}
 
 					if ($timeOut.val().length) {
-						toastr.options.timeOut = + $timeOut.val()
+						toastr.options.timeOut = + $timeOut.val();
 					}
 
 					if ($extendedTimeOut.val().length) {
-					    toastr.options.extendedTimeOut = + $extendedTimeOut.val()
+					    toastr.options.extendedTimeOut = + $extendedTimeOut.val();
 					}
 
 					if (!msg) {
-						msg = getMessage()
+						msg = getMessage();
 					}
 
-					var $toast = toastr[shortCutFunction](msg, title)
-
-					// Wire up an event handler to a button in the toast, if it exists
+					var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
 					if ($toast.find('#okBtn').length) {
 					    $toast.delegate('#okBtn', 'click', function () {
-					        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!')
-					        $toast.remove()
-					    })
+					        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+					        $toast.remove();
+					    });
 					}
 					if ($toast.find('#surpriseBtn').length) {
 					    $toast.delegate('#surpriseBtn', 'click', function () {
-					        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.')
-					    })
+					        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+					    });
 					}
 
 					$('#cleartoasts').click(function() {
-					    toastr.clear()
-					})
-				})
-			})
+					    toastr.clear();
+					});
+		        });
+		    })
 		</script>
 	</body>
 </html>
