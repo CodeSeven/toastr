@@ -59,7 +59,6 @@
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
         filter: alpha(opacity=80);
         margin: 0 0 6px;
-        -moz-opacity: 0.8;
         opacity: 0.8;
         padding: 15px 15px 15px 50px;
         width: 300px;
@@ -104,7 +103,6 @@
     cursor: pointer;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
-    -moz-opacity: 1;
     opacity: 1;
 }
 
