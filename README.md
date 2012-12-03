@@ -4,9 +4,11 @@
 ## Current Version
 1.1.1
 
-
 ## Demo
 Demo can be found at http://CodeSeven.github.com/toastr
+
+## NuGet Gallery
+http://nuget.org/packages/toastr
 
 ## Quick start
 
