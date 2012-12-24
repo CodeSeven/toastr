@@ -64,7 +64,7 @@
                 },
 
                 notify = function (map) {
-                    var 
+                    var
                         options = getOptions(),
                         iconClass = map.iconClass || options.iconClass;
 
@@ -73,7 +73,7 @@
                         iconClass = map.optionsOverride.iconClass || iconClass;
                     }
 
-                    var 
+                    var
                         intervalId = null,
                         $container = getContainer(options),
                         $toastElement = $('<div/>'),
@@ -167,13 +167,7 @@
                 clear = function ($toastElement) {
                     var options = getOptions();
                     var $container = $('#' + options.containerId);
-                    if ($toastElement) { //Fade out a single notification
-                        if ($(':focus', $toastElement).length > 0) {
-                            return;
-                        }
-                        var fade = function (callback) {
-                            return $toastElement.fadeOut(options.fadeOut, callback);
-                        };
+                    if ($toastElement && $(':focus', $toastElement).length === 0) {
                         var removeToast = function () {
                             if ($toastElement.is(':visible')) {
                                 return;
@@ -183,7 +177,7 @@
                                 $container.remove();
                             }
                         };
-                        fade(removeToast);
+                        $toastElement.fadeOut(options.fadeOut, removeToast);
                         return;
                     }
                     if ($container.length) {
@@ -192,15 +186,15 @@
                         });
                     }
                 };
-                return {
-                    clear: clear,
-                    error: error,
-                    info: info,
-                    options: {},
-                    success: success,
-                    version: '1.1.1',
-                    warning: warning
-                };
+            return {
+                clear: clear,
+                error: error,
+                info: info,
+                options: {},
+                success: success,
+                version: '1.1.2',
+                warning: warning
+            };
         })();
         return toastr;
     });
