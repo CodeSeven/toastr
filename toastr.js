@@ -64,7 +64,7 @@
                 },
 
                 notify = function (map) {
-                    var 
+                    var
                         options = getOptions(),
                         iconClass = map.iconClass || options.iconClass;
 
@@ -73,7 +73,7 @@
                         iconClass = map.optionsOverride.iconClass || iconClass;
                     }
 
-                    var 
+                    var
                         intervalId = null,
                         $container = getContainer(options),
                         $toastElement = $('<div/>'),
@@ -164,23 +164,35 @@
                     });
                 },
 
-
-            clear = function () {
-                var options = getOptions();
-                var $container = $('#' + options.containerId);
-                if ($container.length) {
-                    $container.fadeOut(options.fadeOut, function () {
-                        $container.remove();
-                    });
-                }
-            };
+                clear = function ($toastElement) {
+                    var options = getOptions();
+                    var $container = $('#' + options.containerId);
+                    if ($toastElement && $(':focus', $toastElement).length === 0) {
+                        var removeToast = function () {
+                            if ($toastElement.is(':visible')) {
+                                return;
+                            }
+                            $toastElement.remove();
+                            if ($container.children().length === 0) {
+                                $container.remove();
+                            }
+                        };
+                        $toastElement.fadeOut(options.fadeOut, removeToast);
+                        return;
+                    }
+                    if ($container.length) {
+                        $container.fadeOut(options.fadeOut, function () {
+                            $container.remove();
+                        });
+                    }
+                };
             return {
                 clear: clear,
                 error: error,
                 info: info,
                 options: {},
                 success: success,
-                version: '1.1.1',
+                version: '1.1.2',
                 warning: warning
             };
         })();

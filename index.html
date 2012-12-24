@@ -90,6 +90,7 @@
 				<div class="row span11">
 					<button type="button" class="btn btn-primary" id="showtoast">Show Toast</button>                
                     <button type="button" class="btn btn-danger" id="cleartoasts">Clear Toasts</button> 
+                    <button type="button" class="btn btn-danger" id="clearlasttoast">Clear Last Toast</button> 
 				</div>
 			</div>
 		</section>
@@ -111,6 +112,7 @@
 		        var
 					i = -1,
 					toastCount = 0,
+		            $toastlast,
 					getMessage = function() {
 						var msgs = ['My name is Inigo Montoya. You killed my father. Prepare to die!',
 							'<div><input class="input-small" value="textbox"/>&nbsp;<a href="http://johnpapa.net" target="_blank">This is a hyperlink</a></div><div><button type="button" id="okBtn" class="btn btn-primary">Close me</button><button type="button" id="surpriseBtn" class="btn" style="margin: 0 8px 0 8px">Surprise me</button></div>',
@@ -167,6 +169,7 @@
 					}
 
 					var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+		            $toastlast = $toast;
 					if ($toast.find('#okBtn').length) {
 					    $toast.delegate('#okBtn', 'click', function () {
 					        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
@@ -179,9 +182,12 @@
 					    });
 					}
 
-					$('#cleartoasts').click(function() {
-					    toastr.clear();
-					});
+		            $('#clearlasttoast').click(function() {
+		                toastr.clear($toastlast);
+		            });
+		        });
+		        $('#cleartoasts').click(function () {
+		            toastr.clear();
 		        });
 		    })
 		</script>
