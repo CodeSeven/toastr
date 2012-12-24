@@ -164,25 +164,43 @@
                     });
                 },
 
-
-            clear = function () {
-                var options = getOptions();
-                var $container = $('#' + options.containerId);
-                if ($container.length) {
-                    $container.fadeOut(options.fadeOut, function () {
-                        $container.remove();
-                    });
-                }
-            };
-            return {
-                clear: clear,
-                error: error,
-                info: info,
-                options: {},
-                success: success,
-                version: '1.1.1',
-                warning: warning
-            };
+                clear = function ($toastElement) {
+                    var options = getOptions();
+                    var $container = $('#' + options.containerId);
+                    if ($toastElement) { //Fade out a single notification
+                        if ($(':focus', $toastElement).length > 0) {
+                            return;
+                        }
+                        var fade = function (callback) {
+                            return $toastElement.fadeOut(options.fadeOut, callback);
+                        };
+                        var removeToast = function () {
+                            if ($toastElement.is(':visible')) {
+                                return;
+                            }
+                            $toastElement.remove();
+                            if ($container.children().length === 0) {
+                                $container.remove();
+                            }
+                        };
+                        fade(removeToast);
+                        return;
+                    }
+                    if ($container.length) {
+                        $container.fadeOut(options.fadeOut, function () {
+                            $container.remove();
+                        });
+                    }
+                };
+                return {
+                    clear: clear,
+                    error: error,
+                    info: info,
+                    options: {},
+                    success: success,
+                    version: '1.1.1',
+                    warning: warning
+                };
         })();
         return toastr;
     });
