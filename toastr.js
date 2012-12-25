@@ -26,7 +26,8 @@
                     positionClass: 'toast-top-right',
                     timeOut: 5000, // Set timeOut to 0 to make it sticky
                     titleClass: 'toast-title',
-                    messageClass: 'toast-message'
+                    messageClass: 'toast-message',
+                    closeButton : false
                 },
 
                 error = function (message, title, optionsOverride) {
@@ -66,7 +67,11 @@
                 notify = function (map) {
                     var
                         options = getOptions(),
-                        iconClass = map.iconClass || options.iconClass;
+                        iconClass = map.iconClass || options.iconClass,
+                        $closeBtn,
+                        closeBtn = options.closeButton,
+        			    closeBtnIsString = typeof closeBtn === 'string',        			    
+        			    closeTitle = closeBtnIsString ? closeBtn : 'Close Notification';
 
                     if (typeof (map.optionsOverride) !== 'undefined') {
                         options = $.extend(options, map.optionsOverride);
@@ -79,6 +84,7 @@
                         $toastElement = $('<div/>'),
                         $titleElement = $('<div/>'),
                         $messageElement = $('<div/>'),
+						$closeBtnElement = $('<span/>'),
                         response = { options: options, map: map };
 
                     if (map.iconClass) {
@@ -89,6 +95,36 @@
                         $titleElement.append(map.title).addClass(options.titleClass);
                         $toastElement.append($titleElement);
                     }
+					
+					if (closeBtn) {
+                		
+						//if user pass a jquery button to options.closeButton attach it else create a new one
+                		if (closeBtn.jquery) {
+                			$closeBtn = closeBtn;
+                		} else {
+						    //create a jquery button
+							$closeBtn = $('<a />', {
+											'title': closeTitle,
+											'html': '&nbsp;&nbsp;'
+                			});	
+                			
+                		}
+                		
+						$closeBtnElement.append($closeBtn).addClass('toast-close');
+						//if title is present attach the button to title else attach it to toastElement
+						if (map.title) {
+						  $titleElement.append($closeBtnElement); 
+						} else {
+						  $toastElement.append($closeBtnElement);
+						}
+						
+                		$closeBtnElement.click(function(e){
+							fadeAway();
+							e.preventDefault();
+							//stopPropagation usefull to prevent options.onclick being fired 
+							e.stopPropagation();
+                		});
+                	}
 
                     if (map.message) {
                         $messageElement.append(map.message).addClass(options.messageClass);
@@ -125,11 +161,17 @@
                     $toastElement.hide();
                     $container.prepend($toastElement);
                     $toastElement.fadeIn(options.fadeIn);
-                    if (options.timeOut > 0) {
+					
+					//if user require closeButton make toastr sticky
+                    if (options.timeOut > 0 && !closeBtn) {
                         intervalId = setTimeout(fadeAway, options.timeOut);
                     }
 
-                    $toastElement.hover(stickAround, delayedFadeAway);
+					//prevent binding stickAround hover if closeButton required
+                    if (!options.closeButton) {
+                    	$toastElement.hover(stickAround, delayedFadeAway);
+                	} 
+					
                     if (!options.onclick && options.tapToDismiss) {
                         $toastElement.click(fadeAway);
                     }
