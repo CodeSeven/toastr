@@ -5,7 +5,7 @@
 1.1.2
 
 ## Demo
-Demo can be found at http://CodeSeven.github.com/toastr
+Demo can be found at http://joeyramone76.github.com/toastr
 
 ## NuGet Gallery
 http://nuget.org/packages/toastr
