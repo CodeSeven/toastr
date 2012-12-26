@@ -13,7 +13,7 @@ http://nuget.org/packages/toastr
 ## Quick start
 
 ###3 Easy Steps
-For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
+For other API calls, see the [demo](http://joeyramone76.github.com/toastr).
 
 1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>`
 
