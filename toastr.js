@@ -103,7 +103,7 @@
                 			$closeBtn = closeBtn;
                 		} else {
 						    //create a jquery button
-							$closeBtn = $('<a />', {
+							$closeBtn = $('<span />', {
 											'title': closeTitle,
 											'html': '&nbsp;&nbsp;'
                 			});	
@@ -111,12 +111,7 @@
                 		}
                 		
 						$closeBtnElement.append($closeBtn).addClass('toast-close');
-						//if title is present attach the button to title else attach it to toastElement
-						if (map.title) {
-						  $titleElement.append($closeBtnElement); 
-						} else {
-						  $toastElement.append($closeBtnElement);
-						}
+						$toastElement.prepend($closeBtnElement);
 						
                 		$closeBtnElement.click(function(e){
 							fadeAway();
@@ -163,7 +158,7 @@
                     $toastElement.fadeIn(options.fadeIn);
 					
 					//if user require closeButton make toastr sticky
-                    if (options.timeOut > 0 && !closeBtn) {
+                    if (options.timeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.timeOut);
                     }
 

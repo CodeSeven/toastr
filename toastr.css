@@ -103,7 +103,7 @@
 
 .toast-close {
 	float: right;
-	display: inline-block;
+	display: block;
 	width: 18px;
 	height: 18px;
 	padding:0px 4px;
