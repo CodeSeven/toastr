@@ -157,7 +157,7 @@
                     $container.prepend($toastElement);
                     $toastElement.fadeIn(options.fadeIn);
 					
-					//if user require closeButton make toastr sticky
+					
                     if (options.timeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.timeOut);
                     }
