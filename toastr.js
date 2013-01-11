@@ -164,6 +164,10 @@
                     });
                 },
 
+                clearAll = function (optionsOverride) {
+                    return clear(undefined, optionsOverride);
+                },
+
                 clear = function ($toastElement, optionsOverride) {
                     var options = getOptions();
                     if (typeof (optionsOverride) !== 'undefined') {
@@ -192,6 +196,7 @@
                 };
             return {
                 clear: clear,
+                clearAll: clearAll,
                 error: error,
                 info: info,
                 options: {},
