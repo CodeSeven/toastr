@@ -164,8 +164,12 @@
                     });
                 },
 
-                clear = function ($toastElement) {
+                clear = function ($toastElement, optionsOverride) {
                     var options = getOptions();
+                    if (typeof (optionsOverride) !== 'undefined') {
+                        options = $.extend(options, optionsOverride);
+                    }
+
                     var $container = $('#' + options.containerId);
                     if ($toastElement && $(':focus', $toastElement).length === 0) {
                         var removeToast = function () {
