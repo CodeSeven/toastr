@@ -167,8 +167,16 @@
                     });
                 },
 
-                clear = function ($toastElement) {
+                clearAll = function (optionsOverride) {
+                    return clear(undefined, optionsOverride);
+                },
+
+                clear = function ($toastElement, optionsOverride) {
                     var options = getOptions();
+                    if (typeof (optionsOverride) !== 'undefined') {
+                        options = $.extend(options, optionsOverride);
+                    }
+
                     var $container = $('#' + options.containerId);
                     if ($toastElement && $(':focus', $toastElement).length === 0) {
                         var removeToast = function () {
@@ -191,11 +199,12 @@
                 };
             return {
                 clear: clear,
+                clearAll: clearAll,
                 error: error,
                 info: info,
                 options: {},
                 success: success,
-                version: '1.1.2',
+                version: '1.1.2.1',
                 warning: warning
             };
         })();
