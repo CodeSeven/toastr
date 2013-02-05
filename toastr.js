@@ -195,7 +195,7 @@
                 info: info,
                 options: {},
                 success: success,
-                version: '1.1.3',
+                version: '1.1.4.2',
                 warning: warning
             };
         })();
