@@ -87,6 +87,7 @@
                             
 						</div>
 					</div>
+
 				</div>
 
 				<div class="row span11">
@@ -94,6 +95,10 @@
                     <button type="button" class="btn btn-danger" id="cleartoasts">Clear Toasts</button> 
                     <button type="button" class="btn btn-danger" id="clearlasttoast">Clear Last Toast</button> 
 				</div>
+
+                <div class="span11 row">
+                  <pre id='toastr_options'></pre>
+                </div>
 			</div>
 		</section>
 
@@ -107,6 +112,8 @@
 		</footer>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+        <script src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+
 		<script src="toastr.js"></script>
 		
 		<script type="text/javascript">
@@ -169,6 +176,15 @@
 					if (!msg) {
 						msg = getMessage();
 					}
+
+                    $("#toastr_options").text("\nCommand: toastr["
+                        + shortCutFunction
+                        + "](\""
+                        + msg
+                        + (title ? "\", \"" + title : '')
+                        + "\")\n\ntoastr.options: "
+                        + JSON.stringify(toastr.options, null, 2)
+                        );
 
 					var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
 		            $toastlast = $toast;
