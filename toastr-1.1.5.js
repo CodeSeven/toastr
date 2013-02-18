@@ -29,7 +29,8 @@
                     positionClass: 'toast-top-right',
                     timeOut: 5000, // Set timeOut to 0 to make it sticky
                     titleClass: 'toast-title',
-                    messageClass: 'toast-message'
+                    messageClass: 'toast-message',
+                    target: $('body')
                 },
 
                 error = function (message, title, optionsOverride) {
@@ -49,7 +50,7 @@
                     $container = $('<div/>')
                         .attr('id', options.containerId)
                         .addClass(options.positionClass);
-                    $container.appendTo($('body'));
+                    $container.appendTo($(options.target));
                     return $container;
                 },
 
