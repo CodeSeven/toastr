@@ -1,0 +1,7 @@
+{
+  "name": "toastr",
+  "main": ["toastr-1.1.5.js", "toastr.css"],
+  "version": "1.1.5",
+  "dependencies": {
+  }
+}
