@@ -170,7 +170,7 @@
 
                 clear = function ($toastElement) {
                     var options = getOptions();
-                    var $container = getContainer();
+                    var $container = getContainer(options);
                     if ($toastElement && $(':focus', $toastElement).length === 0) {
                         var removeToast = function () {
                             if ($toastElement.is(':visible')) {
