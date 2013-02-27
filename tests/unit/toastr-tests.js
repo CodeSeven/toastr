@@ -31,9 +31,11 @@
         fadeIn: 0,
         debug: false
     }
+
+    var delay = toastr.options.timeOut + 500;
 	
-    // This must go first
-    module('clear/empty')
+    // 'Clears' must go first
+    module('clear')
     asyncTest('clear - show 3 toasts, clear the 2nd', 1, function () {
         //Arrange
         var $toast = [];
@@ -45,6 +47,8 @@
         toastr.clear($toast[1]);
         //Assert
         setTimeout(function () {
+            //debugger;
+            //console.log($container.children().length);
             ok($container && $container.children().length === 2);
             //Teardown
             resetContainer();
@@ -52,7 +56,7 @@
         }, 1000);
     })
 
-    asyncTest('clear - show 3 toasts, clear all 3', 1, function () {
+    asyncTest('clear - show 3 toasts, clear all 3, 0 left', 1, function () {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -63,12 +67,32 @@
         toastr.clear();
         //Assert
         setTimeout(function () {
-            console.log($container.children().length);
+            //console.log($container.children().length);
             ok($container && $container.children().length === 0);
             //Teardown
             resetContainer();
             start();
-        }, 1000);
+        }, delay);
+    })
+
+
+    asyncTest('clear and show - show 2 toasts, clear both, then show 1 more', 2, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        var $container = toastr.getContainer();
+        toastr.clear();
+        //Act
+        setTimeout(function () {
+            $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+            //Assert
+            equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear')
+            ok($toast[2].find('div.toast-title').find(':visible'), 'Toast after a clear is visible')
+            //Teardown
+            resetContainer();
+            start();
+        }, delay);
     })
 
 

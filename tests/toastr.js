@@ -56,9 +56,7 @@
                     var
                         options = getOptions(),
                         iconClass = map.iconClass || options.iconClass;
-
-                    if (!$container) { getContainer(options) };
-
+                    
                     if (typeof (map.optionsOverride) !== 'undefined') {
                         options = $.extend(options, map.optionsOverride);
                         iconClass = map.optionsOverride.iconClass || iconClass;
@@ -66,6 +64,7 @@
 
                     var
                         intervalId = null,
+                        $container = getContainer(options),
                         $toastElement = $('<div/>'),
                         $titleElement = $('<div/>'),
                         $messageElement = $('<div/>'),
@@ -171,7 +170,7 @@
                 info: info,
                 options: {},
                 success: success,
-                version: '1.2.0',
+                version: '1.2.1',
                 warning: warning
             };
 
