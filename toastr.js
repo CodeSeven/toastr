@@ -31,7 +31,7 @@
                     timeOut: 5000, // Set timeOut to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
-                    target: $('body')
+                    target: 'body'
                 },
 
                 error = function (message, title, optionsOverride) {
@@ -56,7 +56,7 @@
                     var
                         options = getOptions(),
                         iconClass = map.iconClass || options.iconClass;
-                    
+
                     if (typeof (map.optionsOverride) !== 'undefined') {
                         options = $.extend(options, map.optionsOverride);
                         iconClass = map.optionsOverride.iconClass || iconClass;
@@ -170,7 +170,7 @@
                 info: info,
                 options: {},
                 success: success,
-                version: '1.2.1',
+                version: '1.2.2',
                 warning: warning
             };
 
