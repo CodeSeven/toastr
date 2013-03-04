@@ -1,6 +1,6 @@
 /// <reference path="../../toastr.js" />
 /// <reference path="../qunit/qunit.js" />
-(function () {
+$(function () {
     var
 		iconClasses = {
 		    error: 'toast-error',
@@ -329,4 +329,4 @@
 	    toastr.clear();
 	}
 
-})()
+});
