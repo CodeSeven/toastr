@@ -18,7 +18,9 @@
                     containerId: 'toast-container',
                     debug: false,
                     fadeIn: 300,
+                    onFadeIn: undefined,
                     fadeOut: 1000,
+                    onFadeOut: undefined,
                     extendedTimeOut: 1000,
                     iconClasses: {
                         error: 'toast-error',
@@ -86,7 +88,7 @@
 
                     $toastElement.hide();
                     $container.prepend($toastElement);
-                    $toastElement.fadeIn(options.fadeIn);
+                    $toastElement.fadeIn(options.fadeIn, options.onFadeIn);
                     if (options.timeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.timeOut);
                     }
@@ -114,6 +116,9 @@
                         }
                         return $toastElement.fadeOut(options.fadeOut, function () {
                             removeToast($toastElement);
+                            if (options.onFadeOut) {
+                                options.onFadeOut();
+                            }
                         });
                     }
 

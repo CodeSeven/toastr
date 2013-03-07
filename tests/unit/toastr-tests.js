@@ -256,6 +256,41 @@
 		clearContainerChildren();
 	})
 
+    module('event')
+    test('event - onFadeIn is executed', 1, function () {
+        // Arrange
+        var run, onFadeIn
+        run = false
+        onFadeIn = function () { run = true; }
+        toastr.options.onFadeIn = onFadeIn
+        // Act
+        var $toast = toastr.success(sampleMsg, sampleTitle)
+        // Assert
+        ok(run)
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    })
+
+    asyncTest('event - onFadeOut is executed', 1, function () {
+        //Arrange
+        var run, onFadeIn
+        run = false
+        onFadeOut = function () { run = true; }
+        toastr.options.onFadeOut = onFadeOut
+        toastr.options.timeOut = 1
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle)
+        setTimeout(function () {
+            // Assert
+            ok(run)
+            //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, 2);
+    })
+
     // These must go last
 	module('positioning')
     test('Container - position top-right', 1, function () {
