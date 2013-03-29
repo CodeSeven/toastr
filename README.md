@@ -2,7 +2,7 @@
 **toastr** is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
 
 ## Current Version
-1.2.2
+1.2.3-pre
 
 ## Demo
 Demo can be found at http://CodeSeven.github.com/toastr
@@ -21,21 +21,21 @@ For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
 
 3. use toastr to display a toast for info, success, warning or error
 
-        // Display an info toast with no title
-        toastr.info('Are you the 6 fingered man?')
+		// Display an info toast with no title
+		toastr.info('Are you the 6 fingered man?')
 
 ### Other Options
-    // Display a warning toast, with no title
-    toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!')
-    
-    // Display a success toast, with a title
-    toastr.success('Have fun storming the castle!', 'Miracle Max Says')
-    
-    // Display an error toast, with a title
-    toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
+	// Display a warning toast, with no title
+	toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!')
+	
+	// Display a success toast, with a title
+	toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+	
+	// Display an error toast, with a title
+	toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
 		
-    // Clears the current list of toasts
-    toastr.clear()
+	// Clears the current list of toasts
+	toastr.clear()
 
 ## Authors
 **Hans Fjällemark**
