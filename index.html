@@ -94,6 +94,10 @@
                     <button type="button" class="btn btn-danger" id="cleartoasts">Clear Toasts</button> 
                     <button type="button" class="btn btn-danger" id="clearlasttoast">Clear Last Toast</button> 
 				</div>
+				
+				<div class="span11 row" style='margin-top: 25px;'>
+					<pre id='toastrOptions'></pre>
+				</div>
 			</div>
 		</section>
 
@@ -170,6 +174,15 @@
 						msg = getMessage();
 					}
 
+					$("#toastrOptions").text("Command: toastr["
+                        + shortCutFunction
+                        + "](\""
+                        + msg
+                        + (title ? "\", \"" + title : '')
+                        + "\")\n\ntoastr.options: "
+                        + JSON.stringify(toastr.options, null, 2)
+					);
+					
 					var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
 		            $toastlast = $toast;
 					if ($toast.find('#okBtn').length) {
