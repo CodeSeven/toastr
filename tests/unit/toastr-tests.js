@@ -96,6 +96,43 @@
     })
 
 
+    asyncTest('clear and show - clear removes toast container', 1, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        var $container = toastr.getContainer();
+        toastr.clear();
+        //Act
+        setTimeout(function () {
+            //Assert
+            equal($(selectors.container).length, 0, 'Toast container does not exist')
+            //Teardown
+            resetContainer();
+            start();
+        }, delay);
+    })
+
+
+    asyncTest('clear and show - after clear new toast creates container', 1, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        var $container = toastr.getContainer();
+        toastr.clear();
+        //Act
+        setTimeout(function () {
+            $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+            //Assert
+            equal($(selectors.container).find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear')
+            //Teardown
+            resetContainer();
+            start();
+        }, delay);
+    })
+
+
     module('info')
     test('info - pass title and message', 3, function () {
 	    //Arrange
@@ -255,6 +292,21 @@
 		$toast.remove();
 		clearContainerChildren();
 	})
+
+	module('options')
+    test('Override - pass position class', 1, function () {
+		//Arrange
+        resetContainer();
+		toastr.options.positionClass = positionClasses.topRight
+		//Act
+		var $toast = toastr.success(sampleMsg, sampleTitle, {positionClass: positionClasses.bottomRight})
+		var $container = toastr.getContainer(); //$(selectors.container)
+		//Assert
+		ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right')
+		//Teardown
+		$toast.remove()
+		resetContainer();
+    })
 
     // These must go last
 	module('positioning')
