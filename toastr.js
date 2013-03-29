@@ -64,9 +64,9 @@
                         iconClass = map.optionsOverride.iconClass || iconClass;
                     }
 
+                    $container = getContainer(options);
                     var
                         intervalId = null,
-                        $container = getContainer(options),
                         $toastElement = $('<div/>'),
                         $titleElement = $('<div/>'),
                         $messageElement = $('<div/>'),
@@ -154,7 +154,9 @@
 
                 clear = function ($toastElement) {
                     var options = getOptions();
-                    if (!$container) { getContainer(options) };
+                    if (!$container) {
+                        getContainer(options);
+                    }
                     if ($toastElement && $(':focus', $toastElement).length === 0) {
                         $toastElement.fadeOut(options.fadeOut, function () {
                             removeToast($toastElement);
@@ -175,7 +177,7 @@
                 info: info,
                 options: {},
                 success: success,
-                version: '1.2.2',
+                version: '1.2.3',
                 warning: warning
             };
 
@@ -185,21 +187,20 @@
 
             function getContainer(options) {
                 if (!options) { options = getOptions(); }
-                container = $('#' + options.containerId);
-                if (container.children().length) {
-                    return container;
+                $container = $('#' + options.containerId);
+                if ($container.children().length) {
+                    return $container;
                 }
-                container = $('<div/>')
+                $container = $('<div/>')
                     .attr('id', options.containerId)
                     .addClass(options.positionClass);
-                container.appendTo($(options.target));
-                $container = container;
-                return container;
-            };
+                $container.appendTo($(options.target));
+                return $container;
+            }
 
             function getOptions() {
                 return $.extend({}, defaults, toastr.options);
-            };
+            }
 
             function removeToast($toastElement) {
                 if (!$container) { $container = getContainer(); }
