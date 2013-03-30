@@ -1,28 +1,27 @@
 /// <reference path="../../toastr.js" />
 /// <reference path="../qunit/qunit.js" />
-(function () {
-    var
-		iconClasses = {
-		    error: 'toast-error',
-		    info: 'toast-info',
-		    success: 'toast-success',
-		    warning: 'toast-warning'
-		},
-		positionClasses = {
-		    topRight: 'toast-top-right',
-		    bottomRight: 'toast-bottom-right',
-		    bottomLeft: 'toast-bottom-left',
-		    topLeft: 'toast-top-left'
-		},
-		sampleMsg = 'I don\'t think they really exist',
-		sampleTitle = 'ROUS',
-		selectors = {
-		    container: 'div#toast-container',
-		    toastInfo: 'div#toast-container > div.toast-info',
-		    toastWarning: 'div#toast-container > div.toast-success',
-		    toastError: 'div#toast-container > div.toast-error',
-		    toastSuccess: 'div#toast-container > div.toast-success'
-		};
+(function() {
+    var iconClasses = {
+        error: 'toast-error',
+        info: 'toast-info',
+        success: 'toast-success',
+        warning: 'toast-warning'
+    },
+        positionClasses = {
+            topRight: 'toast-top-right',
+            bottomRight: 'toast-bottom-right',
+            bottomLeft: 'toast-bottom-left',
+            topLeft: 'toast-top-left'
+        },
+        sampleMsg = 'I don\'t think they really exist',
+        sampleTitle = 'ROUS',
+        selectors = {
+            container: 'div#toast-container',
+            toastInfo: 'div#toast-container > div.toast-info',
+            toastWarning: 'div#toast-container > div.toast-success',
+            toastError: 'div#toast-container > div.toast-error',
+            toastSuccess: 'div#toast-container > div.toast-success'
+        };
 
     toastr.options = {
         timeOut: 2000,
@@ -32,10 +31,10 @@
         debug: false
     };
     var delay = toastr.options.timeOut + 500;
-	
+
     // 'Clears' must go first
     module('clear');
-    asyncTest('clear - show 3 toasts, clear the 2nd', 1, function () {
+    asyncTest('clear - show 3 toasts, clear the 2nd', 1, function() {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -45,7 +44,7 @@
         //Act
         toastr.clear($toast[1]);
         //Assert
-        setTimeout(function () {
+        setTimeout(function() {
             //debugger;
             //console.log($container.children().length);
             ok($container && $container.children().length === 2);
@@ -54,7 +53,7 @@
             start();
         }, 1000);
     });
-    asyncTest('clear - show 3 toasts, clear all 3, 0 left', 1, function () {
+    asyncTest('clear - show 3 toasts, clear all 3, 0 left', 1, function() {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -64,7 +63,7 @@
         //Act
         toastr.clear();
         //Assert
-        setTimeout(function () {
+        setTimeout(function() {
             //console.log($container.children().length);
             ok($container && $container.children().length === 0);
             //Teardown
@@ -72,7 +71,7 @@
             start();
         }, delay);
     });
-    asyncTest('clear and show - show 2 toasts, clear both, then show 1 more', 2, function () {
+    asyncTest('clear and show - show 2 toasts, clear both, then show 1 more', 2, function() {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -80,7 +79,7 @@
         var $container = toastr.getContainer();
         toastr.clear();
         //Act
-        setTimeout(function () {
+        setTimeout(function() {
             $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
             equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear');
@@ -89,7 +88,7 @@
             start();
         }, delay);
     });
-    asyncTest('clear and show - clear removes toast container', 1, function () {
+    asyncTest('clear and show - clear removes toast container', 1, function() {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -97,14 +96,14 @@
         var $container = toastr.getContainer();
         toastr.clear();
         //Act
-        setTimeout(function () {
+        setTimeout(function() {
             //Assert
             equal($(selectors.container).length, 0, 'Toast container does not exist'); //Teardown
             resetContainer();
             start();
         }, delay);
     });
-    asyncTest('clear and show - after clear new toast creates container', 1, function () {
+    asyncTest('clear and show - after clear new toast creates container', 1, function() {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -112,7 +111,7 @@
         var $container = toastr.getContainer();
         toastr.clear();
         //Act
-        setTimeout(function () {
+        setTimeout(function() {
             $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
             equal($(selectors.container).find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear'); //Teardown
@@ -121,136 +120,135 @@
         }, delay);
     });
     module('info');
-    test('info - pass title and message', 3, function () {
-	    //Arrange
-	    //Act
-	    var $toast = toastr.info(sampleMsg, sampleTitle); //Assert
-	    equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
+    test('info - pass title and message', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.info(sampleMsg, sampleTitle); //Assert
+        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.info), 'Sets info icon'); //Teardown
-	    $toast.remove();
-	    clearContainerChildren();
-    });
-    test('info - pass message, but no title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.info(sampleMsg); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.info), 'Sets info icon'); //Teardown
-		$toast.remove();
+        $toast.remove();
         clearContainerChildren();
-	});
-    test('info - pass no message nor title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.info(); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets null title');
+    });
+    test('info - pass message, but no title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.info(sampleMsg); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
+        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        ok($toast.hasClass(iconClasses.info), 'Sets info icon'); //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('info - pass no message nor title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.info(); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
         equal($toast.find('div.toast-message').html(), null, 'Sets message');
         ok($toast.hasClass(iconClasses.info), 'Sets info icon'); //Teardown
-		$toast.remove();
+        $toast.remove();
         clearContainerChildren();
-	});
+    });
     module('warning');
-    test('warning - pass message and title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.warning(sampleMsg, sampleTitle); //Assert
-		equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
+    test('warning - pass message and title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.warning(sampleMsg, sampleTitle); //Assert
+        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.warning), 'Sets warning icon'); //Teardown
-		$toast.remove();
+        $toast.remove();
         clearContainerChildren();
     });
-    test('warning - pass message, but no title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.warning(sampleMsg); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+    test('warning - pass message, but no title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.warning(sampleMsg); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.warning), 'Sets warning icon'); //Teardown
-		$toast.remove();
+        $toast.remove();
         clearContainerChildren();
-	});
-    test('warning - no message nor title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.warning(''); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets null title');
+    });
+    test('warning - no message nor title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.warning(''); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
         equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
         ok($toast.hasClass(iconClasses.warning), 'Sets warning icon'); //Teardown
-		$toast.remove();
-		clearContainerChildren();
-	});
+        $toast.remove();
+        clearContainerChildren();
+    });
     module('error');
-    test('error - pass message and title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.error(sampleMsg, sampleTitle); //Assert
-		equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
+    test('error - pass message and title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.error(sampleMsg, sampleTitle); //Assert
+        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
-		$toast.remove();
-		clearContainerChildren();
-	});
-    test('error - pass message, but no title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.error(sampleMsg); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
-		$toast.remove();
-		clearContainerChildren();
-	});
-    test('error - no message nor title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.error(''); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
-        ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
-		$toast.remove();
-		clearContainerChildren();
-	});
-    module('success');
-    test('success - pass message and title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.success(sampleMsg, sampleTitle); //Assert
-		equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
-		$toast.remove();
-		clearContainerChildren();
+        $toast.remove();
+        clearContainerChildren();
     });
-    test('success - pass message, but no title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.success(sampleMsg); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+    test('error - pass message, but no title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.error(sampleMsg); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('error - no message nor title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.error(''); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
+        ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    module('success');
+    test('success - pass message and title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle); //Assert
+        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
-		$toast.remove();
-		clearContainerChildren();
-	});
-    test('success - no message nor title', 3, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.success(''); //Assert
-		equal($toast.find('div.toast-title').length, 0, 'Sets null title');
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('success - pass message, but no title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.success(sampleMsg); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('success - no message nor title', 3, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.success(''); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
         equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
         ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
-		$toast.remove();
-		clearContainerChildren();
-	})
-
+        $toast.remove();
+        clearContainerChildren();
+    });
     module('event');
-    test('event - onFadeIn is executed', 1, function () {
+    test('event - onFadeIn is executed', 1, function() {
         // Arrange
         var run, onFadeIn;
         run = false;
-        onFadeIn = function () { run = true; };
+        onFadeIn = function() { run = true; };
         toastr.options.onFadeIn = onFadeIn;
         // Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
@@ -261,118 +259,115 @@
         clearContainerChildren();
     });
 
-    asyncTest('event - onFadeOut is executed', 1, function () {
+    asyncTest('event - onFadeOut is executed', 1, function() {
         //Arrange
         var run, onFadeOut;
         run = false;
-        onFadeOut = function () { run = true; };
+        onFadeOut = function() { run = true; };
         toastr.options.onFadeOut = onFadeOut;
         toastr.options.timeOut = 1;
         //Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
-        setTimeout(function () {
+        setTimeout(function() {
             // Assert
-            ok(run)
-            //Teardown
+            ok(run); //Teardown
             $toast.remove();
             clearContainerChildren();
             start();
         }, 2);
     });
 
-    asyncTest('event - onFadeIn and onFadeOut area both executeed', 2, function () {
+    asyncTest('event - onFadeIn and onFadeOut area both executeed', 2, function() {
         //Arrange
         var onFadeInRun, onFadeIn, onFadeOutRun, onFadeOut;
         onFadeInRun = false;
         onFadeOutRun = false;
-        onFadeIn = function () { onFadeInRun = true; };
-        onFadeOut = function () { onFadeOutRun = true; };
-        toastr.options.onFadeIn = onFadeIn
-        toastr.options.onFadeOut = onFadeOut
-        toastr.options.timeOut = 1
-        //Act
-        var $toast = toastr.success(sampleMsg, sampleTitle)
-        setTimeout(function () {
+        onFadeIn = function() { onFadeInRun = true; };
+        onFadeOut = function() { onFadeOutRun = true; };
+        toastr.options.onFadeIn = onFadeIn;
+        toastr.options.onFadeOut = onFadeOut;
+        toastr.options.timeOut = 1; //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        setTimeout(function() {
             // Assert
-            ok(onFadeInRun)
-            ok(onFadeOutRun)
-            //Teardown
+            ok(onFadeInRun);
+            ok(onFadeOutRun); //Teardown
             $toast.remove();
             clearContainerChildren();
             start();
         }, 2);
     });
 
-    test('event - message appears when no fadeIn or fadeOut function provided', 1, function () {
-		//Arrange
-		//Act
-		var $toast = toastr.success(sampleMsg, sampleTitle); 
-		//Assert
-        ok($toast.hasClass(iconClasses.success), 'Sets success icon'); 
+    test('event - message appears when no fadeIn or fadeOut function provided', 1, function() {
+        //Arrange
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        //Assert
+        ok($toast.hasClass(iconClasses.success), 'Sets success icon');
         //Teardown
-		$toast.remove();
-		clearContainerChildren();
+        $toast.remove();
+        clearContainerChildren();
     });
 
     // These must go last
-	module('positioning');
-    test('Container - position top-right', 1, function () {
-		//Arrange
+    module('positioning');
+    test('Container - position top-right', 1, function() {
+        //Arrange
         resetContainer();
-		toastr.options.positionClass = positionClasses.topRight; //Act
-		var $toast = toastr.success(sampleMsg);
+        toastr.options.positionClass = positionClasses.topRight; //Act
+        var $toast = toastr.success(sampleMsg);
         var $container = toastr.getContainer(); //$(selectors.container)
-		//Assert
-		ok($container.hasClass(positionClasses.topRight), 'Has position top right'); //Teardown
-		$toast.remove();
+        //Assert
+        ok($container.hasClass(positionClasses.topRight), 'Has position top right'); //Teardown
+        $toast.remove();
         resetContainer();
     });
-    test('Container - position bottom-right', 1, function () {
-		//Arrange
-	    resetContainer();
-		toastr.options.positionClass = positionClasses.bottomRight; //Act
-		var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); //$(selectors.container)
-		//Assert
-		ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right'); //Teardown
-		$toast.remove();
+    test('Container - position bottom-right', 1, function() {
+        //Arrange
         resetContainer();
-	});
-    test('Container - position bottom-left', 1, function () {
-		//Arrange
-	    resetContainer();
-	    //$(selectors.container).remove()
-		toastr.options.positionClass = positionClasses.bottomLeft; //Act
-		var $toast = toastr.success(sampleMsg);
+        toastr.options.positionClass = positionClasses.bottomRight; //Act
+        var $toast = toastr.success(sampleMsg);
         var $container = toastr.getContainer(); //$(selectors.container)
-		//Assert
-		ok($container.hasClass(positionClasses.bottomLeft), 'Has position bottom left'); //Teardown
-		$toast.remove();
+        //Assert
+        ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right'); //Teardown
+        $toast.remove();
         resetContainer();
-	});
-    test('Container - position top-left', 1, function () {
-	    //Arrange
-	    resetContainer();
-		toastr.options.positionClass = positionClasses.topLeft; //Act
-		var $toast = toastr.success(sampleMsg);
+    });
+    test('Container - position bottom-left', 1, function() {
+        //Arrange
+        resetContainer();
+        //$(selectors.container).remove()
+        toastr.options.positionClass = positionClasses.bottomLeft; //Act
+        var $toast = toastr.success(sampleMsg);
         var $container = toastr.getContainer(); //$(selectors.container)
-		//Assert
-		ok($container.hasClass(positionClasses.topLeft), 'Has position top left'); //Teardown
-		$toast.remove();
+        //Assert
+        ok($container.hasClass(positionClasses.bottomLeft), 'Has position bottom left'); //Teardown
+        $toast.remove();
         resetContainer();
-	});
+    });
+    test('Container - position top-left', 1, function() {
+        //Arrange
+        resetContainer();
+        toastr.options.positionClass = positionClasses.topLeft; //Act
+        var $toast = toastr.success(sampleMsg);
+        var $container = toastr.getContainer(); //$(selectors.container)
+        //Assert
+        ok($container.hasClass(positionClasses.topLeft), 'Has position top left'); //Teardown
+        $toast.remove();
+        resetContainer();
+    });
 
     function resetContainer() {
-	    var $container = toastr.getContainer();
-	    if ($container) {
-	        $container.remove();
-	    }
-	    $(selectors.container).remove();
-	    clearContainerChildren();
+        var $container = toastr.getContainer();
+        if ($container) {
+            $container.remove();
+        }
+        $(selectors.container).remove();
+        clearContainerChildren();
     }
 
-	function clearContainerChildren() {
-	    toastr.clear();
-	}
+    function clearContainerChildren() {
+        toastr.clear();
+    }
 
-})()
+})();
