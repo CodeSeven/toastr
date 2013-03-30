@@ -243,19 +243,78 @@
         ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
 		$toast.remove();
 		clearContainerChildren();
-	});
-    module('options');
-    test('Override - pass position class', 1, function () {
+	})
+
+    module('event');
+    test('event - onFadeIn is executed', 1, function () {
+        // Arrange
+        var run, onFadeIn;
+        run = false;
+        onFadeIn = function () { run = true; };
+        toastr.options.onFadeIn = onFadeIn;
+        // Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        // Assert
+        ok(run);
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
+    asyncTest('event - onFadeOut is executed', 1, function () {
+        //Arrange
+        var run, onFadeOut;
+        run = false;
+        onFadeOut = function () { run = true; };
+        toastr.options.onFadeOut = onFadeOut;
+        toastr.options.timeOut = 1;
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        setTimeout(function () {
+            // Assert
+            ok(run)
+            //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, 2);
+    });
+
+    asyncTest('event - onFadeIn and onFadeOut area both executeed', 2, function () {
+        //Arrange
+        var onFadeInRun, onFadeIn, onFadeOutRun, onFadeOut;
+        onFadeInRun = false;
+        onFadeOutRun = false;
+        onFadeIn = function () { onFadeInRun = true; };
+        onFadeOut = function () { onFadeOutRun = true; };
+        toastr.options.onFadeIn = onFadeIn
+        toastr.options.onFadeOut = onFadeOut
+        toastr.options.timeOut = 1
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle)
+        setTimeout(function () {
+            // Assert
+            ok(onFadeInRun)
+            ok(onFadeOutRun)
+            //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, 2);
+    });
+
+    test('event - message appears when no fadeIn or fadeOut function provided', 1, function () {
 		//Arrange
-        resetContainer();
-		toastr.options.positionClass = positionClasses.topRight; //Act
-		var $toast = toastr.success(sampleMsg, sampleTitle, {positionClass: positionClasses.bottomRight});
-        var $container = toastr.getContainer(); //$(selectors.container)
+		//Act
+		var $toast = toastr.success(sampleMsg, sampleTitle); 
 		//Assert
-		ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right'); //Teardown
+        ok($toast.hasClass(iconClasses.success), 'Sets success icon'); 
+        //Teardown
 		$toast.remove();
-        resetContainer();
-    }); // These must go last
+		clearContainerChildren();
+    });
+
+    // These must go last
 	module('positioning');
     test('Container - position top-right', 1, function () {
 		//Arrange
