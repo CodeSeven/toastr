@@ -34,7 +34,7 @@
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
                     target: 'body',
-                    prepend: true
+                    newestOnTop: true
                 },
 
                 error = function (message, title, optionsOverride) {
@@ -88,7 +88,7 @@
                     }
 
                     $toastElement.hide();
-                    if (options.prepend) {
+                    if (options.newestOnTop) {
                         $container.prepend($toastElement);
                     } else {
                         $container.append($toastElement);
