@@ -152,6 +152,6 @@
 /* overrides */
 #toast-container.toast-top-full-width > div,
 #toast-container.toast-bottom-full-width > div {
-    width: 100%;
-    margin: 1px 0 1px 0;
+    width: 96%;
+    margin: 1px auto;
 }
