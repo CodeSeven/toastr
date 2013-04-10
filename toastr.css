@@ -54,6 +54,9 @@
     position: fixed;
     z-index: 999999;
 }
+    #toast-container * {
+        box-sizing: border-box;
+    }
 
     #toast-container > div {
         margin: 0 0 6px;
@@ -152,6 +155,6 @@
 /* overrides */
 #toast-container.toast-top-full-width > div,
 #toast-container.toast-bottom-full-width > div {
-    width: 96%;
+    width: 100%;
     margin: 1px auto;
 }
