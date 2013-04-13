@@ -33,7 +33,8 @@
                     timeOut: 5000, // Set timeOut to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
-                    target: 'body'
+                    target: 'body',
+                    newestOnTop: true
                 },
 
                 error = function (message, title, optionsOverride) {
@@ -87,7 +88,11 @@
                     }
 
                     $toastElement.hide();
-                    $container.prepend($toastElement);
+                    if (options.newestOnTop) {
+                        $container.prepend($toastElement);
+                    } else {
+                        $container.append($toastElement);
+                    }
                     $toastElement.fadeIn(options.fadeIn, options.onFadeIn);
                     if (options.timeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.timeOut);

@@ -308,6 +308,40 @@
         $toast.remove();
         clearContainerChildren();
     });
+	
+	
+    module('order of appearance');
+    test('Newest toast on top', 1, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.newestOnTop = true;
+        //Act
+        var $first = toastr.success("First toast");
+        var $second = toastr.success("Second toast");
+        //Assert
+        var containerHtml = toastr.getContainer().html();
+        ok(containerHtml.indexOf("First toast") > containerHtml.indexOf("Second toast"), 'Newest toast is on top');
+        //Teardown
+        $first.remove();
+        $second.remove();
+        resetContainer();
+    });
+
+    test('Oldest toast on top', 1, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.newestOnTop = false;
+        //Act
+        var $first = toastr.success("First toast");
+        var $second = toastr.success("Second toast");
+        //Assert
+        var containerHtml = toastr.getContainer().html();
+        ok(containerHtml.indexOf("First toast") < containerHtml.indexOf("Second toast"), 'Oldest toast is on top');
+        //Teardown
+        $first.remove();
+        $second.remove();
+        resetContainer();
+    });
 
     // These must go last
     module('positioning');
