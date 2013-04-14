@@ -10,7 +10,8 @@
 ; (function (define) {
     define(['jquery'], function ($) {
         return (function () {
-            var $container,
+            var version = '1.2.3',
+                $container,
 
                 defaults = {
                     tapToDismiss: true,
@@ -182,7 +183,7 @@
                 info: info,
                 options: {},
                 success: success,
-                version: '1.2.3',
+                version: version,
                 warning: warning
             };
 
