@@ -10,7 +10,8 @@
 ; (function (define) {
     define(['jquery'], function ($) {
         return (function () {
-            var $container,
+            var version = '1.2.3',
+                $container,
 
                 defaults = {
                     tapToDismiss: true,
@@ -33,7 +34,8 @@
                     timeOut: 5000, // Set timeOut and extendedTimeout to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
-                    target: 'body'
+                    target: 'body',
+                    newestOnTop: true
                 },
 
                 error = function (message, title, optionsOverride) {
@@ -87,7 +89,11 @@
                     }
 
                     $toastElement.hide();
-                    $container.prepend($toastElement);
+                    if (options.newestOnTop) {
+                        $container.prepend($toastElement);
+                    } else {
+                        $container.append($toastElement);
+                    }
                     $toastElement.fadeIn(options.fadeIn, options.onFadeIn);
                     if (options.timeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.timeOut);
@@ -177,7 +183,7 @@
                 info: info,
                 options: {},
                 success: success,
-                version: '1.2.3',
+                version: version,
                 warning: warning
             };
 
