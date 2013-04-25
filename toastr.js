@@ -88,7 +88,12 @@
                         $toastElement.append($messageElement);
                     }
 
-                    $toastElement.hide();
+                    if (options.callback) {
+                        $toastElement.hide(400, options.callback);
+                    } else {
+                        $toastElement.hide();
+                    }
+
                     if (options.newestOnTop) {
                         $container.prepend($toastElement);
                     } else {
