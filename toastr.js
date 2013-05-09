@@ -10,7 +10,7 @@
 ; (function (define) {
     define(['jquery'], function ($) {
         return (function () {
-            var version = '1.2.3',
+            var version = '1.3.0',
                 $container,
 
                 defaults = {
