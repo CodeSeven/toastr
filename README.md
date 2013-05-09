@@ -2,7 +2,7 @@
 **toastr** is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
 
 ## Current Version
-1.2.3-pre
+1.3.0
 
 ## Demo
 Demo can be found at http://CodeSeven.github.com/toastr
@@ -36,6 +36,14 @@ For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
 		
 	// Clears the current list of toasts
 	toastr.clear()
+
+	// Show newest toast at bottom (top is default)
+	toastr.options.newestOnTop = false;
+
+	// Define a callback for when the toast fades in/out
+	toastr.options.onFadeIn = function() { console.log('hello'); }
+	toastr.options.onFadeOut = function() { console.log('goodbye'); }
+
 
 ## Authors
 **Hans Fjällemark**

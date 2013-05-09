@@ -10,7 +10,8 @@
 ; (function (define) {
     define(['jquery'], function ($) {
         return (function () {
-            var $container,
+            var version = '1.3.0',
+                $container,
 
                 defaults = {
                     tapToDismiss: true,
@@ -30,7 +31,7 @@
                     },
                     iconClass: 'toast-info',
                     positionClass: 'toast-top-right',
-                    timeOut: 5000, // Set timeOut to 0 to make it sticky
+                    timeOut: 5000, // Set timeOut and extendedTimeout to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
                     target: 'body',
@@ -65,9 +66,9 @@
                         iconClass = map.optionsOverride.iconClass || iconClass;
                     }
 
+                    $container = getContainer(options);
                     var
                         intervalId = null,
-                        $container = getContainer(options),
                         $toastElement = $('<div/>'),
                         $titleElement = $('<div/>'),
                         $messageElement = $('<div/>'),
@@ -159,7 +160,9 @@
 
                 clear = function ($toastElement) {
                     var options = getOptions();
-                    if (!$container) { getContainer(options) };
+                    if (!$container) {
+                        getContainer(options);
+                    }
                     if ($toastElement && $(':focus', $toastElement).length === 0) {
                         $toastElement.fadeOut(options.fadeOut, function () {
                             removeToast($toastElement);
@@ -180,7 +183,7 @@
                 info: info,
                 options: {},
                 success: success,
-                version: '1.2.2',
+                version: version,
                 warning: warning
             };
 
@@ -190,21 +193,20 @@
 
             function getContainer(options) {
                 if (!options) { options = getOptions(); }
-                container = $('#' + options.containerId);
-                if (container.children().length) {
-                    return container;
+                $container = $('#' + options.containerId);
+                if ($container.children().length) {
+                    return $container;
                 }
-                container = $('<div/>')
+                $container = $('<div/>')
                     .attr('id', options.containerId)
                     .addClass(options.positionClass);
-                container.appendTo($(options.target));
-                $container = container;
-                return container;
-            };
+                $container.appendTo($(options.target));
+                return $container;
+            }
 
             function getOptions() {
                 return $.extend({}, defaults, toastr.options);
-            };
+            }
 
             function removeToast($toastElement) {
                 if (!$container) { $container = getContainer(); }
@@ -222,9 +224,9 @@
         })();
     });
 }(typeof define === 'function' && define.amd ? define : function (deps, factory) {
-        if (typeof module !== 'undefined' && module.exports) { //Node
-            module.exports = factory(require(deps[0]));
-        } else {
-            window['toastr'] = factory(window['jQuery']);
-        }
-    }));
+    if (typeof module !== 'undefined' && module.exports) { //Node
+        module.exports = factory(require(deps[0]));
+    } else {
+        window['toastr'] = factory(window['jQuery']);
+    }
+}));
