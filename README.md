@@ -10,6 +10,9 @@ Demo can be found at http://CodeSeven.github.com/toastr
 ## NuGet Gallery
 http://nuget.org/packages/toastr
 
+## [Bower](http://bower.io/)
+bower install toastr
+
 ## Quick start
 
 ###3 Easy Steps
