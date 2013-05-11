@@ -35,7 +35,8 @@
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
                     target: 'body',
-                    newestOnTop: true
+                    newestOnTop: true,
+                    escapeHtml: true
                 },
 
                 error = function (message, title, optionsOverride) {
@@ -79,12 +80,16 @@
                     }
 
                     if (map.title) {
-                        $titleElement.append(map.title).addClass(options.titleClass);
+                        $titleElement
+                            .append(options.escapeHtml ? escapeHtml(map.title) : map.title)
+                            .addClass(options.titleClass);
                         $toastElement.append($titleElement);
                     }
 
                     if (map.message) {
-                        $messageElement.append(map.message).addClass(options.messageClass);
+                        $messageElement
+                            .append(options.escapeHtml ? escapeHtml(map.message) : map.message)
+                            .addClass(options.messageClass);
                         $toastElement.append($messageElement);
                     }
 
@@ -218,6 +223,14 @@
                 if ($container.children().length === 0) {
                     $container.remove();
                 }
+            }
+
+            function escapeHtml(str) {
+                return str.replace(/&/g, '&amp;')
+                          .replace(/</g, '&lt;')
+                          .replace(/>/g, '&gt;')
+                          .replace(/"/g, '&quot;')
+                          .replace(/'/g, '&#39;');
             }
             //#endregion
 
