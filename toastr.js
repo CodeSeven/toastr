@@ -18,10 +18,14 @@
                     toastClass: 'toast',
                     containerId: 'toast-container',
                     debug: false,
-                    fadeIn: 300,
-                    onFadeIn: undefined,
-                    fadeOut: 1000,
-                    onFadeOut: undefined,
+                    showMethod: 'fadeIn',
+                    showDuration: 300,
+                    showEasing: '',
+                    onShown: undefined,
+                    hideMethod: 'fadeOut',
+                    hideDuration: 1000,
+                    hideEasing: '',
+                    onHidden: undefined,
                     extendedTimeOut: 1000,
                     iconClasses: {
                         error: 'toast-error',
@@ -94,7 +98,7 @@
                     } else {
                         $container.append($toastElement);
                     }
-                    $toastElement.fadeIn(options.fadeIn, options.onFadeIn);
+                    $toastElement[options.showMethod](options.showDuration, options.showEasing, options.onShown);
                     if (options.timeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.timeOut);
                     }
@@ -120,10 +124,10 @@
                         if ($(':focus', $toastElement).length > 0) {
                             return;
                         }
-                        return $toastElement.fadeOut(options.fadeOut, function () {
+                        return $toastElement[options.hideMethod](options.hideDuration, options.hideEasing, function () {
                             removeToast($toastElement);
-                            if (options.onFadeOut) {
-                                options.onFadeOut();
+                            if (options.onHidden) {
+                                options.onHidden();
                             }
                         });
                     }
@@ -136,7 +140,7 @@
 
                     function stickAround() {
                         clearTimeout(intervalId);
-                        $toastElement.stop(true, true).fadeIn(options.fadeIn);
+                        $toastElement.stop(true, true)[options.showMethod](options.showDuration, options.showEasing, null);
                     }
                 },
 
@@ -164,13 +168,13 @@
                         getContainer(options);
                     }
                     if ($toastElement && $(':focus', $toastElement).length === 0) {
-                        $toastElement.fadeOut(options.fadeOut, function () {
+                        $toastElement[options.hideMethod](options.hideDuration, options.hideEasing, function () {
                             removeToast($toastElement);
                         });
                         return;
                     }
                     if ($container.children().length) {
-                        $container.fadeOut(options.fadeOut, function () {
+                        $container[options.hideMethod](options.hideDuration, options.hideEasing, function () {
                             $container.remove();
                         });
                     }
