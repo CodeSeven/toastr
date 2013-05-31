@@ -10,8 +10,10 @@
 ; (function (define) {
     define(['jquery'], function ($) {
         return (function () {
-            var version = '1.3.0',
+            var version = '1.3.1',
                 $container,
+                listener,
+                toastId = 0,
 
                 defaults = {
                     tapToDismiss: true,
@@ -56,91 +58,11 @@
                     });
                 },
 
-                notify = function (map) {
-                    var
-                        options = getOptions(),
-                        iconClass = map.iconClass || options.iconClass;
-
-                    if (typeof (map.optionsOverride) !== 'undefined') {
-                        options = $.extend(options, map.optionsOverride);
-                        iconClass = map.optionsOverride.iconClass || iconClass;
-                    }
-
-                    $container = getContainer(options);
-                    var
-                        intervalId = null,
-                        $toastElement = $('<div/>'),
-                        $titleElement = $('<div/>'),
-                        $messageElement = $('<div/>'),
-                        response = { options: options, map: map };
-
-                    if (map.iconClass) {
-                        $toastElement.addClass(options.toastClass).addClass(iconClass);
-                    }
-
-                    if (map.title) {
-                        $titleElement.append(map.title).addClass(options.titleClass);
-                        $toastElement.append($titleElement);
-                    }
-
-                    if (map.message) {
-                        $messageElement.append(map.message).addClass(options.messageClass);
-                        $toastElement.append($messageElement);
-                    }
-
-                    $toastElement.hide();
-                    if (options.newestOnTop) {
-                        $container.prepend($toastElement);
-                    } else {
-                        $container.append($toastElement);
-                    }
-                    $toastElement.fadeIn(options.fadeIn, options.onFadeIn);
-                    if (options.timeOut > 0) {
-                        intervalId = setTimeout(fadeAway, options.timeOut);
-                    }
-
-                    $toastElement.hover(stickAround, delayedFadeAway);
-                    if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(fadeAway);
-                    }
-
-                    if (options.onclick) {
-                        $toastElement.click(function () {
-                            options.onclick() && fadeAway();
-                        });
-                    }
-
-                    if (options.debug && console) {
-                        console.log(response);
-                    }
-
-                    return $toastElement;
-
-                    function fadeAway() {
-                        if ($(':focus', $toastElement).length > 0) {
-                            return;
-                        }
-                        return $toastElement.fadeOut(options.fadeOut, function () {
-                            removeToast($toastElement);
-                            if (options.onFadeOut) {
-                                options.onFadeOut();
-                            }
-                        });
-                    }
-
-                    function delayedFadeAway() {
-                        if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-                            intervalId = setTimeout(fadeAway, options.extendedTimeOut);
-                        }
-                    }
-
-                    function stickAround() {
-                        clearTimeout(intervalId);
-                        $toastElement.stop(true, true).fadeIn(options.fadeIn);
-                    }
+                subscribe = function(callback) {
+                    listener = callback;
                 },
-
-                success = function (message, title, optionsOverride) {
+				
+				success = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.success,
                         message: message,
@@ -182,6 +104,7 @@
                 getContainer: getContainer,
                 info: info,
                 options: {},
+				subscribe: subscribe,
                 success: success,
                 version: version,
                 warning: warning
@@ -191,6 +114,109 @@
 
             //#region Internal Methods
 
+            function publish(args) {
+                if (!listener) {
+                    return;
+                }
+                listener(args);
+            }
+
+			function notify(map) {
+				var
+					options = getOptions(),
+					iconClass = map.iconClass || options.iconClass;
+
+				if (typeof (map.optionsOverride) !== 'undefined') {
+					options = $.extend(options, map.optionsOverride);
+					iconClass = map.optionsOverride.iconClass || iconClass;
+				}
+				
+				toastId++;
+
+				$container = getContainer(options);
+				var
+					intervalId = null,
+					$toastElement = $('<div/>'),
+					$titleElement = $('<div/>'),
+					$messageElement = $('<div/>'),
+                    response = {
+                        toastId: toastId,
+                        state: 'visible',
+                        timestamp: new Date().toString(),
+                        options: options,
+                        map: map
+                    };
+
+				if (map.iconClass) {
+					$toastElement.addClass(options.toastClass).addClass(iconClass);
+				}
+
+				if (map.title) {
+					$titleElement.append(map.title).addClass(options.titleClass);
+					$toastElement.append($titleElement);
+				}
+
+				if (map.message) {
+					$messageElement.append(map.message).addClass(options.messageClass);
+					$toastElement.append($messageElement);
+				}
+
+				$toastElement.hide();
+				if (options.newestOnTop) {
+					$container.prepend($toastElement);
+				} else {
+					$container.append($toastElement);
+				}
+				$toastElement.fadeIn(options.fadeIn, options.onFadeIn);
+				if (options.timeOut > 0) {
+					intervalId = setTimeout(fadeAway, options.timeOut);
+				}
+
+				$toastElement.hover(stickAround, delayedFadeAway);
+				if (!options.onclick && options.tapToDismiss) {
+					$toastElement.click(fadeAway);
+				}
+
+				if (options.onclick) {
+					$toastElement.click(function () {
+						options.onclick() && fadeAway();
+					});
+				}
+
+				publish(response);
+				
+				if (options.debug && console) {
+					console.log(response);
+				}
+
+				return $toastElement;
+
+				function fadeAway() {
+					if ($(':focus', $toastElement).length > 0) {
+						return;
+					}
+					return $toastElement.fadeOut(options.fadeOut, function () {
+						removeToast($toastElement);
+						if (options.onFadeOut) {
+							options.onFadeOut();
+						}
+						response.state = 'hidden';
+                        response.timestamp = new Date().toString(),
+                        publish(response);
+					});
+				}
+
+				function delayedFadeAway() {
+					if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+						intervalId = setTimeout(fadeAway, options.extendedTimeOut);
+					}
+				}
+
+				function stickAround() {
+					clearTimeout(intervalId);
+					$toastElement.stop(true, true).fadeIn(options.fadeIn);
+				}
+			}
             function getContainer(options) {
                 if (!options) { options = getOptions(); }
                 $container = $('#' + options.containerId);
