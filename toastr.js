@@ -8,225 +8,261 @@
  * Project: https://github.com/CodeSeven/toastr
  */
 ; (function (define) {
-    define(['jquery'], function ($) {
-        return (function () {
-            var version = '1.3.0',
-                $container,
+	define(['jquery'], function ($) {
+		return (function () {
+			var version = '1.3.1',
+				$container,
+			    toastType = {
+			        error: 'error',
+			        info: 'info',
+			        success: 'success',
+			        warning: 'warning'
+			    },
+				listener,
+				toastId = 0,
 
-                defaults = {
-                    tapToDismiss: true,
-                    toastClass: 'toast',
-                    containerId: 'toast-container',
-                    debug: false,
-                    fadeIn: 300,
-                    onFadeIn: undefined,
-                    fadeOut: 1000,
-                    onFadeOut: undefined,
-                    extendedTimeOut: 1000,
-                    iconClasses: {
-                        error: 'toast-error',
-                        info: 'toast-info',
-                        success: 'toast-success',
-                        warning: 'toast-warning'
-                    },
-                    iconClass: 'toast-info',
-                    positionClass: 'toast-top-right',
-                    timeOut: 5000, // Set timeOut and extendedTimeout to 0 to make it sticky
-                    titleClass: 'toast-title',
-                    messageClass: 'toast-message',
-                    target: 'body',
-                    newestOnTop: true
-                },
+				defaults = {
+					tapToDismiss: true,
+					toastClass: 'toast',
+					containerId: 'toast-container',
+					debug: false,
+					fadeIn: 300,
+					onFadeIn: undefined,
+					fadeOut: 1000,
+					onFadeOut: undefined,
+					extendedTimeOut: 1000,
+					iconClasses: {
+						error: 'toast-error',
+						info: 'toast-info',
+						success: 'toast-success',
+						warning: 'toast-warning'
+					},
+					iconClass: 'toast-info',
+					positionClass: 'toast-top-right',
+					timeOut: 5000, // Set timeOut and extendedTimeout to 0 to make it sticky
+					titleClass: 'toast-title',
+					messageClass: 'toast-message',
+					target: 'body',
+					newestOnTop: true
+				},
 
-                error = function (message, title, optionsOverride) {
-                    return notify({
-                        iconClass: getOptions().iconClasses.error,
-                        message: message,
-                        optionsOverride: optionsOverride,
-                        title: title
-                    });
-                },
+				error = function (message, title, optionsOverride) {
+				    return notify({
+				        type: toastType.error,
+						iconClass: getOptions().iconClasses.error,
+						message: message,
+						optionsOverride: optionsOverride,
+						title: title
+					});
+				},
 
-                info = function (message, title, optionsOverride) {
-                    return notify({
-                        iconClass: getOptions().iconClasses.info,
-                        message: message,
-                        optionsOverride: optionsOverride,
-                        title: title
-                    });
-                },
+				info = function (message, title, optionsOverride) {
+					return notify({
+					    type: toastType.info,
+					    iconClass: getOptions().iconClasses.info,
+						message: message,
+						optionsOverride: optionsOverride,
+						title: title
+					});
+				},
 
-                notify = function (map) {
-                    var
-                        options = getOptions(),
-                        iconClass = map.iconClass || options.iconClass;
+				subscribe = function (callback) {
+					listener = callback;
+				},
 
-                    if (typeof (map.optionsOverride) !== 'undefined') {
-                        options = $.extend(options, map.optionsOverride);
-                        iconClass = map.optionsOverride.iconClass || iconClass;
-                    }
+				success = function (message, title, optionsOverride) {
+					return notify({
+					    type: toastType.success,
+					    iconClass: getOptions().iconClasses.success,
+						message: message,
+						optionsOverride: optionsOverride,
+						title: title
+					});
+				},
 
-                    $container = getContainer(options);
-                    var
-                        intervalId = null,
-                        $toastElement = $('<div/>'),
-                        $titleElement = $('<div/>'),
-                        $messageElement = $('<div/>'),
-                        response = { options: options, map: map };
+				warning = function (message, title, optionsOverride) {
+					return notify({
+					    type: toastType.warning,
+					    iconClass: getOptions().iconClasses.warning,
+						message: message,
+						optionsOverride: optionsOverride,
+						title: title
+					});
+				},
 
-                    if (map.iconClass) {
-                        $toastElement.addClass(options.toastClass).addClass(iconClass);
-                    }
+				clear = function ($toastElement) {
+					var options = getOptions();
+					if (!$container) {
+						getContainer(options);
+					}
+					if ($toastElement && $(':focus', $toastElement).length === 0) {
+						$toastElement.fadeOut(options.fadeOut, function () {
+							removeToast($toastElement);
+						});
+						return;
+					}
+					if ($container.children().length) {
+						$container.fadeOut(options.fadeOut, function () {
+							$container.remove();
+						});
+					}
+				};
 
-                    if (map.title) {
-                        $titleElement.append(map.title).addClass(options.titleClass);
-                        $toastElement.append($titleElement);
-                    }
+			var toastr = {
+				clear: clear,
+				error: error,
+				getContainer: getContainer,
+				info: info,
+				options: {},
+				subscribe: subscribe,
+				success: success,
+				version: version,
+				warning: warning
+			};
 
-                    if (map.message) {
-                        $messageElement.append(map.message).addClass(options.messageClass);
-                        $toastElement.append($messageElement);
-                    }
+			return toastr;
 
-                    $toastElement.hide();
-                    if (options.newestOnTop) {
-                        $container.prepend($toastElement);
-                    } else {
-                        $container.append($toastElement);
-                    }
-                    $toastElement.fadeIn(options.fadeIn, options.onFadeIn);
-                    if (options.timeOut > 0) {
-                        intervalId = setTimeout(fadeAway, options.timeOut);
-                    }
+			//#region Internal Methods
 
-                    $toastElement.hover(stickAround, delayedFadeAway);
-                    if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(fadeAway);
-                    }
+			function publish(args) {
+				if (!listener) {
+					return;
+				}
+				listener(args);
+			}
 
-                    if (options.onclick) {
-                        $toastElement.click(function () {
-                            options.onclick() && fadeAway();
-                        });
-                    }
+			function notify(map) {
+				var
+					options = getOptions(),
+					iconClass = map.iconClass || options.iconClass;
 
-                    if (options.debug && console) {
-                        console.log(response);
-                    }
+				if (typeof (map.optionsOverride) !== 'undefined') {
+					options = $.extend(options, map.optionsOverride);
+					iconClass = map.optionsOverride.iconClass || iconClass;
+				}
 
-                    return $toastElement;
+				toastId++;
 
-                    function fadeAway() {
-                        if ($(':focus', $toastElement).length > 0) {
-                            return;
-                        }
-                        return $toastElement.fadeOut(options.fadeOut, function () {
-                            removeToast($toastElement);
-                            if (options.onFadeOut) {
-                                options.onFadeOut();
-                            }
-                        });
-                    }
+				$container = getContainer(options);
+				var
+					intervalId = null,
+					$toastElement = $('<div/>'),
+					$titleElement = $('<div/>'),
+					$messageElement = $('<div/>'),
+					response = {
+						toastId: toastId,
+						state: 'visible',
+						startTime: new Date(),
+						options: options,
+						map: map
+					};
 
-                    function delayedFadeAway() {
-                        if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-                            intervalId = setTimeout(fadeAway, options.extendedTimeOut);
-                        }
-                    }
+				if (map.iconClass) {
+					$toastElement.addClass(options.toastClass).addClass(iconClass);
+				}
 
-                    function stickAround() {
-                        clearTimeout(intervalId);
-                        $toastElement.stop(true, true).fadeIn(options.fadeIn);
-                    }
-                },
+				if (map.title) {
+					$titleElement.append(map.title).addClass(options.titleClass);
+					$toastElement.append($titleElement);
+				}
 
-                success = function (message, title, optionsOverride) {
-                    return notify({
-                        iconClass: getOptions().iconClasses.success,
-                        message: message,
-                        optionsOverride: optionsOverride,
-                        title: title
-                    });
-                },
+				if (map.message) {
+					$messageElement.append(map.message).addClass(options.messageClass);
+					$toastElement.append($messageElement);
+				}
 
-                warning = function (message, title, optionsOverride) {
-                    return notify({
-                        iconClass: getOptions().iconClasses.warning,
-                        message: message,
-                        optionsOverride: optionsOverride,
-                        title: title
-                    });
-                },
+				$toastElement.hide();
+				if (options.newestOnTop) {
+					$container.prepend($toastElement);
+				} else {
+					$container.append($toastElement);
+				}
+				$toastElement.fadeIn(options.fadeIn, options.onFadeIn);
+				if (options.timeOut > 0) {
+					intervalId = setTimeout(fadeAway, options.timeOut);
+				}
 
-                clear = function ($toastElement) {
-                    var options = getOptions();
-                    if (!$container) {
-                        getContainer(options);
-                    }
-                    if ($toastElement && $(':focus', $toastElement).length === 0) {
-                        $toastElement.fadeOut(options.fadeOut, function () {
-                            removeToast($toastElement);
-                        });
-                        return;
-                    }
-                    if ($container.children().length) {
-                        $container.fadeOut(options.fadeOut, function () {
-                            $container.remove();
-                        });
-                    }
-                };
+				$toastElement.hover(stickAround, delayedFadeAway);
+				if (!options.onclick && options.tapToDismiss) {
+					$toastElement.click(fadeAway);
+				}
 
-            var toastr = {
-                clear: clear,
-                error: error,
-                getContainer: getContainer,
-                info: info,
-                options: {},
-                success: success,
-                version: version,
-                warning: warning
-            };
+				if (options.onclick) {
+					$toastElement.click(function () {
+						options.onclick() && fadeAway();
+					});
+				}
 
-            return toastr;
+				publish(response);
 
-            //#region Internal Methods
+				if (options.debug && console) {
+					console.log(response);
+				}
 
-            function getContainer(options) {
-                if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
-                if ($container.children().length) {
-                    return $container;
-                }
-                $container = $('<div/>')
-                    .attr('id', options.containerId)
-                    .addClass(options.positionClass);
-                $container.appendTo($(options.target));
-                return $container;
-            }
+				return $toastElement;
 
-            function getOptions() {
-                return $.extend({}, defaults, toastr.options);
-            }
+				function fadeAway() {
+					if ($(':focus', $toastElement).length > 0) {
+						return;
+					}
+					return $toastElement.fadeOut(options.fadeOut, function () {
+						removeToast($toastElement);
+						if (options.onFadeOut) {
+							options.onFadeOut();
+						}
+						response.state = 'hidden';
+					    response.endTime = new Date(),
+						publish(response);
+					});
+				}
 
-            function removeToast($toastElement) {
-                if (!$container) { $container = getContainer(); }
-                if ($toastElement.is(':visible')) {
-                    return;
-                }
-                $toastElement.remove();
-                $toastElement = null;
-                if ($container.children().length === 0) {
-                    $container.remove();
-                }
-            }
-            //#endregion
+				function delayedFadeAway() {
+					if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+						intervalId = setTimeout(fadeAway, options.extendedTimeOut);
+					}
+				}
 
-        })();
-    });
+				function stickAround() {
+					clearTimeout(intervalId);
+					$toastElement.stop(true, true).fadeIn(options.fadeIn);
+				}
+			}
+			function getContainer(options) {
+				if (!options) { options = getOptions(); }
+				$container = $('#' + options.containerId);
+				if ($container.children().length) {
+					return $container;
+				}
+				$container = $('<div/>')
+					.attr('id', options.containerId)
+					.addClass(options.positionClass);
+				$container.appendTo($(options.target));
+				return $container;
+			}
+
+			function getOptions() {
+				return $.extend({}, defaults, toastr.options);
+			}
+
+			function removeToast($toastElement) {
+				if (!$container) { $container = getContainer(); }
+				if ($toastElement.is(':visible')) {
+					return;
+				}
+				$toastElement.remove();
+				$toastElement = null;
+				if ($container.children().length === 0) {
+					$container.remove();
+				}
+			}
+			//#endregion
+
+		})();
+	});
 }(typeof define === 'function' && define.amd ? define : function (deps, factory) {
-    if (typeof module !== 'undefined' && module.exports) { //Node
-        module.exports = factory(require(deps[0]));
-    } else {
-        window['toastr'] = factory(window['jQuery']);
-    }
+	if (typeof module !== 'undefined' && module.exports) { //Node
+		module.exports = factory(require(deps[0]));
+	} else {
+		window['toastr'] = factory(window['jQuery']);
+	}
 }));
