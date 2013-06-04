@@ -230,8 +230,8 @@
 			function getContainer(options) {
 				if (!options) { options = getOptions(); }
 				$container = $('#' + options.containerId);
-				if ($container.children().length) {
-					return $container;
+				if ($container.length) {
+				    return $container;
 				}
 				$container = $('<div/>')
 					.attr('id', options.containerId)
