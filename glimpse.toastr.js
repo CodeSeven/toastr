@@ -27,7 +27,6 @@
 
     function receiveToasts(args) {
         var data = args;
-        //data.map.toastId = data.toastId; // Forces collapse (need 5 properties for this)
         !rendered ? preexistingToasts.push(data) : write(data);
     }
 
@@ -78,7 +77,7 @@
             data.options,
             getStateStyle(data)
         ];
-        render.engine.prepend(toastrPanel, [headerRow, pivotedData]); // , { layout: layout }
+        render.engine.prepend(toastrPanel, [headerRow, pivotedData]);
     }
 
     function getStateStyle(data) {
@@ -86,7 +85,6 @@
     }
 
     pubsub.subscribe('action.panel.rendered.toastr', function (args) {
-        //console.log('rendered glimpse.toastr');
         toastrPanel = args.panel;
         rendered = true;
         render.engine.insert(toastrPanel, [headerRow]);
@@ -103,7 +101,7 @@
             name: 'toastr',
             version: '0.1.0',
             isPermanent: true,
-            data: 'Loading ...'
+            data: 'Loading glimpse.toastr ...'
         },
         metadata: {
             documentationUri: "http://jpapa.me/c7toastr"
@@ -113,25 +111,3 @@
     tab.register(config);
 
 })(jQueryGlimpse, glimpse.pubsub, glimpse.tab, glimpse.render, window.toastr);
-
-/* #region WIP */
-//pubsub.subscribe('action.panel.rendering.toastr', function (args) {
-//    console.log('rendering glimpse.toastr');
-//});
-
-//pubsub.subscribe('action.panel.showed.toastr', function (args) {
-//    console.log('showed glimpse.toastr');
-//});
-
-//pubsub.subscribe('action.panel.showing.toastr', function (args) {
-//    console.log('showing glimpse.toastr');
-//});
-
-//pubsub.subscribe('action.panel.hiding.toastr', function (args) {
-//    console.log('hiding glimpse.toastr');
-//});
-
-//var layout = [
-//    [{ data: 0, key: true, width: '8%' }, { data: 1, width: '8%' }, { data: 2, width: '28%' }, { data: 3, width: '28%' }, { data: 4, width: '28%' }]
-//];
-/* #endregion */
