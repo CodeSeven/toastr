@@ -230,7 +230,7 @@
 			function getContainer(options) {
 				if (!options) { options = getOptions(); }
 				$container = $('#' + options.containerId);
-				if ($container.children().length) {
+				if ($container.length) {
 					return $container;
 				}
 				$container = $('<div/>')
