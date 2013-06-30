@@ -78,7 +78,7 @@
             getStateStyle(data)
         ];
         render.engine.prepend(toastrPanel, [headerRow, pivotedData]);
-    }
+	}
 
     function getStateStyle(data) {
         return data.state === 'visible' ? 'info' : '';
@@ -99,7 +99,7 @@
         key: 'toastr',
         payload: {
             name: 'toastr',
-            version: '0.1.0',
+            version: '0.2.0',
             isPermanent: true,
             data: 'Loading glimpse.toastr ...'
         },
