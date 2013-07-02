@@ -1,211 +1,144 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"/>
-    <title>toastr examples</title>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link href="toastr.css" rel="stylesheet" type="text/css" />
-    <style>
-      .row {
-        margin-left: 0;
-      }
-    </style>
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Toastr by CodeSeven</title>
   </head>
 
-  <body style="padding: 30px" class="container">
-    <section class="row">
-      <h1>toastr</h1>
-
-      <div class="well row">
-        <div class="row span11">
-          <div class="span4">
-            <div class="control-group">
-              <div class="controls">
-                <label class="control-label" for="title">Title</label>
-                <input id="title" type="text" class="input-large" placeholder="Enter a title ..."/>
-                <label class="control-label" for="message">Message</label>
-                <textarea class="input-large" id="message" rows="3" placeholder="Enter a message ..."></textarea>
-              </div>
-            </div>
-          </div>
-          
-          <div class="span2">
-            <div class="control-group" id="toastTypeGroup">
-              <div class="controls">
-                <label >Toast Type</label>
-                <label class="radio"><input type="radio" name="toasts" value="success" checked/>Success</label>
-                <label class="radio"><input type="radio" name="toasts" value="info"/>Info</label>
-                <label class="radio"><input type="radio" name="toasts" value="warning"/>Warning</label>
-                <label class="radio"><input type="radio" name="toasts" value="error"/>Error</label>
-              </div>
-            </div>
-            <div class="control-group" id="positionGroup">
-              <div class="controls">
-                <label>Position</label>
-                <label class="radio"><input type="radio" name="positions" value="toast-top-right" checked/>Top Right</label>
-                <label class="radio"><input type="radio" name="positions" value="toast-bottom-right"/>Bottom Right</label>
-                <label class="radio"><input type="radio" name="positions" value="toast-bottom-left"/>Bottom Left</label>
-                <label class="radio"><input type="radio" name="positions" value="toast-top-left"/>Top Left</label>
-                <label class="radio"><input type="radio" name="positions" value="toast-top-full-width"/>Top Full Width</label>
-                <label class="radio"><input type="radio" name="positions" value="toast-bottom-full-width"/>Bottom Full Width</label>
-              </div>
-            </div>                                                                
-          </div>
-          
-          <div class="span2" >
-            <div class="control-group">
-              <div class="controls">
-                  <label class="control-label" for="">Fade in</label>
-                <input id="fadeIn" type="text" placeholder="ms" class="input-mini" value="300"/>
-
-                <label class="control-label" for="fadeOut">Fade out</label>
-                <input id="fadeOut" type="text" placeholder="ms" class="input-mini" value="1000"/>
-
-                <label class="control-label" for="timeOut">Time out</label>
-                <input id="timeOut" type="text" placeholder="ms" class="input-mini" value="5000"/>
-
-                <label class="control-label" for="timeOut">Extended time out</label>
-                <input id="extendedTimeOut" type="text" placeholder="ms" class="input-mini" value="1000"/>
-              </div>
-            </div>
-          </div>
-
-          <div class="span2">
-            <div class="control-group">
-              <div class="controls">
-                <label class="checkbox" for="debugInfo">
-                  <input id="debugInfo" type="checkbox" value="checked" class="input-mini"/>Debug
-                </label>
-              </div>
-              <div class="controls">
-                <label class="checkbox" for="addBehaviorOnToastClick">
-                  <input id="addBehaviorOnToastClick" type="checkbox" value="checked" class="input-mini"/>Add behavior on toast click
-                </label>
-              </div>
-                            
-            </div>
-          </div>
-        </div>
-
-        <div class="row span11">
-          <button type="button" class="btn btn-primary" id="showtoast">Show Toast</button>                
-                    <button type="button" class="btn btn-danger" id="cleartoasts">Clear Toasts</button> 
-                    <button type="button" class="btn btn-danger" id="clearlasttoast">Clear Last Toast</button> 
-        </div>
-        
-        <div class="span11 row" style='margin-top: 25px;'>
-          <pre id='toastrOptions'></pre>
-        </div>
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Toastr</h1>
+        <h2>Simple javascript toast notifications</h2>
+        <a href="https://github.com/CodeSeven/toastr" class="button"><small>View project on</small>GitHub</a>
       </div>
-    </section>
+    </header>
 
-    <footer class="row">
-      <h2>Links</h2>
-      
-      <ul>
-        <li><a href="https://github.com/CodeSeven/toastr/downloads">Download</a></li>
-        <li><a href="https://github.com/CodeSeven/toastr">GitHub</a></li>
-      </ul>
-    </footer>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="toastr" class="anchor" href="#toastr"><span class="octicon octicon-link"></span></a>toastr</h1>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="toastr.js"></script>
-    <script src="glimpse.js"></script>
-    <script src="glimpse.toastr.js"></script>
-    
-    <script type="text/javascript">
-        $(function () {
-            var
-          i = -1,
-          toastCount = 0,
-                $toastlast,
-          getMessage = function() {
-            var msgs = ['My name is Inigo Montoya. You killed my father. Prepare to die!',
-              '<div><input class="input-small" value="textbox"/>&nbsp;<a href="http://johnpapa.net" target="_blank">This is a hyperlink</a></div><div><button type="button" id="okBtn" class="btn btn-primary">Close me</button><button type="button" id="surpriseBtn" class="btn" style="margin: 0 8px 0 8px">Surprise me</button></div>',
-              'Are you the six fingered man?',
-              'Inconceivable!',
-              'I do not think that means what you think it means.',
-              'Have fun storming the castle!'
-              ];
-              i++;
-              if (i === msgs.length) {
-              i = 0;
-              }
+<p><strong>toastr</strong> is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.</p>
 
-            return msgs[i];
-          };
-            $('#showtoast').click(function() {
-          var shortCutFunction = $("#toastTypeGroup input:radio:checked").val(),
-            msg = $('#message').val(),
-            title = $('#title').val() || '',
-            $fadeIn = $('#fadeIn'),
-            $fadeOut = $('#fadeOut'),
-            $timeOut = $('#timeOut'),
-              $extendedTimeOut = $('#extendedTimeOut'),
-            toastIndex = toastCount++;
-                toastr.options = {
-              debug: ($('#debugInfo').attr('checked') === 'checked'),
-              positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
-                        onclick: null
-          };
-                if (($('#addBehaviorOnToastClick').attr('checked') === 'checked')) {
-              toastr.options.onclick = function () {
-                  alert('You can perform some custom action after a toast goes away');
-              };
-                }
+<h2>
+<a name="current-version" class="anchor" href="#current-version"><span class="octicon octicon-link"></span></a>Current Version</h2>
 
-          if ($fadeIn.val().length) {
-            toastr.options.fadeIn = + $fadeIn.val();
-          }
+<p>1.3.1</p>
 
-          if ($fadeOut.val().length) {
-            toastr.options.fadeOut = + $fadeOut.val();
-          }
+<h2>
+<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h2>
 
-          if ($timeOut.val().length) {
-            toastr.options.timeOut = + $timeOut.val();
-          }
+<p>Demo can be found at <a href="http://CodeSeven.github.com/toastr">http://CodeSeven.github.com/toastr</a></p>
 
-          if ($extendedTimeOut.val().length) {
-              toastr.options.extendedTimeOut = + $extendedTimeOut.val();
-          }
+<h2>
+<a name="nuget-gallery" class="anchor" href="#nuget-gallery"><span class="octicon octicon-link"></span></a>NuGet Gallery</h2>
 
-          if (!msg) {
-            msg = getMessage();
-          }
+<p><a href="http://nuget.org/packages/toastr">http://nuget.org/packages/toastr</a></p>
 
-          $("#toastrOptions").text("Command: toastr["
-                        + shortCutFunction
-                        + "](\""
-                        + msg
-                        + (title ? "\", \"" + title : '')
-                        + "\")\n\ntoastr.options = "
-                        + JSON.stringify(toastr.options, null, 2)
-          );
-          
-          var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
-                $toastlast = $toast;
-          if ($toast.find('#okBtn').length) {
-              $toast.delegate('#okBtn', 'click', function () {
-                  alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
-                  $toast.remove();
-              });
-          }
-          if ($toast.find('#surpriseBtn').length) {
-              $toast.delegate('#surpriseBtn', 'click', function () {
-                  alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
-              });
-          }
+<h2>
+<a name="bower" class="anchor" href="#bower"><span class="octicon octicon-link"></span></a><a href="http://bower.io/">Bower</a>
+</h2>
 
-                $('#clearlasttoast').click(function() {
-                    toastr.clear($toastlast);
-                });
-            });
-            $('#cleartoasts').click(function () {
-                toastr.clear();
-            });
-        })
-    </script>
+<p>bower install toastr</p>
+
+<h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick start</h2>
+
+<h3>
+<a name="3-easy-steps" class="anchor" href="#3-easy-steps"><span class="octicon octicon-link"></span></a>3 Easy Steps</h3>
+
+<p>For other API calls, see the <a href="http://CodeSeven.github.com/toastr">demo</a>.</p>
+
+<ol>
+<li><p>Link to toastr.css <code>&lt;link href="toastr.css" rel="stylesheet"/&gt;</code></p></li>
+<li><p>Link to toastr.js <code>&lt;script src="toastr.js"&gt;&lt;/script&gt;</code></p></li>
+<li>
+<p>use toastr to display a toast for info, success, warning or error</p>
+
+<pre><code>// Display an info toast with no title
+toastr.info('Are you the 6 fingered man?')
+</code></pre>
+</li>
+</ol><h3>
+<a name="other-options" class="anchor" href="#other-options"><span class="octicon octicon-link"></span></a>Other Options</h3>
+
+<pre><code>// Display a warning toast, with no title
+toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!')
+
+// Display a success toast, with a title
+toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+
+// Display an error toast, with a title
+toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
+
+// Clears the current list of toasts
+toastr.clear()
+
+// Show newest toast at bottom (top is default)
+toastr.options.newestOnTop = false;
+
+// Define a callback for when the toast fades in/out
+toastr.options.onFadeIn = function() { console.log('hello'); }
+toastr.options.onFadeOut = function() { console.log('goodbye'); }
+</code></pre>
+
+<h2>
+<a name="authors" class="anchor" href="#authors"><span class="octicon octicon-link"></span></a>Authors</h2>
+
+<p><strong>Hans Fjällemark</strong></p>
+
+<ul>
+<li><a href="http://twitter.com/hfjallemark">http://twitter.com/hfjallemark</a></li>
+</ul><p><strong>John Papa</strong></p>
+
+<ul>
+<li><a href="http://twitter.com/John_Papa">http://twitter.com/John_Papa</a></li>
+</ul><h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>Inspired by <a href="https://github.com/Srirangan/notifer.js/">https://github.com/Srirangan/notifer.js/</a>.</p>
+
+<h2>
+<a name="copyright" class="anchor" href="#copyright"><span class="octicon octicon-link"></span></a>Copyright</h2>
+
+<p>Copyright © 2012 <a href="http://twitter.com/hfjallemark">Hans Fjällemark</a> &amp; <a href="http://twitter.com/John_Papa">John Papa</a>.</p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>toastr is under MIT license - <a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a></p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/CodeSeven/toastr/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/CodeSeven/toastr/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/CodeSeven/toastr"></a> is maintained by <a href="https://github.com/CodeSeven">CodeSeven</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
   </body>
 </html>
