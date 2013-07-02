@@ -28,7 +28,7 @@ bower install toastr
 ## Quick start
 
 ###3 Easy Steps
-For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
+For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html).
 
 1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>`
 
