@@ -7,6 +7,18 @@
 ## Demo
 Demo can be found at http://CodeSeven.github.com/toastr
 
+## CDNjs
+Toastr is hosted at CDN JS
+
+#### Debug
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/js/toastr.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/js/toastr.js)
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/css/toastr.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/css/toastr.css)
+
+#### Minified
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/js/toastr.min.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/js/toastr.min.js) 
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/css/toastr.min.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/css/toastr.min.css)
+
+
 ## NuGet Gallery
 http://nuget.org/packages/toastr
 
