@@ -5,7 +5,7 @@
 1.3.1
 
 ## Demo
-Demo can be found at http://CodeSeven.github.com/toastr
+Demo can be found at http://codeseven.github.io/toastr/demo.html
 
 ## CDNjs
 Toastr is hosted at CDN JS
