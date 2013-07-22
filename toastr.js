@@ -149,6 +149,8 @@
 					$toastElement = $('<div/>'),
 					$titleElement = $('<div/>'),
 					$messageElement = $('<div/>'),
+					$closeElement = $('<button>&times;</button>'),
+					$clearElement = $('<div/>').css('clear', 'both'),
 					response = {
 						toastId: toastId,
 						state: 'visible',
@@ -169,6 +171,11 @@
 				if (map.message) {
 					$messageElement.append(map.message).addClass(options.messageClass);
 					$toastElement.append($messageElement);
+				}
+
+				if (options.closeButton) {
+					$closeElement.addClass('toast-close-button');
+					$toastElement.addClass('toast-close').prepend($closeElement).append($clearElement);
 				}
 
 				$toastElement.hide();
