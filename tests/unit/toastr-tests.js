@@ -244,6 +244,31 @@
         $toast.remove();
         clearContainerChildren();
     });
+    module('closeButton', {
+        teardown: function() {
+            toastr.options.closeButton = false;
+        }
+    });
+    test('close button disabled', 2, function () {
+        //Arrange
+        toastr.options.closeButton = false;
+        //Act
+        var $toast = toastr.success(''); //Assert
+        equal($toast.find('button.toast-close-button').length, 0, 'close button should not exist with closeButton=false');
+        ok(!$toast.hasClass('toast-close'), 'does not set close class on toast'); //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('close button enabled', 2, function () {
+        //Arrange
+        toastr.options.closeButton = true;
+        //Act
+        var $toast = toastr.success(''); //Assert
+        equal($toast.find('button.toast-close-button').length, 1, 'close button should exist with closeButton=true');
+        ok($toast.hasClass('toast-close'), 'sets close class on toast'); //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
     module('event');
     test('event - onFadeIn is executed', 1, function () {
         // Arrange
