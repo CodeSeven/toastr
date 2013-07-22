@@ -158,11 +158,11 @@
                     $extendedTimeOut = $('#extendedTimeOut'),
                   toastIndex = toastCount++;
                 toastr.options = {
-                    debug: ($('#debugInfo').attr('checked') === 'checked'),
+                    debug: $('#debugInfo').prop('checked'),
                     positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                     onclick: null
                 };
-                if (($('#addBehaviorOnToastClick').attr('checked') === 'checked')) {
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
                     toastr.options.onclick = function () {
                         alert('You can perform some custom action after a toast goes away');
                     };
