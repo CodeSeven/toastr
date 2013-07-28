@@ -5,7 +5,9 @@
 1.3.1
 
 ## Demo
-Demo can be found at http://codeseven.github.io/toastr/demo.html
+- Demo can be found at http://codeseven.github.io/toastr/demo.html
+
+- [Demo using FontAwesome icons with toastr](http://plnkr.co/edit/6W9URNyyp2ItO4aUWzBB?p=preview)
 
 ## CDNjs
 Toastr is hosted at CDN JS
