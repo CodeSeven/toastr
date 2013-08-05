@@ -28,6 +28,8 @@
         extendedTimeOut: 0,
         fadeOut: 0,
         fadeIn: 0,
+        showDuration: 0,
+        hideDuration: 0,
         debug: false
     };
 
@@ -35,7 +37,7 @@
 
     // 'Clears' must go first
     module('clear');
-    asyncTest('clear - show 3 toasts, clear the 2nd', 1, function () {
+    test('clear - show 3 toasts, clear the 2nd', 1, function () {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -45,14 +47,9 @@
         //Act
         toastr.clear($toast[1]);
         //Assert
-        setTimeout(function () {
-            //debugger;
-            //console.log($container.children().length);
-            ok($container && $container.children().length === 2);
-            //Teardown
-            resetContainer();
-            start();
-        }, delay);
+        ok($container && $container.children().length === 2);
+        //Teardown
+        resetContainer();
     });
     asyncTest('clear - show 3 toasts, clear all 3, 0 left', 1, function () {
         //Arrange
@@ -306,6 +303,62 @@
         }, delay);
     });
 
+    asyncTest('event - onFadeIn is executed', 1, function () {
+        // Arrange
+        var run, onFadeIn;
+        run = false;
+        onFadeIn = function () { run = true; };
+        toastr.options.onFadeIn = onFadeIn;
+        // Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        setTimeout(function () {
+            // Assert
+            ok(run);
+            //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, delay);
+    });
+
+    asyncTest('event - onFadeOut is executed', 1, function () {
+        //Arrange
+        var run, onFadeOut;
+        run = false;
+        onFadeOut = function () { run = true; };
+        toastr.options.onFadeOut = onFadeOut;
+        toastr.options.timeOut = 1;
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        setTimeout(function () {
+            // Assert
+            ok(run); //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, delay);
+    });
+
+    asyncTest('event - onFadeIn and onFadeOut area both executeed', 2, function () {
+        //Arrange
+        var onFadeInRun, onFadeIn, onFadeOutRun, onFadeOut;
+        onFadeInRun = false;
+        onFadeOutRun = false;
+        onFadeIn = function () { onFadeInRun = true; };
+        onFadeOut = function () { onFadeOutRun = true; };
+        toastr.options.onFadeIn = onFadeIn;
+        toastr.options.onFadeOut = onFadeOut;
+        toastr.options.timeOut = 1; //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        setTimeout(function () {
+            // Assert
+            ok(onFadeInRun);
+            ok(onFadeOutRun); //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, delay);
+    });
     test('event - message appears when no show or hide method functions provided', 1, function () {
         //Arrange
         //Act

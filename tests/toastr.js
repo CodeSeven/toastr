@@ -18,6 +18,10 @@
                     toastClass: 'toast',
                     containerId: 'toast-container',
                     debug: false,
+                    fadeIn: 300,
+                    onFadeIn: undefined,
+                    fadeOut: 1000,
+                    onFadeOut: undefined,
                     showMethod: 'fadeIn',
                     showDuration: 300,
                     showEasing: '',
@@ -41,7 +45,7 @@
                     target: 'body',
                     newestOnTop: true
                 },
-
+                
                 error = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.error,
@@ -98,7 +102,8 @@
                     } else {
                         $container.append($toastElement);
                     }
-                    $toastElement[options.showMethod](options.showDuration, options.showEasing, options.onShown);
+
+                    $toastElement[options.showMethod]({ duration: options.showDuration, easing: options.showEasing, complete: options.onShown });
                     if (options.timeOut > 0) {
                         intervalId = setTimeout(fadeAway, options.timeOut);
                     }
@@ -124,10 +129,14 @@
                         if ($(':focus', $toastElement).length > 0) {
                             return;
                         }
-                        return $toastElement[options.hideMethod](options.hideDuration, options.hideEasing, function () {
-                            removeToast($toastElement);
-                            if (options.onHidden) {
-                                options.onHidden();
+                        return $toastElement[options.hideMethod]({
+                            duration: options.hideDuration,
+                            easing: options.hideEasing,
+                            complete: function () {
+                                removeToast($toastElement);
+                                if (options.onHidden) {
+                                    options.onHidden();
+                                }
                             }
                         });
                     }
@@ -140,7 +149,7 @@
 
                     function stickAround() {
                         clearTimeout(intervalId);
-                        $toastElement.stop(true, true)[options.showMethod](options.showDuration, options.showEasing, null);
+                        $toastElement.stop(true, true)[options.showMethod]({ duration: options.showDuration, easing: options.showEasing });
                     }
                 },
 
@@ -168,14 +177,22 @@
                         getContainer(options);
                     }
                     if ($toastElement && $(':focus', $toastElement).length === 0) {
-                        $toastElement[options.hideMethod](options.hideDuration, options.hideEasing, function () {
-                            removeToast($toastElement);
+                        $toastElement[options.hideMethod]({
+                            duration: options.hideDuration,
+                            easing: options.hideEasing,
+                            complete: function () {
+                                removeToast($toastElement);
+                            }
                         });
                         return;
                     }
                     if ($container.children().length) {
-                        $container[options.hideMethod](options.hideDuration, options.hideEasing, function () {
-                            $container.remove();
+                        $container[options.hideMethod]({
+                            duration: options.hideDuration,
+                            easing: options.hideEasing,
+                            complete: function () {
+                                $container.remove();
+                            }
                         });
                     }
                 };
@@ -209,7 +226,16 @@
             }
 
             function getOptions() {
-                return $.extend({}, defaults, toastr.options);
+                var options = $.extend({}, defaults, toastr.options);
+                mergeFadeAndShowOptions(options);
+                return options;
+            }
+
+            function mergeFadeAndShowOptions(options) {
+                options.onShown = options.onFadeIn || options.onShown;
+                options.onHidden = options.onFadeOut || options.onHidden;
+                options.showDuration = options.fadeIn || options.showDuration;
+                options.hideDuration = options.fadeOut || options.hideDuration;
             }
 
             function removeToast($toastElement) {
