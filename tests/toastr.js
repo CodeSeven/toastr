@@ -18,9 +18,9 @@
                     toastClass: 'toast',
                     containerId: 'toast-container',
                     debug: false,
-                    fadeIn: 300,
+                    fadeIn: 0,
                     onFadeIn: undefined,
-                    fadeOut: 1000,
+                    fadeOut: 0,
                     onFadeOut: undefined,
                     showMethod: 'fadeIn',
                     showDuration: 300,
@@ -45,7 +45,7 @@
                     target: 'body',
                     newestOnTop: true
                 },
-                
+
                 error = function (message, title, optionsOverride) {
                     return notify({
                         iconClass: getOptions().iconClasses.error,
