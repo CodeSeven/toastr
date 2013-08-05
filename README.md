@@ -43,10 +43,18 @@ For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
 	// Show newest toast at bottom (top is default)
 	toastr.options.newestOnTop = false;
 
-	// Define a callback for when the toast fades in/out
-	toastr.options.onFadeIn = function() { console.log('hello'); }
-	toastr.options.onFadeOut = function() { console.log('goodbye'); }
-
+	// Define a callback for when the toast is shown/hidden
+	toastr.options.onShown = function() { console.log('hello'); }
+	toastr.options.onHidden = function() { console.log('goodbye'); }
+	
+	// Use the jQuery show/hide method of your choice
+	// (These default to fadeIn/fadeOut)
+	toastr.options.showMethod = 'slideDown'; 
+	toastr.options.hideMethod = 'slideUp'; 
+	
+	// Use easing effects (using the jQuery Easing plugin (http://www.gsgd.co.uk/sandbox/jquery/easing/))
+	toastr.options.showEasing = 'easeOutBounce';
+	toastr.options.hideEasing = 'easeInBack';
 
 ## Authors
 **Hans Fjällemark**
