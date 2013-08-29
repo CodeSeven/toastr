@@ -110,24 +110,18 @@
 @media all and (max-width: 240px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
-    width: 108px;
+    width: 11em;
   }
 }
-@media all and (min-width: 241px) and (max-width: 320px) {
+@media all and (min-width: 241px) and (max-width: 480px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
-    width: 128px;
-  }
-}
-@media all and (min-width: 321px) and (max-width: 480px) {
-  #toast-container > div {
-    padding: 8px 8px 8px 50px;
-    width: 192px;
+    width: 18em;
   }
 }
 @media all and (min-width: 481px) and (max-width: 768px) {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
-    width: 300px;
+    width: 25em;
   }
 }
