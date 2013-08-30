@@ -61,6 +61,27 @@ For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html)
 	toastr.options.onFadeIn = function() { console.log('hello'); }
 	toastr.options.onFadeOut = function() { console.log('goodbye'); }
 
+## Building Toastr
+
+To build the minified and css versions of Toastr you will need [node](http://nodejs.org) installed.
+
+Install the [Grunt](http://gruntjs.com/) command line. This might require `sudo`.
+
+```shell
+npm install -g grunt-cli
+```
+
+Then, from the main project folder run this command. This should not require `sudo`.
+
+```shell
+npm install
+```
+
+At this point the dependencies have been installed and you can build Toastr
+
+```shell
+grunt
+```
 
 ## Authors
 **Hans Fjällemark**
