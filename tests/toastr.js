@@ -132,6 +132,7 @@
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
                     target: 'body',
+                    closeHtml: '<button>&times;</button>',
                     newestOnTop: true
                 };
             }
@@ -161,6 +162,7 @@
 					$toastElement = $('<div/>'),
 					$titleElement = $('<div/>'),
 					$messageElement = $('<div/>'),
+				    $closeElement = $(options.closeHtml),
 					response = {
 					    toastId: toastId,
 					    state: 'visible',
@@ -183,6 +185,11 @@
                     $toastElement.append($messageElement);
                 }
 
+                if (options.closeButton) {
+                    $closeElement.addClass('toast-close-button');
+                    $toastElement.prepend($closeElement);
+                }
+
                 $toastElement.hide();
                 if (options.newestOnTop) {
                     $container.prepend($toastElement);
@@ -191,7 +198,9 @@
                 }
 
 
-                $toastElement[options.showMethod]({ duration: options.showDuration, easing: options.showEasing, complete: options.onShown });
+                $toastElement[options.showMethod](
+				    { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
+				);
                 if (options.timeOut > 0) {
                     intervalId = setTimeout(hideToast, options.timeOut);
                 }

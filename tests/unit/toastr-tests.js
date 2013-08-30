@@ -13,7 +13,7 @@
         bottomLeft: 'toast-bottom-left',
         topLeft: 'toast-top-left'
     };
-    var sampleMsg = 'I don\'t think they really exist'
+    var sampleMsg = 'I don\'t think they really exist';
     var sampleTitle = 'ROUS';
     var selectors = {
         container: 'div#toast-container',
@@ -67,7 +67,6 @@
         toastr.clear();
         //Assert
         setTimeout(function () {
-            //console.log($container.children().length);
             ok($container && $container.children().length === 0);
             //Teardown
             resetContainer();
@@ -86,7 +85,8 @@
             $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
             equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear');
-            ok($toast[2].find('div.toast-title').find(':visible'), 'Toast after a clear is visible'); //Teardown
+            ok($toast[2].find('div.toast-title').find(':visible'), 'Toast after a clear is visible');
+            //Teardown
             resetContainer();
             start();
         }, delay);
@@ -101,7 +101,8 @@
         //Act
         setTimeout(function () {
             //Assert
-            equal($(selectors.container).length, 0, 'Toast container does not exist'); //Teardown
+            equal($(selectors.container).length, 0, 'Toast container does not exist');
+            //Teardown
             resetContainer();
             start();
         }, delay);
@@ -126,20 +127,24 @@
     test('info - pass title and message', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.info(sampleMsg, sampleTitle); //Assert
+        var $toast = toastr.info(sampleMsg, sampleTitle);
+        //Assert
         equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.info), 'Sets info icon'); //Teardown
+        ok($toast.hasClass(iconClasses.info), 'Sets info icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
     test('info - pass message, but no title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.info(sampleMsg); //Assert
+        var $toast = toastr.info(sampleMsg);
+        //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets null title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.info), 'Sets info icon'); //Teardown
+        ok($toast.hasClass(iconClasses.info), 'Sets info icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
@@ -149,7 +154,8 @@
         var $toast = toastr.info(); //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets null title');
         equal($toast.find('div.toast-message').html(), null, 'Sets message');
-        ok($toast.hasClass(iconClasses.info), 'Sets info icon'); //Teardown
+        ok($toast.hasClass(iconClasses.info), 'Sets info icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
@@ -157,30 +163,36 @@
     test('warning - pass message and title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.warning(sampleMsg, sampleTitle); //Assert
+        var $toast = toastr.warning(sampleMsg, sampleTitle);
+        //Assert
         equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon'); //Teardown
+        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
     test('warning - pass message, but no title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.warning(sampleMsg); //Assert
+        var $toast = toastr.warning(sampleMsg);
+        //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon'); //Teardown
+        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
     test('warning - no message nor title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.warning(''); //Assert
+        var $toast = toastr.warning('');
+        //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets null title');
         equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
-        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon'); //Teardown
+        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
@@ -188,10 +200,12 @@
     test('error - pass message and title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.error(sampleMsg, sampleTitle); //Assert
+        var $toast = toastr.error(sampleMsg, sampleTitle);
+        //Assert
         equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
+        ok($toast.hasClass(iconClasses.error), 'Sets error icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
@@ -201,17 +215,20 @@
         var $toast = toastr.error(sampleMsg); //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
+        ok($toast.hasClass(iconClasses.error), 'Sets error icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
     test('error - no message nor title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.error(''); //Assert
+        var $toast = toastr.error('');
+        //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
         equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
-        ok($toast.hasClass(iconClasses.error), 'Sets error icon'); //Teardown
+        ok($toast.hasClass(iconClasses.error), 'Sets error icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
@@ -219,30 +236,65 @@
     test('success - pass message and title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.success(sampleMsg, sampleTitle); //Assert
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        //Assert
         equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
+        ok($toast.hasClass(iconClasses.success), 'Sets success icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
     test('success - pass message, but no title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.success(sampleMsg); //Assert
+        var $toast = toastr.success(sampleMsg);
+        //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
         equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-        ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
+        ok($toast.hasClass(iconClasses.success), 'Sets success icon');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
     test('success - no message nor title', 3, function () {
         //Arrange
         //Act
-        var $toast = toastr.success(''); //Assert
+        var $toast = toastr.success('');
+        //Assert
         equal($toast.find('div.toast-title').length, 0, 'Sets null title');
         equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
         ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
+    module('closeButton', {
+        teardown: function () {
+            toastr.options.closeButton = false;
+        }
+    });
+    test('close button disabled', 2, function () {
+        //Arrange
+        toastr.options.closeButton = false;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        equal($toast.find('button.toast-close-button').length, 0, 'close button should not exist with closeButton=false');
+        ok(!$toast.hasClass('toast-close'), 'does not set close class on toast');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('close button enabled', 2, function () {
+        //Arrange
+        toastr.options.closeButton = true;
+        //Act
+        var $toast = toastr.success(''); 
+        //Assert
+        equal($toast.find('button.toast-close-button').length, 1, 'close button should exist with closeButton=true');
+        ok($toast.hasClass('toast-close'), 'sets close class on toast');
+        //Teardown
         $toast.remove();
         clearContainerChildren();
     });
@@ -353,22 +405,26 @@
     test('Container - position top-right', 1, function () {
         //Arrange
         resetContainer();
-        toastr.options.positionClass = positionClasses.topRight; //Act
+        toastr.options.positionClass = positionClasses.topRight;
+        //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); //$(selectors.container)
+        var $container = toastr.getContainer(); 
         //Assert
-        ok($container.hasClass(positionClasses.topRight), 'Has position top right'); //Teardown
+        ok($container.hasClass(positionClasses.topRight), 'Has position top right');
+        //Teardown
         $toast.remove();
         resetContainer();
     });
     test('Container - position bottom-right', 1, function () {
         //Arrange
         resetContainer();
-        toastr.options.positionClass = positionClasses.bottomRight; //Act
+        toastr.options.positionClass = positionClasses.bottomRight;
+        //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); //$(selectors.container)
+        var $container = toastr.getContainer(); 
         //Assert
-        ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right'); //Teardown
+        ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right');
+        //Teardown
         $toast.remove();
         resetContainer();
     });
@@ -376,22 +432,26 @@
         //Arrange
         resetContainer();
         //$(selectors.container).remove()
-        toastr.options.positionClass = positionClasses.bottomLeft; //Act
+        toastr.options.positionClass = positionClasses.bottomLeft;
+        //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); //$(selectors.container)
+        var $container = toastr.getContainer();
         //Assert
-        ok($container.hasClass(positionClasses.bottomLeft), 'Has position bottom left'); //Teardown
+        ok($container.hasClass(positionClasses.bottomLeft), 'Has position bottom left');
+        //Teardown
         $toast.remove();
         resetContainer();
     });
     test('Container - position top-left', 1, function () {
         //Arrange
         resetContainer();
-        toastr.options.positionClass = positionClasses.topLeft; //Act
+        toastr.options.positionClass = positionClasses.topLeft;
+        //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); //$(selectors.container)
+        var $container = toastr.getContainer(); 
         //Assert
-        ok($container.hasClass(positionClasses.topLeft), 'Has position top left'); //Teardown
+        ok($container.hasClass(positionClasses.topLeft), 'Has position top left');
+        //Teardown
         $toast.remove();
         resetContainer();
     });

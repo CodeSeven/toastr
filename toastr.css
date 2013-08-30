@@ -13,6 +13,43 @@
   color: #cccccc;
   text-decoration: none;
 }
+/*
+	https://github.com/twitter/bootstrap/blob/master/less/close.less
+	https://github.com/twitter/bootstrap/blob/master/less/alerts.less
+*/
+.toast-close-button {
+  position: relative;
+  right: -0.3em;
+  top: -0.3em;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  -webkit-text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.8;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  filter: alpha(opacity=80);
+}
+.toast-close-button:hover,
+.toast-close-button:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.4;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+  filter: alpha(opacity=40);
+}
+/*Additional properties for button version
+ iOS requires the button element instead of an anchor tag.
+ If you want the anchor version, it requires `href="#"`.*/
+button.toast-close-button {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
 .toast-top-full-width {
   top: 0;
   right: 0;
@@ -42,6 +79,8 @@
 #toast-container {
   position: fixed;
   z-index: 999999;
+  /*overrides*/
+
 }
 #toast-container * {
   -moz-box-sizing: border-box;
@@ -112,11 +151,19 @@
     padding: 8px 8px 8px 50px;
     width: 11em;
   }
+  #toast-container .toast-close-button {
+    right: -0.2em;
+    top: -0.2em;
+  }
 }
 @media all and (min-width: 241px) and (max-width: 480px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 18em;
+  }
+  #toast-container .toast-close-button {
+    right: -0.2em;
+    top: -0.2em;
   }
 }
 @media all and (min-width: 481px) and (max-width: 768px) {

@@ -26,7 +26,6 @@ http://nuget.org/packages/toastr
 ## [Bower](http://bower.io/)
 		bower install toastr
 
-
 ## Breaking Changes
  
 ####Animation Changes
@@ -64,8 +63,20 @@ For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html)
 	// Clears the current list of toasts
 	toastr.clear()
 
+### Close Button
+Optionally enable a close button
+
+    toastr.options.closeButton = true;
+
+Optionally override the close button's HTML. 
+
+    toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
+
+You can also override the CSS/LESS for `#toast-container .toast-close-button`
+
 ### Display Sequence
-	// Show newest toast at bottom (top is default)
+Show newest toast at bottom (top is default)
+
 	toastr.options.newestOnTop = false;
 
 ### Callbacks
