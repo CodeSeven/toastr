@@ -1,12 +1,12 @@
 # toastr
-**toastr** is a Javascript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
+**toastr** is a Javascript library for non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
 
 ## Current Version
-1.3.1
+1.3.1 (stable)
+2.0.0rc1 (unstable)
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
-
 - [Demo using FontAwesome icons with toastr](http://plnkr.co/edit/6W9URNyyp2ItO4aUWzBB?p=preview)
 
 ## CDNjs
@@ -20,12 +20,22 @@ Toastr is hosted at CDN JS
 - [//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/js/toastr.min.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/js/toastr.min.js) 
 - [//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/css/toastr.min.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/1.3.1/css/toastr.min.css)
 
-
 ## NuGet Gallery
 http://nuget.org/packages/toastr
 
 ## [Bower](http://bower.io/)
-bower install toastr
+		bower install toastr
+
+
+## Breaking Changes
+ 
+####Animation Changes
+The following animations options have been deprecated and should be replaced:
+ 
+ - Replace `options.fadeIn` with `options.showDuration`
+ - Replace `options.onFadeIn` with `options.onShown`
+ - Replace `options.fadeOut` with `options.hideDuration`
+ - Replace `options.onFadeOut` with `options.onHidden`
 
 ## Quick start
 
@@ -54,12 +64,34 @@ For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html)
 	// Clears the current list of toasts
 	toastr.clear()
 
+### Display Sequence
 	// Show newest toast at bottom (top is default)
 	toastr.options.newestOnTop = false;
 
-	// Define a callback for when the toast fades in/out
-	toastr.options.onFadeIn = function() { console.log('hello'); }
-	toastr.options.onFadeOut = function() { console.log('goodbye'); }
+### Callbacks
+	// Define a callback for when the toast is shown/hidden
+	toastr.options.onShown = function() { console.log('hello'); }
+	toastr.options.onHidden = function() { console.log('goodbye'); }
+
+### Animation Options
+Toastr will supply default animations, so you do not have to provide any of these settings. However you have the option to override the animations if you like.
+
+####Easings
+Optionally override the animation easing to show or hide the toasts. Default is swing. swing and linear are built into jQuery.
+
+	toastr.options.showEasing = 'swing';
+	toastr.options.hideEasing = 'linear';
+
+Using the jQuery Easing plugin (http://www.gsgd.co.uk/sandbox/jquery/easing/)
+
+	toastr.options.showEasing = 'easeOutBounce';
+	toastr.options.hideEasing = 'easeInBack';
+
+####Animation Method
+Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut. The methods fadeIn/fadeOut, slideDown/slideUp, and show/hide are built into jQuery.
+
+	toastr.options.showMethod = 'slideDown'; 
+	toastr.options.hideMethod = 'slideUp'; 
 
 ## Building Toastr
 

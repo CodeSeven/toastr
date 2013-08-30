@@ -28,6 +28,8 @@
         extendedTimeOut: 0,
         fadeOut: 0,
         fadeIn: 0,
+        showDuration: 0,
+        hideDuration: 0,
         debug: false
     };
 
@@ -244,28 +246,30 @@
         $toast.remove();
         clearContainerChildren();
     });
+
     module('event');
-    test('event - onFadeIn is executed', 1, function () {
+    asyncTest('event - onShown is executed', 1, function () {
         // Arrange
-        var run, onFadeIn;
-        run = false;
-        onFadeIn = function () { run = true; };
-        toastr.options.onFadeIn = onFadeIn;
+        var run = false;
+        var onShown = function () { run = true; };
+        toastr.options.onShown = onShown;
         // Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
-        // Assert
-        ok(run);
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
+        setTimeout(function () {
+            // Assert
+            ok(run);
+            //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, delay);
     });
 
-    asyncTest('event - onFadeOut is executed', 1, function () {
+    asyncTest('event - onHidden is executed', 1, function () {
         //Arrange
-        var run, onFadeOut;
-        run = false;
-        onFadeOut = function () { run = true; };
-        toastr.options.onFadeOut = onFadeOut;
+        var run = false;
+        var onHidden = function () { run = true; };
+        toastr.options.onHidden = onHidden;
         toastr.options.timeOut = 1;
         //Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
@@ -275,31 +279,32 @@
             $toast.remove();
             clearContainerChildren();
             start();
-        }, 2);
+        }, delay);
     });
 
-    asyncTest('event - onFadeIn and onFadeOut area both executeed', 2, function () {
+    asyncTest('event - onShown and onHidden are both executed', 2, function () {
         //Arrange
-        var onFadeInRun, onFadeIn, onFadeOutRun, onFadeOut;
-        onFadeInRun = false;
-        onFadeOutRun = false;
-        onFadeIn = function () { onFadeInRun = true; };
-        onFadeOut = function () { onFadeOutRun = true; };
-        toastr.options.onFadeIn = onFadeIn;
-        toastr.options.onFadeOut = onFadeOut;
-        toastr.options.timeOut = 1; //Act
+        var onShowRun = false;
+        var onHideRun = false;
+        var onShow = function () { onShowRun = true; };
+        var onHide = function () { onHideRun = true; };
+        toastr.options.onShown = onShow;
+        toastr.options.onHidden = onHide;
+        toastr.options.timeOut = 1;
+        //Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
         setTimeout(function () {
             // Assert
-            ok(onFadeInRun);
-            ok(onFadeOutRun); //Teardown
+            ok(onShowRun);
+            ok(onHideRun);
+            //Teardown
             $toast.remove();
             clearContainerChildren();
             start();
-        }, 2);
+        }, delay);
     });
 
-    test('event - message appears when no fadeIn or fadeOut function provided', 1, function () {
+    test('event - message appears when no show or hide method functions provided', 1, function () {
         //Arrange
         //Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
@@ -309,8 +314,7 @@
         $toast.remove();
         clearContainerChildren();
     });
-
-
+    
     module('order of appearance');
     test('Newest toast on top', 1, function () {
         //Arrange
