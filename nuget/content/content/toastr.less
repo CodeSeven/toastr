@@ -1,21 +1,21 @@
 ﻿// Mix-ins
 .borderRadius(@radius) {
-	   -moz-border-radius: @radius;
+	-moz-border-radius: @radius;
 	-webkit-border-radius: @radius;
-			border-radius: @radius;
+	border-radius: @radius;
 }
 
 .boxShadow(@boxShadow) {
-	   -moz-box-shadow: @boxShadow;
+	-moz-box-shadow: @boxShadow;
 	-webkit-box-shadow: @boxShadow;
-			box-shadow: @boxShadow;
+	box-shadow: @boxShadow;
 }
 
 .opacity(@opacity) {
 	@opacityPercent: @opacity * 100;
 	opacity: @opacity;
 	-ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{opacityPercent})";
-		filter: ~"alpha(opacity=@{opacityPercent})";
+	filter: ~"alpha(opacity=@{opacityPercent})";
 }
 
 .wordWrap(@wordWrap: break-word) {
@@ -47,11 +47,50 @@
 		color: @white;
 	}
 
-	a:hover {
-		color: @light-grey;
+		a:hover {
+			color: @light-grey;
+			text-decoration: none;
+		}
+}
+
+//#region close button
+/*
+	https://github.com/twitter/bootstrap/blob/master/less/close.less
+	https://github.com/twitter/bootstrap/blob/master/less/alerts.less
+*/
+.toast-close-button {
+	position: relative;
+	right: -0.3em;
+	top: -0.3em;
+	float: right;
+	font-size: 20px;
+	font-weight: bold;
+	color: @white;
+	-webkit-text-shadow: 0 1px 0 rgba(255,255,255,1);
+	text-shadow: 0 1px 0 rgba(255,255,255,1);
+	.opacity(0.8);
+
+	&:hover,
+	&:focus {
+		color: @black;
 		text-decoration: none;
+		cursor: pointer;
+		.opacity(0.4);
 	}
 }
+
+/*Additional properties for button version
+ iOS requires the button element instead of an anchor tag.
+ If you want the anchor version, it requires `href="#"`.*/
+button.toast-close-button {
+	padding: 0;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	-webkit-appearance: none;
+}
+
+//#endregion
 
 .toast-top-full-width {
 	top: 0;
@@ -90,11 +129,11 @@
 	z-index: 999999;
 
 	* {
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 	}
-	
+
 	> div {
 		margin: 0 0 6px;
 		padding: 15px 15px 15px 50px;
@@ -129,7 +168,7 @@
 		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII=") !important;
 	}
 
-	// overrides
+	/*overrides*/
 	&.toast-top-full-width > div,
 	&.toast-bottom-full-width > div {
 		width: 96%;
@@ -160,29 +199,39 @@
 /*Responsive Design*/
 
 @media all and (max-width: 240px) {
-	#toast-container > div {
-		padding: 8px 8px 8px 50px;
-		width: 108px;
+	#toast-container {
+
+		> div {
+			padding: 8px 8px 8px 50px;
+			width: 11em;
+		}
+
+		& .toast-close-button {
+			right: -0.2em;
+			top: -0.2em;
+		}
 	}
 }
 
-@media all and (min-width: 241px) and (max-width: 320px) {
-	#toast-container > div {
-		padding: 8px 8px 8px 50px;
-		width: 128px;
-	}
-}
+@media all and (min-width: 241px) and (max-width: 480px) {
+	#toast-container {
+		> div {
+			padding: 8px 8px 8px 50px;
+			width: 18em;
+		}
 
-@media all and (min-width: 321px) and (max-width: 480px) {
-	#toast-container > div {
-		padding: 8px 8px 8px 50px;
-		width: 192px;
+		& .toast-close-button {
+			right: -0.2em;
+			top: -0.2em;
+		}
 	}
 }
 
 @media all and (min-width: 481px) and (max-width: 768px) {
-	#toast-container > div {
-		padding: 15px 15px 15px 50px;
-		width: 300px;
+	#toast-container {
+		> div {
+			padding: 15px 15px 15px 50px;
+			width: 25em;
+		}
 	}
 }
