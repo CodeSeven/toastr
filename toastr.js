@@ -209,10 +209,14 @@
                 if (!options.onclick && options.tapToDismiss) {
                     $toastElement.click(hideToast);
                 }
+				if(options.closeButton && $closeElement){
+					$closeElement.click(function(){ hideToast(true); });
+				}
 
                 if (options.onclick) {
                     $toastElement.click(function () {
-                        options.onclick() && hideToast();
+                        options.onclick();
+                        hideToast();
                     });
                 }
 
@@ -224,8 +228,8 @@
 
                 return $toastElement;
 
-                function hideToast() {
-                    if ($(':focus', $toastElement).length > 0) {
+                function hideToast(override) {
+                    if ($(':focus', $toastElement).length && !override) {
                         return;
                     }
                     return $toastElement[options.hideMethod]({
