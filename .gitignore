@@ -1,4 +1,5 @@
 node_modules
+bower_components
 
 # Ignore Visual Studio  Project #
 ###################
