@@ -1,4 +1,4 @@
-/// <reference path="../../toastr.js" />
+/// <reference path="../../../toastr.js" />
 /// <reference path="../qunit/qunit.js" />
 (function () {
     var iconClasses = {

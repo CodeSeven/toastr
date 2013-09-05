@@ -22,11 +22,15 @@ module.exports = function(grunt) {
           "toastr.min.js": "toastr.js"
         }
       }
-    }
+    },
+	qunit: {
+		all: ['tests/toastr-tests.html']
+	}
   });
 
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-qunit');
 
-  grunt.registerTask('default', ['less', 'uglify']);
+  grunt.registerTask('default', ['less', 'qunit', 'uglify']);
 };
