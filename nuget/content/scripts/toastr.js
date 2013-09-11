@@ -1,4 +1,6 @@
 ﻿/*
+ * Toastr
+ * Version 2.0.0
  * Copyright 2012 John Papa and Hans Fjällemark.  
  * All Rights Reserved.  
  * Use, reproduction, distribution, and modification of this code is subject to the terms and 
@@ -10,7 +12,7 @@
 ; (function (define) {
     define(['jquery'], function ($) {
         return (function () {
-            var version = '2.0.0rc1';
+            var version = '2.0.0';
             var $container;
             var listener;
             var toastId = 0;
@@ -209,9 +211,12 @@
                 if (!options.onclick && options.tapToDismiss) {
                     $toastElement.click(hideToast);
                 }
-				if(options.closeButton && $closeElement){
-					$closeElement.click(function(){ hideToast(true); });
-				}
+                if (options.closeButton && $closeElement) {
+                    $closeElement.click(function (event) {
+                        event.stopPropogation();
+                        hideToast(true);
+                    });
+                }
 
                 if (options.onclick) {
                     $toastElement.click(function () {
