@@ -213,7 +213,7 @@
                 }
                 if (options.closeButton && $closeElement) {
                     $closeElement.click(function (event) {
-                        event.stopPropogation();
+                        event.stopPropagation();
                         hideToast(true);
                     });
                 }
