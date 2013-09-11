@@ -2,22 +2,20 @@ Toastr Release Checklist
 
 1. Update Toastr Version
 	* toastr.js
-	* bower.json
+	* bower.json (toastr-bower repo)
 	* package.json
 	* nuget versions and dependency versions
 	* readme file for github repo
 	* Consider HotTowel VSIX
 2. Test 
-	* samples
 	* main demo
 	* unit tests
 3. Nuget
 	* Copy new files in
 	* Build
 	* Test 
-4. Check docs
-	* Include Changes.txt
-	* Include License.txt
+4. CDNJS
+	* Update CDNJS
 5. Update Website with New Downloads
 6. Publish Bower 
 	* Include License and Readme
