@@ -25,6 +25,10 @@ http://nuget.org/packages/toastr
 ## [Bower](http://bower.io/)
 		bower install toastr
 
+
+## Wiki and Change Log
+[Wiki including Change Log](https://github.com/CodeSeven/toastr/wiki)
+
 ## Breaking Changes
  
 ####Animation Changes
