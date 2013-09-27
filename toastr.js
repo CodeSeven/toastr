@@ -298,7 +298,7 @@
 		})();
 	});
 }(typeof define === 'function' && define.amd ? define : function (deps, factory) {
-	if (typeof module !== 'undefined' && module.exports) { //Node
+	if (typeof define === "function" && typeof module !== 'undefined' && module.exports) { //Node
 		module.exports = factory(require(deps[0]));
 	} else {
 		window['toastr'] = factory(window['jQuery']);
