@@ -213,7 +213,11 @@
 				}
 				if (options.closeButton && $closeElement) {
 					$closeElement.click(function (event) {
-						event.stopPropagation();
+					   if( event.stopPropagation ) {
+                          event.stopPropagation();
+                       } else if( event.cancelBubble !== undefined && event.cancelBubble !== true ) {
+                          event.cancelBubble = true;
+                       }
 						hideToast(true);
 					});
 				}
