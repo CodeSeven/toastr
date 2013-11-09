@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Toastr
  * Version 2.0.1
  * Copyright 2012 John Papa and Hans Fjällemark.  
