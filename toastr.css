@@ -155,7 +155,7 @@ button.toast-close-button {
   background-color: #f89406;
 }
 /*Responsive Design*/
-@media all and (max-width: 240px) {
+@media all and (max-width: 239px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 11em;
@@ -165,7 +165,7 @@ button.toast-close-button {
     top: -0.2em;
   }
 }
-@media all and (min-width: 241px) and (max-width: 480px) {
+@media all and (min-width: 240px) and (max-width: 479px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 18em;
@@ -175,7 +175,7 @@ button.toast-close-button {
     top: -0.2em;
   }
 }
-@media all and (min-width: 481px) and (max-width: 768px) {
+@media all and (min-width: 480px) and (max-width: 767px) {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
     width: 25em;
