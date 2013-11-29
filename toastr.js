@@ -213,7 +213,11 @@
 				}
 				if (options.closeButton && $closeElement) {
 					$closeElement.click(function (event) {
-						event.stopPropagation();
+					   if( event.stopPropagation ) {
+                          event.stopPropagation();
+                       } else if( event.cancelBubble !== undefined && event.cancelBubble !== true ) {
+                          event.cancelBubble = true;
+                       }
 						hideToast(true);
 					});
 				}
@@ -299,7 +303,7 @@
 	});
 }(typeof define === 'function' && define.amd ? define : function (deps, factory) {
 	if (typeof module !== 'undefined' && module.exports) { //Node
-		module.exports = factory(require(deps[0]));
+		module.exports = factory(require('jquery'));
 	} else {
 		window['toastr'] = factory(window['jQuery']);
 	}
