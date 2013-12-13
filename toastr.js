@@ -120,6 +120,7 @@
 					hideDuration: 1000,
 					hideEasing: 'swing',
 					onHidden: undefined,
+					onClosed: undefined,
 
 					extendedTimeOut: 1000,
 					iconClasses: {
@@ -218,6 +219,10 @@
                        } else if( event.cancelBubble !== undefined && event.cancelBubble !== true ) {
                           event.cancelBubble = true;
                        }
+                       	$toastElement.off('mouseleave');
+						if (options.onClosed) {
+							options.onClosed();
+						}
 						hideToast(true);
 					});
 				}
