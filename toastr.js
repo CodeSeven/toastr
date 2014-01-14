@@ -7,6 +7,7 @@
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
  *
  * Author: John Papa and Hans Fjällemark
+ * ARIA Support: Greta Krafsig
  * Project: https://github.com/CodeSeven/toastr
  */
 ; (function (define) {
@@ -25,6 +26,7 @@
 
 			var toastr = {
 				clear: clear,
+				remove: remove,
 				error: error,
 				getContainer: getContainer,
 				info: info,
@@ -99,6 +101,18 @@
 						easing: options.hideEasing,
 						complete: function () { $container.remove(); }
 					});
+				}
+			}
+			
+			function remove($toastElement) {
+				var options = getOptions();
+				if (!$container) { getContainer(options); }
+				if ($toastElement && $(':focus', $toastElement).length === 0) {
+					removeToast($toastElement);
+					return;
+				}
+				if ($container.children().length) {
+					$container.remove();
 				}
 			}
 			//#endregion
@@ -188,7 +202,7 @@
 				}
 
 				if (options.closeButton) {
-					$closeElement.addClass('toast-close-button');
+					$closeElement.addClass('toast-close-button').attr("role", "button");
 					$toastElement.prepend($closeElement);
 				}
 
@@ -277,7 +291,10 @@
 				}
 				$container = $('<div/>')
 					.attr('id', options.containerId)
-					.addClass(options.positionClass);
+					.addClass(options.positionClass)
+					.attr('aria-live', 'polite')
+					.attr('role', 'alert');
+					
 				$container.appendTo($(options.target));
 				return $container;
 			}
