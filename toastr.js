@@ -273,7 +273,11 @@
 				if (!options) { options = getOptions(); }
 				$container = $('#' + options.containerId);
 				if ($container.length) {
-					return $container;
+					if (options.target && $container.parent() !== options.target) {
+						$container.remove();
+					} else {
+						return $container;
+					}
 				}
 				$container = $('<div/>')
 					.attr('id', options.containerId)
