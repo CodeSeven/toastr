@@ -273,7 +273,7 @@
 				if (!options) { options = getOptions(); }
 				$container = $('#' + options.containerId);
 				if ($container.length) {
-					if (options.target && $container.parent() !== options.target) {
+					if (options.target && $container.parent()[0] !== $(options.target)[0]) {
 						$container.remove();
 					} else {
 						return $container;
