@@ -199,6 +199,9 @@
 					$container.append($toastElement);
 				}
 
+				if (options.positionClass && !$container.hasClass(options.positionClass)) {
+					clearPositionClass($container).addClass(options.positionClass);
+				}
 
 				$toastElement[options.showMethod](
 					{ duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
@@ -269,15 +272,23 @@
 					);
 				}
 			}
+			
+			function clearPositionClass() {
+				return $container.removeClass('toast-top-full-width toast-bottom-full-width toast-top-left toast-top-right toast-bottom-right toast-bottom-left');
+			}
+			
 			function getContainer(options) {
 				if (!options) { options = getOptions(); }
 				$container = $('#' + options.containerId);
 				if ($container.length) {
-					return $container;
+					if (options.target && $container.parent() !== options.target) {
+						$container.remove();
+					} else {
+						return $container;
+					}
 				}
 				$container = $('<div/>')
-					.attr('id', options.containerId)
-					.addClass(options.positionClass);
+					.attr('id', options.containerId);
 				$container.appendTo($(options.target));
 				return $container;
 			}
