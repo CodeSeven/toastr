@@ -1,9 +1,9 @@
 ﻿/*
  * Toastr
  * Version 2.0.1
- * Copyright 2012 John Papa and Hans Fjällemark.  
- * All Rights Reserved.  
- * Use, reproduction, distribution, and modification of this code is subject to the terms and 
+ * Copyright 2012 John Papa and Hans Fjällemark.
+ * All Rights Reserved.
+ * Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
  *
  * Author: John Papa and Hans Fjällemark
@@ -25,61 +25,29 @@
 
 			var toastr = {
 				clear: clear,
-				error: error,
+        create: create,
 				getContainer: getContainer,
-				info: info,
 				options: {},
 				subscribe: subscribe,
-				success: success,
-				version: version,
-				warning: warning
+				version: version
 			};
 
 			return toastr;
 
 			//#region Accessible Methods
-			function error(message, title, optionsOverride) {
-				return notify({
-					type: toastType.error,
-					iconClass: getOptions().iconClasses.error,
-					message: message,
-					optionsOverride: optionsOverride,
-					title: title
-				});
-			}
 
-			function info(message, title, optionsOverride) {
-				return notify({
-					type: toastType.info,
-					iconClass: getOptions().iconClasses.info,
-					message: message,
-					optionsOverride: optionsOverride,
-					title: title
-				});
-			}
+      function create(type, message, title, optionsOverride) {
+        return notify({
+          type: toastType[type],
+          iconClass: getOptions().iconClasses[type],
+          message: message,
+          optionsOverride: optionsOverride,
+          title: title
+        });
+      }
 
 			function subscribe(callback) {
 				listener = callback;
-			}
-
-			function success(message, title, optionsOverride) {
-				return notify({
-					type: toastType.success,
-					iconClass: getOptions().iconClasses.success,
-					message: message,
-					optionsOverride: optionsOverride,
-					title: title
-				});
-			}
-
-			function warning(message, title, optionsOverride) {
-				return notify({
-					type: toastType.warning,
-					iconClass: getOptions().iconClasses.warning,
-					message: message,
-					optionsOverride: optionsOverride,
-					title: title
-				});
 			}
 
 			function clear($toastElement) {
