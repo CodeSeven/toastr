@@ -1,18 +1,32 @@
-
 # Ignore Visual Studio  Project #
 ###################
-*.config
 *.user
-*.csproj
 *.gpState
-*.sln
 *.suo
-/bin
-/obj
+bin
+obj
 /packages
-/Properties
-/Scripts
 
+# Ignore Node modules
+###################
+node_modules
+**/test/coverage
+**/build/dist
+
+# mongo db
+###################
+#Don't commit Mongo Database files
+*.lock
+*.0
+*.1
+*.ns
+journal
+
+#Do commit the zip of the mongo-database
+!ngCodeCamper.zip
+
+# Ignore Web Storm #
+.idea
 
 # Compiled source #
 ###################
@@ -34,6 +48,7 @@
 *.jar
 *.rar
 *.tar
+*.xap
 *.zip
 
 # Logs and databases #
@@ -41,6 +56,9 @@
 *.log
 *.sql
 *.sqlite
+# *.sdf
+*.mdf
+*.ldf
 
 # OS generated files #
 ######################
@@ -48,3 +66,6 @@
 ehthumbs.db
 Icon?
 Thumbs.db
+packages
+final/build/node_modules/
+
