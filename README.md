@@ -38,7 +38,7 @@ Inspired by https://github.com/Srirangan/notifer.js/.
 
 
 ## Copyright
-Copyright © 2012 [Hans Fjällemark](http://twitter.com/hfjallemark) & [John Papa](http://twitter.com/John_Papa).
+Copyright © 2012-2014 [Hans Fjällemark](http://twitter.com/hfjallemark) & [John Papa](http://twitter.com/John_Papa).
 
 ## License
 toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php
