@@ -7,17 +7,18 @@ Toastr Release Checklist
 	* nuget versions and dependency versions
 	* readme file for github repo
 	* Consider HotTowel VSIX
-2. Test 
-	* main demo
-	* unit tests
+2. Grunt
+	* run main demo
+	* run unit tests
+    * grunt to test, minify, etc.
 3. Nuget
 	* Copy new files in
 	* Build
-	* Test 
+	* Test
 4. CDNJS
 	* Update CDNJS
 5. Update Website with New Downloads
-6. Publish Bower 
+6. Publish Bower
 	* Include License and Readme
 	* Test Locally
 	* Update Github repo toastr-bower
