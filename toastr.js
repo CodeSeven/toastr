@@ -103,7 +103,7 @@
 					});
 				}
 			}
-			
+
 			function remove($toastElement) {
 				var options = getOptions();
 				if (!$container) { getContainer(options); }
@@ -260,7 +260,7 @@
 						easing: options.hideEasing,
 						complete: function () {
 							removeToast($toastElement);
-							if (options.onHidden) {
+							if (options.onHidden && response.state !== 'hidden') {
 								options.onHidden();
 							}
 							response.state = 'hidden';
@@ -294,7 +294,7 @@
 					.addClass(options.positionClass)
 					.attr('aria-live', 'polite')
 					.attr('role', 'alert');
-					
+
 				$container.appendTo($(options.target));
 				return $container;
 			}
