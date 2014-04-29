@@ -123,6 +123,17 @@
             start();
         }, delay);
     });
+    test('clear and show - after clear all toasts new toast still appears', 1, function () {
+        //Arrange
+        var $toast = [];
+        //Act
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        toastr.clear();
+        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+        //Assert
+        equal($(selectors.container).find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear'); //Teardown
+    });
     module('info');
     test('info - pass title and message', 3, function () {
         //Arrange
@@ -289,7 +300,7 @@
         //Arrange
         toastr.options.closeButton = true;
         //Act
-        var $toast = toastr.success(''); 
+        var $toast = toastr.success('');
         //Assert
         equal($toast.find('button.toast-close-button').length, 1, 'close button should exist with closeButton=true');
         //Teardown
@@ -364,7 +375,7 @@
         $toast.remove();
         clearContainerChildren();
     });
-    
+
     module('order of appearance');
     test('Newest toast on top', 1, function () {
         //Arrange
@@ -406,7 +417,7 @@
         toastr.options.positionClass = positionClasses.topRight;
         //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); 
+        var $container = toastr.getContainer();
         //Assert
         ok($container.hasClass(positionClasses.topRight), 'Has position top right');
         //Teardown
@@ -419,7 +430,7 @@
         toastr.options.positionClass = positionClasses.bottomRight;
         //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); 
+        var $container = toastr.getContainer();
         //Assert
         ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right');
         //Teardown
@@ -446,7 +457,7 @@
         toastr.options.positionClass = positionClasses.topLeft;
         //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); 
+        var $container = toastr.getContainer();
         //Assert
         ok($container.hasClass(positionClasses.topLeft), 'Has position top left');
         //Teardown
