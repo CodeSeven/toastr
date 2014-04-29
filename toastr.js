@@ -264,7 +264,7 @@
 								options.onHidden();
 							}
 							response.state = 'hidden';
-							response.endTime = new Date(),
+							response.endTime = new Date();
 							publish(response);
 						}
 					});
