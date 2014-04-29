@@ -1,7 +1,6 @@
 ﻿/*
  * Toastr
- * Version 2.0.1
- * Copyright 2012 John Papa and Hans Fjällemark.
+ * Copyright 2012-2014 John Papa and Hans Fjällemark.
  * All Rights Reserved.
  * Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
@@ -32,7 +31,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.0.1',
+                version: '2.0.2',
                 warning: warning
             };
 
