@@ -85,13 +85,13 @@
             $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
             equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear');
-            ok($toast[2].find('div.toast-title').find(':visible'), 'Toast after a clear is visible');
+            ok($toast[2].is(':visible'), 'Toast after a clear is visible');
             //Teardown
             resetContainer();
             start();
         }, delay);
     });
-    asyncTest('clear and show - clear removes toast container', 1, function () {
+    asyncTest('clear and show - clear removes toast container', 2, function () {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -102,6 +102,7 @@
         setTimeout(function () {
             //Assert
             equal($(selectors.container).length, 0, 'Toast container does not exist');
+            ok(!$toast[1].is(':visible'), 'Toast after a clear is visible');
             //Teardown
             resetContainer();
             start();
@@ -132,7 +133,9 @@
         toastr.clear();
         $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
         //Assert
-        equal($(selectors.container).find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear'); //Teardown
+        ok($toast[2].is(':visible'), 'Toast after a clear is visible');
+        //Teardown
+        resetContainer();
     });
     module('info');
     test('info - pass title and message', 3, function () {
