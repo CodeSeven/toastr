@@ -1,7 +1,7 @@
-﻿/*
+/*
  * Toastr
- * Version 2.0.2
- * Copyright 2012-2014 John Papa and Hans Fjällemark.
+ * Version 2.0.1
+ * Copyright 2012 John Papa and Hans Fjällemark.
  * All Rights Reserved.
  * Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
@@ -24,6 +24,7 @@
   color: #cccccc;
   text-decoration: none;
 }
+
 .toast-close-button {
   position: relative;
   right: -0.3em;
@@ -47,6 +48,7 @@
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
   filter: alpha(opacity=40);
 }
+
 /*Additional properties for button version
  iOS requires the button element instead of an anchor tag.
  If you want the anchor version, it requires `href="#"`.*/
@@ -153,7 +155,7 @@ button.toast-close-button {
   background-color: #f89406;
 }
 /*Responsive Design*/
-@media all and (max-width: 240px) {
+@media all and (max-width: 239px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 11em;
@@ -163,7 +165,7 @@ button.toast-close-button {
     top: -0.2em;
   }
 }
-@media all and (min-width: 241px) and (max-width: 480px) {
+@media all and (min-width: 240px) and (max-width: 479px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 18em;
@@ -173,7 +175,7 @@ button.toast-close-button {
     top: -0.2em;
   }
 }
-@media all and (min-width: 481px) and (max-width: 768px) {
+@media all and (min-width: 480px) and (max-width: 767px) {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
     width: 25em;
