@@ -14,16 +14,60 @@
 ## Breaking Changes
 - None
 
-# 2.0.0 (2013-09-01)
+# Current Version
+2.0.1  (2013-09-01)
 
 ## Breaking Changes
-
-####Animation Changes
+ 
+###Animation Changes
 The following animations options have been deprecated and should be replaced:
-
+ 
  - Replace `options.fadeIn` with `options.showDuration`
  - Replace `options.onFadeIn` with `options.onShown`
  - Replace `options.fadeOut` with `options.hideDuration`
  - Replace `options.onFadeOut` with `options.onHidden`
 
+## New Features
 
+### Close Button
+Optionally enable a close button
+
+    toastr.options.closeButton = true;
+
+Optionally override the close button's HTML. 
+
+    toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
+
+You can also override the CSS/LESS for `#toast-container .toast-close-button`
+
+### Callbacks
+	// Define a callback for when the toast is shown/hidden
+	toastr.options.onShown = function() { console.log('hello'); }
+	toastr.options.onHidden = function() { console.log('goodbye'); }
+
+### Animation Options
+Toastr will supply default animations, so you do not have to provide any of these settings. However you have the option to override the animations if you like.
+
+####Easings
+Optionally override the animation easing to show or hide the toasts. Default is swing. swing and linear are built into jQuery.
+
+	toastr.options.showEasing = 'swing';
+	toastr.options.hideEasing = 'linear';
+
+Using the jQuery Easing plugin (http://www.gsgd.co.uk/sandbox/jquery/easing/)
+
+	toastr.options.showEasing = 'easeOutBounce';
+	toastr.options.hideEasing = 'easeInBack';
+
+####Animation Method
+Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut. The methods fadeIn/fadeOut, slideDown/slideUp, and show/hide are built into jQuery.
+
+	toastr.options.showMethod = 'slideDown'; 
+	toastr.options.hideMethod = 'slideUp'; 
+
+# Version 1.3.1
+
+## Display Sequence
+Show newest toast at bottom (top is default)
+
+	toastr.options.newestOnTop = false;
