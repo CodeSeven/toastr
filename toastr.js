@@ -31,7 +31,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.0.2',
+                version: '2.0.3',
                 warning: warning
             };
 
@@ -46,6 +46,18 @@
                     optionsOverride: optionsOverride,
                     title: title
                 });
+            }
+
+            function getContainer(options, create) {
+                if (!options) { options = getOptions(); }
+                $container = $('#' + options.containerId);
+                if ($container.length) {
+                    return $container;
+                }
+                if(create) {
+                    $container = createContainer(options);
+                }
+                return $container;
             }
 
             function info(message, title, optionsOverride) {
@@ -124,6 +136,17 @@
                 return false;
             }
 
+            function createContainer(options) {
+                $container = $('<div/>')
+                    .attr('id', options.containerId)
+                    .addClass(options.positionClass)
+                    .attr('aria-live', 'polite')
+                    .attr('role', 'alert');
+
+                $container.appendTo($(options.target));
+                return $container;
+            }
+
             function getDefaults() {
                 return {
                     tapToDismiss: true,
@@ -159,15 +182,12 @@
             }
 
             function publish(args) {
-                if (!listener) {
-                    return;
-                }
+                if (!listener) { return; }
                 listener(args);
             }
 
             function notify(map) {
-                var
-                    options = getOptions(),
+                var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
 
                 if (typeof (map.optionsOverride) !== 'undefined') {
@@ -177,9 +197,8 @@
 
                 toastId++;
 
-                $container = getContainer(options);
-                var
-                    intervalId = null,
+                $container = getContainer(options, true);
+                var intervalId = null,
                     $toastElement = $('<div/>'),
                     $titleElement = $('<div/>'),
                     $messageElement = $('<div/>'),
@@ -222,14 +241,16 @@
                 $toastElement[options.showMethod](
                     { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
                 );
+
                 if (options.timeOut > 0) {
                     intervalId = setTimeout(hideToast, options.timeOut);
                 }
 
-                $toastElement.hover(stickAround, delayedhideToast);
+                $toastElement.hover(stickAround, delayedHideToast);
                 if (!options.onclick && options.tapToDismiss) {
                     $toastElement.click(hideToast);
                 }
+
                 if (options.closeButton && $closeElement) {
                     $closeElement.click(function (event) {
                         if( event.stopPropagation ) {
@@ -275,7 +296,7 @@
                     });
                 }
 
-                function delayedhideToast() {
+                function delayedHideToast() {
                     if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(hideToast, options.extendedTimeOut);
                     }
@@ -287,21 +308,6 @@
                         { duration: options.showDuration, easing: options.showEasing }
                     );
                 }
-            }
-            function getContainer(options) {
-                if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
-                if ($container.length) {
-                    return $container;
-                }
-                $container = $('<div/>')
-                    .attr('id', options.containerId)
-                    .addClass(options.positionClass)
-                    .attr('aria-live', 'polite')
-                    .attr('role', 'alert');
-
-                $container.appendTo($(options.target));
-                return $container;
             }
 
             function getOptions() {
