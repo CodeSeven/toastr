@@ -31,7 +31,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.0.3beta',
+                version: '2.0.3',
                 warning: warning
             };
 

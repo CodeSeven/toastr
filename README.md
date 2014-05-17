@@ -2,7 +2,7 @@
 **toastr** is a Javascript library for non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
 
 ## Current Version
-2.0.2
+2.0.3
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
@@ -12,12 +12,12 @@
 Toastr is hosted at CDN JS
 
 #### Debug
-- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.js)
-- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.css)
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js)
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css)
 
 #### Minified
-- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js) 
-- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css)
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js) 
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css)
 
 ## NuGet Gallery
 http://nuget.org/packages/toastr
@@ -143,7 +143,7 @@ Inspired by https://github.com/Srirangan/notifer.js/.
 
 
 ## Copyright
-Copyright © 2012 [Hans Fjällemark](http://twitter.com/hfjallemark) & [John Papa](http://twitter.com/John_Papa).
+Copyright © 2012-2014 [Hans Fjällemark](http://twitter.com/hfjallemark) & [John Papa](http://twitter.com/John_Papa).
 
 ## License 
 toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php

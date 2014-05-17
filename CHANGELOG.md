@@ -1,3 +1,8 @@
+# 2.0.3 (2014-05-17)
+
+## Bug Fixes
+- positionClass changes were not being honored due to 2.0.2 release changes. Refactored getContainer to only get the container, unless a 2nd boolean parameter is passed in in which case it will also create it if the container did not exist [871c2a6](https://github.com/CodeSeven/toastr/commit/871c2a6e438bb6b996cfb80286720604a4cf00fd)
+
 # 2.0.2 (2014-04-29)
 
 ## Features
