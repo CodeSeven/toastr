@@ -50,7 +50,7 @@
 
             function getContainer(options, create) {
                 if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
+                $container = $('#' + options.positionClass);
                 if ($container.length) {
                     return $container;
                 }
@@ -138,7 +138,8 @@
 
             function createContainer(options) {
                 $container = $('<div/>')
-                    .attr('id', options.containerId)
+                    .attr('id', options.positionClass)
+                    .addClass('toast-container')
                     .addClass(options.positionClass)
                     .attr('aria-live', 'polite')
                     .attr('role', 'alert');
