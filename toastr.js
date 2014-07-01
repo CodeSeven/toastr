@@ -35,6 +35,8 @@
                 warning: warning
             };
 
+            var previousToast;
+
             return toastr;
 
             //#region Accessible Methods
@@ -189,6 +191,15 @@
             function notify(map) {
                 var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
+
+                if(options.preventDuplicates){
+                    if(map.message === previousToast){
+                        return;
+                    }
+                    else{
+                        previousToast = map.message;
+                    }
+                }
 
                 if (typeof (map.optionsOverride) !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
