@@ -179,7 +179,8 @@
                     messageClass: 'toast-message',
                     target: 'body',
                     closeHtml: '<button>&times;</button>',
-                    newestOnTop: true
+                    newestOnTop: true,
+                    preventDuplicates: false
                 };
             }
 
