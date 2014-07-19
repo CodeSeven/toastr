@@ -221,7 +221,8 @@
                 }
 
                 if (map.message) {
-                    $messageElement.append(map.message).addClass(options.messageClass);
+                    var message_method = options.html ? 'html' : 'text';
+                    $messageElement[message_method](map.message).addClass(options.messageClass);
                     $toastElement.append($messageElement);
                 }
 

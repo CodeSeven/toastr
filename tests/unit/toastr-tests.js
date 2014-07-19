@@ -379,6 +379,17 @@
         clearContainerChildren();
     });
 
+    module('html encoding');
+    test('encodes html by default', 1, function () {
+      var $toast = toastr.success('<b>hello</b>');
+      ok($toast.find('.toast-message').html() == '&lt;b&gt;hello&lt;/b&gt;', 'html is encoded');
+    });
+
+    test('allows to disable html encoding', 1, function () {
+      var $toast = toastr.success('<b>hello</b>', null, { html: true });
+      ok($toast.find('.toast-message').html() == '<b>hello</b>', 'html is not encoded');
+    });
+
     module('order of appearance');
     test('Newest toast on top', 1, function () {
         //Arrange
