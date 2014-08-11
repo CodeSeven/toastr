@@ -19,7 +19,8 @@
                 error: 'error',
                 info: 'info',
                 success: 'success',
-                warning: 'warning'
+                warning: 'warning',
+				dialog: 'dialog'
             };
 
             var toastr = {
@@ -31,6 +32,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
+				dialog: dialog,
                 version: '2.0.3',
                 warning: warning
             };
@@ -67,6 +69,17 @@
                     message: message,
                     optionsOverride: optionsOverride,
                     title: title
+                });
+            }
+			
+			function dialog(message, title, onOk, optionsOverride) {
+                return notify({
+                    type: toastType.dialog,
+                    iconClass: getOptions().iconClasses.info,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title,
+					onOk: onOk
                 });
             }
 
@@ -236,7 +249,6 @@
                 } else {
                     $container.append($toastElement);
                 }
-
 
                 $toastElement[options.showMethod](
                     { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
