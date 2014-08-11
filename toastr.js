@@ -237,6 +237,19 @@
                     $messageElement.append(map.message).addClass(options.messageClass);
                     $toastElement.append($messageElement);
                 }
+				
+				if (map.type == toastType.dialog) {
+					var okBtn = $("<button>Ok</button>");
+ 					var cancelBtn = $("<button>Cancel</button>");
+					okBtn.on('click', function() {
+						map.onOk();
+					});
+					okBtn.addClass('toast-dialog-button');
+					cancelBtn.addClass('toast-dialog-button');
+					$toastElement.append(okBtn);
+					$toastElement.append(cancelBtn);
+					debugger;
+				}
 
                 if (options.closeButton) {
                     $closeElement.addClass('toast-close-button').attr("role", "button");
