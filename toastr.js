@@ -75,7 +75,7 @@
 			function dialog(message, title, onOk, optionsOverride) {
                 return notify({
                     type: toastType.dialog,
-                    iconClass: getOptions().iconClasses.info,
+                    iconClass: getOptions().iconClasses.dialog,
                     message: message,
                     optionsOverride: optionsOverride,
                     title: title,
@@ -181,6 +181,7 @@
                         error: 'toast-error',
                         info: 'toast-info',
                         success: 'toast-success',
+                        dialog: 'toast-dialog',
                         warning: 'toast-warning'
                     },
                     iconClass: 'toast-info',
