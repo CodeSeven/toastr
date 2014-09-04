@@ -19,7 +19,8 @@
                 error: 'error',
                 info: 'info',
                 success: 'success',
-                warning: 'warning'
+                warning: 'warning',
+				dialog: 'dialog'
             };
 
             var toastr = {
@@ -31,6 +32,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
+				dialog: dialog,
                 version: '2.0.3',
                 warning: warning
             };
@@ -69,6 +71,17 @@
                     message: message,
                     optionsOverride: optionsOverride,
                     title: title
+                });
+            }
+			
+			function dialog(message, title, onOk, optionsOverride) {
+                return notify({
+                    type: toastType.dialog,
+                    iconClass: getOptions().iconClasses.dialog,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title,
+					onOk: onOk
                 });
             }
 
@@ -170,6 +183,7 @@
                         error: 'toast-error',
                         info: 'toast-info',
                         success: 'toast-success',
+                        dialog: 'toast-dialog',
                         warning: 'toast-warning'
                     },
                     iconClass: 'toast-info',
@@ -236,6 +250,19 @@
                     $messageElement.append(map.message).addClass(options.messageClass);
                     $toastElement.append($messageElement);
                 }
+				
+				if (map.type == toastType.dialog) {
+					var okBtn = $("<button>Ok</button>");
+ 					var cancelBtn = $("<button>Cancel</button>");
+					okBtn.on('click', function() {
+						map.onOk();
+					});
+					okBtn.addClass('toast-dialog-button');
+					cancelBtn.addClass('toast-dialog-button');
+					$toastElement.append(okBtn);
+					$toastElement.append(cancelBtn);
+					debugger;
+				}
 
                 if (options.closeButton) {
                     $closeElement.addClass('toast-close-button').attr("role", "button");
@@ -248,7 +275,6 @@
                 } else {
                     $container.append($toastElement);
                 }
-
 
                 $toastElement[options.showMethod](
                     { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
