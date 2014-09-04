@@ -379,6 +379,36 @@
         clearContainerChildren();
     });
 
+    test('event - prevent duplicate sequential toasts.', 1, function(){
+        toastr.options.preventDuplicates = true;
+
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle);
+        $toast[1] = toastr.info(sampleMsg, sampleTitle);
+        $toast[2] = toastr.info(sampleMsg + " 1", sampleTitle);
+        var $container = toastr.getContainer();
+
+        ok($container && $container.children().length === 2)
+
+        clearContainerChildren();
+    });
+
+    test('event - allow duplicate sequential toasts.', 1, function(){
+        toastr.options.preventDuplicates = false;
+
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle);
+        $toast[1] = toastr.info(sampleMsg, sampleTitle);
+        $toast[1] = toastr.info(sampleMsg, sampleTitle);
+        var $container = toastr.getContainer();
+
+        ok($container && $container.children().length === 3)
+
+        clearContainerChildren();
+    });
+
+
+
     module('order of appearance');
     test('Newest toast on top', 1, function () {
         //Arrange

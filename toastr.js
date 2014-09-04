@@ -35,6 +35,8 @@
                 warning: warning
             };
 
+            var previousToast;
+
             return toastr;
 
             //#region Accessible Methods
@@ -177,7 +179,8 @@
                     messageClass: 'toast-message',
                     target: 'body',
                     closeHtml: '<button>&times;</button>',
-                    newestOnTop: true
+                    newestOnTop: true,
+                    preventDuplicates: false
                 };
             }
 
@@ -189,6 +192,15 @@
             function notify(map) {
                 var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
+
+                if(options.preventDuplicates){
+                    if(map.message === previousToast){
+                        return;
+                    }
+                    else{
+                        previousToast = map.message;
+                    }
+                }
 
                 if (typeof (map.optionsOverride) !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
