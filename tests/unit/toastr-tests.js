@@ -388,7 +388,7 @@
         $toast[2] = toastr.info(sampleMsg + " 1", sampleTitle);
         var $container = toastr.getContainer();
 
-        ok($container && $container.children().length === 2)
+        ok($container && $container.children().length === 2);
 
         clearContainerChildren();
     });
@@ -402,7 +402,7 @@
         $toast[1] = toastr.info(sampleMsg, sampleTitle);
         var $container = toastr.getContainer();
 
-        ok($container && $container.children().length === 3)
+        ok($container && $container.children().length === 3);
 
         clearContainerChildren();
     });
