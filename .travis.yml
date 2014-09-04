@@ -5,7 +5,6 @@ node_js:
 install:
   - npm install -g grunt-cli karma-cli bower
   - npm install
-  - bower install
 
 script:
   - npm test
