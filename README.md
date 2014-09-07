@@ -108,6 +108,13 @@ Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut.
 
 	toastr.options.showMethod = 'slideDown'; 
 	toastr.options.hideMethod = 'slideUp'; 
+	
+
+###Timeouts
+Control how toastr interacts with users by setting timeouts appropriately.
+
+	toastr.options.timeout = 30; // How long the toast will display without user interaction
+	toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
 
 ## Building Toastr
 
