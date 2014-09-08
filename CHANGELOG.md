@@ -1,11 +1,37 @@
+
+
+# 2.1.0 (TBD)
+
+## New Features
+- Prevent duplicate sequential toasts [aa083d8](https://github.com/CodeSeven/toastr/commit/ccb377b6015d557dbb987df74750b97b3aa083d8)
+
+`toastr.options.preventDuplicates = true;`
+
+## Bug Fixes
+- None
+
+## Breaking Changes
+- None
+
+## Dev Ops
+
+- Add karma test runner
+- Added Travis CI hooks
+
 # 2.0.3 (2014-05-17)
 
+## New Features
+ - None
+ 
 ## Bug Fixes
 - positionClass changes were not being honored due to 2.0.2 release changes. Refactored getContainer to only get the container, unless a 2nd boolean parameter is passed in in which case it will also create it if the container did not exist [871c2a6](https://github.com/CodeSeven/toastr/commit/871c2a6e438bb6b996cfb80286720604a4cf00fd)
 
+## Breaking Changes
+ - None
+
 # 2.0.2 (2014-04-29)
 
-## Features
+## New Features
 - Added simple ARIA reader support ([45c6362](https://github.com/CodeSeven/toastr/commit/45c63628476f6b085a6579dc681f4fe61ba5820c))
 - Added SASS support (direct port of CSS for now) ([b4c8b34](https://github.com/CodeSeven/toastr/commit/b4c8b3460efb8aa51c730dd38c35ef6b025db2cc))
 
@@ -19,18 +45,7 @@
 ## Breaking Changes
 - None
 
-# Current Version
-2.0.1  (2013-09-01)
-
-## Breaking Changes
- 
-###Animation Changes
-The following animations options have been deprecated and should be replaced:
- 
- - Replace `options.fadeIn` with `options.showDuration`
- - Replace `options.onFadeIn` with `options.onShown`
- - Replace `options.fadeOut` with `options.hideDuration`
- - Replace `options.onFadeOut` with `options.onHidden`
+# 2.0.1  (2013-09-01)
 
 ## New Features
 
@@ -76,6 +91,16 @@ Control how toastr interacts with users by setting timeouts appropriately.
 
 	toastr.options.timeout = 30; // How long the toast will display without user interaction
 	toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
+
+## Breaking Changes
+
+###Animation Changes
+The following animations options have been deprecated and should be replaced:
+ 
+ - Replace `options.fadeIn` with `options.showDuration`
+ - Replace `options.onFadeIn` with `options.onShown`
+ - Replace `options.fadeOut` with `options.hideDuration`
+ - Replace `options.onFadeOut` with `options.onHidden`
 
 # Version 1.3.1
 
