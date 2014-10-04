@@ -87,6 +87,18 @@ button.toast-close-button {
 
 //#endregion
 
+.toast-top-center {
+	top: 0;
+	right: 0;
+	width: 100%;
+}
+
+.toast-bottom-center {
+	bottom: 0;
+	right: 0;
+	width: 100%;
+}
+
 .toast-top-full-width {
 	top: 0;
 	right: 0;
@@ -164,6 +176,12 @@ button.toast-close-button {
 	}
 
 	/*overrides*/
+	&.toast-top-center > div,
+	&.toast-bottom-center > div {
+		width: 300px;
+		margin: auto;
+	}
+
 	&.toast-top-full-width > div,
 	&.toast-bottom-full-width > div {
 		width: 96%;
