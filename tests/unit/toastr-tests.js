@@ -11,7 +11,9 @@
         topRight: 'toast-top-right',
         bottomRight: 'toast-bottom-right',
         bottomLeft: 'toast-bottom-left',
-        topLeft: 'toast-top-left'
+        topLeft: 'toast-top-left',
+        topCenter: 'toast-top-center',
+        bottomCenter: 'toast-bottom-center'
     };
     var sampleMsg = 'I don\'t think they really exist';
     var sampleTitle = 'ROUS';
@@ -493,6 +495,32 @@
         var $container = toastr.getContainer();
         //Assert
         ok($container.hasClass(positionClasses.topLeft), 'Has position top left');
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+    test('Container - position top-center', 1, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.positionClass = positionClasses.topCenter;
+        //Act
+        var $toast = toastr.success(sampleMsg);
+        var $container = toastr.getContainer();
+        //Assert
+        ok($container.hasClass(positionClasses.topCenter), 'Has position top center');
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+    test('Container - position bottom-center', 1, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.positionClass = positionClasses.bottomCenter;
+        //Act
+        var $toast = toastr.success(sampleMsg);
+        var $container = toastr.getContainer();
+        //Assert
+        ok($container.hasClass(positionClasses.bottomCenter), 'Has position bottom center');
         //Teardown
         $toast.remove();
         resetContainer();
