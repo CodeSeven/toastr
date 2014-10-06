@@ -1,9 +1,10 @@
 
 
-# 2.1.0 (TBD)
+# 2.1.0  (2014-10-04)
 
 ## New Features
 - Prevent duplicate sequential toasts [aa083d8](https://github.com/CodeSeven/toastr/commit/ccb377b6015d557dbb987df74750b97b3aa083d8)
+- Add support for top-center and bottom-center toasts [86a4798](https://github.com/CodeSeven/toastr/commit/dd86ea3e4936d3815751b9bf36a73adf959a1f47)
 
 `toastr.options.preventDuplicates = true;`
 
