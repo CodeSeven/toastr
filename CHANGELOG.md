@@ -18,7 +18,7 @@
 - None
 
 ## Breaking Changes
-- Nones
+- None
 
 ## Dev Ops
 
