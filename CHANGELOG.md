@@ -4,7 +4,7 @@
 
 ## New Features
 - Prevent duplicate sequential toasts [aa083d8](https://github.com/CodeSeven/toastr/commit/ccb377b6015d557dbb987df74750b97b3aa083d8)
-- Add support for top-center and bottom-center toasts [86a4798](https://github.com/CodeSeven/toastr/commit/dd86ea3e4936d3815751b9bf36a73adf959a1f47)
+- Add support for top-center and bottom-center toasts [86a4798](https://github.com/CodeSeven/toastr/commit/86a4798e76c7d8516521780b7bd085d6bb4c371b)
 
 `toastr.options.preventDuplicates = true;`
 
