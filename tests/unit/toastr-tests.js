@@ -313,6 +313,34 @@
         clearContainerChildren();
     });
 
+    module('progressBar', {
+        teardown: function () {
+            toastr.options.progressBar = false;
+        }
+    });
+    test('progress bar disabled', 1, function () {
+        //Arrange
+        toastr.options.progressBar = false;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        equal($toast.find('div.toast-progress').length, 0, 'progress bar should not exist with progressBar=false');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('progress bar enabled', 1, function () {
+        //Arrange
+        toastr.options.progressBar = true;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        equal($toast.find('div.toast-progress').length, 1, 'progress bar should exist with progressBar=true');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
     module('event');
     asyncTest('event - onShown is executed', 1, function () {
         // Arrange
