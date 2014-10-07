@@ -180,7 +180,8 @@
                     target: 'body',
                     closeHtml: '<button>&times;</button>',
                     newestOnTop: true,
-                    preventDuplicates: false
+                    preventDuplicates: false,
+					progressBar: false
                 };
             }
 
@@ -211,9 +212,13 @@
 
                 $container = getContainer(options, true);
                 var intervalId = null,
+                    progressIntervalId = null,
+                    hideTime = null,
+					currentTimeOut = null,
                     $toastElement = $('<div/>'),
                     $titleElement = $('<div/>'),
                     $messageElement = $('<div/>'),
+                    $progressElement = $('<div/>'),
                     $closeElement = $(options.closeHtml),
                     response = {
                         toastId: toastId,
@@ -242,6 +247,11 @@
                     $toastElement.prepend($closeElement);
                 }
 
+				if (options.progressBar) {
+					$progressElement.addClass('toast-progress');
+					$toastElement.prepend($progressElement);
+				}
+
                 $toastElement.hide();
                 if (options.newestOnTop) {
                     $container.prepend($toastElement);
@@ -256,6 +266,11 @@
 
                 if (options.timeOut > 0) {
                     intervalId = setTimeout(hideToast, options.timeOut);
+					currentTimeOut = parseFloat(options.timeOut);
+					hideTime = new Date().getTime() + currentTimeOut;
+					if (options.progressBar) {
+						progressIntervalId = setInterval(updateProgress, 10);
+					}
                 }
 
                 $toastElement.hover(stickAround, delayedHideToast);
@@ -293,6 +308,7 @@
                     if ($(':focus', $toastElement).length && !override) {
                         return;
                     }
+                    clearTimeout(progressIntervalId);
                     return $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
                         easing: options.hideEasing,
@@ -311,14 +327,22 @@
                 function delayedHideToast() {
                     if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(hideToast, options.extendedTimeOut);
+						currentTimeOut = parseFloat(options.extendedTimeOut);
+                        hideTime = new Date().getTime() + currentTimeOut;
                     }
                 }
 
                 function stickAround() {
                     clearTimeout(intervalId);
+                    hideTime = 0;
                     $toastElement.stop(true, true)[options.showMethod](
                         { duration: options.showDuration, easing: options.showEasing }
                     );
+                }
+
+                function updateProgress() {
+                    var percentage = ((hideTime - (new Date().getTime())) / currentTimeOut) * 100;
+                    $progressElement.width(percentage + '%');
                 }
             }
 
