@@ -174,7 +174,7 @@ button.toast-close-button {
   left: 0;
   bottom: 0;
   height: 4px;
-  background-color: #000;
+  background-color: #000000;
   opacity: 0.4;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
   filter: alpha(opacity=40);
