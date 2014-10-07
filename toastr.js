@@ -181,7 +181,7 @@
                     closeHtml: '<button>&times;</button>',
                     newestOnTop: true,
                     preventDuplicates: false,
-					progressBar: false
+                    progressBar: false
                 };
             }
 
@@ -214,7 +214,7 @@
                 var intervalId = null,
                     progressIntervalId = null,
                     hideTime = null,
-					currentTimeOut = null,
+                    currentTimeOut = null,
                     $toastElement = $('<div/>'),
                     $titleElement = $('<div/>'),
                     $messageElement = $('<div/>'),
@@ -247,10 +247,10 @@
                     $toastElement.prepend($closeElement);
                 }
 
-				if (options.progressBar) {
-					$progressElement.addClass('toast-progress');
-					$toastElement.prepend($progressElement);
-				}
+                if (options.progressBar) {
+                    $progressElement.addClass('toast-progress');
+                    $toastElement.prepend($progressElement);
+                }
 
                 $toastElement.hide();
                 if (options.newestOnTop) {
@@ -266,11 +266,11 @@
 
                 if (options.timeOut > 0) {
                     intervalId = setTimeout(hideToast, options.timeOut);
-					currentTimeOut = parseFloat(options.timeOut);
-					hideTime = new Date().getTime() + currentTimeOut;
-					if (options.progressBar) {
-						progressIntervalId = setInterval(updateProgress, 10);
-					}
+                    currentTimeOut = parseFloat(options.timeOut);
+                    hideTime = new Date().getTime() + currentTimeOut;
+                    if (options.progressBar) {
+                        progressIntervalId = setInterval(updateProgress, 10);
+                    }
                 }
 
                 $toastElement.hover(stickAround, delayedHideToast);
@@ -327,7 +327,7 @@
                 function delayedHideToast() {
                     if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(hideToast, options.extendedTimeOut);
-						currentTimeOut = parseFloat(options.extendedTimeOut);
+                        currentTimeOut = parseFloat(options.extendedTimeOut);
                         hideTime = new Date().getTime() + currentTimeOut;
                     }
                 }
