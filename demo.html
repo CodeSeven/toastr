@@ -44,6 +44,11 @@
                             <input id="debugInfo" type="checkbox" value="checked" class="input-mini" />Debug
                         </label>
                     </div>
+                    <div class="controls">
+                        <label class="checkbox" for="progressBar">
+                            <input id="progressBar" type="checkbox" value="checked" class="input-mini" />Progress Bar
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -195,6 +200,7 @@
             toastr.options = {
                 closeButton: $('#closeButton').prop('checked'),
                 debug: $('#debugInfo').prop('checked'),
+                progressBar: $('#progressBar').prop('checked'),
                 positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                 onclick: null
             };

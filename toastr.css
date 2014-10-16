@@ -104,6 +104,8 @@ button.toast-close-button {
   box-sizing: border-box;
 }
 #toast-container > div {
+  position: relative;
+  overflow: hidden;
   margin: 0 0 6px;
   padding: 15px 15px 15px 50px;
   width: 300px;
@@ -166,6 +168,18 @@ button.toast-close-button {
 .toast-warning {
   background-color: #f89406;
 }
+
+.toast-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  background-color: #000000;
+  opacity: 0.4;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+  filter: alpha(opacity=40);
+}
+
 /*Responsive Design*/
 @media all and (max-width: 240px) {
   #toast-container > div {
