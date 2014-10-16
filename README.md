@@ -115,6 +115,12 @@ Control how toastr interacts with users by setting timeouts appropriately.
 
 	toastr.options.timeout = 30; // How long the toast will display without user interaction
 	toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
+	
+
+###Progress Bar
+Visually indicate how long before a toast expires.
+
+    toastr.options.progressBar = true; 
 
 ## Building Toastr
 
