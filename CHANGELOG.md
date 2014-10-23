@@ -3,9 +3,9 @@
 # 2.1.0  (2014-10-15)
 
 ## New Features
-- Prevent duplicate sequential toasts [aa083d8](https://github.com/CodeSeven/toastr/commit/ccb377b6015d557dbb987df74750b97b3aa083d8)
-- Add support for top-center and bottom-center toasts [86a4798](https://github.com/CodeSeven/toastr/commit/86a4798e76c7d8516521780b7bd085d6bb4c371b)
-- Add feature allowing progress bars to be shown for toasts [PR 189](https://github.com/CodeSeven/toastr/pull/189) 
+- Prevent duplicate sequential toasts [SBero](https://github.com/sbero) | [aa083d8](https://github.com/CodeSeven/toastr/commit/ccb377b6015d557dbb987df74750b97b3aa083d8) 
+- Add support for top-center and bottom-center toasts [showwin](https://github.com/showwin) | [86a4798](https://github.com/CodeSeven/toastr/commit/86a4798e76c7d8516521780b7bd085d6bb4c371b)
+- Add feature allowing progress bars to be shown for toasts [TravisTX](https://github.com/TravisTX) | [PR 189](https://github.com/CodeSeven/toastr/pull/189) 
 
 `toastr.options.preventDuplicates = true;`
 
