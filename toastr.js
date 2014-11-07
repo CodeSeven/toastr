@@ -18,6 +18,7 @@
             var toastType = {
                 error: 'error',
                 info: 'info',
+                debug: 'debug',
                 success: 'success',
                 warning: 'warning'
             };
@@ -28,6 +29,7 @@
                 error: error,
                 getContainer: getContainer,
                 info: info,
+                debug: debug,
                 options: {},
                 subscribe: subscribe,
                 success: success,
@@ -75,6 +77,17 @@
             function subscribe(callback) {
                 listener = callback;
             }
+
+			function debug(message, title, optionsOverride) {
+			    return notify({
+    				type: toastType.debug,
+					iconClass: getOptions().iconClasses.info,
+					message: message,
+					optionsOverride: optionsOverride,
+					title: title
+				});
+			}
+
 
             function success(message, title, optionsOverride) {
                 return notify({
