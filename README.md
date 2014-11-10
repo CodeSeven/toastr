@@ -109,12 +109,23 @@ Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut.
 	toastr.options.showMethod = 'slideDown'; 
 	toastr.options.hideMethod = 'slideUp'; 
 	
+###Prevent Duplicates
+Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to the previous toast based on their message content.
+
+    toastr.options.preventDuplicates = true;
+	
 
 ###Timeouts
 Control how toastr interacts with users by setting timeouts appropriately.
 
 	toastr.options.timeout = 30; // How long the toast will display without user interaction
 	toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
+	
+
+###Progress Bar
+Visually indicate how long before a toast expires.
+
+    toastr.options.progressBar = true; 
 
 ## Building Toastr
 
