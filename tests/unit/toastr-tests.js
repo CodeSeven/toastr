@@ -554,6 +554,11 @@
         resetContainer();
     });
 
+	module('amd');
+	test('Supports loading as the toastr module', 1, function () {
+		strictEqual((toastrModule || {}).moduleName, 'toastr');
+	});
+
     function resetContainer() {
         var $container = toastr.getContainer();
         if ($container) {
