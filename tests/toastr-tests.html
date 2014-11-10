@@ -16,7 +16,27 @@
 	<script src="http://code.jquery.com/jquery.js" type="text/javascript"></script>
 	<script src="../bower_components/jquery/jquery.js" type="text/javascript"></script>
 	<script src="../toastr.js" type="text/javascript"></script>
+	<script src="requirejs/require.js" type="text/javascript"></script>
 	<script src="qunit/qunit.js" type="text/javascript"></script>
+	<script>
+	QUnit.config.autostart = false;
+	var toastrModule;
+	function getConfig() {
+		return {
+			'baseUrl': './',
+			'waitSeconds': 0,
+			'paths': {
+				'toastr': '../toastr',
+				'jquery':["http://code.jquery.com/jquery", "../bower_components/jquery/jquery"]
+			},
+		};
+	}
+	require(getConfig(), ['toastr'], function(toastr) {
+		toastrModule = toastr;
+		toastrModule.moduleName = 'toastr';
+		QUnit.start();
+	});
+	</script>
 	<script src="unit/toastr-tests.js" type="text/javascript"></script>
 </body>
 </html>

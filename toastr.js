@@ -9,8 +9,18 @@
  * Author: John Papa and Hans Fjällemark
  * Project: https://github.com/CodeSeven/toastr
  */
-; (function (define) {
-	define(['jquery'], function ($) {
+; (function (factory) {
+    if (typeof module !== 'undefined' && module.exports) { //Node
+        module.exports = factory(require(deps[0]));
+    } else
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else {
+        // Browser globals
+        window['toastr'] = factory(jQuery);
+    }
+}(function ($) {
 		return (function () {
 			var version = '2.0.1';
 			var $container;
@@ -300,11 +310,5 @@
 			//#endregion
 
 		})();
-	});
-}(typeof define === 'function' && define.amd ? define : function (deps, factory) {
-	if (typeof module !== 'undefined' && module.exports) { //Node
-		module.exports = factory(require('jquery'));
-	} else {
-		window['toastr'] = factory(window['jQuery']);
-	}
-}));
+    })
+);
