@@ -1,9 +1,8 @@
 ﻿/*
  * Toastr
- * Version 2.0.1
- * Copyright 2012 John Papa and Hans Fjällemark.  
- * All Rights Reserved.  
- * Use, reproduction, distribution, and modification of this code is subject to the terms and 
+ * Copyright 2012-2014 John Papa and Hans Fjällemark.
+ * All Rights Reserved.
+ * Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
  *
  * Author: John Papa and Hans Fjällemark
@@ -24,7 +23,6 @@
   color: #cccccc;
   text-decoration: none;
 }
-
 .toast-close-button {
   position: relative;
   right: -0.3em;
@@ -48,7 +46,6 @@
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
   filter: alpha(opacity=40);
 }
-
 /*Additional properties for button version
  iOS requires the button element instead of an anchor tag.
  If you want the anchor version, it requires `href="#"`.*/

@@ -87,6 +87,18 @@ button.toast-close-button {
 
 //#endregion
 
+.toast-top-center {
+	top: 0;
+	right: 0;
+	width: 100%;
+}
+
+.toast-bottom-center {
+	bottom: 0;
+	right: 0;
+	width: 100%;
+}
+
 .toast-top-full-width {
 	top: 0;
 	right: 0;
@@ -130,6 +142,8 @@ button.toast-close-button {
 	}
 
 	> div {
+		position: relative;
+		overflow: hidden;
 		margin: 0 0 6px;
 		padding: 15px 15px 15px 50px;
 		width: 300px;
@@ -164,6 +178,12 @@ button.toast-close-button {
 	}
 
 	/*overrides*/
+	&.toast-top-center > div,
+	&.toast-bottom-center > div {
+		width: 300px;
+		margin: auto;
+	}
+
 	&.toast-top-full-width > div,
 	&.toast-bottom-full-width > div {
 		width: 96%;
@@ -189,6 +209,15 @@ button.toast-close-button {
 
 .toast-warning {
 	background-color: @orange;
+}
+
+.toast-progress {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 4px;
+	background-color: @black;
+	.opacity(0.4);
 }
 
 /*Responsive Design*/

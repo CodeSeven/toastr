@@ -11,7 +11,9 @@
         topRight: 'toast-top-right',
         bottomRight: 'toast-bottom-right',
         bottomLeft: 'toast-bottom-left',
-        topLeft: 'toast-top-left'
+        topLeft: 'toast-top-left',
+        topCenter: 'toast-top-center',
+        bottomCenter: 'toast-bottom-center'
     };
     var sampleMsg = 'I don\'t think they really exist';
     var sampleTitle = 'ROUS';
@@ -85,13 +87,13 @@
             $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
             equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear');
-            ok($toast[2].find('div.toast-title').find(':visible'), 'Toast after a clear is visible');
+            ok($toast[2].is(':visible'), 'Toast after a clear is visible');
             //Teardown
             resetContainer();
             start();
         }, delay);
     });
-    asyncTest('clear and show - clear removes toast container', 1, function () {
+    asyncTest('clear and show - clear removes toast container', 2, function () {
         //Arrange
         var $toast = [];
         $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
@@ -102,6 +104,7 @@
         setTimeout(function () {
             //Assert
             equal($(selectors.container).length, 0, 'Toast container does not exist');
+            ok(!$toast[1].is(':visible'), 'Toast after a clear is visible');
             //Teardown
             resetContainer();
             start();
@@ -122,6 +125,19 @@
             resetContainer();
             start();
         }, delay);
+    });
+    test('clear and show - after clear all toasts new toast still appears', 1, function () {
+        //Arrange
+        var $toast = [];
+        //Act
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        toastr.clear();
+        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+        //Assert
+        ok($toast[2].is(':visible'), 'Toast after a clear is visible');
+        //Teardown
+        resetContainer();
     });
     module('info');
     test('info - pass title and message', 3, function () {
@@ -289,9 +305,37 @@
         //Arrange
         toastr.options.closeButton = true;
         //Act
-        var $toast = toastr.success(''); 
+        var $toast = toastr.success('');
         //Assert
         equal($toast.find('button.toast-close-button').length, 1, 'close button should exist with closeButton=true');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
+    module('progressBar', {
+        teardown: function () {
+            toastr.options.progressBar = false;
+        }
+    });
+    test('progress bar disabled', 1, function () {
+        //Arrange
+        toastr.options.progressBar = false;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        equal($toast.find('div.toast-progress').length, 0, 'progress bar should not exist with progressBar=false');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('progress bar enabled', 1, function () {
+        //Arrange
+        toastr.options.progressBar = true;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        equal($toast.find('div.toast-progress').length, 1, 'progress bar should exist with progressBar=true');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -364,7 +408,37 @@
         $toast.remove();
         clearContainerChildren();
     });
-    
+
+    test('event - prevent duplicate sequential toasts.', 1, function(){
+        toastr.options.preventDuplicates = true;
+
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle);
+        $toast[1] = toastr.info(sampleMsg, sampleTitle);
+        $toast[2] = toastr.info(sampleMsg + " 1", sampleTitle);
+        var $container = toastr.getContainer();
+
+        ok($container && $container.children().length === 2);
+
+        clearContainerChildren();
+    });
+
+    test('event - allow duplicate sequential toasts.', 1, function(){
+        toastr.options.preventDuplicates = false;
+
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle);
+        $toast[1] = toastr.info(sampleMsg, sampleTitle);
+        $toast[1] = toastr.info(sampleMsg, sampleTitle);
+        var $container = toastr.getContainer();
+
+        ok($container && $container.children().length === 3);
+
+        clearContainerChildren();
+    });
+
+
+
     module('order of appearance');
     test('Newest toast on top', 1, function () {
         //Arrange
@@ -406,7 +480,7 @@
         toastr.options.positionClass = positionClasses.topRight;
         //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); 
+        var $container = toastr.getContainer();
         //Assert
         ok($container.hasClass(positionClasses.topRight), 'Has position top right');
         //Teardown
@@ -419,7 +493,7 @@
         toastr.options.positionClass = positionClasses.bottomRight;
         //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); 
+        var $container = toastr.getContainer();
         //Assert
         ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right');
         //Teardown
@@ -446,9 +520,35 @@
         toastr.options.positionClass = positionClasses.topLeft;
         //Act
         var $toast = toastr.success(sampleMsg);
-        var $container = toastr.getContainer(); 
+        var $container = toastr.getContainer();
         //Assert
         ok($container.hasClass(positionClasses.topLeft), 'Has position top left');
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+    test('Container - position top-center', 1, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.positionClass = positionClasses.topCenter;
+        //Act
+        var $toast = toastr.success(sampleMsg);
+        var $container = toastr.getContainer();
+        //Assert
+        ok($container.hasClass(positionClasses.topCenter), 'Has position top center');
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+    test('Container - position bottom-center', 1, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.positionClass = positionClasses.bottomCenter;
+        //Act
+        var $toast = toastr.success(sampleMsg);
+        var $container = toastr.getContainer();
+        //Assert
+        ok($container.hasClass(positionClasses.bottomCenter), 'Has position bottom center');
         //Teardown
         $toast.remove();
         resetContainer();

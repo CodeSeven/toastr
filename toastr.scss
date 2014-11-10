@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Toastr
  * Copyright 2012-2014 John Papa and Hans Fjällemark.
  * All Rights Reserved.

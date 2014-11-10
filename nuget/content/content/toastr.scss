@@ -1,6 +1,7 @@
-﻿/*
+/*
  * Toastr
- * Copyright 2012-2014 John Papa and Hans Fjällemark.
+ * Version 2.0.1
+ * Copyright 2012 John Papa and Hans Fjällemark.
  * All Rights Reserved.
  * Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
@@ -23,6 +24,7 @@
   color: #cccccc;
   text-decoration: none;
 }
+
 .toast-close-button {
   position: relative;
   right: -0.3em;
@@ -46,6 +48,7 @@
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
   filter: alpha(opacity=40);
 }
+
 /*Additional properties for button version
  iOS requires the button element instead of an anchor tag.
  If you want the anchor version, it requires `href="#"`.*/
@@ -55,16 +58,6 @@ button.toast-close-button {
   background: transparent;
   border: 0;
   -webkit-appearance: none;
-}
-.toast-top-center {
-  top: 0;
-  right: 0;
-  width: 100%;
-}
-.toast-bottom-center {
-  bottom: 0;
-  right: 0;
-  width: 100%;
 }
 .toast-top-full-width {
   top: 0;
@@ -104,8 +97,6 @@ button.toast-close-button {
   box-sizing: border-box;
 }
 #toast-container > div {
-  position: relative;
-  overflow: hidden;
   margin: 0 0 6px;
   padding: 15px 15px 15px 50px;
   width: 300px;
@@ -143,11 +134,6 @@ button.toast-close-button {
 #toast-container > .toast-warning {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII=") !important;
 }
-#toast-container.toast-top-center > div,
-#toast-container.toast-bottom-center > div {
-  width: 300px;
-  margin: auto;
-}
 #toast-container.toast-top-full-width > div,
 #toast-container.toast-bottom-full-width > div {
   width: 96%;
@@ -168,20 +154,8 @@ button.toast-close-button {
 .toast-warning {
   background-color: #f89406;
 }
-
-.toast-progress {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 4px;
-  background-color: #000000;
-  opacity: 0.4;
-  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
-  filter: alpha(opacity=40);
-}
-
 /*Responsive Design*/
-@media all and (max-width: 240px) {
+@media all and (max-width: 239px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 11em;
@@ -191,7 +165,7 @@ button.toast-close-button {
     top: -0.2em;
   }
 }
-@media all and (min-width: 241px) and (max-width: 480px) {
+@media all and (min-width: 240px) and (max-width: 479px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 18em;
@@ -201,7 +175,7 @@ button.toast-close-button {
     top: -0.2em;
   }
 }
-@media all and (min-width: 481px) and (max-width: 768px) {
+@media all and (min-width: 480px) and (max-width: 767px) {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
     width: 25em;
