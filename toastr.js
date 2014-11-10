@@ -1,6 +1,6 @@
 ﻿/*
  * Toastr
- * Copyright 2012-2014 John Papa and Hans Fjällemark.
+ * Copyright 2012-2014 John Papa, Hans Fjällemark, and Tim Ferrell.
  * All Rights Reserved.
  * Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
@@ -31,9 +31,11 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.0.3',
+                version: '2.1.0',
                 warning: warning
             };
+
+            var previousToast;
 
             return toastr;
 
@@ -172,12 +174,14 @@
                     },
                     iconClass: 'toast-info',
                     positionClass: 'toast-top-right',
-                    timeOut: 5000, // Set timeOut and extendedTimeout to 0 to make it sticky
+                    timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
                     target: 'body',
                     closeHtml: '<button>&times;</button>',
-                    newestOnTop: true
+                    newestOnTop: true,
+                    preventDuplicates: false,
+                    progressBar: false
                 };
             }
 
@@ -189,6 +193,15 @@
             function notify(map) {
                 var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
+
+                if(options.preventDuplicates){
+                    if(map.message === previousToast){
+                        return;
+                    }
+                    else{
+                        previousToast = map.message;
+                    }
+                }
 
                 if (typeof (map.optionsOverride) !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
@@ -202,7 +215,13 @@
                     $toastElement = $('<div/>'),
                     $titleElement = $('<div/>'),
                     $messageElement = $('<div/>'),
+                    $progressElement = $('<div/>'),
                     $closeElement = $(options.closeHtml),
+                    progressBar = {
+                        intervalId: null,
+                        hideEta: null,
+                        maxHideTime: null
+                    },
                     response = {
                         toastId: toastId,
                         state: 'visible',
@@ -230,6 +249,11 @@
                     $toastElement.prepend($closeElement);
                 }
 
+                if (options.progressBar) {
+                    $progressElement.addClass('toast-progress');
+                    $toastElement.prepend($progressElement);
+                }
+
                 $toastElement.hide();
                 if (options.newestOnTop) {
                     $container.prepend($toastElement);
@@ -244,6 +268,11 @@
 
                 if (options.timeOut > 0) {
                     intervalId = setTimeout(hideToast, options.timeOut);
+                    progressBar.maxHideTime = parseFloat(options.timeOut);
+                    progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+                    if (options.progressBar) {
+                        progressBar.intervalId = setInterval(updateProgress, 10);
+                    }
                 }
 
                 $toastElement.hover(stickAround, delayedHideToast);
@@ -281,6 +310,7 @@
                     if ($(':focus', $toastElement).length && !override) {
                         return;
                     }
+                    clearTimeout(progressBar.intervalId);
                     return $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
                         easing: options.hideEasing,
@@ -299,14 +329,22 @@
                 function delayedHideToast() {
                     if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                         intervalId = setTimeout(hideToast, options.extendedTimeOut);
+                        progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
+                        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
                     }
                 }
 
                 function stickAround() {
                     clearTimeout(intervalId);
+                    progressBar.hideEta = 0;
                     $toastElement.stop(true, true)[options.showMethod](
                         { duration: options.showDuration, easing: options.showEasing }
                     );
+                }
+
+                function updateProgress() {
+                    var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
+                    $progressElement.width(percentage + '%');
                 }
             }
 

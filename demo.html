@@ -44,9 +44,13 @@
                             <input id="debugInfo" type="checkbox" value="checked" class="input-mini" />Debug
                         </label>
                     </div>
+                    <div class="controls">
+                        <label class="checkbox" for="progressBar">
+                            <input id="progressBar" type="checkbox" value="checked" class="input-mini" />Progress Bar
+                        </label>
+                    </div>
                 </div>
             </div>
-
             <div class="span2">
                 <div class="control-group" id="toastTypeGroup">
                     <div class="controls">
@@ -86,6 +90,12 @@
                         <label class="radio">
                             <input type="radio" name="positions" value="toast-bottom-full-width" />Bottom Full Width
                         </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-top-center" />Top Center
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-bottom-center" />Bottom Center
+                        </label>
                     </div>
                 </div>
             </div>
@@ -120,7 +130,7 @@
                         <label class="control-label" for="timeOut">Time out</label>
                         <input id="timeOut" type="text" placeholder="ms" class="input-mini" value="5000" />
 
-                        <label class="control-label" for="timeOut">Extended time out</label>
+                        <label class="control-label" for="extendedTimeOut">Extended time out</label>
                         <input id="extendedTimeOut" type="text" placeholder="ms" class="input-mini" value="1000" />
                     </div>
                 </div>
@@ -191,6 +201,7 @@
             toastr.options = {
                 closeButton: $('#closeButton').prop('checked'),
                 debug: $('#debugInfo').prop('checked'),
+                progressBar: $('#progressBar').prop('checked'),
                 positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                 onclick: null
             };
