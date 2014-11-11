@@ -25,7 +25,7 @@ Toastr Release Checklist
 	* Github tag
 	* Register with Bower
 7. Publish Nugets
-8. Release on Github
+8. Release on Github 
 	* Tag with semver
 	* Attach all artifacts
 9. Blog post
