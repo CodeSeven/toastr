@@ -142,7 +142,6 @@ At this point the dependencies have been installed and you can build Toastr
 - Run the test `gulp test`
 - Run the build `gulp`
 
-
 ## Authors
 **John Papa**
 
