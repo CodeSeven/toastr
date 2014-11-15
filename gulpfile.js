@@ -8,9 +8,10 @@ var plato = require('plato');
 var plug = require('gulp-load-plugins')();
 
 var paths = {
-    js: 'toastr.js',
-    css: 'toastr.css',
-    report: './report'
+    js: './toastr.js',
+    css: './toastr.css',
+    report: './report',
+    build: './build'
 };
 
 var colors = plug.util.colors;
@@ -40,21 +41,18 @@ gulp.task('analyze', function() {
  * Minify and bundle the app's JavaScript
  * @return {Stream}
  */
-gulp.task('js', ['analyze'], function() {
+gulp.task('js', function() {
     log('Bundling, minifying, and copying the app\'s JavaScript');
 
-    var source = [];
-    
     return gulp
-        .src(source)
+        .src(paths.js)
         .pipe(plug.sourcemaps.init())
         .pipe(plug.bytediff.start())
-        .pipe(plug.uglify({
-            mangle: true
-        }))
+        .pipe(plug.uglify({}))
         .pipe(plug.bytediff.stop(bytediffFormatter))
-        .pipe(plug.sourcemaps.write('./'))
-        .pipe(gulp.dest('toastr.min.js'));
+        .pipe(plug.sourcemaps.write(paths.build))
+        .pipe(plug.rename('toastr.min.js'))
+        .pipe(gulp.dest(paths.build));
 });
 
 /**
@@ -69,7 +67,8 @@ gulp.task('css', function() {
         .pipe(plug.bytediff.start())
         .pipe(plug.minifyCss({}))
         .pipe(plug.bytediff.stop(bytediffFormatter))
-        .pipe(gulp.dest('toastr.min.css'));
+        .pipe(plug.rename('toastr.min.css'))
+        .pipe(gulp.dest(paths.build));
 });
 
 /**
@@ -87,8 +86,9 @@ gulp.task('default', ['js', 'css'], function() {
  */
 gulp.task('clean', function(cb) {
     log('Cleaning: ' + plug.util.colors.blue(paths.report));
+    log('Cleaning: ' + plug.util.colors.blue(paths.build));
 
-    var delPaths = [paths.report];
+    var delPaths = [paths.build, paths.report];
     del(delPaths, cb);
 });
 
