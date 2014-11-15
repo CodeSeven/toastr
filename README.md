@@ -129,9 +129,9 @@ Visually indicate how long before a toast expires.
 
 ## Building Toastr
 
-To build the minified and css versions of Toastr you will need [node](http://nodejs.org) installed.
+To build the minified and css versions of Toastr you will need [node](http://nodejs.org) installed. Use Homebrew or Chocolatey.
 
-`npm install -g [gulp](http://gruntjs.com/)`
+`npm install -g gulp`
 
 Run `npm install`
 
