@@ -25,10 +25,6 @@ For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
 		toastr.info('Are you the 6 fingered man?')
 
 ## Authors
-**Hans Fjällemark**
-
-+ [http://twitter.com/hfjallemark](http://twitter.com/hfjallemark)
-
 **John Papa**
 
 + [http://twitter.com/John_Papa](http://twitter.com/John_Papa)
@@ -37,12 +33,16 @@ For other API calls, see the [demo](http://CodeSeven.github.com/toastr).
 
 + [http://twitter.com/ferrell_tim](http://twitter.com/ferrell_tim)
 
+**Hans Fjällemark**
+
++ [http://twitter.com/hfjallemark](http://twitter.com/hfjallemark)
+
 ## Credits
 Inspired by https://github.com/Srirangan/notifer.js/.
 
 
 ## Copyright
-Copyright © 2012-2014 [Hans Fjällemark](http://twitter.com/hfjallemark) , [John Papa](http://twitter.com/John_Papa), and [Tim Ferrell](http://twitter.com/ferrell_tim)
+Copyright © 2012-2014 
 
 ## License
 toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php

@@ -6,6 +6,8 @@
 bin
 obj
 /packages
+/report
+/tests/coverage
 
 # Ignore Node modules
 ###################

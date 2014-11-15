@@ -1,12 +1,13 @@
-﻿/*
+/*
  * Toastr
- * Copyright 2012-2014 John Papa, Hans Fjällemark, and Tim Ferrell.
+ * Copyright 2012-2014 
+ * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
  * All Rights Reserved.
  * Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
  *
- * Author: John Papa and Hans Fjällemark
  * ARIA Support: Greta Krafsig
+ *
  * Project: https://github.com/CodeSeven/toastr
  */
 ; (function (define) {
@@ -56,7 +57,7 @@
                 if ($container.length) {
                     return $container;
                 }
-                if(create) {
+                if (create) {
                     $container = createContainer(options);
                 }
                 return $container;
@@ -119,14 +120,14 @@
 
             //#region Internal Methods
 
-            function clearContainer(options){
+            function clearContainer (options) {
                 var toastsToClear = $container.children();
                 for (var i = toastsToClear.length - 1; i >= 0; i--) {
                     clearToast($(toastsToClear[i]), options);
-                };
+                }
             }
 
-            function clearToast($toastElement, options){
+            function clearToast ($toastElement, options) {
                 if ($toastElement && $(':focus', $toastElement).length === 0) {
                     $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
@@ -194,11 +195,10 @@
                 var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
 
-                if(options.preventDuplicates){
-                    if(map.message === previousToast){
+                if (options.preventDuplicates) {
+                    if (map.message === previousToast) {
                         return;
-                    }
-                    else{
+                    } else {
                         previousToast = map.message;
                     }
                 }
@@ -245,7 +245,7 @@
                 }
 
                 if (options.closeButton) {
-                    $closeElement.addClass('toast-close-button').attr("role", "button");
+                    $closeElement.addClass('toast-close-button').attr('role', 'button');
                     $toastElement.prepend($closeElement);
                 }
 
@@ -260,10 +260,8 @@
                 } else {
                     $container.append($toastElement);
                 }
-
-
                 $toastElement[options.showMethod](
-                    { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
+                    {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
                 );
 
                 if (options.timeOut > 0) {
@@ -282,9 +280,9 @@
 
                 if (options.closeButton && $closeElement) {
                     $closeElement.click(function (event) {
-                        if( event.stopPropagation ) {
+                        if (event.stopPropagation) {
                             event.stopPropagation();
-                        } else if( event.cancelBubble !== undefined && event.cancelBubble !== true ) {
+                        } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
                             event.cancelBubble = true;
                         }
                         hideToast(true);
@@ -338,7 +336,7 @@
                     clearTimeout(intervalId);
                     progressBar.hideEta = 0;
                     $toastElement.stop(true, true)[options.showMethod](
-                        { duration: options.showDuration, easing: options.showEasing }
+                        {duration: options.showDuration, easing: options.showEasing}
                     );
                 }
 
