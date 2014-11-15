@@ -7,10 +7,11 @@ Toastr Release Checklist
 	* nuget versions and dependency versions
 	* readme file for github repo
 	* Consider HotTowel VSIX
-2. Grunt
+2. Gulp
 	* run main demo
-	* run unit tests
-    * grunt to test, minify, etc.
+    * `gulp analyze`
+	* `gulp test`
+    * `gulp`
 3. Nuget
 	* Copy new files in
 	* Build
