@@ -39,6 +39,7 @@
     "gulp-jshint": "^1.9.0",
     "gulp-load-plugins": "^0.7.1",
     "gulp-load-utils": "0.0.4",
+    "gulp-task-listing": "^0.3.0",
     "gulp-util": "^3.0.1",
     "jquery": "^2.1.1",
     "jshint-stylish": "^1.0.0",

@@ -80,9 +80,9 @@ gulp.task('css', function() {
  * @return {Stream}
  */
 gulp.task('clean', function(cb) {
-    log('Cleaning: ' + plug.util.colors.blue(paths.build));
+    log('Cleaning: ' + plug.util.colors.blue(paths.report));
 
-    var delPaths = [].concat(paths.build, paths.report);
+    var delPaths = [paths.report];
     del(delPaths, cb);
 });
 
