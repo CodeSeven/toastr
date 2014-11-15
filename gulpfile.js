@@ -8,7 +8,6 @@ var plato = require('plato');
 var plug = require('gulp-load-plugins')();
 
 var paths = {
-    build : './',
     js: 'toastr.js',
     css: 'toastr.css',
     report: './report'
