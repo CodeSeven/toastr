@@ -48,14 +48,14 @@ gulp.task('js', ['analyze'], function() {
     
     return gulp
         .src(source)
-        // .pipe(plug.sourcemaps.init()) // get screwed up in the file rev process
+        .pipe(plug.sourcemaps.init())
         .pipe(plug.bytediff.start())
         .pipe(plug.uglify({
             mangle: true
         }))
         .pipe(plug.bytediff.stop(bytediffFormatter))
-        // .pipe(plug.sourcemaps.write('./'))
-        .pipe(gulp.dest(paths.build));
+        .pipe(plug.sourcemaps.write('./'))
+        .pipe(gulp.dest('toastr.min.js'));
 });
 
 /**
@@ -70,7 +70,14 @@ gulp.task('css', function() {
         .pipe(plug.bytediff.start())
         .pipe(plug.minifyCss({}))
         .pipe(plug.bytediff.stop(bytediffFormatter))
-        .pipe(gulp.dest(paths.build));
+        .pipe(gulp.dest('toastr.min.css'));
+});
+
+/**
+ * Build js and css
+ */
+gulp.task('default', ['js', 'css'], function() {
+    log('Analyze, Build CSS and JS');
 });
 
 /**
