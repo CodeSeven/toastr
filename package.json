@@ -58,6 +58,6 @@
     "qunitjs": "~1.14.0"
   },
   "scripts": {
-    "test": "karma start"
+    "test": "gulp test"
   }
 }
