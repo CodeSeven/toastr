@@ -1,4 +1,95 @@
-/*
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - toastr.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>toastr.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">63.06</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">362</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">56.59</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">3.06</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/*
  * Toastr
  * Copyright 2012-2014 
  * Auhors: John Papa, Hans Fjällemark, and Tim Ferrell.
@@ -11,16 +102,16 @@
  * Project: https://github.com/CodeSeven/toastr
  */
 ; (function (define) {
-    define(['jquery'], function ($) {
+    define([&#039;jquery&#039;], function ($) {
         return (function () {
             var $container;
             var listener;
             var toastId = 0;
             var toastType = {
-                error: 'error',
-                info: 'info',
-                success: 'success',
-                warning: 'warning'
+                error: &#039;error&#039;,
+                info: &#039;info&#039;,
+                success: &#039;success&#039;,
+                warning: &#039;warning&#039;
             };
 
             var toastr = {
@@ -32,7 +123,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.1.0',
+                version: &#039;2.1.0&#039;,
                 warning: warning
             };
 
@@ -53,7 +144,7 @@
 
             function getContainer(options, create) {
                 if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
+                $container = $(&#039;#&#039; + options.containerId);
                 if ($container.length) {
                     return $container;
                 }
@@ -108,7 +199,7 @@
             function remove($toastElement) {
                 var options = getOptions();
                 if (!$container) { getContainer(options); }
-                if ($toastElement && $(':focus', $toastElement).length === 0) {
+                if ($toastElement &amp;&amp; $(&#039;:focus&#039;, $toastElement).length === 0) {
                     removeToast($toastElement);
                     return;
                 }
@@ -122,13 +213,13 @@
 
             function clearContainer (options) {
                 var toastsToClear = $container.children();
-                for (var i = toastsToClear.length - 1; i >= 0; i--) {
+                for (var i = toastsToClear.length - 1; i &gt;= 0; i--) {
                     clearToast($(toastsToClear[i]), options);
                 }
             }
 
             function clearToast ($toastElement, options) {
-                if ($toastElement && $(':focus', $toastElement).length === 0) {
+                if ($toastElement &amp;&amp; $(&#039;:focus&#039;, $toastElement).length === 0) {
                     $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
                         easing: options.hideEasing,
@@ -140,11 +231,11 @@
             }
 
             function createContainer(options) {
-                $container = $('<div/>')
-                    .attr('id', options.containerId)
+                $container = $(&#039;&lt;div/&gt;&#039;)
+                    .attr(&#039;id&#039;, options.containerId)
                     .addClass(options.positionClass)
-                    .attr('aria-live', 'polite')
-                    .attr('role', 'alert');
+                    .attr(&#039;aria-live&#039;, &#039;polite&#039;)
+                    .attr(&#039;role&#039;, &#039;alert&#039;);
 
                 $container.appendTo($(options.target));
                 return $container;
@@ -153,33 +244,33 @@
             function getDefaults() {
                 return {
                     tapToDismiss: true,
-                    toastClass: 'toast',
-                    containerId: 'toast-container',
+                    toastClass: &#039;toast&#039;,
+                    containerId: &#039;toast-container&#039;,
                     debug: false,
 
-                    showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
+                    showMethod: &#039;fadeIn&#039;, //fadeIn, slideDown, and show are built into jQuery
                     showDuration: 300,
-                    showEasing: 'swing', //swing and linear are built into jQuery
+                    showEasing: &#039;swing&#039;, //swing and linear are built into jQuery
                     onShown: undefined,
-                    hideMethod: 'fadeOut',
+                    hideMethod: &#039;fadeOut&#039;,
                     hideDuration: 1000,
-                    hideEasing: 'swing',
+                    hideEasing: &#039;swing&#039;,
                     onHidden: undefined,
 
                     extendedTimeOut: 1000,
                     iconClasses: {
-                        error: 'toast-error',
-                        info: 'toast-info',
-                        success: 'toast-success',
-                        warning: 'toast-warning'
+                        error: &#039;toast-error&#039;,
+                        info: &#039;toast-info&#039;,
+                        success: &#039;toast-success&#039;,
+                        warning: &#039;toast-warning&#039;
                     },
-                    iconClass: 'toast-info',
-                    positionClass: 'toast-top-right',
+                    iconClass: &#039;toast-info&#039;,
+                    positionClass: &#039;toast-top-right&#039;,
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-                    titleClass: 'toast-title',
-                    messageClass: 'toast-message',
-                    target: 'body',
-                    closeHtml: '<button>&times;</button>',
+                    titleClass: &#039;toast-title&#039;,
+                    messageClass: &#039;toast-message&#039;,
+                    target: &#039;body&#039;,
+                    closeHtml: &#039;&lt;button&gt;&amp;times;&lt;/button&gt;&#039;,
                     newestOnTop: true,
                     preventDuplicates: false,
                     progressBar: false
@@ -203,7 +294,7 @@
                     }
                 }
 
-                if (typeof (map.optionsOverride) !== 'undefined') {
+                if (typeof (map.optionsOverride) !== &#039;undefined&#039;) {
                     options = $.extend(options, map.optionsOverride);
                     iconClass = map.optionsOverride.iconClass || iconClass;
                 }
@@ -212,10 +303,10 @@
 
                 $container = getContainer(options, true);
                 var intervalId = null,
-                    $toastElement = $('<div/>'),
-                    $titleElement = $('<div/>'),
-                    $messageElement = $('<div/>'),
-                    $progressElement = $('<div/>'),
+                    $toastElement = $(&#039;&lt;div/&gt;&#039;),
+                    $titleElement = $(&#039;&lt;div/&gt;&#039;),
+                    $messageElement = $(&#039;&lt;div/&gt;&#039;),
+                    $progressElement = $(&#039;&lt;div/&gt;&#039;),
                     $closeElement = $(options.closeHtml),
                     progressBar = {
                         intervalId: null,
@@ -224,7 +315,7 @@
                     },
                     response = {
                         toastId: toastId,
-                        state: 'visible',
+                        state: &#039;visible&#039;,
                         startTime: new Date(),
                         options: options,
                         map: map
@@ -245,12 +336,12 @@
                 }
 
                 if (options.closeButton) {
-                    $closeElement.addClass('toast-close-button').attr('role', 'button');
+                    $closeElement.addClass(&#039;toast-close-button&#039;).attr(&#039;role&#039;, &#039;button&#039;);
                     $toastElement.prepend($closeElement);
                 }
 
                 if (options.progressBar) {
-                    $progressElement.addClass('toast-progress');
+                    $progressElement.addClass(&#039;toast-progress&#039;);
                     $toastElement.prepend($progressElement);
                 }
 
@@ -264,7 +355,7 @@
                     {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
                 );
 
-                if (options.timeOut > 0) {
+                if (options.timeOut &gt; 0) {
                     intervalId = setTimeout(hideToast, options.timeOut);
                     progressBar.maxHideTime = parseFloat(options.timeOut);
                     progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
@@ -274,15 +365,15 @@
                 }
 
                 $toastElement.hover(stickAround, delayedHideToast);
-                if (!options.onclick && options.tapToDismiss) {
+                if (!options.onclick &amp;&amp; options.tapToDismiss) {
                     $toastElement.click(hideToast);
                 }
 
-                if (options.closeButton && $closeElement) {
+                if (options.closeButton &amp;&amp; $closeElement) {
                     $closeElement.click(function (event) {
                         if (event.stopPropagation) {
                             event.stopPropagation();
-                        } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
+                        } else if (event.cancelBubble !== undefined &amp;&amp; event.cancelBubble !== true) {
                             event.cancelBubble = true;
                         }
                         hideToast(true);
@@ -298,14 +389,14 @@
 
                 publish(response);
 
-                if (options.debug && console) {
+                if (options.debug &amp;&amp; console) {
                     console.log(response);
                 }
 
                 return $toastElement;
 
                 function hideToast(override) {
-                    if ($(':focus', $toastElement).length && !override) {
+                    if ($(&#039;:focus&#039;, $toastElement).length &amp;&amp; !override) {
                         return;
                     }
                     clearTimeout(progressBar.intervalId);
@@ -314,10 +405,10 @@
                         easing: options.hideEasing,
                         complete: function () {
                             removeToast($toastElement);
-                            if (options.onHidden && response.state !== 'hidden') {
+                            if (options.onHidden &amp;&amp; response.state !== &#039;hidden&#039;) {
                                 options.onHidden();
                             }
-                            response.state = 'hidden';
+                            response.state = &#039;hidden&#039;;
                             response.endTime = new Date();
                             publish(response);
                         }
@@ -325,7 +416,7 @@
                 }
 
                 function delayedHideToast() {
-                    if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+                    if (options.timeOut &gt; 0 || options.extendedTimeOut &gt; 0) {
                         intervalId = setTimeout(hideToast, options.extendedTimeOut);
                         progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
                         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
@@ -342,7 +433,7 @@
 
                 function updateProgress() {
                     var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-                    $progressElement.width(percentage + '%');
+                    $progressElement.width(percentage + &#039;%&#039;);
                 }
             }
 
@@ -352,7 +443,7 @@
 
             function removeToast($toastElement) {
                 if (!$container) { $container = getContainer(); }
-                if ($toastElement.is(':visible')) {
+                if ($toastElement.is(&#039;:visible&#039;)) {
                     return;
                 }
                 $toastElement.remove();
@@ -365,10 +456,36 @@
 
         })();
     });
-}(typeof define === 'function' && define.amd ? define : function (deps, factory) {
-    if (typeof module !== 'undefined' && module.exports) { //Node
-        module.exports = factory(require('jquery'));
+}(typeof define === &#039;function&#039; &amp;&amp; define.amd ? define : function (deps, factory) {
+    if (typeof module !== &#039;undefined&#039; &amp;&amp; module.exports) { //Node
+        module.exports = factory(require(&#039;jquery&#039;));
     } else {
-        window['toastr'] = factory(window['jQuery']);
+        window[&#039;toastr&#039;] = factory(window[&#039;jQuery&#039;]);
     }
-}));
+}));</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>
