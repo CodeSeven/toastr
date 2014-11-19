@@ -1,6 +1,6 @@
 /*
  * Toastr
- * Copyright 2012-2014 
+ * Copyright 2012-2014
  * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
  * All Rights Reserved.
  * Use, reproduction, distribution, and modification of this code is subject to the terms and
@@ -182,7 +182,8 @@
                     closeHtml: '<button>&times;</button>',
                     newestOnTop: true,
                     preventDuplicates: false,
-                    progressBar: false
+                    progressBar: false,
+                    escapeHtml: false
                 };
             }
 
@@ -217,6 +218,7 @@
                     $messageElement = $('<div/>'),
                     $progressElement = $('<div/>'),
                     $closeElement = $(options.closeHtml),
+                    insertMethod = 'append',
                     progressBar = {
                         intervalId: null,
                         hideEta: null,
@@ -230,17 +232,21 @@
                         map: map
                     };
 
+                if (options.escapeHtml === true) {
+                    insertMethod = 'text';
+                }
+
                 if (map.iconClass) {
                     $toastElement.addClass(options.toastClass).addClass(iconClass);
                 }
 
                 if (map.title) {
-                    $titleElement.append(map.title).addClass(options.titleClass);
+                    $titleElement[insertMethod](map.title).addClass(options.titleClass);
                     $toastElement.append($titleElement);
                 }
 
                 if (map.message) {
-                    $messageElement.append(map.message).addClass(options.messageClass);
+                    $messageElement[insertMethod](map.message).addClass(options.messageClass);
                     $toastElement.append($messageElement);
                 }
 
