@@ -49,6 +49,11 @@
                             <input id="progressBar" type="checkbox" value="checked" class="input-mini" />Progress Bar
                         </label>
                     </div>
+                    <div class="controls">
+                        <label class="checkbox" for="preventDuplicates">
+                            <input id="preventDuplicates" type="checkbox" value="checked" class="input-mini" />Prevent Duplicates
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -202,6 +207,7 @@
                 debug: $('#debugInfo').prop('checked'),
                 progressBar: $('#progressBar').prop('checked'),
                 positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                preventDuplicates: $('#preventDuplicates').prop('checked'),
                 onclick: null
             };
 
@@ -242,6 +248,8 @@
             if ($hideMethod.val().length) {
                 toastr.options.hideMethod = $hideMethod.val();
             }
+
+
 
             if (!msg) {
                 msg = getMessage();
