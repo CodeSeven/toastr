@@ -1,7 +1,7 @@
 var packageJson = JSON.parse(Npm.require("fs").readFileSync("package.json"));
 
 Package.describe({
-  "name": "toastr:toastr",
+  "name": "codeseven:toastr",
   "summary": "ToastrJS (official): Gnome / Growl Type Non-blocking Notifications",
   "version": packageJson.version,
   "git": "https://github.com/CodeSeven/toastr.git"
