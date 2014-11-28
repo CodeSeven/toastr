@@ -319,9 +319,9 @@
                 function hideToast(override) {
 
                     // Check if we need keep the toast visible
-                    var stick = (options.stickOnTextSelection && window.getSelection() && window.getSelection().toString() !== ''));
+                    var stick = (options.stickOnTextSelection && window.getSelection() && window.getSelection().toString() !== '');
 
-                    if ($(':focus', $toastElement).length && (!override || stick) {
+                    if ($(':focus', $toastElement).length && (!override || stick)) {
                         return;
                     }
                     clearTimeout(progressBar.intervalId);
