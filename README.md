@@ -118,7 +118,7 @@ Rather than having identical toasts stack, set the preventDuplicates property to
 ###Timeouts
 Control how toastr interacts with users by setting timeouts appropriately.
 
-	toastr.options.timeout = 30; // How long the toast will display without user interaction
+	toastr.options.timeOut = 30; // How long the toast will display without user interaction
 	toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
 	
 

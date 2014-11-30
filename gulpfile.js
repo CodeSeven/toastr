@@ -46,12 +46,16 @@ gulp.task('js', function() {
 
     return gulp
         .src(paths.js)
-//        .pipe(plug.sourcemaps.init())
+        .pipe(plug.sourcemaps.init())
         .pipe(plug.bytediff.start())
         .pipe(plug.uglify({}))
         .pipe(plug.bytediff.stop(bytediffFormatter))
-//        .pipe(plug.sourcemaps.write(paths.build))
-        .pipe(plug.rename('toastr.min.js'))
+        .pipe(plug.sourcemaps.write('/'))
+        .pipe(plug.rename(function(path) {
+          if(path.extname === ".js") {
+            path.basename += ".min"
+          }
+        }))
         .pipe(gulp.dest(paths.build));
 });
 
