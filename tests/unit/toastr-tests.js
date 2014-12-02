@@ -312,6 +312,17 @@
         $toast.remove();
         clearContainerChildren();
     });
+	test('close button has type=button', 1, function () {
+        //Arrange
+        toastr.options.closeButton = true;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        equal($toast.find('button[type="button"].toast-close-button').length, 1, 'close button should have type=button');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
 
     module('progressBar', {
         teardown: function () {
