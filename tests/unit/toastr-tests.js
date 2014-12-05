@@ -448,7 +448,21 @@
         clearContainerChildren();
     });
 
+    test('event - allow preventDuplicates option to be overridden.', 1, function() {
+        var $toast = [];
 
+        $toast[0] = toastr.info(sampleMsg, sampleTitle, {
+            preventDuplicates: true
+        });
+        $toast[1] = toastr.info(sampleMsg, sampleTitle, {
+            preventDuplicates: true
+        });
+        $toast[2] = toastr.info(sampleMsg, sampleTitle);
+        var $container = toastr.getContainer();
+
+        ok($container && $container.children().length === 2);
+        clearContainerChildren();
+    });
 
     module('order of appearance');
     test('Newest toast on top', 1, function () {
