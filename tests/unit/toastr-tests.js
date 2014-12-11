@@ -427,9 +427,25 @@
         $toast[0] = toastr.info(sampleMsg, sampleTitle);
         $toast[1] = toastr.info(sampleMsg, sampleTitle);
         $toast[2] = toastr.info(sampleMsg + " 1", sampleTitle);
+        $toast[3] = toastr.info(sampleMsg, sampleTitle);
         var $container = toastr.getContainer();
 
-        ok($container && $container.children().length === 2);
+        ok($container && $container.children().length === 3);
+
+        clearContainerChildren();
+    });
+
+    test('event - prevent duplicate sequential toasts, but allow previous after clear.', 1, function(){
+        toastr.options.preventDuplicates = true;
+
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle);
+        $toast[1] = toastr.info(sampleMsg, sampleTitle);
+        clearContainerChildren();
+        $toast[3] = toastr.info(sampleMsg, sampleTitle);
+        var $container = toastr.getContainer();
+
+        ok($container && $container.children().length === 1);
 
         clearContainerChildren();
     });
