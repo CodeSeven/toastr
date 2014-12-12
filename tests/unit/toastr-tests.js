@@ -88,6 +88,20 @@
         //Teardown
         resetContainer();
     });
+    test('clear - after clear with ignoreFocus option toast with focus disappears', 1, function () {
+        //Arrange
+        var $toast;
+        var msg = sampleMsg + '<br/><br/><button type="button">Clear</button>';
+        //Act
+        $toast = toastr.info(msg, sampleTitle + '-1');
+        $toast.find('button').focus();
+        toastr.clear($toast, { ignoreFocus: true });
+        var $container = toastr.getContainer();
+        //Assert
+        ok($container && $container.children().length === 0, 'Focused toast after a clear with ignoreFocus is not visible');
+        //Teardown
+        resetContainer();
+    });
     asyncTest('clear and show - show 2 toasts, clear both, then show 1 more', 2, function () {
         //Arrange
         var $toast = [];
@@ -149,22 +163,6 @@
         $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
         //Assert
         ok($toast[2].is(':visible'), 'Toast after a clear is visible');
-        //Teardown
-        resetContainer();
-    });
-    module('clearExplicitly');
-    test('clearExplicitly - after clearExplicitly toast with focus disappears', 1, function () {
-        //Arrange
-        var $toast;
-        var msg = sampleMsg + '<br/><br/><button type="button">Clear</button>';
-        //Act
-        $toast = toastr.info(msg, sampleTitle + '-1');
-        $toast.find('button').focus();
-        toastr.clearExplicitly($toast);
-        var $container = toastr.getContainer();
-        //Assert
-        ok($container && $container.children().length === 0, 'Focused toast after a clearExplicitly is not visible');
-        //ok($toast.is(':hidden'), 'Focused toast after a clearExplicitly is not visible');
         //Teardown
         resetContainer();
     });

@@ -25,7 +25,6 @@
 
             var toastr = {
                 clear: clear,
-                clearExplicitly: clearExplicitly,
                 remove: remove,
                 error: error,
                 getContainer: getContainer,
@@ -98,17 +97,12 @@
                 });
             }
 
-            function clear($toastElement) {
+            function clear($toastElement, clearOptions) {
                 var options = getOptions();
                 if (!$container) { getContainer(options); }
-                if (!clearToast($toastElement, options)) {
+                if (!clearToast($toastElement, options, clearOptions)) {
                     clearContainer(options);
                 }
-            }
-
-            function clearExplicitly($toastElement) {
-                var options = getOptions();
-                clearToastBase($toastElement, options);
             }
 
             function remove($toastElement) {
@@ -133,15 +127,9 @@
                 }
             }
 
-            function clearToast ($toastElement, options) {
-                if ($toastElement && $(':focus', $toastElement).length === 0) {
-                    return clearToastBase($toastElement, options);
-                }
-                return false;
-            }
-
-            function clearToastBase($toastElement, options) {
-                if ($toastElement) {
+            function clearToast ($toastElement, options, clearOptions) {
+                var ignoreFocus = clearOptions && clearOptions.ignoreFocus ? clearOptions.ignoreFocus : false;
+                if ($toastElement && (ignoreFocus || $(':focus', $toastElement).length === 0)) {
                     $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
                         easing: options.hideEasing,

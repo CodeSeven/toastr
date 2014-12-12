@@ -293,7 +293,7 @@
             }
             if ($toast.find('.clear').length) {
                 $toast.delegate('.clear', 'click', function () {
-                    toastr.clearExplicitly($toast);
+                    toastr.clear($toast, { ignoreFocus: true });
                 });
             }
         });
