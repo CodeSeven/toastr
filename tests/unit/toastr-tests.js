@@ -529,13 +529,13 @@
         //Act
         var originalMsg = '<b>Hello!</b>';
         var escapedMsg = '&lt;b&gt;Hello!&lt;/b&gt;';
-        var $frist = toastr.success(originalMsg, null, { escapeHtml: true });
+        var $first = toastr.success(originalMsg, null, { escapeHtml: true });
         var $second = toastr.success(originalMsg);
         //Assert
-        ok($frist.find('.toast-message')[0].innerHTML == escapedMsg, 'Element content should be escaped');
+        ok($first.find('.toast-message')[0].innerHTML == escapedMsg, 'Element content should be escaped');
         ok($second.find('.toast-message')[0].innerHTML == originalMsg, 'Element content should not be escaped');
         //Teardown
-        $frist.remove();
+        $first.remove();
         $second.remove();
         resetContainer();
     });
