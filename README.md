@@ -41,7 +41,7 @@ The following animations options have been deprecated and should be replaced:
  - Replace `options.fadeOut` with `options.hideDuration`
  - Replace `options.onFadeOut` with `options.onHidden`
 
-## Quick start
+## Quick Start
 
 ###3 Easy Steps
 For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html).
@@ -148,6 +148,14 @@ At this point the dependencies have been installed and you can build Toastr
 ```shell
 grunt
 ```
+
+## Contributing
+
+For a pull request to be considered it must resolve a bug, or add a feature which is beneficial to a large audience.
+
+All pull requests must pass existing unit tests, and add additional tests to indicate successful operation of a new feature, or the resolution of an identified bug.
+
+Requests must be made against the `develop` branch. Pull requests submitted against the `master` branch will not be considered.
 
 ## Authors
 **Hans Fjällemark**
