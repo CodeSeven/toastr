@@ -195,17 +195,17 @@
                 var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
 
+                if (typeof (map.optionsOverride) !== 'undefined') {
+                    options = $.extend(options, map.optionsOverride);
+                    iconClass = map.optionsOverride.iconClass || iconClass;
+                }
+                
                 if (options.preventDuplicates) {
                     if (map.message === previousToast) {
                         return;
                     } else {
                         previousToast = map.message;
                     }
-                }
-
-                if (typeof (map.optionsOverride) !== 'undefined') {
-                    options = $.extend(options, map.optionsOverride);
-                    iconClass = map.optionsOverride.iconClass || iconClass;
                 }
 
                 toastId++;
