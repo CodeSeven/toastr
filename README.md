@@ -153,9 +153,11 @@ grunt
 
 For a pull request to be considered it must resolve a bug, or add a feature which is beneficial to a large audience.
 
-All pull requests must pass existing unit tests, and add additional tests to indicate successful operation of a new feature, or the resolution of an identified bug.
+Pull requests must pass existing unit tests, CI processes, and add additional tests to indicate successful operation of a new feature, or the resolution of an identified bug.
 
 Requests must be made against the `develop` branch. Pull requests submitted against the `master` branch will not be considered.
+
+All pull requests are subject to approval by the repository owners, who have sole discretion over acceptance or denial.
 
 ## Authors
 **Hans Fjällemark**
