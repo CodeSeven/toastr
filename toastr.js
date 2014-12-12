@@ -25,6 +25,7 @@
 
             var toastr = {
                 clear: clear,
+                clearExplicitly: clearExplicitly,
                 remove: remove,
                 error: error,
                 getContainer: getContainer,
@@ -105,6 +106,11 @@
                 }
             }
 
+            function clearExplicitly($toastElement) {
+                var options = getOptions();
+                clearToastBase($toastElement, options);
+            }
+
             function remove($toastElement) {
                 var options = getOptions();
                 if (!$container) { getContainer(options); }
@@ -129,6 +135,13 @@
 
             function clearToast ($toastElement, options) {
                 if ($toastElement && $(':focus', $toastElement).length === 0) {
+                    return clearToastBase($toastElement, options);
+                }
+                return false;
+            }
+
+            function clearToastBase($toastElement, options) {
+                if ($toastElement) {
                     $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
                         easing: options.hideEasing,
@@ -199,7 +212,7 @@
                     options = $.extend(options, map.optionsOverride);
                     iconClass = map.optionsOverride.iconClass || iconClass;
                 }
-                
+
                 if (options.preventDuplicates) {
                     if (map.message === previousToast) {
                         return;
