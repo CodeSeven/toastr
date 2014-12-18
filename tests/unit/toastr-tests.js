@@ -523,7 +523,7 @@
 
 		
         //Act
-        var $toast = toastr.success(message, title);
+        var $toast = toastr.success(message, title); // Injected script in message!
         var $container = toastr.getContainer();		
 		
         //Assert
@@ -543,7 +543,7 @@
 
 		
         //Act
-        var $toast = toastr.success(message, title);
+        var $toast = toastr.success(message, title); // Injected script in title!
         var $container = toastr.getContainer();		
 		
         //Assert
