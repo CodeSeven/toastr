@@ -512,6 +512,48 @@
         $second.remove();
         resetContainer();
     });
+	
+	//Check for security vulnerabilities
+	module('security');
+	test('Injection attack on toastr Message', 1, function () {
+        //Arrange
+        resetContainer();  
+		var message = "<script>document.getElementsByTagName('body')[0].setAttribute('data-vulnerable','true')</script>";
+		var title = "Injection attack on toastr Message";
+
+		
+        //Act
+        var $toast = toastr.success(message, title);
+        var $container = toastr.getContainer();		
+		
+        //Assert
+		var isAttributeAdded = document.getElementsByTagName('body')[0].hasAttribute('data-vulnerable');
+        ok(!isAttributeAdded, 'Has not added data-vulnerable attribute to the body');
+		
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+	
+	test('Injection attack on toastr Title', 1, function () {
+        //Arrange
+        resetContainer();  
+		var title = "<script>document.getElementsByTagName('body')[0].setAttribute('data-vulnerable','true')</script>";
+		var message = "Injection attack on toastr Title";
+
+		
+        //Act
+        var $toast = toastr.success(message, title);
+        var $container = toastr.getContainer();		
+		
+        //Assert
+		var isAttributeAdded = document.getElementsByTagName('body')[0].hasAttribute('data-vulnerable');
+        ok(!isAttributeAdded, 'Has not added data-vulnerable attribute to the body');
+		
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
 
     // These must go last
     module('positioning');
@@ -593,7 +635,7 @@
         //Teardown
         $toast.remove();
         resetContainer();
-    });
+    });	
 
     function resetContainer() {
         var $container = toastr.getContainer();
