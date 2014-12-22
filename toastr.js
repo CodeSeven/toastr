@@ -191,8 +191,8 @@
                 listener(args);
             }
 			
-			function escapeSpecialCharacters (input) {
-			    return input.replace(/&/g, '&amp;')
+	    function escapeSpecialCharacters (input) {
+	    	return input.replace(/&/g, '&amp;')
                    .replace(/</g, '&lt;')
                    .replace(/>/g, '&gt;')
                    .replace(/"/g, '&quot;')
