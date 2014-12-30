@@ -98,7 +98,7 @@
             }
 
             function clear($toastElement) {
-                var options = getOptions();
+                var options = getOptions($toastElement);
                 if (!$container) { getContainer(options); }
                 if (!clearToast($toastElement, options)) {
                     clearContainer(options);
@@ -230,6 +230,8 @@
                         map: map
                     };
 
+                $toastElement.data('toastr-options', options);
+
                 if (map.iconClass) {
                     $toastElement.addClass(options.toastClass).addClass(iconClass);
                 }
@@ -346,8 +348,13 @@
                 }
             }
 
-            function getOptions() {
-                return $.extend({}, getDefaults(), toastr.options);
+            function getOptions($toastElement) {
+                if($toastElement) {
+                    return $.extend({}, $toastElement.data('toastr-options'));
+                }
+                else {
+                    return $.extend({}, getDefaults(), toastr.options);
+                }
             }
 
             function removeToast($toastElement) {

@@ -75,6 +75,18 @@
             start();
         }, delay);
     });
+    asyncTest('clear - uses overridden options when clearing', 1, function () {
+        //Arrange
+        var $toast = toastr.info(sampleMsg, sampleTitle, { hideDuration: 200 });
+        toastr.clear($toast);
+        //Act
+        setTimeout(function () {
+            //Assert
+            equal($(selectors.container).children().length, 1);
+            resetContainer();
+            start();
+        }, 1);
+    });
     asyncTest('clear and show - show 2 toasts, clear both, then show 1 more', 2, function () {
         //Arrange
         var $toast = [];
