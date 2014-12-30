@@ -120,14 +120,14 @@
 
             //#region Internal Methods
 
-            function clearContainer (options) {
+            function clearContainer(options) {
                 var toastsToClear = $container.children();
                 for (var i = toastsToClear.length - 1; i >= 0; i--) {
                     clearToast($(toastsToClear[i]), options);
                 }
             }
 
-            function clearToast ($toastElement, options) {
+            function clearToast($toastElement, options) {
                 if ($toastElement && $(':focus', $toastElement).length === 0) {
                     $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
@@ -182,7 +182,8 @@
                     closeHtml: '<button type="button">&times;</button>',
                     newestOnTop: true,
                     preventDuplicates: false,
-                    progressBar: false
+                    progressBar: false,
+                    stickOnTextSelection: false
                 };
             }
 
@@ -261,7 +262,7 @@
                     $container.append($toastElement);
                 }
                 $toastElement[options.showMethod](
-                    {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
+                    { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
                 );
 
                 if (options.timeOut > 0) {
@@ -285,6 +286,17 @@
                         } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
                             event.cancelBubble = true;
                         }
+
+                        // Clear selected text
+                        var sel = window.getSelection ? window.getSelection() : document.selection;
+                        if (sel) {
+                            if (sel.removeAllRanges) {
+                                sel.removeAllRanges();
+                            } else if (sel.empty) {
+                                sel.empty();
+                            }
+                        }
+
                         hideToast(true);
                     });
                 }
@@ -305,7 +317,11 @@
                 return $toastElement;
 
                 function hideToast(override) {
-                    if ($(':focus', $toastElement).length && !override) {
+
+                    // Check if we need keep the toast visible
+                    var stick = (options.stickOnTextSelection && window.getSelection() && window.getSelection().toString() !== '');
+
+                    if ($(':focus', $toastElement).length && (!override || stick)) {
                         return;
                     }
                     clearTimeout(progressBar.intervalId);
@@ -336,7 +352,7 @@
                     clearTimeout(intervalId);
                     progressBar.hideEta = 0;
                     $toastElement.stop(true, true)[options.showMethod](
-                        {duration: options.showDuration, easing: options.showEasing}
+                        { duration: options.showDuration, easing: options.showEasing }
                     );
                 }
 
