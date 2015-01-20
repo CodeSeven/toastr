@@ -75,6 +75,33 @@
             start();
         }, delay);
     });
+    test('clear - after clear toast with focus still appears', 1, function () {
+        //Arrange
+        var $toast;
+        var msg = sampleMsg + '<br/><br/><button type="button">Clear</button>';
+        //Act
+        $toast = toastr.info(msg, sampleTitle + '-1');
+        $toast.find('button').focus();
+        toastr.clear($toast);
+        //Assert
+        ok($toast.is(':visible'), 'Focused toast after a clear is visible');
+        //Teardown
+        resetContainer();
+    });
+    test('clear - after clear with force option toast with focus disappears', 1, function () {
+        //Arrange
+        var $toast;
+        var msg = sampleMsg + '<br/><br/><button type="button">Clear</button>';
+        //Act
+        $toast = toastr.info(msg, sampleTitle + '-1');
+        $toast.find('button').focus();
+        toastr.clear($toast, { force: true });
+        var $container = toastr.getContainer();
+        //Assert
+        ok($container && $container.children().length === 0, 'Focused toast after a clear with force is not visible');
+        //Teardown
+        resetContainer();
+    });
     asyncTest('clear and show - show 2 toasts, clear both, then show 1 more', 2, function () {
         //Arrange
         var $toast = [];
@@ -312,7 +339,7 @@
         $toast.remove();
         clearContainerChildren();
     });
-	test('close button has type=button', 1, function () {
+    test('close button has type=button', 1, function () {
         //Arrange
         toastr.options.closeButton = true;
         //Act

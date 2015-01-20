@@ -97,10 +97,10 @@
                 });
             }
 
-            function clear($toastElement) {
+            function clear($toastElement, clearOptions) {
                 var options = getOptions();
                 if (!$container) { getContainer(options); }
-                if (!clearToast($toastElement, options)) {
+                if (!clearToast($toastElement, options, clearOptions)) {
                     clearContainer(options);
                 }
             }
@@ -127,8 +127,9 @@
                 }
             }
 
-            function clearToast ($toastElement, options) {
-                if ($toastElement && $(':focus', $toastElement).length === 0) {
+            function clearToast ($toastElement, options, clearOptions) {
+                var force = clearOptions && clearOptions.force ? clearOptions.force : false;
+                if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
                     $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
                         easing: options.hideEasing,
@@ -199,7 +200,7 @@
                     options = $.extend(options, map.optionsOverride);
                     iconClass = map.optionsOverride.iconClass || iconClass;
                 }
-                
+
                 if (options.preventDuplicates) {
                     if (map.message === previousToast) {
                         return;

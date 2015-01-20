@@ -54,6 +54,11 @@
                             <input id="preventDuplicates" type="checkbox" value="checked" class="input-mini" />Prevent Duplicates
                         </label>
                     </div>
+                    <div class="controls">
+                        <label class="checkbox" for="addClear">
+                            <input id="addClear" type="checkbox" value="checked" class="input-mini" />Add Clear Button
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -188,6 +193,12 @@
 
             return msgs[i];
         };
+        var getMessageWithClearButton = function (msg) {
+            msg = msg ? msg : 'Clear itself?';
+            msg += '<br /><br /><button type="button" class="clear">Yes</button>';
+            return msg;
+        };
+
         $('#showtoast').click(function () {
             var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
             var msg = $('#message').val();
@@ -201,6 +212,7 @@
             var $showMethod = $('#showMethod');
             var $hideMethod = $('#hideMethod');
             var toastIndex = toastCount++;
+            var addClear = $('#addClear').prop('checked');
 
             toastr.options = {
                 closeButton: $('#closeButton').prop('checked'),
@@ -226,11 +238,11 @@
             }
 
             if ($timeOut.val().length) {
-                toastr.options.timeOut = $timeOut.val();
+                toastr.options.timeOut = addClear ? 0 : $timeOut.val();
             }
 
             if ($extendedTimeOut.val().length) {
-                toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                toastr.options.extendedTimeOut = addClear ? 0 : $extendedTimeOut.val();
             }
 
             if ($showEasing.val().length) {
@@ -249,8 +261,10 @@
                 toastr.options.hideMethod = $hideMethod.val();
             }
 
-
-
+            if (addClear) {
+                msg = getMessageWithClearButton(msg);
+                toastr.options.tapToDismiss = false;
+            }
             if (!msg) {
                 msg = getMessage();
             }
@@ -277,7 +291,13 @@
                     alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
                 });
             }
+            if ($toast.find('.clear').length) {
+                $toast.delegate('.clear', 'click', function () {
+                    toastr.clear($toast, { force: true });
+                });
+            }
         });
+
         function getLastToast(){
             return $toastlast;
         }
