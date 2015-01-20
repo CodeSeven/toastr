@@ -191,8 +191,20 @@
                 if (!listener) { return; }
                 listener(args);
             }
+			
+	    function escapeSpecialCharacters (input) {
+	    	return input.replace(/&/g, '&amp;')
+                   .replace(/</g, '&lt;')
+                   .replace(/>/g, '&gt;')
+                   .replace(/"/g, '&quot;')
+                   .replace(/'/g, '&apos;');
+			}
 
             function notify(map) {
+				// Added code to ensure that HTML characters as a part of the message/title are not executed & displayed correctly
+			    if (map && map.message && $.type(map.message) == "string") { map.message = escapeSpecialCharacters(map.message); } // Convert message
+			    if (map && map.title && $.type(map.message) == "string") { map.title = escapeSpecialCharacters(map.title); } // Convert title
+			
                 var options = getOptions(),
                     iconClass = map.iconClass || options.iconClass;
 
