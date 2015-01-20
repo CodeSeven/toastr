@@ -540,6 +540,74 @@
         resetContainer();
     });
 
+    module('Html escaping');
+    test('Message and title escaping disabled by default', 4, function () {
+        //Arrange
+        resetContainer();
+        //Act
+        var htmlTitle = '<div class="im-html-title">Can has html!</div>';
+        var htmlMessage = '<div class="im-html-msg">Can has html!</div>';
+        var $toast = toastr.success(htmlMessage, htmlTitle);
+        //Assert
+        var container = toastr.getContainer();
+        ok($(container).find('.im-html-title').length == 1, 'Element created inside toaster title');
+        ok($(container).find('.im-html-title').text() == 'Can has html!', 'Element has correct content');
+        ok($(container).find('.im-html-msg').length == 1, 'Element created inside toaster message');
+        ok($(container).find('.im-html-msg').text() == 'Can has html!', 'Element has correct content');
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+
+    test('Message escaped if escapeHtml enabled', 2, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.escapeHtml = true;
+        //Act
+        var htmlMessage = '<div class="im-html-element">I\'m escaped</div>';
+        var $toast = toastr.success(htmlMessage);
+        //Assert
+        var escaped = '&lt;div class="im-html-element"&gt;I\'m escaped&lt;/div&gt;';
+        ok($toast.find('.im-html-element').length == 0, "Element wasnt't created inside toaster");
+        ok($toast.find('.toast-message')[0].innerHTML == escaped, 'Element content escaped correctly');
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+
+    test('Title escaped if escapeHtml enabled', 1, function () {
+        //Arrange
+        resetContainer();
+        toastr.options.escapeHtml = true;
+        //Act
+        var htmlTitle = '<b>Hello,</b>';
+        var $toast = toastr.success('world!', htmlTitle);
+        //Assert
+        var escaped = '&lt;b&gt;Hello,&lt;/b&gt;';
+        ok($toast.find('.toast-title')[0].innerHTML == escaped, 'Element content escaped correctly');
+        //Teardown
+        $toast.remove();
+        resetContainer();
+    });
+
+    test('Can set escapeHtml per toast', 2, function () {
+        //Arrange
+        resetContainer();
+        toastr.options = {};
+        //Act
+        var originalMsg = '<b>Hello!</b>';
+        var escapedMsg = '&lt;b&gt;Hello!&lt;/b&gt;';
+        var $first = toastr.success(originalMsg, null, { escapeHtml: true });
+        var $second = toastr.success(originalMsg);
+        //Assert
+        ok($first.find('.toast-message')[0].innerHTML == escapedMsg, 'Element content should be escaped');
+        ok($second.find('.toast-message')[0].innerHTML == originalMsg, 'Element content should not be escaped');
+        //Teardown
+        $first.remove();
+        $second.remove();
+        resetContainer();
+    });
+
     // These must go last
     module('positioning');
     test('Container - position top-right', 1, function () {
