@@ -52,9 +52,9 @@ gulp.task('js', function() {
         .pipe(plug.bytediff.stop(bytediffFormatter))
         .pipe(plug.sourcemaps.write('/'))
         .pipe(plug.rename(function(path) {
-          if(path.extname === ".js") {
-            path.basename += ".min"
-          }
+            if (path.extname === '.js') {
+                path.basename += '.min';
+            }
         }))
         .pipe(gulp.dest(paths.build));
 });
