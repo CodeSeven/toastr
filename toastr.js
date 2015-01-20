@@ -128,8 +128,8 @@
             }
 
             function clearToast ($toastElement, options, clearOptions) {
-                var ignoreFocus = clearOptions && clearOptions.ignoreFocus ? clearOptions.ignoreFocus : false;
-                if ($toastElement && (ignoreFocus || $(':focus', $toastElement).length === 0)) {
+                var force = clearOptions && clearOptions.force ? clearOptions.force : false;
+                if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
                     $toastElement[options.hideMethod]({
                         duration: options.hideDuration,
                         easing: options.hideEasing,
