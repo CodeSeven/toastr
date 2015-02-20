@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/CodeSeven/toastr.svg)](https://travis-ci.org/CodeSeven/toastr)
 
 ## Current Version
-2.1.0
+2.1.1
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
