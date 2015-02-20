@@ -3,7 +3,7 @@
   "filename": "js/toastr.min.js",
   "main": "toastr.js",
   "style": "./toastr.min.css",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "ToastrJS is a JavaScript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.",
   "homepage": "http://www.toastrjs.com",
   "keywords": [
