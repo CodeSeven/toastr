@@ -50,7 +50,7 @@ gulp.task('js', function() {
         .pipe(plug.bytediff.start())
         .pipe(plug.uglify({}))
         .pipe(plug.bytediff.stop(bytediffFormatter))
-        .pipe(plug.sourcemaps.write('/'))
+        .pipe(plug.sourcemaps.write('.'))
         .pipe(plug.rename(function(path) {
             if (path.extname === '.js') {
                 path.basename += '.min';
