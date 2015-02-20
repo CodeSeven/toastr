@@ -75,26 +75,6 @@
             start();
         }, delay);
     });
-//    test('clear - after clear toast with focus still appears', 1, function () {
-//        //Arrange
-//        var $toast;
-//        var msg = sampleMsg + '<br/><br/><button type="button">Clear</button>';
-//        //Act
-//        $toast = toastr.info(msg, sampleTitle + '-1');
-//        var $button = $toast.find('button');
-//        $button.focus(function() {
-//            console.log('*** focused ***');
-//        });
-//        $button.focus();
-//        console.log('*************' + $toast.is(':visible'));
-////        console.log($button);
-//        toastr.clear($toast);
-//        console.log('*************' + $toast.is(':visible'));
-//        //Assert
-//        ok($toast.is(':visible'), 'Focused toast after a clear is visible');
-//        //Teardown
-//        resetContainer();
-//    });
     test('clear - after clear with force option toast with focus disappears', 1, function () {
         //Arrange
         var $toast;
