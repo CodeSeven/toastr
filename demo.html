@@ -276,12 +276,12 @@
                 msg = getMessage();
             }
 
-            $("#toastrOptions").text("Command: toastr["
+            $('#toastrOptions').text('Command: toastr["'
                             + shortCutFunction
-                            + "](\""
+                            + '"]("'
                             + msg
-                            + (title ? "\", \"" + title : '')
-                            + "\")\n\ntoastr.options = "
+                            + (title ? '", "' + title : '')
+                            + '")\n\ntoastr.options = '
                             + JSON.stringify(toastr.options, null, 2)
             );
 
