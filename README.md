@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/CodeSeven/toastr.svg)](https://travis-ci.org/CodeSeven/toastr)
 
 ## Current Version
-2.1.0
+2.1.1
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
@@ -169,7 +169,7 @@ All pull requests are subject to approval by the repository owners, who have sol
 Inspired by https://github.com/Srirangan/notifer.js/.
 
 ## Copyright
-Copyright © 2012-2014 
+Copyright © 2012-2015
 
 ## License
 toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php

@@ -1,4 +1,10 @@
+# 2.1.1 (2015-02-19)
 
+## New Features
+- Support for explicitly clearing a toast [jstawski](https://github.com/jstawski) | [PR 226](https://github.com/CodeSeven/toastr/pull/226)
+
+## Dev Ops
+- Refactor to use gulp
 
 # 2.1.0  (2014-10-15)
 

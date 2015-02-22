@@ -56,7 +56,12 @@
                     </div>
                     <div class="controls">
                         <label class="checkbox" for="addClear">
-                            <input id="addClear" type="checkbox" value="checked" class="input-mini" />Add Clear Button
+                            <input id="addClear" type="checkbox" value="checked" class="input-mini" />Add button to force clearing a toast, ignoring focus
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="newestOnTop">
+                            <input id="newestOnTop" type="checkbox" value="checked" class="input-mini" />Newest on top
                         </label>
                     </div>
                 </div>
@@ -193,9 +198,10 @@
 
             return msgs[i];
         };
+
         var getMessageWithClearButton = function (msg) {
             msg = msg ? msg : 'Clear itself?';
-            msg += '<br /><br /><button type="button" class="clear">Yes</button>';
+            msg += '<br /><br /><button type="btn button" class="clear">Yes</button>';
             return msg;
         };
 
@@ -217,6 +223,7 @@
             toastr.options = {
                 closeButton: $('#closeButton').prop('checked'),
                 debug: $('#debugInfo').prop('checked'),
+                newestOnTop: $('#newestOnTop').prop('checked'),
                 progressBar: $('#progressBar').prop('checked'),
                 positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                 preventDuplicates: $('#preventDuplicates').prop('checked'),
