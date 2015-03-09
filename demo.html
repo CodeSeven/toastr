@@ -287,6 +287,11 @@
 
             var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
             $toastlast = $toast;
+
+            if(typeof $toast === 'undefined'){
+                return;
+            }
+
             if ($toast.find('#okBtn').length) {
                 $toast.delegate('#okBtn', 'click', function () {
                     alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
