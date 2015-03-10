@@ -110,7 +110,7 @@ Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut.
 	toastr.options.hideMethod = 'slideUp'; 
 	
 ###Prevent Duplicates
-Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to the previous toast based on their message content.
+Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to the previous toast based on their message content and status type.
 
     toastr.options.preventDuplicates = true;
 	

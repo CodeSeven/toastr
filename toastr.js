@@ -336,10 +336,13 @@
 
                 function shouldExit(options, map) {
                     if (options.preventDuplicates) {
-                        if (map.message === previousToast) {
+                    	if (previousToast !== undefined && map.message === previousToast.message && map.type === previousToast.type) {
                             return true;
                         } else {
-                            previousToast = map.message;
+                        	previousToast = {
+                        		message: map.message,
+                        		type: map.type
+                        	};
                         }
                     }
                     return false;
