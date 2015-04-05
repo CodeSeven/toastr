@@ -21,6 +21,7 @@ toastr will:
 - be available to the browser as a module.
 - use native DOM selectors
 - perform animations via the [WebAnimations API](https://w3c.github.io/web-animations/) (using polyfills where necessary)
+- be tested via Mocha / Chai
 
 toastr will not:
 
