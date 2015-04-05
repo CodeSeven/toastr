@@ -9,6 +9,7 @@ The goal is to create a simple core library that can be customized and extended.
 
 ## Design Specification
 
+Toastr v3.0.0 is under development. This branch should not be considered stable.
 
 
 ## Authors
@@ -32,4 +33,3 @@ Copyright © 2012-2015
 
 ## License
 toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php
-
