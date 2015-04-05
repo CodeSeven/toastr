@@ -4,10 +4,11 @@
 The goal is to create a simple core library that can be customized and extended.
 
 
-## Current Version
-3.0.0 - Pre-release
+## Pre-release Version
 
-Toastr v3.0.0 is under development. This branch should not be considered stable until further notice.
+Toastr 3.0.0 is under development. 
+
+This branch should not be used in production systems.
 
 ## Design Specification
 
