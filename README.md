@@ -7,10 +7,24 @@ The goal is to create a simple core library that can be customized and extended.
 ## Current Version
 3.0.0 - Pre-release
 
+Toastr v3.0.0 is under development. This branch should not be considered stable until further notice.
+
 ## Design Specification
 
-Toastr v3.0.0 is under development. This branch should not be considered stable.
+*This is an evolving specification.*
 
+toastr will:
+
+- be written in native ES6
+- use `gulp` for builds
+- be transpiled to ES5 strict (via `gulp` script)
+- be available to the browser as a module.
+- use native DOM selectors
+- perform animations via the [WebAnimations API](https://w3c.github.io/web-animations/) (using polyfills where necessary)
+
+toastr will not:
+
+- have a dependency on jQuery
 
 ## Authors
 **John Papa**
