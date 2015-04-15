@@ -13,6 +13,7 @@ cache:
   directories:
   - node_modules
 
- branches:
-  except:
-    - v3
+branches:
+  only:
+    - develop
+    - master
