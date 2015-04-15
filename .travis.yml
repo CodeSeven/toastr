@@ -12,3 +12,7 @@ script:
 cache:
   directories:
   - node_modules
+
+ branches:
+  except:
+    - v3
