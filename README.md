@@ -1,8 +1,18 @@
 # toastr
-**toastr** is a Javascript library for non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
+**toastr** is a Javascript library for non-blocking notifications. No library is currently required. The goal is to create a simple core library that can be customized and extended.
+
+***Note: v3 is currently under development and not meant for production. Please use the v2.x version (master) instead.***
 
 ## Current Version
 3.0.0-alpha
+
+## Breaking Changes
+
++ Architectural changes using ES6 transpiled into ES5.
+
++ Built-in web animations.
+
++ No external dependencies.
 
 ## Contributing
 
