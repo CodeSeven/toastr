@@ -1,0 +1,25 @@
+{
+  "name": "toastr",
+  "version": "3.0.0",
+  "authors": [
+    "Timothy Ferrell <timothyferrell@gmail.com>"
+  ],
+  "main": "src/toastr.es6",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies" : {
+    "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip"
+  }
+}

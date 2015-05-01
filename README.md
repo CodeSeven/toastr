@@ -1,32 +1,14 @@
 # toastr
-**toastr** is a Javascript library for non-blocking notifications.
+**toastr** is a Javascript library for non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
 
-The goal is to create a simple core library that can be customized and extended.
+## Current Version
+3.0.0-alpha
 
+## Contributing
 
-## Pre-release Version
+For a pull request to be considered it must resolve a bug, or add a feature which is beneficial to a large audience.
 
-Toastr 3.0.0 is under development. 
-
-This branch should not be used in production systems.
-
-## Design Specification
-
-*This is an evolving specification.*
-
-toastr will:
-
-- be written in native ES6
-- use `gulp` for builds
-- be transpiled to ES5 strict (via `gulp` script)
-- be available to the browser as a module.
-- use native DOM selectors
-- perform animations via the [WebAnimations API](https://w3c.github.io/web-animations/) (using polyfills where necessary)
-- be tested via Mocha / Chai
-
-toastr will not:
-
-- have a dependency on jQuery
+All pull requests are subject to approval by the repository owners, who have sole discretion over acceptance or denial.
 
 ## Authors
 **John Papa**
@@ -39,7 +21,7 @@ toastr will not:
 
 **Stephen Bero**
 
-+ [http://www.stephenbero.com/](http://www.stephenbero.com/)
++ [http://twitter.com/stephenbero](http://twitter.com/stephenbero)
 
 ## Credits
 Inspired by https://github.com/Srirangan/notifer.js/.
@@ -49,3 +31,4 @@ Copyright © 2012-2015
 
 ## License
 toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php
+
