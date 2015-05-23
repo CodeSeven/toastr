@@ -69,7 +69,7 @@ For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html)
 	toastr.clear()
 
 	// Override global options
-	toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {timeout: 5000})
+	toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {timeOut: 5000})
 
 ### Close Button
 Optionally enable a close button
