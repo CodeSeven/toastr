@@ -6,6 +6,8 @@ var karma = require('karma').server;
 var merge = require('merge-stream');
 var plato = require('plato');
 var plug = require('gulp-load-plugins')();
+var autoprefixer = require('autoprefixer-core');
+var opacity = require('postcss-opacity');
 
 var paths = {
     js: './toastr.js',
@@ -66,9 +68,14 @@ gulp.task('js', function() {
 gulp.task('css', function() {
     log('Bundling, minifying, and copying the app\'s CSS');
 
+    var processors = [
+        autoprefixer({browsers: ['last 2 version', 'ie 8', 'Firefox ESR', '> 1%']}),
+        opacity
+    ];
+
     return gulp.src(paths.less)
         .pipe(plug.less())
-//        .pipe(plug.autoprefixer('last 2 version', '> 5%'))
+        .pipe(plug.postcss(processors))
         .pipe(gulp.dest(paths.build))
         .pipe(plug.bytediff.start())
         .pipe(plug.minifyCss({}))

@@ -1,28 +1,3 @@
-﻿// Mix-ins
-.borderRadius(@radius) {
-	-moz-border-radius: @radius;
-	-webkit-border-radius: @radius;
-	border-radius: @radius;
-}
-
-.boxShadow(@boxShadow) {
-	-moz-box-shadow: @boxShadow;
-	-webkit-box-shadow: @boxShadow;
-	box-shadow: @boxShadow;
-}
-
-.opacity(@opacity) {
-	@opacityPercent: @opacity * 100;
-	opacity: @opacity;
-	-ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(Opacity=@{opacityPercent})";
-	filter: ~"alpha(opacity=@{opacityPercent})";
-}
-
-.wordWrap(@wordWrap: break-word) {
-	-ms-word-wrap: @wordWrap;
-	word-wrap: @wordWrap;
-}
-
 // Variables
 @black: #000000;
 @grey: #999999;
@@ -40,7 +15,7 @@
 }
 
 .toast-message {
-	.wordWrap();
+	word-wrap: break-word;
 
 	a,
 	label {
@@ -61,16 +36,15 @@
 	font-size: 20px;
 	font-weight: bold;
 	color: @white;
-	-webkit-text-shadow: 0 1px 0 rgba(255,255,255,1);
 	text-shadow: 0 1px 0 rgba(255,255,255,1);
-	.opacity(0.8);
+	opacity: 0.8;
 
 	&:hover,
 	&:focus {
 		color: @black;
 		text-decoration: none;
 		cursor: pointer;
-		.opacity(0.4);
+		opacity: 0.4;
 	}
 }
 
@@ -136,8 +110,6 @@ button.toast-close-button {
 	z-index: 999999;
 
 	* {
-		-moz-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 
@@ -147,17 +119,17 @@ button.toast-close-button {
 		margin: 0 0 6px;
 		padding: 15px 15px 15px 50px;
 		width: 300px;
-		.borderRadius(3px 3px 3px 3px);
+		border-radius: 3px 3px 3px 3px;
 		background-position: 15px center;
 		background-repeat: no-repeat;
-		.boxShadow(0 0 12px @grey);
+		box-shadow: 0 0 12px @grey;
 		color: @white;
-		.opacity(0.8);
+		opacity: 0.8;
 	}
 
 	> :hover {
-		.boxShadow(0 0 12px @black);
-		.opacity(1);
+		box-shadow: 0 0 12px @black;
+		opacity: 1;
 		cursor: pointer;
 	}
 
@@ -217,7 +189,7 @@ button.toast-close-button {
 	bottom: 0;
 	height: 4px;
 	background-color: @black;
-	.opacity(0.4);
+	opacity: 0.4;
 }
 
 /*Responsive Design*/
