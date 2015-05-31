@@ -19,7 +19,7 @@ module.exports = function(config) {
     files: [
 //      'http://code.jquery.com/jquery.js',
       'node_modules/jquery/dist/jquery.min.js',
-      'toastr.css',
+      'build/toastr.css',
       'toastr.js',
       'node_modules/qunitjs/qunit/qunit.js',
       'tests/unit/qunit-helper.js',
