@@ -64,8 +64,11 @@ For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html)
 	
 	// Display an error toast, with a title
 	toastr.error('I do not think that word means what you think it means.', 'Inconceivable!')
-		
-	// Clears the current list of toasts
+	
+	// Immediately remove current toasts without using animation
+	toastr.remove()
+	
+	// Remove current toasts using animation
 	toastr.clear()
 
 	// Override global options
