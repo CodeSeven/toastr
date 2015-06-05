@@ -268,8 +268,8 @@
                     }
 
                     if (options.onclick) {
-                        $toastElement.click(function () {
-                            options.onclick();
+                        $toastElement.click(function (event) {
+                            options.onclick(event);
                             hideToast();
                         });
                     }
