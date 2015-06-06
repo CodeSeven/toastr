@@ -1,19 +1,19 @@
-var gulp = require("gulp"),
-    babel = require("gulp-babel"),
-    rename = require("gulp-rename"),
+var gulp = require('gulp'),
+    babel = require('gulp-babel'),
+    rename = require('gulp-rename'),
     sourcemaps = require('gulp-sourcemaps'),
     closureCompiler = require('gulp-closure-compiler');
 
 gulp.task('default', function(){
-    return gulp.src("./src/toastr.es6")
+    return gulp.src('./src/toastr.es6')
         .pipe(sourcemaps.init())
-            .pipe(babel())
-            .pipe(rename("toastr.js"))
+            .pipe(babel({ blacklist: ['strict'] }))
+            .pipe(rename('toastr.js'))
         .pipe(sourcemaps.write('../maps'))
-        .pipe(gulp.dest("dist", {overwrite: true}));
+        .pipe(gulp.dest('dist', {overwrite: true}));
 });
 
-gulp.task('build', ['default','closure'], function () {
+gulp.task('build', ['default', 'closure'], function () {
 
 });
 
@@ -31,5 +31,5 @@ gulp.task('closure', function () {
                 warning_level: 'VERBOSE'
             }
         }))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist'));
 });
