@@ -1,4 +1,4 @@
-﻿// Mix-ins
+// Mix-ins
 .borderRadius(@radius) {
 	-moz-border-radius: @radius;
 	-webkit-border-radius: @radius;
@@ -134,7 +134,8 @@ button.toast-close-button {
 #toast-container {
 	position: fixed;
 	z-index: 999999;
-
+	// The container should not be clickable.
+	pointer-events: none;
 	* {
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
@@ -143,6 +144,8 @@ button.toast-close-button {
 
 	> div {
 		position: relative;
+		// The toast itself should be clickable.
+		pointer-events: auto;
 		overflow: hidden;
 		margin: 0 0 6px;
 		padding: 15px 15px 15px 50px;
