@@ -410,6 +410,6 @@
     if (typeof module !== 'undefined' && module.exports) { //Node
         module.exports = factory(require('jquery'));
     } else {
-        window['toastr'] = factory(window['jQuery']);
+        window.toastr = factory(window.jQuery);
     }
 }));
