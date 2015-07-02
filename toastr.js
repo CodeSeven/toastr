@@ -167,6 +167,9 @@
                     hideDuration: 1000,
                     hideEasing: 'swing',
                     onHidden: undefined,
+                    closeMethod: false,
+                    closeDuration: false,
+                    closeEasing: false,
 
                     extendedTimeOut: 1000,
                     iconClasses: {
@@ -346,13 +349,18 @@
                 }
 
                 function hideToast(override) {
+                    var opts = {};
+                    ['Method', 'Duration', 'Easing'].forEach(function(opt) {
+                        opts[opt.toLowerCase()] = override && options['close' + opt] !== false ?
+                            options['close' + opt] : options['hide' + opt];
+                    });
                     if ($(':focus', $toastElement).length && !override) {
                         return;
                     }
                     clearTimeout(progressBar.intervalId);
-                    return $toastElement[options.hideMethod]({
-                        duration: options.hideDuration,
-                        easing: options.hideEasing,
+                    return $toastElement[opts.method]({
+                        duration: opts.duration,
+                        easing: opts.easing,
                         complete: function () {
                             removeToast($toastElement);
                             if (options.onHidden && response.state !== 'hidden') {
