@@ -100,6 +100,13 @@ toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 
 You can also override the CSS/LESS for `#toast-container .toast-close-button`
 
+Optionally override the hide animation when the close button is clicked (falls back to hide configuration).
+```js
+toastr.options.closeMethod = 'fadeOut';
+toastr.options.closeDuration = 300;
+toastr.options.closeEasing = 'swing';
+```
+
 ### Display Sequence
 Show newest toast at bottom (top is default)
 ```js
@@ -121,12 +128,14 @@ Optionally override the animation easing to show or hide the toasts. Default is 
 ```js
 toastr.options.showEasing = 'swing';
 toastr.options.hideEasing = 'linear';
+toastr.options.closeEasing = 'linear';
 ```
 
 Using the jQuery Easing plugin (http://www.gsgd.co.uk/sandbox/jquery/easing/)
 ```js
 toastr.options.showEasing = 'easeOutBounce';
 toastr.options.hideEasing = 'easeInBack';
+toastr.options.closeEasing = 'easeInBack';
 ```
 
 ####Animation Method
@@ -134,6 +143,7 @@ Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut.
 ```js
 toastr.options.showMethod = 'slideDown';
 toastr.options.hideMethod = 'slideUp';
+toastr.options.closeMethod = 'slideUp';
 ```
 	
 ###Prevent Duplicates

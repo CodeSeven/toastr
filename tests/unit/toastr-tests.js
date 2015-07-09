@@ -337,6 +337,24 @@
         $toast.remove();
         clearContainerChildren();
     });
+    asyncTest('close button duration', 1, function () {
+        //Arrange
+        toastr.options.closeButton = true;
+        toastr.options.closeDuration = 0;
+        toastr.options.hideDuration = 2000;
+        var $container = toastr.getContainer();
+        //Act
+        var $toast = toastr.success('');
+        $toast.find('button.toast-close-button').click();
+        setTimeout(function () {
+            //Assert
+            ok($container && $container.children().length === 0, 'close button should support own hide animation');
+            //Teardown
+            toastr.options.hideDuration = 0;
+            resetContainer();
+            start();
+        }, 500);
+    });
 
     module('progressBar', {
         teardown: function () {
