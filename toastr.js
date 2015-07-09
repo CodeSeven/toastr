@@ -349,18 +349,17 @@
                 }
 
                 function hideToast(override) {
-                    var opts = {};
-                    ['Method', 'Duration', 'Easing'].forEach(function(opt) {
-                        opts[opt.toLowerCase()] = override && options['close' + opt] !== false ?
-                            options['close' + opt] : options['hide' + opt];
-                    });
+                    var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
+                    var duration = override && options.closeDuration !== false ?
+                        options.closeDuration : options.hideDuration;
+                    var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
                     if ($(':focus', $toastElement).length && !override) {
                         return;
                     }
                     clearTimeout(progressBar.intervalId);
-                    return $toastElement[opts.method]({
-                        duration: opts.duration,
-                        easing: opts.easing,
+                    return $toastElement[method]({
+                        duration: duration,
+                        easing: easing,
                         complete: function () {
                             removeToast($toastElement);
                             if (options.onHidden && response.state !== 'hidden') {
