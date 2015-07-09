@@ -298,6 +298,46 @@
         $toast.remove();
         clearContainerChildren();
     });
+    module('custom toast');
+    test('custom toast - pass message and title', 3, function () {
+        //Arrange
+        toastr.addToastType("burnt")
+        //Act
+        var $toast = toastr.burnt(sampleMsg, sampleTitle);
+        //Assert
+        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
+        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        ok($toast.hasClass('toast-'+'burnt'), 'Sets burnt class');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('custom toast - pass message, but no title', 3, function () {
+        //Arrange
+        toastr.addToastType("burnt")
+        //Act
+        var $toast = toastr.burnt(sampleMsg);
+        //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        ok($toast.hasClass('toast-'+'burnt'), 'Sets burnt class');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('custom toast - no message nor title', 3, function () {
+        //Arrange
+        toastr.addToastType("burnt")
+        //Act
+        var $toast = toastr.burnt('');
+        //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
+        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
+        ok($toast.hasClass('toast-'+'burnt'), 'Sets burnt class');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
 
     module('closeButton', {
         teardown: function () {

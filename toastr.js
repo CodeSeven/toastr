@@ -23,8 +23,43 @@
                 success: 'success',
                 warning: 'warning'
             };
+            
+            var defaultOptions = {
+                tapToDismiss: true,
+                toastClass: 'toast',
+                containerId: 'toast-container',
+                debug: false,
+
+                showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
+                showDuration: 300,
+                showEasing: 'swing', //swing and linear are built into jQuery
+                onShown: undefined,
+                hideMethod: 'fadeOut',
+                hideDuration: 1000,
+                hideEasing: 'swing',
+                onHidden: undefined,
+
+                extendedTimeOut: 1000,
+                iconClasses: {
+                    error: 'toast-error',
+                    info: 'toast-info',
+                    success: 'toast-success',
+                    warning: 'toast-warning'
+                },
+                iconClass: 'toast-info',
+                positionClass: 'toast-top-right',
+                timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+                titleClass: 'toast-title',
+                messageClass: 'toast-message',
+                target: 'body',
+                closeHtml: '<button type="button">&times;</button>',
+                newestOnTop: true,
+                preventDuplicates: false,
+                progressBar: false
+            };
 
             var toastr = {
+                addToastType: addToastType,
                 clear: clear,
                 remove: remove,
                 error: error,
@@ -42,6 +77,14 @@
             return toastr;
 
             ////////////////
+
+            function addToastType(typeName) {
+                defaultOptions.iconClasses[typeName] = "toast-" + typeName;
+                toastType[typeName] = typeName;
+                toastr[typeName] = function(message, title, optionsOverride) {
+                    return customToastType(typeName, message, title, optionsOverride);
+                }
+            }
 
             function error(message, title, optionsOverride) {
                 return notify({
@@ -152,40 +195,18 @@
                 return $container;
             }
 
+            function customToastType(typeName, message, title, optionsOverride) {
+                return notify({
+                     type: toastType[typeName],
+                     iconClass: getOptions().iconClasses[typeName],
+                     message: message,
+                     optionsOverride: optionsOverride,
+                     title: title
+                });
+            }
+
             function getDefaults() {
-                return {
-                    tapToDismiss: true,
-                    toastClass: 'toast',
-                    containerId: 'toast-container',
-                    debug: false,
-
-                    showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
-                    showDuration: 300,
-                    showEasing: 'swing', //swing and linear are built into jQuery
-                    onShown: undefined,
-                    hideMethod: 'fadeOut',
-                    hideDuration: 1000,
-                    hideEasing: 'swing',
-                    onHidden: undefined,
-
-                    extendedTimeOut: 1000,
-                    iconClasses: {
-                        error: 'toast-error',
-                        info: 'toast-info',
-                        success: 'toast-success',
-                        warning: 'toast-warning'
-                    },
-                    iconClass: 'toast-info',
-                    positionClass: 'toast-top-right',
-                    timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-                    titleClass: 'toast-title',
-                    messageClass: 'toast-message',
-                    target: 'body',
-                    closeHtml: '<button type="button">&times;</button>',
-                    newestOnTop: true,
-                    preventDuplicates: false,
-                    progressBar: false
-                };
+                return $.extend({},defaultOptions);
             }
 
             function publish(args) {
@@ -388,7 +409,7 @@
             }
 
             function getOptions() {
-                return $.extend({}, getDefaults(), toastr.options);
+                return $.extend(getDefaults(), toastr.options);
             }
 
             function removeToast($toastElement) {
