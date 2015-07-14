@@ -209,6 +209,7 @@
                 $container = getContainer(options, true);
 
                 var intervalId = null;
+                var registeredDelayed = false;
                 var $toastElement = $('<div/>');
                 var $titleElement = $('<div/>');
                 var $messageElement = $('<div/>');
@@ -346,7 +347,13 @@
                 }
 
                 function hideToast(override) {
-                    if ($(':focus', $toastElement).length && !override) {
+                    intervalId = null;
+                    //if $toastElement has focus and override is falsy OR - previous behaviour
+                    //there is delayedHideToast registered OR - new behaviour
+                    //the toast $container has focus - new behaviour, stickAround does not unregister
+                    //this timeout anymore.
+                    if (($(':focus', $toastElement).length && !override) ||
+                        registeredDelayed || $(':hover', $container).length) {
                         return;
                     }
                     clearTimeout(progressBar.intervalId);
@@ -365,16 +372,24 @@
                     });
                 }
 
+                function hideIfNoInterval() {
+                    registeredDelayed = false;
+                    if (intervalId) {
+                        return;
+                    }
+                    hideToast();
+                }
+
                 function delayedHideToast() {
                     if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-                        intervalId = setTimeout(hideToast, options.extendedTimeOut);
+                        registeredDelayed = true;
+                        setTimeout(hideIfNoInterval, options.extendedTimeOut);
                         progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
                         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
                     }
                 }
 
                 function stickAround() {
-                    clearTimeout(intervalId);
                     progressBar.hideEta = 0;
                     $toastElement.stop(true, true)[options.showMethod](
                         {duration: options.showDuration, easing: options.showEasing}
