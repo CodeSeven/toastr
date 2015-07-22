@@ -33,6 +33,7 @@
 @red: #BD362F;
 @blue: #2F96B4;
 @orange: #F89406;
+@default-container-opacity: .8;
 
 // Styles
 .toast-title {
@@ -155,7 +156,7 @@ button.toast-close-button {
 		background-repeat: no-repeat;
 		.boxShadow(0 0 12px @grey);
 		color: @white;
-		.opacity(0.8);
+		.opacity(@default-container-opacity);
 	}
 
 	> :hover {
