@@ -180,6 +180,7 @@
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',
+                    escapeHtml: false,
                     target: 'body',
                     closeHtml: '<button type="button">&times;</button>',
                     newestOnTop: true,
@@ -240,6 +241,18 @@
                 }
 
                 return $toastElement;
+
+                function escapeHtml(source) {
+                    if (source == null)
+                        source = "";
+
+                    return new String(source)
+                        .replace(/&/g, '&amp;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
+                }
 
                 function personalizeToast() {
                     setIcon();
@@ -308,14 +321,14 @@
 
                 function setTitle() {
                     if (map.title) {
-                        $titleElement.append(map.title).addClass(options.titleClass);
+                        $titleElement.append(!options.escapeHtml ? map.title : escapeHtml(map.title)).addClass(options.titleClass);
                         $toastElement.append($titleElement);
                     }
                 }
 
                 function setMessage() {
                     if (map.message) {
-                        $messageElement.append(map.message).addClass(options.messageClass);
+                        $messageElement.append(!options.escapeHtml ? map.message : escapeHtml(map.message)).addClass(options.messageClass);
                         $toastElement.append($messageElement);
                     }
                 }
