@@ -74,14 +74,19 @@ For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html)
 	// Override global options
 	toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {timeOut: 5000})
 
+### Escape HTML characters
+In case you want to escape HTML charaters in title and message
+
+	toastr.options.escapeHtml = true;
+
 ### Close Button
 Optionally enable a close button
 
-    toastr.options.closeButton = true;
+	toastr.options.closeButton = true;
 
 Optionally override the close button's HTML. 
 
-    toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
+	toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 
 You can also override the CSS/LESS for `#toast-container .toast-close-button`
 
