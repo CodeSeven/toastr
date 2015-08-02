@@ -43,7 +43,7 @@ class toastr {
 
         this.container = document.getElementById(options.containerId);
 
-        if (this.container!=null) {
+        if (this.container !== null) {
             return this.container;
         }
 
@@ -66,8 +66,8 @@ class toastr {
             iconClass: this.getOptions().iconClasses.error,
             message: message,
             optionsOverride: optionsOverride,
-            title: title
-        })
+            title: title,
+        });
     }
 
     /**
@@ -135,7 +135,7 @@ class toastr {
 
         var options = this.getOptions();
 
-        if (this.container == null) {
+        if (this.container === null) {
             this.getContainer(options,false);
         }
 
@@ -152,11 +152,11 @@ class toastr {
     remove(toastElement) {
         let options = this.getOptions();
 
-        if (typeof(this.container) == 'undefined') {
+        if (typeof(this.container) === 'undefined') {
             this.getContainer(options, false);
         }
 
-        if(typeof(toastElement) == 'undefined' && toastElement.matches(':focus')) {
+        if(typeof(toastElement) === 'undefined' && toastElement.matches(':focus')) {
             this.removeToast(toastElement);
             return;
         }
@@ -184,8 +184,7 @@ class toastr {
      */
     clearToast (toastElement, options, clearOptions) {
         let forceClosureOfToast = clearOptions && clearOptions.force ? clearOptions.force : false;
-        if (typeof(toastElement)!=='undefined'
-                && (forceClosureOfToast || toastElement.matches(':focus'))) {
+        if (typeof(toastElement)!=='undefined' && (forceClosureOfToast || toastElement.matches(':focus'))) {
 
             // TODO: Show exit animation and do callback etc
             return true;
@@ -255,8 +254,7 @@ class toastr {
      */
     publish(args) {
 
-        if (typeof(this.listener) == 'undefined'
-            || this.listener == null) {
+        if (typeof(this.listener) === 'undefined' || this.listener === null) {
             return;
         }
 
@@ -338,7 +336,7 @@ class toastr {
         function handleEvents() {
 
             toastElement.addEventListener('mouseover', stickAround);
-            toastElement.addEventListener('mouseout', delayedHideToast)
+            toastElement.addEventListener('mouseout', delayedHideToast);
 
             if (!options.onclick && options.tapToDismiss) {
                 toastElement.click(hideToast);
@@ -423,7 +421,7 @@ class toastr {
                 //this.container.prepend(toastElement);
                 // TODO: Not yet supported in v3
             } else {
-                this.container.appendChild(toastElement);
+                this.container.appendChild(toastElement); // TODO: JSHint Possible String Violation
             }
         }
 
@@ -471,10 +469,10 @@ class toastr {
 
         function shouldExit(options, map) {
             if (options.preventDuplicates) {
-                if (map.message === this.previousToast) {
+                if (map.message === this.previousToast) { // TODO: JSHint Possible String Violation
                     return true;
                 } else {
-                    this.previousToast = map.message;
+                    this.previousToast = map.message; // TODO: JSHint Possible String Violation
                 }
             }
             return false;
@@ -489,7 +487,7 @@ class toastr {
 
             console.log("Hiding toast now.", toastElement);
 
-            let removeFunction = this.removeToast;
+            let removeFunction = this.removeToast; // TODO: JSHint Possible String Violation
 
             let animationFinishedCallback = function(args) {
                 console.log("Toast is now hiding.", args);
@@ -510,7 +508,7 @@ class toastr {
 
             animateToastOut(toastElement,animationFinishedCallback);
 
-        };
+        }
 
         /**
          * Defines the animation for animating toasts off of the document.
@@ -618,8 +616,8 @@ class toastr {
             }
         }
         return extended;
-    };
+    }
 }
 
 // This makes toastr an export for closure's sake
-window['toastr'] = toastr;
+window.toastr = toastr;

@@ -12,12 +12,15 @@
   "author": "Tim Ferrell, Stephen Bero, John Papa",
   "license": "MIT",
   "devDependencies": {
-    "babel": "^5.1.10",
-    "gulp": "^3.8.11",
-    "gulp-babel": "^4.0.0",
-    "gulp-closure-compiler": "^0.2.19",
-    "gulp-load-plugins": "^0.10.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^1.5.1"
+    "babel": "*",
+    "babel-eslint": "*",
+    "gulp": "*",
+    "gulp-babel": "*",
+    "gulp-closure-compiler": "*",
+    "gulp-jscs": "*",
+    "gulp-jshint": "*",
+    "gulp-load-plugins": "*",
+    "gulp-rename": "*",
+    "gulp-sourcemaps": "*"
   }
 }
