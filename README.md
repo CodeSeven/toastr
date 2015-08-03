@@ -87,6 +87,11 @@ toastr.clear()
 toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {timeOut: 5000})
 ```
 
+### Escape HTML characters
+In case you want to escape HTML charaters in title and message
+
+	toastr.options.escapeHtml = true;
+
 ### Close Button
 Optionally enable a close button
 ```js
