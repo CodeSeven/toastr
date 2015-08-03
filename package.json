@@ -14,6 +14,7 @@
   "devDependencies": {
     "babel": "*",
     "babel-eslint": "*",
+    "chai": "*",
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-closure-compiler": "*",
@@ -21,6 +22,7 @@
     "gulp-jshint": "*",
     "gulp-load-plugins": "*",
     "gulp-rename": "*",
-    "gulp-sourcemaps": "*"
+    "gulp-sourcemaps": "*",
+    "mocha": "*"
   }
 }

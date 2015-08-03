@@ -4,7 +4,13 @@ var gulp = require("gulp"),
     sourcemaps = require('gulp-sourcemaps'),
     closureCompiler = require('gulp-closure-compiler'),
     jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs');
+    jscs = require('gulp-jscs'),
+    mocha = require('gulp-mocha');
+
+gulp.task('test', function(){
+    return gulp.src('./tests/**/*.js')
+            .pipe(mocha());
+    });
 
 gulp.task('jshint', function() {
   return gulp.src('./src/*.es6')

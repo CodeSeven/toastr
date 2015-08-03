@@ -199,11 +199,12 @@ var toastr = (function () {
     }, {
         key: 'clearContainer',
         value: function clearContainer(options) {
-            var _this = this;
+            for (var i = 0; i < this.container.children.length; ++i) {
+                var item = this.container.children[i];
 
-            this.container.childNodes.forEach(function (item) {
-                return _this.clearToast(item, options, false);
-            });
+                this.clearToast(item, options);
+            }
+            // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
         }
 
         /**
@@ -217,12 +218,20 @@ var toastr = (function () {
     }, {
         key: 'clearToast',
         value: function clearToast(toastElement, options, clearOptions) {
-            var forceClosureOfToast = clearOptions && clearOptions.force ? clearOptions.force : false;
-            if (typeof toastElement !== 'undefined' && (forceClosureOfToast || toastElement.matches(':focus'))) {
 
-                // TODO: Show exit animation and do callback etc
-                return true;
+            if (typeof toastElement !== 'undefined') {
+                var forceClosureOfToast = clearOptions && clearOptions.force ? clearOptions.force : false;
+
+                if (forceClosureOfToast || toastElement.matches(':focus')) {
+                    this.removeToast(toastElement);
+
+                    // TODO: Show exit animation and do callback etc
+                    return true;
+                }
             }
+
+            return false;
+
             return false;
         }
 
@@ -661,5 +670,7 @@ var toastr = (function () {
     return toastr;
 })();
 
-window.toastr = toastr;
+if (typeof window !== 'undefined') {
+    window.toastr = toastr;
+}
 //# sourceMappingURL=../maps/toastr.js.map

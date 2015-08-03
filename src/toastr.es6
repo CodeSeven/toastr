@@ -171,7 +171,12 @@ class toastr {
      * @param options
      */
     clearContainer (options) {
-        this.container.childNodes.forEach(item => this.clearToast(item,options, false));
+        for(var i = 0; i < this.container.children.length; ++i){
+            var item = this.container.children[i];
+
+            this.clearToast(item, options);
+        }
+        // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
     }
 
     /**
@@ -183,12 +188,21 @@ class toastr {
      * @returns {boolean}
      */
     clearToast (toastElement, options, clearOptions) {
-        let forceClosureOfToast = clearOptions && clearOptions.force ? clearOptions.force : false;
-        if (typeof(toastElement)!=='undefined' && (forceClosureOfToast || toastElement.matches(':focus'))) {
 
-            // TODO: Show exit animation and do callback etc
-            return true;
+        if(typeof(toastElement) !== 'undefined'){
+            let forceClosureOfToast = clearOptions && clearOptions.force ? clearOptions.force : false;
+
+            if (forceClosureOfToast || toastElement.matches(':focus')) {
+                this.removeToast(toastElement);
+
+                // TODO: Show exit animation and do callback etc
+                return true;
+            }
         }
+        
+        return false;
+
+        
         return false;
     }
 
@@ -620,4 +634,6 @@ class toastr {
 }
 
 // This makes toastr an export for closure's sake
-window.toastr = toastr;
+if(typeof(window) !== 'undefined'){
+    window.toastr = toastr;
+}
