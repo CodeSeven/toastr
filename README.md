@@ -99,17 +99,23 @@ Optionally enable a close button
 toastr.options.closeButton = true;
 ```
 
+<<<<<<< Updated upstream
 Optionally override the close button's HTML. 
 ```js
 toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 ```
 =======
 
+=======
+>>>>>>> Stashed changes
         toastr.options.closeButton = true;
 
 Optionally override the close button's HTML. 
 
         toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 You can also override the CSS/LESS for `#toast-container .toast-close-button`
@@ -167,7 +173,10 @@ toastr.options.preventDuplicates = true;
 ```
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
        toastr.options.preventDuplicates = true;
 	
 >>>>>>> Stashed changes
