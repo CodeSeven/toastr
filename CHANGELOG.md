@@ -1,3 +1,21 @@
+# 2.1.2 (2015-08-06)
+
+## New Features
+- Added HTML escaping (use toastr.options.escapeHTML)
+- Added more options for overriding animations, specifically to closing a toast
+- Events are now passed into the onClick handler of the toast
+
+## Bug Fixes
+- Resolved issue with centered toasts that would override top and bottom margins
+
+## Dev Ops
+- Removed `module` and `require` from the `.jshintrc` file
+- Cleaned up the readme
+- Builds moved to the `builds` folder
+- Made href calls relative to the transport in the demo
+- CSS is now built by the included LESS file as part of a `gulp` call
+- Removed un-used deps
+
 # 2.1.1 (2015-02-19)
 
 ## New Features
