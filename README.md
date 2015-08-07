@@ -96,17 +96,13 @@ In case you want to escape HTML charaters in title and message
 Optionally enable a close button
 ```js
 toastr.options.closeButton = true;
+````
 
 Optionally override the close button's HTML. 
+
 ```js
 toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 ```
-
-        toastr.options.closeButton = true;
-
-Optionally override the close button's HTML. 
-
-        toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 
 You can also override the CSS/LESS for `#toast-container .toast-close-button`
 
@@ -161,9 +157,6 @@ Rather than having identical toasts stack, set the preventDuplicates property to
 ```js
 toastr.options.preventDuplicates = true;
 ```
-
-       toastr.options.preventDuplicates = true;
-	
 
 ###Timeouts
 Control how toastr interacts with users by setting timeouts appropriately. Timeouts can be disabled by setting them to 0.
