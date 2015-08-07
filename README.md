@@ -100,6 +100,7 @@ toastr.options.closeButton = true;
 ```
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Optionally override the close button's HTML. 
 ```js
 toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
@@ -108,12 +109,17 @@ toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         toastr.options.closeButton = true;
 
 Optionally override the close button's HTML. 
 
         toastr.options.closeHtml = '<button><i class="icon-off"></i></button>';
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -174,7 +180,10 @@ toastr.options.preventDuplicates = true;
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
        toastr.options.preventDuplicates = true;
