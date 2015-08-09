@@ -1,4 +1,4 @@
-﻿// Mix-ins
+// Mix-ins
 .borderRadius(@radius) {
 	-moz-border-radius: @radius;
 	-webkit-border-radius: @radius;
@@ -33,6 +33,7 @@
 @red: #BD362F;
 @blue: #2F96B4;
 @orange: #F89406;
+@default-container-opacity: .8;
 
 // Styles
 .toast-title {
@@ -155,7 +156,7 @@ button.toast-close-button {
 		background-repeat: no-repeat;
 		.boxShadow(0 0 12px @grey);
 		color: @white;
-		.opacity(0.8);
+		.opacity(@default-container-opacity);
 	}
 
 	> :hover {
@@ -184,13 +185,15 @@ button.toast-close-button {
 	&.toast-top-center > div,
 	&.toast-bottom-center > div {
 		width: 300px;
-		margin: auto;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	&.toast-top-full-width > div,
 	&.toast-bottom-full-width > div {
 		width: 96%;
-		margin: auto;
+		margin-left: auto;
+		margin-right: auto;
 	}
 }
 
