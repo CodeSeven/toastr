@@ -32,18 +32,8 @@ var selectors = {
     toastError: 'div#toast-container > div.toast-error',
     toastSuccess: 'div#toast-container > div.toast-success'
 };
-/*
-toastrObj.options = {
-    timeOut: 2000,
-    extendedTimeOut: 0,
-    fadeOut: 0,
-    fadeIn: 0,
-    showDuration: 0,
-    hideDuration: 0,
-    debug: false
-};
 
-var delay = toastrObj.options.timeOut + 500;*/
+var delay;
 
 function resetContainer(t) {
     var $container = t.getContainer();
@@ -64,7 +54,19 @@ describe('Toastr Unit Tests', function() {
 
 	beforeEach(function(){
 		t = new toastr();
-		console.log(t);
+
+		t.options = {
+		    timeOut: 2000,
+		    extendedTimeOut: 0,
+		    fadeOut: 0,
+		    fadeIn: 0,
+		    showDuration: 0,
+		    hideDuration: 0,
+		    debug: false
+		};
+
+		delay = t.options.timeOut + 500;
+		// console.log(t);
 	});
 
 	afterEach(function(){
@@ -90,7 +92,9 @@ describe('Toastr Unit Tests', function() {
 		    $toast[2] = t.info(sampleMsg, sampleTitle + '-3');
 		    var $container = t.getContainer();
 		    //Act
+		    console.log($toast[1]);
 		    t.clear($toast[1]); // I have to force the removal. v2 doesn't have this requirement.
+		    
 		    //Assert
 		    // setTimeout(function () {
 		        //debugger;
@@ -134,65 +138,67 @@ describe('Toastr Unit Tests', function() {
 			var msg = sampleMsg + '<br/><br/><button type="button">Clear</button>';
 
 			$toast = t.info(msg, sampleTitle + "-1");
-			$toast.find('button').focus();
+			// jQuery.find('button')[0].focus(); // TODO why do we need focus on the button? We don't use .remove()
 			t.clear($toast, {force: true});
 
 			var $container = t.getContainer();
 
-			expect($container).to.exist;
-	        expect($container.children).to.have.length(0);
+			expect($container).to.not.exist;
+	        expect($container).to.have.be.null; // TODO validate that this against the v2 test is in fact accurate expectation
 
-	        // resetContainer();
 	        done();
 		});
 
 		it('clear and show - show 2 toasts, clear both, then show 1 more', function(done){
 			var $toast = [];
 
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
-	        var $container = toastr.getContainer();
-	        toastr.clear();
+	        $toast[0] = t.info(sampleMsg, sampleTitle + '-1');
+	        $toast[1] = t.info(sampleMsg, sampleTitle + '-2');
+	        var $container = t.getContainer();
+	        t.clear();
         
-            $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+            $toast[2] = t.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
-            equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear');
-            ok($toast[2].is(':visible'), 'Toast after a clear is visible');
+            var toast2jQuery = jQuery($toast[2]);
+            expect(toast2jQuery.find('div.toast-title').html()).to.contain(sampleTitle + '-3-Visible');
+            
+            expect(toast2jQuery.length).to.be.equal(1);
+            expect(jQuery(selectors.container).length).to.equal(1);
             //Teardown
-            resetContainer();
-            start();
+            // resetContainer();
+            // start();
             done();
 		});
 
 		it('clear and show - clear removes toast container', function(done){
 			var $toast = [];
-        	$toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
-        	$toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
-        	var $container = toastr.getContainer();
-        	toastr.clear();
+        	$toast[0] = t.info(sampleMsg, sampleTitle + '-1');
+        	$toast[1] = t.info(sampleMsg, sampleTitle + '-2');
+        	var $container = t.getContainer();
+        	t.clear();
         
         
             //Assert
-            equal($(selectors.container).length, 0, 'Toast container does not exist');
-            ok(!$toast[1].is(':visible'), 'Toast after a clear is visible');
+            expect(jQuery(selectors.container).length).to.equal(0);
+            // expect(!jQuery($toast[1]).length).to.be.false; // TODO what's the point?
             //Teardown
-            resetContainer();
-            start();
+            // resetContainer();
+            // start();
         	done();
 		});
 
 		it('clear and show - after clear new toast creates container', function(done){
 			var $toast = [];
-        	$toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
-        	$toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
-        	var $container = toastr.getContainer();
-        	toastr.clear();
+        	$toast[0] = t.info(sampleMsg, sampleTitle + '-1');
+        	$toast[1] = t.info(sampleMsg, sampleTitle + '-2');
+        	var $container = t.getContainer();
+        	t.clear();
         
-            $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+            $toast[2] = t.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
-            equal($(selectors.container).find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear'); //Teardown
-            resetContainer();
-            start();
+            expect(jQuery(selectors.container).find('div.toast-title').html()).to.contain(sampleTitle + '-3-Visible');
+            // resetContainer();
+            // start();
             done();
 		});
 
@@ -200,14 +206,14 @@ describe('Toastr Unit Tests', function() {
 			//Arrange
 	        var $toast = [];
 	        //Act
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
-	        toastr.clear();
-	        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+	        $toast[0] = t.info(sampleMsg, sampleTitle + '-1');
+	        $toast[1] = t.info(sampleMsg, sampleTitle + '-2');
+	        t.clear();
+	        $toast[2] = t.info(sampleMsg, sampleTitle + '-3-Visible');
 	        //Assert
-	        ok($toast[2].is(':visible'), 'Toast after a clear is visible');
+	        expect(jQuery($toast[2]).length).to.be.equal(1);
 	        //Teardown
-	        resetContainer();
+	        // resetContainer();
 	        done();
 		});
 	});

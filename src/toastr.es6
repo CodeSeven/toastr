@@ -605,7 +605,7 @@ class toastr {
      * @returns {boolean}
      */
     isElementVisible(element) {
-        return element.offsetWidth > 0 && element.offsetHeight > 0;
+        return element.offsetWidth > 0 && element.offsetHeight > 0; // TODO this doesn't work
     }
 
     /**
