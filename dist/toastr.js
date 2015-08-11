@@ -199,7 +199,9 @@ var toastr = (function () {
     }, {
         key: 'clearContainer',
         value: function clearContainer(options) {
-            for (var i = 0; i < this.container.children.length; ++i) {
+            var numToastsToClear = this.container.children.length;
+
+            for (var i = numToastsToClear - 1; i >= 0; --i) {
                 var item = this.container.children[i];
 
                 this.clearToast(item, options);
@@ -220,9 +222,9 @@ var toastr = (function () {
         value: function clearToast(toastElement, options, clearOptions) {
 
             if (typeof toastElement !== 'undefined') {
-                var forceClosureOfToast = clearOptions && clearOptions.force ? clearOptions.force : false;
+                var forceToastClosure = clearOptions && clearOptions.force ? clearOptions.force : false;
 
-                if (forceClosureOfToast || toastElement.matches(':focus')) {
+                if (forceToastClosure || !toastElement.matches(':focus')) {
                     this.removeToast(toastElement);
 
                     // TODO: Show exit animation and do callback etc
@@ -231,8 +233,33 @@ var toastr = (function () {
             }
 
             return false;
+        }
 
-            return false;
+        /**
+         * Removes a toast from the screen.
+         * @param toastElement
+         */
+    }, {
+        key: 'removeToast',
+        value: function removeToast(toastElement) {
+
+            if (typeof this.container === 'undefined') {
+                this.container = this.getContainer();
+            }
+
+            if (this.isElementVisible(toastElement)) {
+                return;
+            }
+
+            // Use the element to get it's parent so we can remove it.
+            toastElement.parentNode.removeChild(toastElement);
+
+            toastElement = null;
+
+            if (this.container.childNodes.length === 0) {
+                this.container.parentNode.removeChild(this.container);
+                this.previousToast = undefined;
+            }
         }
 
         /**
@@ -600,33 +627,6 @@ var toastr = (function () {
         key: 'getOptions',
         value: function getOptions() {
             return this.extend(this.getDefaultOptions(), this.options);
-        }
-
-        /**
-         * Removes a toast from the screen.
-         * @param toastElement
-         */
-    }, {
-        key: 'removeToast',
-        value: function removeToast(toastElement) {
-
-            if (typeof this.container == 'undefined') {
-                this.container = this.getContainer();
-            }
-
-            if (this.isElementVisible(toastElement)) {
-                return;
-            }
-
-            // Use the element to get it's parent so we can remove it.
-            toastElement.parentNode.removeChild(toastElement);
-
-            toastElement = null;
-
-            if (this.container.childNodes.length === 0) {
-                this.container.parentNode.removeChild(this.container);
-                this.previousToast = undefined;
-            }
         }
 
         /**
