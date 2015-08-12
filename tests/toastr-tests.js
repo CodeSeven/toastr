@@ -223,12 +223,12 @@ describe('Toastr Unit Tests', function() {
 		it('info - pass title and message', function(done){
 			var $toast = t.info(sampleMsg, sampleTitle);
 	        
-	        // equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-	        // equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        // ok($toast.hasClass(iconClasses.info), 'Sets info icon');
+	        expect(jQuery($toast).find('div.toast-title').html()).to.contain(sampleTitle);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.info)).to.be.true;
 	        
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 
 	        done();
 		});
@@ -236,23 +236,24 @@ describe('Toastr Unit Tests', function() {
 		it('info - pass message, but no title', function(done){
 			var $toast = t.info(sampleMsg);
 	        //Assert
-	        // equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-	        // equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        // ok($toast.hasClass(iconClasses.info), 'Sets info icon');
+	        expect(jQuery($toast).find('div.toast-title').length).to.be.equal(0);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.info)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 
 		it('info - pass no message nor title', function(done){
 			var $toast = t.info(); //Assert
-        	// equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-        	// equal($toast.find('div.toast-message').html(), null, 'Sets message');
-        	// ok($toast.hasClass(iconClasses.info), 'Sets info icon');
+        	
+        	expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
+        	expect(jQuery($toast).find('div.toast-message').html()).to.be.undefined;
+        	expect(jQuery($toast).hasClass(iconClasses.info)).to.be.true;
         	//Teardown
         	$toast.remove();
-        	clearContainerChildren();
+        	// clearContainerChildren();
         	done();
 		});
 	});
