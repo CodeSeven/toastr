@@ -262,113 +262,115 @@ describe('Toastr Unit Tests', function() {
 		it('warning - pass message and title', function(done){
 			var $toast = t.warning(sampleMsg, sampleTitle);
 	        //Assert
-	        // equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-	        // equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        // ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
+	        expect(jQuery($toast).find('div.toast-title').html()).to.contain(sampleTitle);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.warning)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 
 			done();
 		});
 
 		it('warning - pass message, but no title', function(done){
-			var $toast = toastr.warning(sampleMsg);
+			var $toast = t.warning(sampleMsg);
 	        //Assert
-	        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-	        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
+	        expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.warning)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 
 		it('warning - no message nor title', function(done){
-			var $toast = toastr.warning('');
+			var $toast = t.warning();
+
 	        //Assert
-	        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-	        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
-	        ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
+	        expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
+	        expect(jQuery($toast).find('div.toast-message').length).to.equal(0);
+	        expect(jQuery($toast).hasClass(iconClasses.warning)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 	});
 
 	describe('Error tests', function(){
 		it('error - pass message and title', function(done){
-			var $toast = toastr.error(sampleMsg, sampleTitle);
+			var $toast = t.error(sampleMsg, sampleTitle);
 	        //Assert
-	        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-	        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        ok($toast.hasClass(iconClasses.error), 'Sets error icon');
+	        expect(jQuery($toast).find('div.toast-title').html()).to.contain(sampleTitle);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.error)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 
 		it('error - pass message, but no title', function(done){
-			var $toast = toastr.error(sampleMsg); //Assert
-	        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-	        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        ok($toast.hasClass(iconClasses.error), 'Sets error icon');
+			var $toast = t.error(sampleMsg); //Assert
+	        
+	        expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.error)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 
 		it('error - no message nor title', function(done){
-			var $toast = toastr.error('');
+			var $toast = t.error();
 	        //Assert
-	        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-	        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
-	        ok($toast.hasClass(iconClasses.error), 'Sets error icon');
+	        expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
+	        expect(jQuery($toast).find('div.toast-message').length).to.equal(0);
+	        expect(jQuery($toast).hasClass(iconClasses.error)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 	});
 
 	describe('Success tests', function(){
 		it('success - pass message and title', function(done){
-			var $toast = toastr.success(sampleMsg, sampleTitle);
+			var $toast = t.success(sampleMsg, sampleTitle);
 	        //Assert
-	        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-	        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        ok($toast.hasClass(iconClasses.success), 'Sets success icon');
+	        expect(jQuery($toast).find('div.toast-title').html()).to.contain(sampleTitle);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.success)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 
 		it('success - pass message, but no title', function(done){
-			var $toast = toastr.success(sampleMsg);
+			var $toast = t.success(sampleMsg);
 	        //Assert
-	        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-	        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
-	        ok($toast.hasClass(iconClasses.success), 'Sets success icon');
+	        expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
+	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
+	        expect(jQuery($toast).hasClass(iconClasses.success)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 
 		it('success - no message nor title', function(done){
 			//Arrange
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success();
 	        //Assert
-	        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-	        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
-	        ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
+	        expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
+	        expect(jQuery($toast).find('div.toast-message').length).to.equal(0);
+	        expect(jQuery($toast).hasClass(iconClasses.success)).to.be.true;
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 		});
 	});
@@ -380,40 +382,43 @@ describe('Toastr Unit Tests', function() {
 
 		it('close button disabled', function (done) {
 	        //Arrange
-	        toastr.options.closeButton = false;
+	        t.options.closeButton = false;
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success('');
 	        //Assert
-	        equal($toast.find('button.toast-close-button').length, 0, 'close button should not exist with closeButton=false');
+	        //, 'close button should not exist with closeButton=false'
+	        expect(jQuery($toast).find('button.toast-close-button').length).to.equal(0);
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 	    });
 
 	    it('close button enabled', function (done) {
 	        //Arrange
-	        toastr.options.closeButton = true;
+	        t.options.closeButton = true;
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success('');
 	        //Assert
-	        equal($toast.find('button.toast-close-button').length, 1, 'close button should exist with closeButton=true');
+	        //, 'close button should exist with closeButton=true'
+	        expect(jQuery($toast).find('button.toast-close-button').length).to.equal(1);
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 	    });
 
 	    it('close button has type=button', function (done) {
 	        //Arrange
-	        toastr.options.closeButton = true;
+	        t.options.closeButton = true;
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success('');
 	        //Assert
-	        equal($toast.find('button[type="button"].toast-close-button').length, 1, 'close button should have type=button');
+	        // , 'close button should have type=button'
+	        expect(jQuery($toast).find('button[type="button"].toast-close-button').length).to.equal(1);
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 	    });
 	});
