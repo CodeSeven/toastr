@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Toastr Tests</title>
+  <link rel="stylesheet" media="all" href="../node_modules/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"><p><a href="./tests.html">toastr v3 tests</a></p></div>
+  <div id="messages"></div>
+  <div id="fixtures"></div>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../dist/toastr.js"></script>
+  <script>mocha.setup('bdd')</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>jQuery.noConflict();</script>
+  <script src="toastr-tests.js"></script>
+  <script>mocha.run();</script>
+  <style>
+  #fixtures {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 1000px;
+    height: 1000px;
+  }
+
+  #toast-container{
+    display: none;
+  }
+  </style>
+</body>
+</html>

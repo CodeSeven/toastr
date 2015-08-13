@@ -43,7 +43,7 @@ class toastr {
 
         this.container = document.getElementById(options.containerId);
 
-        if (this.container!=null) {
+        if (this.container !== null) {
             return this.container;
         }
 
@@ -66,8 +66,8 @@ class toastr {
             iconClass: this.getOptions().iconClasses.error,
             message: message,
             optionsOverride: optionsOverride,
-            title: title
-        })
+            title: title,
+        });
     }
 
     /**
@@ -135,7 +135,7 @@ class toastr {
 
         var options = this.getOptions();
 
-        if (this.container == null) {
+        if (this.container === null) {
             this.getContainer(options,false);
         }
 
@@ -152,11 +152,11 @@ class toastr {
     remove(toastElement) {
         let options = this.getOptions();
 
-        if (typeof(this.container) == 'undefined') {
+        if (typeof(this.container) === 'undefined') {
             this.getContainer(options, false);
         }
 
-        if(typeof(toastElement) == 'undefined' && toastElement.matches(':focus')) {
+        if(typeof(toastElement) === 'undefined' && toastElement.matches(':focus')) {
             this.removeToast(toastElement);
             return;
         }
@@ -171,7 +171,14 @@ class toastr {
      * @param options
      */
     clearContainer (options) {
-        this.container.childNodes.forEach(item => this.clearToast(item,options, false));
+        let numToastsToClear = this.container.children.length;
+
+        for(var i = numToastsToClear - 1; i >= 0 ; --i){
+            var item = this.container.children[i];
+
+            this.clearToast(item, options);
+        }
+        // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
     }
 
     /**
@@ -183,14 +190,44 @@ class toastr {
      * @returns {boolean}
      */
     clearToast (toastElement, options, clearOptions) {
-        let forceClosureOfToast = clearOptions && clearOptions.force ? clearOptions.force : false;
-        if (typeof(toastElement)!=='undefined'
-                && (forceClosureOfToast || toastElement.matches(':focus'))) {
 
-            // TODO: Show exit animation and do callback etc
-            return true;
+        if(typeof(toastElement) !== 'undefined'){
+            let forceToastClosure = clearOptions && clearOptions.force ? clearOptions.force : false;
+            
+            if (forceToastClosure || !toastElement.matches(':focus')) {
+                this.removeToast(toastElement);
+
+                // TODO: Show exit animation and do callback etc
+                return true;
+            }
         }
+        
         return false;
+    }
+
+    /**
+     * Removes a toast from the screen.
+     * @param toastElement
+     */
+    removeToast(toastElement) {
+
+        if (typeof(this.container) === 'undefined') {
+            this.container = this.getContainer();
+        }
+
+        if (this.isElementVisible(toastElement)) {
+            return;
+        }
+
+        // Use the element to get it's parent so we can remove it.
+        toastElement.parentNode.removeChild(toastElement);
+
+        toastElement = null;
+
+        if (this.container.childNodes.length === 0) {
+            this.container.parentNode.removeChild(this.container);
+            this.previousToast = undefined;
+        }
     }
 
 
@@ -255,8 +292,7 @@ class toastr {
      */
     publish(args) {
 
-        if (typeof(this.listener) == 'undefined'
-            || this.listener == null) {
+        if (typeof(this.listener) === 'undefined' || this.listener === null) {
             return;
         }
 
@@ -338,7 +374,7 @@ class toastr {
         function handleEvents() {
 
             toastElement.addEventListener('mouseover', stickAround);
-            toastElement.addEventListener('mouseout', delayedHideToast)
+            toastElement.addEventListener('mouseout', delayedHideToast);
 
             if (!options.onclick && options.tapToDismiss) {
                 toastElement.click(hideToast);
@@ -423,7 +459,7 @@ class toastr {
                 //this.container.prepend(toastElement);
                 // TODO: Not yet supported in v3
             } else {
-                this.container.appendChild(toastElement);
+                this.container.appendChild(toastElement); // TODO: JSHint Possible String Violation
             }
         }
 
@@ -471,10 +507,10 @@ class toastr {
 
         function shouldExit(options, map) {
             if (options.preventDuplicates) {
-                if (map.message === this.previousToast) {
+                if (map.message === this.previousToast) { // TODO: JSHint Possible String Violation
                     return true;
                 } else {
-                    this.previousToast = map.message;
+                    this.previousToast = map.message; // TODO: JSHint Possible String Violation
                 }
             }
             return false;
@@ -489,7 +525,7 @@ class toastr {
 
             console.log("Hiding toast now.", toastElement);
 
-            let removeFunction = this.removeToast;
+            let removeFunction = this.removeToast; // TODO: JSHint Possible String Violation
 
             let animationFinishedCallback = function(args) {
                 console.log("Toast is now hiding.", args);
@@ -510,7 +546,7 @@ class toastr {
 
             animateToastOut(toastElement,animationFinishedCallback);
 
-        };
+        }
 
         /**
          * Defines the animation for animating toasts off of the document.
@@ -563,38 +599,13 @@ class toastr {
     }
 
     /**
-     * Removes a toast from the screen.
-     * @param toastElement
-     */
-    removeToast(toastElement) {
-
-        if (typeof(this.container)=='undefined') {
-            this.container = this.getContainer();
-        }
-
-        if (this.isElementVisible(toastElement)) {
-            return;
-        }
-
-        // Use the element to get it's parent so we can remove it.
-        toastElement.parentNode.removeChild(toastElement);
-
-        toastElement = null;
-
-        if (this.container.childNodes.length === 0) {
-            this.container.parentNode.removeChild(this.container);
-            this.previousToast = undefined;
-        }
-    }
-
-    /**
      * Checks if the provided element is visible on screen.
      * @private
      * @param element
      * @returns {boolean}
      */
     isElementVisible(element) {
-        return element.offsetWidth > 0 && element.offsetHeight > 0;
+        return element.offsetWidth > 0 && element.offsetHeight > 0; // TODO this doesn't work
     }
 
     /**
@@ -618,8 +629,10 @@ class toastr {
             }
         }
         return extended;
-    };
+    }
 }
 
 // This makes toastr an export for closure's sake
-window['toastr'] = toastr;
+if(typeof(window) !== 'undefined'){
+    window.toastr = toastr;
+}

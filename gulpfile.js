@@ -2,9 +2,28 @@ var gulp = require("gulp"),
     babel = require("gulp-babel"),
     rename = require("gulp-rename"),
     sourcemaps = require('gulp-sourcemaps'),
-    closureCompiler = require('gulp-closure-compiler');
+    closureCompiler = require('gulp-closure-compiler'),
+    jshint = require('gulp-jshint'),
+    jscs = require('gulp-jscs'),
+    mocha = require('gulp-mocha');
 
-gulp.task('default', function(){
+gulp.task('test', function(){
+    return gulp.src('./tests/**/*.js')
+            .pipe(mocha());
+    });
+
+gulp.task('jshint', function() {
+  return gulp.src('./src/*.es6')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+
+gulp.task('jscs', function() {
+  return gulp.src('./src/*.es6')
+    .pipe(jscs());
+});
+
+gulp.task('transpile', function(){
     return gulp.src("./src/toastr.es6")
         .pipe(sourcemaps.init())
             .pipe(babel())
@@ -16,6 +35,8 @@ gulp.task('default', function(){
 gulp.task('build', ['default','closure'], function () {
 
 });
+
+gulp.task('default', ['jshint', 'jscs', 'transpile']);
 
 
 gulp.task('closure', function () {
