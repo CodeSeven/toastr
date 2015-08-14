@@ -11,7 +11,7 @@
  * Project: https://github.com/CodeSeven/toastr
  */
 /* global define */
-; (function (define) {
+(function (define) {
     define(['jquery'], function ($) {
         return (function () {
             var $container;
