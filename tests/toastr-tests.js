@@ -645,94 +645,103 @@ describe('Toastr Unit Tests', function() {
 
 	describe('Positioning tests', function(){
 
+		beforeEach(function(){
+			resetContainer(t);
+		});
+
+		afterEach(function(){
+			clearContainerChildren(t);
+		});
+
 		it('Container - position top-right', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.topRight;
+	        
+	        t.options.positionClass = positionClasses.topRight;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.topRight), 'Has position top right');
+	        expect(jQuery($container).hasClass(positionClasses.topRight)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position bottom-right', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.bottomRight;
+	        
+	        t.options.positionClass = positionClasses.bottomRight;
+
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right');
+	        expect(jQuery($container).hasClass(positionClasses.bottomRight)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position bottom-left', function (done) {
 	        //Arrange
-	        resetContainer();
+	        // resetContainer();
 	        //$(selectors.container).remove()
-	        toastr.options.positionClass = positionClasses.bottomLeft;
+	        t.options.positionClass = positionClasses.bottomLeft;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.bottomLeft), 'Has position bottom left');
+	        expect(jQuery($container).hasClass(positionClasses.bottomLeft)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position top-left', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.topLeft;
+	        // resetContainer();
+	        t.options.positionClass = positionClasses.topLeft;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.topLeft), 'Has position top left');
+	        expect(jQuery($container).hasClass(positionClasses.topLeft)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position top-center', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.topCenter;
+	        // resetContainer();
+	        t.options.positionClass = positionClasses.topCenter;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.topCenter), 'Has position top center');
+	        expect(jQuery($container).hasClass(positionClasses.topCenter)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position bottom-center', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.bottomCenter;
+	        // resetContainer();
+	        t.options.positionClass = positionClasses.bottomCenter;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.bottomCenter), 'Has position bottom center');
+	        expect(jQuery($container).hasClass(positionClasses.bottomCenter)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 	});

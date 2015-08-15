@@ -199,14 +199,16 @@ var toastr = (function () {
     }, {
         key: 'clearContainer',
         value: function clearContainer(options) {
-            var numToastsToClear = this.container.children.length;
+            if (this.container) {
+                var numToastsToClear = this.container.children.length;
 
-            for (var i = numToastsToClear - 1; i >= 0; --i) {
-                var item = this.container.children[i];
+                for (var i = numToastsToClear - 1; i >= 0; --i) {
+                    var item = this.container.children[i];
 
-                this.clearToast(item, options);
+                    this.clearToast(item, options);
+                }
+                // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
             }
-            // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
         }
 
         /**
@@ -256,7 +258,7 @@ var toastr = (function () {
 
             toastElement = null;
 
-            if (this.container.childNodes.length === 0) {
+            if (this.container.childNodes.length === 0 && this.container.parentNode) {
                 this.container.parentNode.removeChild(this.container);
                 this.previousToast = undefined;
             }

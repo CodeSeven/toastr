@@ -171,14 +171,16 @@ class toastr {
      * @param options
      */
     clearContainer (options) {
-        let numToastsToClear = this.container.children.length;
+        if(this.container){
+            let numToastsToClear = this.container.children.length;
 
-        for(var i = numToastsToClear - 1; i >= 0 ; --i){
-            var item = this.container.children[i];
+            for(var i = numToastsToClear - 1; i >= 0 ; --i){
+                var item = this.container.children[i];
 
-            this.clearToast(item, options);
+                this.clearToast(item, options);
+            }
+            // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
         }
-        // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
     }
 
     /**
@@ -224,7 +226,7 @@ class toastr {
 
         toastElement = null;
 
-        if (this.container.childNodes.length === 0) {
+        if (this.container.childNodes.length === 0 && this.container.parentNode) {
             this.container.parentNode.removeChild(this.container);
             this.previousToast = undefined;
         }
