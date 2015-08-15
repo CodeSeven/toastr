@@ -370,7 +370,7 @@ var toastr = (function () {
              */
             var messageElement = document.createElement('div');
             var progressElement = document.createElement('div');
-            var closeElement = document.createElement('div');
+            var closeElement = document.createElement('button');
             closeElement.innerHtml = options.closeHtml;
 
             var progressBar = {
@@ -524,9 +524,10 @@ var toastr = (function () {
             }
 
             function setCloseButton() {
-                if (typeof options.closeButton !== 'undefined') {
+                if (typeof options.closeButton !== 'undefined' && options.closeButton !== false) {
                     closeElement.classList.add('toast-close-button');
                     closeElement.setAttribute('role', 'button');
+                    closeElement.setAttribute('type', 'button');
                     toastElement.appendChild(closeElement);
                 }
             }
@@ -568,11 +569,13 @@ var toastr = (function () {
 
                     // Repeating myself. Try to find a way to not duplicate code.
                     // Use the element to get it's parent so we can remove it.
-                    parentNode.removeChild(toastElement);
+                    if (parentNode !== null) {
+                        parentNode.removeChild(toastElement);
 
-                    if (!parentNode.hasChildNodes()) {
-                        container.parentNode.removeChild(container);
-                        this.previousToast = undefined;
+                        if (!parentNode.hasChildNodes()) {
+                            container.parentNode.removeChild(container);
+                            this.previousToast = undefined;
+                        }
                     }
 
                     toastElement = null;
@@ -638,7 +641,7 @@ var toastr = (function () {
     }, {
         key: 'isElementVisible',
         value: function isElementVisible(element) {
-            return element.offsetWidth > 0 && element.offsetHeight > 0;
+            return element.offsetWidth > 0 && element.offsetHeight > 0; // TODO this doesn't work
         }
 
         /**

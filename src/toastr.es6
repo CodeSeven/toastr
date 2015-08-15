@@ -332,7 +332,7 @@ class toastr {
          */
         let messageElement = document.createElement('div');
         let progressElement = document.createElement('div');
-        let closeElement = document.createElement('div');
+        let closeElement = document.createElement('button');
             closeElement.innerHtml = options.closeHtml;
 
         var progressBar = {
@@ -491,9 +491,10 @@ class toastr {
         }
 
         function setCloseButton() {
-            if (typeof(options.closeButton) !== 'undefined') {
+            if (typeof(options.closeButton) !== 'undefined' && options.closeButton !== false) {
                 closeElement.classList.add('toast-close-button');
                 closeElement.setAttribute('role','button');
+                closeElement.setAttribute('type','button');
                 toastElement.appendChild(closeElement);
             }
         }
@@ -534,11 +535,13 @@ class toastr {
 
                 // Repeating myself. Try to find a way to not duplicate code.
                 // Use the element to get it's parent so we can remove it.
-                parentNode.removeChild(toastElement);
+                if(parentNode !== null){
+                    parentNode.removeChild(toastElement);
 
-                if (!parentNode.hasChildNodes()) {
-                    container.parentNode.removeChild(container);
-                    this.previousToast = undefined;
+                    if (!parentNode.hasChildNodes()) {
+                        container.parentNode.removeChild(container);
+                        this.previousToast = undefined;
+                    }
                 }
 
                 toastElement = null;

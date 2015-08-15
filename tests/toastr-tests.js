@@ -385,6 +385,7 @@ describe('Toastr Unit Tests', function() {
 	        t.options.closeButton = false;
 	        //Act
 	        var $toast = t.success('');
+	        console.log($toast);
 	        //Assert
 	        //, 'close button should not exist with closeButton=false'
 	        expect(jQuery($toast).find('button.toast-close-button').length).to.equal(0);
@@ -399,6 +400,7 @@ describe('Toastr Unit Tests', function() {
 	        t.options.closeButton = true;
 	        //Act
 	        var $toast = t.success('');
+	        console.log($toast);
 	        //Assert
 	        //, 'close button should exist with closeButton=true'
 	        expect(jQuery($toast).find('button.toast-close-button').length).to.equal(1);
