@@ -462,34 +462,37 @@ describe('Toastr Unit Tests', function() {
 	        // Arrange
 	        var run = false;
 	        var onShown = function () { run = true; };
-	        toastr.options.onShown = onShown;
+	        t.options.onShown = onShown;
 	        // Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
+	        var $toast = t.success(sampleMsg, sampleTitle);
 	        
             // Assert
-            ok(run);
+            expect(run).to.be.true;
             //Teardown
             $toast.remove();
-            clearContainerChildren();
-            start();
+            // clearContainerChildren();
+            // start();
             done();
 	        
 	    });
 
 	    it('event - onHidden is executed', function (done) {
+
 	        //Arrange
 	        var run = false;
 	        var onHidden = function () { run = true; };
-	        toastr.options.onHidden = onHidden;
-	        toastr.options.timeOut = 1;
+	        t.options.onHidden = onHidden;
+	        t.options.timeOut = 1;
 	        //Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
+	        var $toast = t.success(sampleMsg, sampleTitle);
 	        
             // Assert
-            ok(run); //Teardown
+            // ok(run); //Teardown
+            expect(run).to.be.true;
+
             $toast.remove();
-            clearContainerChildren();
-            start();
+            // clearContainerChildren();
+            // start();
 	        done();
 	    });
 
@@ -499,95 +502,104 @@ describe('Toastr Unit Tests', function() {
 	        var onHideRun = false;
 	        var onShow = function () { onShowRun = true; };
 	        var onHide = function () { onHideRun = true; };
-	        toastr.options.onShown = onShow;
-	        toastr.options.onHidden = onHide;
-	        toastr.options.timeOut = 1;
+	        t.options.onShown = onShow;
+	        t.options.onHidden = onHide;
+	        t.options.timeOut = 1;
 	        //Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
+	        var $toast = t.success(sampleMsg, sampleTitle);
 	        
             // Assert
-            ok(onShowRun);
-            ok(onHideRun);
+            // ok(onShowRun);
+            // ok(onHideRun);
+            expect(onShowRun).to.be.true;
+            expect(onHideRun).to.be.true;
             //Teardown
             $toast.remove();
-            clearContainerChildren();
-            start();
+            clearContainerChildren(t);
+            // start();
 	        done();
 	    });
 
 	    it('event - message appears when no show or hide method functions provided', function (done) {
 	        //Arrange
 	        //Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
+	        var $toast = t.success(sampleMsg, sampleTitle);
+
+	       	expect(jQuery($toast).hasClass(iconClasses.success)).to.be.true;
 	        //Assert
-	        ok($toast.hasClass(iconClasses.success), 'Sets success icon');
+	        // ok($toast.hasClass(iconClasses.success), 'Sets success icon');
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - prevent duplicate sequential toasts.', function(done){
-	        toastr.options.preventDuplicates = true;
+	        t.options.preventDuplicates = true;
 
 	        var $toast = [];
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[2] = toastr.info(sampleMsg + " 1", sampleTitle);
-	        $toast[3] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[0] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        $toast[2] = t.info(sampleMsg + " 1", sampleTitle);
+	        $toast[3] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 3);
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(3);
 
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - prevent duplicate sequential toasts, but allow previous after clear.', function(done){
-	        toastr.options.preventDuplicates = true;
+	        t.options.preventDuplicates = true;
 
 	        var $toast = [];
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        clearContainerChildren();
-	        $toast[3] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[0] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        clearContainerChildren(t);
+	        $toast[3] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 1);
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(1);
 
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - allow duplicate sequential toasts.', function(done){
-	        toastr.options.preventDuplicates = false;
+	        t.options.preventDuplicates = false;
 
 	        var $toast = [];
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[0] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 3);
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(3);
 
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - allow preventDuplicates option to be overridden.', function(done) {
 	        var $toast = [];
 
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle, {
+	        $toast[0] = t.info(sampleMsg, sampleTitle, {
 	            preventDuplicates: true
 	        });
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle, {
+	        $toast[1] = t.info(sampleMsg, sampleTitle, {
 	            preventDuplicates: true
 	        });
-	        $toast[2] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[2] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 2);
-	        clearContainerChildren();
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(2);
+
+	        clearContainerChildren(t);
 	        done();
 	    });
 	});
@@ -595,35 +607,38 @@ describe('Toastr Unit Tests', function() {
 	describe('Order of Appearance tests', function(){
 		it('Newest toast on top', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.newestOnTop = true;
+	        // resetContainer(t);
+	        t.options.newestOnTop = true;
 	        //Act
-	        var $first = toastr.success("First toast");
-	        var $second = toastr.success("Second toast");
+	        var $first = t.success("First toast");
+	        var $second = t.success("Second toast");
 	        //Assert
-	        var containerHtml = toastr.getContainer().html();
-	        ok(containerHtml.indexOf("First toast") > containerHtml.indexOf("Second toast"), 'Newest toast is on top');
+	        var containerHtml = jQuery(t.getContainer()).html();
+	        
+	        expect(containerHtml.indexOf("First toast")).to.be.above(containerHtml.indexOf("Second toast"));
 	        //Teardown
 	        $first.remove();
 	        $second.remove();
-	        resetContainer();
+	        // resetContainer();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('Oldest toast on top', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.newestOnTop = false;
+	        // resetContainer();
+	        t.options.newestOnTop = false;
 	        //Act
-	        var $first = toastr.success("First toast");
-	        var $second = toastr.success("Second toast");
+	        var $first = t.success("First toast");
+	        var $second = t.success("Second toast");
 	        //Assert
-	        var containerHtml = toastr.getContainer().html();
-	        ok(containerHtml.indexOf("First toast") < containerHtml.indexOf("Second toast"), 'Oldest toast is on top');
+	        var containerHtml = jQuery(t.getContainer()).html();
+	        
+	        expect(containerHtml.indexOf("First toast")).to.be.below(containerHtml.indexOf("Second toast"));
 	        //Teardown
 	        $first.remove();
 	        $second.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 	});

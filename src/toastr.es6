@@ -313,7 +313,7 @@ class toastr {
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
 
-        if (shouldExit(options, map)) {
+        if (shouldExit.call(this, options, map)) {
             return;
         }
 
@@ -348,7 +348,7 @@ class toastr {
             map: map
         };
 
-        personalizeToast();
+        personalizeToast.call(this);
 
         displayToast();
 
@@ -368,7 +368,7 @@ class toastr {
             setMessage();
             setCloseButton();
             setProgressBar();
-            setSequence();
+            setSequence.call(this);
         }
 
         function handleEvents() {
@@ -407,6 +407,10 @@ class toastr {
             console.log("Appending toast to container.", toastElement);
 
             container.appendChild(toastElement);
+
+            if(typeof(options.onShown) === 'function'){
+                options.onShown();
+            }
 
             let animationFinishedCallback = function (args) {
 
@@ -456,7 +460,9 @@ class toastr {
 
         function setSequence() {
             if (options.newestOnTop) {
-                //this.container.prepend(toastElement);
+                var firstNode = this.container.firstChild;
+
+                this.container.insertBefore(toastElement, firstNode);
                 // TODO: Not yet supported in v3
             } else {
                 this.container.appendChild(toastElement); // TODO: JSHint Possible String Violation
@@ -508,12 +514,16 @@ class toastr {
 
         function shouldExit(options, map) {
             if (options.preventDuplicates) {
-                if (map.message === this.previousToast) { // TODO: JSHint Possible String Violation
-                    return true;
-                } else {
-                    this.previousToast = map.message; // TODO: JSHint Possible String Violation
-                }
+                // if (typeof(this) !== 'undefined') { 
+                    
+                    if(map.message === this.previousToast){
+                            return true;    
+                    }else {
+                        this.previousToast = map.message; // TODO: JSHint Possible String Violation
+                    }
+                // } 
             }
+
             return false;
         }
 
@@ -527,6 +537,10 @@ class toastr {
             console.log("Hiding toast now.", toastElement);
 
             let removeFunction = this.removeToast; // TODO: JSHint Possible String Violation
+
+            if(typeof(options.onHidden) === 'function'){
+                options.onHidden();
+            }
 
             let animationFinishedCallback = function(args) {
                 console.log("Toast is now hiding.", args);
