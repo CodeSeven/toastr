@@ -491,7 +491,7 @@ class toastr {
         }
 
         function setCloseButton() {
-            if (typeof(options.closeButton) !== 'undefined' && options.closeButton !== false) {
+            if (typeof(options.closeButton) !== 'undefined' && options.closeButton) {
                 closeElement.classList.add('toast-close-button');
                 closeElement.setAttribute('role','button');
                 closeElement.setAttribute('type','button');
@@ -500,7 +500,7 @@ class toastr {
         }
 
         function setProgressBar() {
-            if (typeof(options.progressBar) !== 'undefined') {
+            if (typeof(options.progressBar) !== 'undefined' && options.progressBar) {
                 progressElement.classList.add('toast-progress');
                 toastElement.appendChild(progressElement);
             }

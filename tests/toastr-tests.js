@@ -432,27 +432,27 @@ describe('Toastr Unit Tests', function() {
 
 		it('progress bar disabled', function (done) {
 	        //Arrange
-	        toastr.options.progressBar = false;
+	        // t.options.progressBar = false;
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success('');
 	        //Assert
-	        equal($toast.find('div.toast-progress').length, 0, 'progress bar should not exist with progressBar=false');
+	        expect(jQuery($toast).find('div.toast-progress').length).to.equal(0);
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 	    });
 
 	    it('progress bar enabled', function (done) {
 	        //Arrange
-	        toastr.options.progressBar = true;
+	        t.options.progressBar = true;
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success('');
 	        //Assert
-	        equal($toast.find('div.toast-progress').length, 1, 'progress bar should exist with progressBar=true');
+	        expect(jQuery($toast).find('div.toast-progress').length).to.equal(1);
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 	    });
 	});
