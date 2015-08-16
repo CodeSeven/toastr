@@ -3,12 +3,18 @@ var $ = require('gulp-load-plugins')({ lazy: true });
 var args = require('yargs').argv;
 var config = require('./gulp.config')();
 
+var colors = $.util.colors;
+
 gulp.task('test', function () {
+    log('Testing');
+
     return gulp.src(config.tests)
         .pipe($.mocha());
 });
 
 gulp.task('vet', function () {
+    log('Linting');
+
     return gulp.src(config.alljs)
         .pipe($.if(args.verbose, $.print()))
         .pipe($.jshint())
@@ -17,13 +23,26 @@ gulp.task('vet', function () {
         .pipe($.jscs());
 });
 
-gulp.task('build', ['vet'], function () {
+gulp.task('build', ['vet', 'styles'], function () {
+    log('Transpiling and Optimizing');
+
     return gulp.src(config.source + config.mainFile)
         .pipe($.sourcemaps.init())
         .pipe($.babel())
         .pipe($.uglify())
-        .pipe($.sourcemaps.write(config.build))
+        .pipe($.sourcemaps.write('./'))
         .pipe(gulp.dest(config.build, { overwrite: true }));
+});
+
+gulp.task('styles', function() {
+    log('Compiling Less --> CSS');
+
+    return gulp
+        .src(config.less)
+        .pipe($.plumber()) // exit gracefully if something fails after this
+        .pipe($.less())
+        .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+        .pipe(gulp.dest(config.build));
 });
 
 gulp.task('default', ['build'], function () {
@@ -46,3 +65,17 @@ gulp.task('closure', function () {
         }))
         .pipe(gulp.dest('dist'));
 });
+
+////////////////
+
+function log(msg) {
+    if (typeof(msg) === 'object') {
+        for (var item in msg) {
+            if (msg.hasOwnProperty(item)) {
+                $.util.log($.util.colors.blue(msg[item]));
+            }
+        }
+    } else {
+        $.util.log($.util.colors.blue(msg));
+    }
+}
