@@ -627,42 +627,35 @@ describe('Toastr Unit Tests', function() {
 		});
 
 		it('Newest toast on top', function (done) {
-	        //Arrange
-	        // resetContainer(t);
 	        t.options.newestOnTop = true;
-	        //Act
+
 	        var $first = t.success("First toast");
 	        var $second = t.success("Second toast");
-	        //Assert
-	        
+
 	        
         	var containerHtml = jQuery(t.getContainer()).html();
 
         	expect(containerHtml.indexOf("First toast")).to.be.above(containerHtml.indexOf("Second toast"));
-	        //Teardown
+
 	        $first.remove();
 	        $second.remove();
-	        // resetContainer();
-	        // clearContainerChildren(t);
+
 	        done();
-	        
 	    });
 
 	    it('Oldest toast on top', function (done) {
-	        //Arrange
-	        // resetContainer();
 	        t.options.newestOnTop = false;
-	        //Act
+
 	        var $first = t.success("First toast");
 	        var $second = t.success("Second toast");
-	        //Assert
+
 	        var containerHtml = jQuery(t.getContainer()).html();
 	        
 	        expect(containerHtml.indexOf("First toast")).to.be.below(containerHtml.indexOf("Second toast"));
-	        //Teardown
+
 	        $first.remove();
 	        $second.remove();
-	        // resetContainer();
+
 	        done();
 	    });
 	});

@@ -408,7 +408,6 @@ var toastr = (function () {
                 setMessage();
                 setCloseButton();
                 setProgressBar();
-                setSequence.call(this);
             }
 
             function handleEvents() {
@@ -446,7 +445,8 @@ var toastr = (function () {
 
                 console.log("Appending toast to container.", toastElement);
 
-                container.appendChild(toastElement);
+                // container.appendChild(toastElement);
+                setSequence.call(this);
 
                 if (typeof options.onShown === 'function') {
                     options.onShown();
@@ -494,14 +494,20 @@ var toastr = (function () {
             }
 
             function setSequence() {
-                if (options.newestOnTop) {
-                    var firstNode = this.container.firstChild;
+                var container = this.getContainer();
 
-                    this.container.insertBefore(toastElement, firstNode);
+                if (options.newestOnTop) {
+                    var firstNode = container.firstChild;
+
+                    container.insertBefore(toastElement, firstNode);
+
+                    // console.log(this.container);
                     // TODO: Not yet supported in v3
                 } else {
-                        this.container.appendChild(toastElement); // TODO: JSHint Possible String Violation
+                        container.appendChild(toastElement); // TODO: JSHint Possible String Violation
                     }
+
+                this.container = container;
             }
 
             /**
