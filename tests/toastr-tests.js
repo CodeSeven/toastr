@@ -1,6 +1,6 @@
 /* jshint -W117, -W030 */
 // var assert = require("assert")
-// var chai = require("chai");
+var chai = require('chai');
 var expect = chai.expect;
 
 // var fs = require('fs');
