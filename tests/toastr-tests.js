@@ -458,6 +458,14 @@ describe('Toastr Unit Tests', function() {
 	});
 
 	describe('Event tests', function(){
+		beforeEach(function(){
+			resetContainer(t);
+		});
+
+		afterEach(function(){
+			clearContainerChildren(t);
+		});
+
 		it('event - onShown is executed', function (done) {
 	        // Arrange
 	        var run = false;
@@ -480,20 +488,23 @@ describe('Toastr Unit Tests', function() {
 
 	        //Arrange
 	        var run = false;
-	        var onHidden = function () { run = true; };
+	        var onHidden = function () { run = true; console.log('Run Hidden');};
 	        t.options.onHidden = onHidden;
 	        t.options.timeOut = 1;
 	        //Act
+	        
 	        var $toast = t.success(sampleMsg, sampleTitle);
 	        
-            // Assert
-            // ok(run); //Teardown
-            expect(run).to.be.true;
+	        setTimeout(function(){
+	        	// Assert
+	            // ok(run); //Teardown
+	            expect(run).to.be.true;
 
-            $toast.remove();
-            // clearContainerChildren();
-            // start();
-	        done();
+	            $toast.remove();
+	            // clearContainerChildren();
+	            // start();
+	            done();
+	        }, 200)	        
 	    });
 
 	    it('event - onShown and onHidden are both executed', function (done) {
@@ -511,13 +522,15 @@ describe('Toastr Unit Tests', function() {
             // Assert
             // ok(onShowRun);
             // ok(onHideRun);
-            expect(onShowRun).to.be.true;
-            expect(onHideRun).to.be.true;
-            //Teardown
-            $toast.remove();
-            clearContainerChildren(t);
-            // start();
-	        done();
+            setTimeout(function(){
+            	expect(onShowRun).to.be.true;
+	            expect(onHideRun).to.be.true;
+	            //Teardown
+	            $toast.remove();
+	            clearContainerChildren(t);
+	            // start();
+		        done();
+            }, 200);
 	    });
 
 	    it('event - message appears when no show or hide method functions provided', function (done) {
@@ -605,6 +618,14 @@ describe('Toastr Unit Tests', function() {
 	});
 
 	describe('Order of Appearance tests', function(){
+		beforeEach(function(){
+			resetContainer(t);
+		});
+
+		afterEach(function(){
+			clearContainerChildren(t);
+		});
+
 		it('Newest toast on top', function (done) {
 	        //Arrange
 	        // resetContainer(t);
@@ -613,15 +634,18 @@ describe('Toastr Unit Tests', function() {
 	        var $first = t.success("First toast");
 	        var $second = t.success("Second toast");
 	        //Assert
-	        var containerHtml = jQuery(t.getContainer()).html();
 	        
-	        expect(containerHtml.indexOf("First toast")).to.be.above(containerHtml.indexOf("Second toast"));
+	        
+        	var containerHtml = jQuery(t.getContainer()).html();
+
+        	expect(containerHtml.indexOf("First toast")).to.be.above(containerHtml.indexOf("Second toast"));
 	        //Teardown
 	        $first.remove();
 	        $second.remove();
 	        // resetContainer();
-	        clearContainerChildren(t);
+	        // clearContainerChildren(t);
 	        done();
+	        
 	    });
 
 	    it('Oldest toast on top', function (done) {

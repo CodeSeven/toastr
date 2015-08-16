@@ -390,7 +390,7 @@ var toastr = (function () {
 
             personalizeToast.call(this);
 
-            displayToast();
+            displayToast.call(this);
 
             handleEvents();
 
@@ -631,7 +631,7 @@ var toastr = (function () {
 
             function updateProgress() {
                 var percentage = (progressBar.hideEta - new Date().getTime()) / progressBar.maxHideTime * 100;
-                progressElement.style.width(percentage + '%');
+                progressElement.style.width = percentage + '%';
             }
         }
 

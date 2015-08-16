@@ -352,7 +352,7 @@ class toastr {
 
         personalizeToast.call(this);
 
-        displayToast();
+        displayToast.call(this);
 
         handleEvents();
 
@@ -465,6 +465,8 @@ class toastr {
                 var firstNode = this.container.firstChild;
 
                 this.container.insertBefore(toastElement, firstNode);
+
+                // console.log(this.container);
                 // TODO: Not yet supported in v3
             } else {
                 this.container.appendChild(toastElement); // TODO: JSHint Possible String Violation
@@ -603,7 +605,7 @@ class toastr {
 
         function updateProgress() {
             var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-            progressElement.style.width(percentage + '%');
+            progressElement.style.width = percentage + '%';
         }
     }
 
