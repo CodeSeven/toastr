@@ -2,7 +2,7 @@
   "name": "toastr",
   "version": "3.0.0",
   "description": "Javascript notifications library",
-  "main": "src/toastr.es6",
+  "main": "src/toastr.js",
   "scripts": {
     "test": "test"
   },
@@ -12,17 +12,16 @@
   "author": "Tim Ferrell, Stephen Bero, John Papa",
   "license": "MIT",
   "devDependencies": {
-    "babel": "*",
-    "babel-eslint": "*",
-    "chai": "*",
-    "gulp": "*",
-    "gulp-babel": "*",
-    "gulp-closure-compiler": "*",
-    "gulp-jscs": "*",
-    "gulp-jshint": "*",
-    "gulp-load-plugins": "*",
-    "gulp-rename": "*",
-    "gulp-sourcemaps": "*",
-    "mocha": "*"
+    "babel": "~5.8.21",
+    "babel-eslint": "~4.0.7",
+    "chai": "~3.2.0",
+    "gulp": "~3.9.0",
+    "gulp-babel": "~5.2.0",
+    "gulp-closure-compiler": "~0.3.0",
+    "gulp-jscs": "~2.0.0",
+    "gulp-jshint": "~1.11.2",
+    "gulp-load-plugins": "~0.10.0",
+    "gulp-sourcemaps": "~1.5.2",
+    "mocha": "~2.2.5"
   }
 }
