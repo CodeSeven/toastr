@@ -17,10 +17,11 @@ gulp.task('vet', function () {
         .pipe($.jscs());
 });
 
-gulp.task('transpile', function () {
+gulp.task('build', ['vet'], function () {
     return gulp.src(config.source + config.mainFile)
         .pipe($.sourcemaps.init())
         .pipe($.babel())
+        .pipe($.uglify())
         .pipe($.sourcemaps.write(config.build))
         .pipe(gulp.dest(config.build, { overwrite: true }));
 });
@@ -28,8 +29,6 @@ gulp.task('transpile', function () {
 gulp.task('default', ['build'], function () {
     // Also builds
 });
-
-gulp.task('build', ['vet', 'transpile']);
 
 //TODO: remove closure?
 gulp.task('closure', function () {
