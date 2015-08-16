@@ -385,6 +385,7 @@ describe('Toastr Unit Tests', function() {
 	        t.options.closeButton = false;
 	        //Act
 	        var $toast = t.success('');
+	        console.log($toast);
 	        //Assert
 	        //, 'close button should not exist with closeButton=false'
 	        expect(jQuery($toast).find('button.toast-close-button').length).to.equal(0);
@@ -399,6 +400,7 @@ describe('Toastr Unit Tests', function() {
 	        t.options.closeButton = true;
 	        //Act
 	        var $toast = t.success('');
+	        console.log($toast);
 	        //Assert
 	        //, 'close button should exist with closeButton=true'
 	        expect(jQuery($toast).find('button.toast-close-button').length).to.equal(1);
@@ -430,65 +432,79 @@ describe('Toastr Unit Tests', function() {
 
 		it('progress bar disabled', function (done) {
 	        //Arrange
-	        toastr.options.progressBar = false;
+	        // t.options.progressBar = false;
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success('');
 	        //Assert
-	        equal($toast.find('div.toast-progress').length, 0, 'progress bar should not exist with progressBar=false');
+	        expect(jQuery($toast).find('div.toast-progress').length).to.equal(0);
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 	    });
 
 	    it('progress bar enabled', function (done) {
 	        //Arrange
-	        toastr.options.progressBar = true;
+	        t.options.progressBar = true;
 	        //Act
-	        var $toast = toastr.success('');
+	        var $toast = t.success('');
 	        //Assert
-	        equal($toast.find('div.toast-progress').length, 1, 'progress bar should exist with progressBar=true');
+	        expect(jQuery($toast).find('div.toast-progress').length).to.equal(1);
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        // clearContainerChildren();
 	        done();
 	    });
 	});
 
 	describe('Event tests', function(){
+		beforeEach(function(){
+			resetContainer(t);
+		});
+
+		afterEach(function(){
+			clearContainerChildren(t);
+		});
+
 		it('event - onShown is executed', function (done) {
 	        // Arrange
 	        var run = false;
 	        var onShown = function () { run = true; };
-	        toastr.options.onShown = onShown;
+	        t.options.onShown = onShown;
 	        // Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
+	        var $toast = t.success(sampleMsg, sampleTitle);
 	        
             // Assert
-            ok(run);
+            expect(run).to.be.true;
             //Teardown
             $toast.remove();
-            clearContainerChildren();
-            start();
+            // clearContainerChildren();
+            // start();
             done();
 	        
 	    });
 
 	    it('event - onHidden is executed', function (done) {
+
 	        //Arrange
 	        var run = false;
-	        var onHidden = function () { run = true; };
-	        toastr.options.onHidden = onHidden;
-	        toastr.options.timeOut = 1;
+	        var onHidden = function () { run = true; console.log('Run Hidden');};
+	        t.options.onHidden = onHidden;
+	        t.options.timeOut = 1;
 	        //Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
 	        
-            // Assert
-            ok(run); //Teardown
-            $toast.remove();
-            clearContainerChildren();
-            start();
-	        done();
+	        var $toast = t.success(sampleMsg, sampleTitle);
+	        
+	        setTimeout(function(){
+	        	// Assert
+	            // ok(run); //Teardown
+	            expect(run).to.be.true;
+
+	            $toast.remove();
+	            // clearContainerChildren();
+	            // start();
+	            done();
+	        }, 200)	        
 	    });
 
 	    it('event - onShown and onHidden are both executed', function (done) {
@@ -497,225 +513,252 @@ describe('Toastr Unit Tests', function() {
 	        var onHideRun = false;
 	        var onShow = function () { onShowRun = true; };
 	        var onHide = function () { onHideRun = true; };
-	        toastr.options.onShown = onShow;
-	        toastr.options.onHidden = onHide;
-	        toastr.options.timeOut = 1;
+	        t.options.onShown = onShow;
+	        t.options.onHidden = onHide;
+	        t.options.timeOut = 1;
 	        //Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
+	        var $toast = t.success(sampleMsg, sampleTitle);
 	        
             // Assert
-            ok(onShowRun);
-            ok(onHideRun);
-            //Teardown
-            $toast.remove();
-            clearContainerChildren();
-            start();
-	        done();
+            // ok(onShowRun);
+            // ok(onHideRun);
+            setTimeout(function(){
+            	expect(onShowRun).to.be.true;
+	            expect(onHideRun).to.be.true;
+	            //Teardown
+	            $toast.remove();
+	            clearContainerChildren(t);
+	            // start();
+		        done();
+            }, 200);
 	    });
 
 	    it('event - message appears when no show or hide method functions provided', function (done) {
 	        //Arrange
 	        //Act
-	        var $toast = toastr.success(sampleMsg, sampleTitle);
+	        var $toast = t.success(sampleMsg, sampleTitle);
+
+	       	expect(jQuery($toast).hasClass(iconClasses.success)).to.be.true;
 	        //Assert
-	        ok($toast.hasClass(iconClasses.success), 'Sets success icon');
+	        // ok($toast.hasClass(iconClasses.success), 'Sets success icon');
 	        //Teardown
 	        $toast.remove();
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - prevent duplicate sequential toasts.', function(done){
-	        toastr.options.preventDuplicates = true;
+	        t.options.preventDuplicates = true;
 
 	        var $toast = [];
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[2] = toastr.info(sampleMsg + " 1", sampleTitle);
-	        $toast[3] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[0] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        $toast[2] = t.info(sampleMsg + " 1", sampleTitle);
+	        $toast[3] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 3);
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(3);
 
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - prevent duplicate sequential toasts, but allow previous after clear.', function(done){
-	        toastr.options.preventDuplicates = true;
+	        t.options.preventDuplicates = true;
 
 	        var $toast = [];
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        clearContainerChildren();
-	        $toast[3] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[0] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        clearContainerChildren(t);
+	        $toast[3] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 1);
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(1);
 
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - allow duplicate sequential toasts.', function(done){
-	        toastr.options.preventDuplicates = false;
+	        t.options.preventDuplicates = false;
 
 	        var $toast = [];
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[0] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        $toast[1] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 3);
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(3);
 
-	        clearContainerChildren();
+	        clearContainerChildren(t);
 	        done();
 	    });
 
 	    it('event - allow preventDuplicates option to be overridden.', function(done) {
 	        var $toast = [];
 
-	        $toast[0] = toastr.info(sampleMsg, sampleTitle, {
+	        $toast[0] = t.info(sampleMsg, sampleTitle, {
 	            preventDuplicates: true
 	        });
-	        $toast[1] = toastr.info(sampleMsg, sampleTitle, {
+	        $toast[1] = t.info(sampleMsg, sampleTitle, {
 	            preventDuplicates: true
 	        });
-	        $toast[2] = toastr.info(sampleMsg, sampleTitle);
-	        var $container = toastr.getContainer();
+	        $toast[2] = t.info(sampleMsg, sampleTitle);
+	        var $container = t.getContainer();
 
-	        ok($container && $container.children().length === 2);
-	        clearContainerChildren();
+	        expect($container).to.be.defined;
+	        expect($container.children.length).to.equal(2);
+
+	        clearContainerChildren(t);
 	        done();
 	    });
 	});
 
 	describe('Order of Appearance tests', function(){
+		beforeEach(function(){
+			resetContainer(t);
+		});
+
+		afterEach(function(){
+			clearContainerChildren(t);
+		});
+
 		it('Newest toast on top', function (done) {
-	        //Arrange
-	        resetContainer();
-	        toastr.options.newestOnTop = true;
-	        //Act
-	        var $first = toastr.success("First toast");
-	        var $second = toastr.success("Second toast");
-	        //Assert
-	        var containerHtml = toastr.getContainer().html();
-	        ok(containerHtml.indexOf("First toast") > containerHtml.indexOf("Second toast"), 'Newest toast is on top');
-	        //Teardown
+	        t.options.newestOnTop = true;
+
+	        var $first = t.success("First toast");
+	        var $second = t.success("Second toast");
+
+	        
+        	var containerHtml = jQuery(t.getContainer()).html();
+
+        	expect(containerHtml.indexOf("First toast")).to.be.above(containerHtml.indexOf("Second toast"));
+
 	        $first.remove();
 	        $second.remove();
-	        resetContainer();
+
 	        done();
 	    });
 
 	    it('Oldest toast on top', function (done) {
-	        //Arrange
-	        resetContainer();
-	        toastr.options.newestOnTop = false;
-	        //Act
-	        var $first = toastr.success("First toast");
-	        var $second = toastr.success("Second toast");
-	        //Assert
-	        var containerHtml = toastr.getContainer().html();
-	        ok(containerHtml.indexOf("First toast") < containerHtml.indexOf("Second toast"), 'Oldest toast is on top');
-	        //Teardown
+	        t.options.newestOnTop = false;
+
+	        var $first = t.success("First toast");
+	        var $second = t.success("Second toast");
+
+	        var containerHtml = jQuery(t.getContainer()).html();
+	        
+	        expect(containerHtml.indexOf("First toast")).to.be.below(containerHtml.indexOf("Second toast"));
+
 	        $first.remove();
 	        $second.remove();
-	        resetContainer();
+
 	        done();
 	    });
 	});
 
 	describe('Positioning tests', function(){
 
+		beforeEach(function(){
+			resetContainer(t);
+		});
+
+		afterEach(function(){
+			clearContainerChildren(t);
+		});
+
 		it('Container - position top-right', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.topRight;
+	        
+	        t.options.positionClass = positionClasses.topRight;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.topRight), 'Has position top right');
+	        expect(jQuery($container).hasClass(positionClasses.topRight)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position bottom-right', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.bottomRight;
+	        
+	        t.options.positionClass = positionClasses.bottomRight;
+
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.bottomRight), 'Has position bottom right');
+	        expect(jQuery($container).hasClass(positionClasses.bottomRight)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position bottom-left', function (done) {
 	        //Arrange
-	        resetContainer();
+	        // resetContainer();
 	        //$(selectors.container).remove()
-	        toastr.options.positionClass = positionClasses.bottomLeft;
+	        t.options.positionClass = positionClasses.bottomLeft;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.bottomLeft), 'Has position bottom left');
+	        expect(jQuery($container).hasClass(positionClasses.bottomLeft)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position top-left', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.topLeft;
+	        // resetContainer();
+	        t.options.positionClass = positionClasses.topLeft;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.topLeft), 'Has position top left');
+	        expect(jQuery($container).hasClass(positionClasses.topLeft)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position top-center', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.topCenter;
+	        // resetContainer();
+	        t.options.positionClass = positionClasses.topCenter;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.topCenter), 'Has position top center');
+	        expect(jQuery($container).hasClass(positionClasses.topCenter)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 
 	    it('Container - position bottom-center', function (done) {
 	        //Arrange
-	        resetContainer();
-	        toastr.options.positionClass = positionClasses.bottomCenter;
+	        // resetContainer();
+	        t.options.positionClass = positionClasses.bottomCenter;
 	        //Act
-	        var $toast = toastr.success(sampleMsg);
-	        var $container = toastr.getContainer();
+	        var $toast = t.success(sampleMsg);
+	        var $container = t.getContainer();
 	        //Assert
-	        ok($container.hasClass(positionClasses.bottomCenter), 'Has position bottom center');
+	        expect(jQuery($container).hasClass(positionClasses.bottomCenter)).to.be.true;
 	        //Teardown
 	        $toast.remove();
-	        resetContainer();
+	        // resetContainer();
 	        done();
 	    });
 	});

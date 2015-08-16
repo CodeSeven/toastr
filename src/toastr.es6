@@ -171,14 +171,16 @@ class toastr {
      * @param options
      */
     clearContainer (options) {
-        let numToastsToClear = this.container.children.length;
+        if(this.container){
+            let numToastsToClear = this.container.children.length;
 
-        for(var i = numToastsToClear - 1; i >= 0 ; --i){
-            var item = this.container.children[i];
+            for(var i = numToastsToClear - 1; i >= 0 ; --i){
+                var item = this.container.children[i];
 
-            this.clearToast(item, options);
+                this.clearToast(item, options);
+            }
+            // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
         }
-        // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
     }
 
     /**
@@ -224,7 +226,7 @@ class toastr {
 
         toastElement = null;
 
-        if (this.container.childNodes.length === 0) {
+        if (this.container.childNodes.length === 0 && this.container.parentNode) {
             this.container.parentNode.removeChild(this.container);
             this.previousToast = undefined;
         }
@@ -313,7 +315,7 @@ class toastr {
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
 
-        if (shouldExit(options, map)) {
+        if (shouldExit.call(this, options, map)) {
             return;
         }
 
@@ -332,7 +334,7 @@ class toastr {
          */
         let messageElement = document.createElement('div');
         let progressElement = document.createElement('div');
-        let closeElement = document.createElement('div');
+        let closeElement = document.createElement('button');
             closeElement.innerHtml = options.closeHtml;
 
         var progressBar = {
@@ -348,9 +350,9 @@ class toastr {
             map: map
         };
 
-        personalizeToast();
+        personalizeToast.call(this);
 
-        displayToast();
+        displayToast.call(this);
 
         handleEvents();
 
@@ -368,7 +370,6 @@ class toastr {
             setMessage();
             setCloseButton();
             setProgressBar();
-            setSequence();
         }
 
         function handleEvents() {
@@ -406,7 +407,12 @@ class toastr {
 
             console.log("Appending toast to container.", toastElement);
 
-            container.appendChild(toastElement);
+            // container.appendChild(toastElement);
+            setSequence.call(this);
+
+            if(typeof(options.onShown) === 'function'){
+                options.onShown();
+            }
 
             let animationFinishedCallback = function (args) {
 
@@ -455,12 +461,20 @@ class toastr {
         }
 
         function setSequence() {
+            let container = this.getContainer();
+
             if (options.newestOnTop) {
-                //this.container.prepend(toastElement);
+                var firstNode = container.firstChild;
+
+                container.insertBefore(toastElement, firstNode);
+
+                // console.log(this.container);
                 // TODO: Not yet supported in v3
             } else {
-                this.container.appendChild(toastElement); // TODO: JSHint Possible String Violation
+                container.appendChild(toastElement); // TODO: JSHint Possible String Violation
             }
+
+            this.container = container;
         }
 
         /**
@@ -491,15 +505,16 @@ class toastr {
         }
 
         function setCloseButton() {
-            if (typeof(options.closeButton) !== 'undefined') {
+            if (typeof(options.closeButton) !== 'undefined' && options.closeButton) {
                 closeElement.classList.add('toast-close-button');
                 closeElement.setAttribute('role','button');
+                closeElement.setAttribute('type','button');
                 toastElement.appendChild(closeElement);
             }
         }
 
         function setProgressBar() {
-            if (typeof(options.progressBar) !== 'undefined') {
+            if (typeof(options.progressBar) !== 'undefined' && options.progressBar) {
                 progressElement.classList.add('toast-progress');
                 toastElement.appendChild(progressElement);
             }
@@ -507,12 +522,16 @@ class toastr {
 
         function shouldExit(options, map) {
             if (options.preventDuplicates) {
-                if (map.message === this.previousToast) { // TODO: JSHint Possible String Violation
-                    return true;
-                } else {
-                    this.previousToast = map.message; // TODO: JSHint Possible String Violation
-                }
+                // if (typeof(this) !== 'undefined') { 
+                    
+                    if(map.message === this.previousToast){
+                            return true;    
+                    }else {
+                        this.previousToast = map.message; // TODO: JSHint Possible String Violation
+                    }
+                // } 
             }
+
             return false;
         }
 
@@ -527,6 +546,10 @@ class toastr {
 
             let removeFunction = this.removeToast; // TODO: JSHint Possible String Violation
 
+            if(typeof(options.onHidden) === 'function'){
+                options.onHidden();
+            }
+
             let animationFinishedCallback = function(args) {
                 console.log("Toast is now hiding.", args);
 
@@ -534,11 +557,13 @@ class toastr {
 
                 // Repeating myself. Try to find a way to not duplicate code.
                 // Use the element to get it's parent so we can remove it.
-                parentNode.removeChild(toastElement);
+                if(parentNode !== null){
+                    parentNode.removeChild(toastElement);
 
-                if (!parentNode.hasChildNodes()) {
-                    container.parentNode.removeChild(container);
-                    this.previousToast = undefined;
+                    if (!parentNode.hasChildNodes()) {
+                        container.parentNode.removeChild(container);
+                        this.previousToast = undefined;
+                    }
                 }
 
                 toastElement = null;
@@ -584,7 +609,7 @@ class toastr {
 
         function updateProgress() {
             var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-            progressElement.style.width(percentage + '%');
+            progressElement.style.width = percentage + '%';
         }
     }
 
