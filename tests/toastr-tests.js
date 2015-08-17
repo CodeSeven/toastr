@@ -1,5 +1,6 @@
+/* jshint -W117, -W030 */
 // var assert = require("assert")
-// var chai = require("chai");
+var chai = require('chai');
 var expect = chai.expect;
 
 // var fs = require('fs');
@@ -82,7 +83,7 @@ describe('Toastr Unit Tests', function() {
 	});
 
 	describe('Clear tests', function () {
-		
+
 
 		it('clear - show 3 toasts, clear the 2nd', function (done) {
 			//Arrange
@@ -94,7 +95,7 @@ describe('Toastr Unit Tests', function() {
 		    //Act
 		    console.log($toast[1]);
 		    t.clear($toast[1]); // I have to force the removal. v2 doesn't have this requirement.
-		    
+
 		    //Assert
 		    // setTimeout(function () {
 		        //debugger;
@@ -104,7 +105,7 @@ describe('Toastr Unit Tests', function() {
 		        // resetContainer(t);
 		        done();
 		        //Teardown
-				
+
 		        // start();
 		    // }, 1000);
 
@@ -122,14 +123,14 @@ describe('Toastr Unit Tests', function() {
 	        t.clear();
 	        // resetContainer(t);
 	        //Assert
-	        
+
 	        expect($container).to.exist;
 	        expect($container.children).to.have.length(0);
 	            //Teardown
-	            
+
 	            // start();
 	        done();
-	        
+
 		});
 
 		it('clear - after clear with force option toast with focus disappears', function(done){
@@ -156,12 +157,12 @@ describe('Toastr Unit Tests', function() {
 	        $toast[1] = t.info(sampleMsg, sampleTitle + '-2');
 	        var $container = t.getContainer();
 	        t.clear();
-        
+
             $toast[2] = t.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
             var toast2jQuery = jQuery($toast[2]);
             expect(toast2jQuery.find('div.toast-title').html()).to.contain(sampleTitle + '-3-Visible');
-            
+
             expect(toast2jQuery.length).to.be.equal(1);
             expect(jQuery(selectors.container).length).to.equal(1);
             //Teardown
@@ -176,8 +177,8 @@ describe('Toastr Unit Tests', function() {
         	$toast[1] = t.info(sampleMsg, sampleTitle + '-2');
         	var $container = t.getContainer();
         	t.clear();
-        
-        
+
+
             //Assert
             expect(jQuery(selectors.container).length).to.equal(0);
             // expect(!jQuery($toast[1]).length).to.be.false; // TODO what's the point?
@@ -193,7 +194,7 @@ describe('Toastr Unit Tests', function() {
         	$toast[1] = t.info(sampleMsg, sampleTitle + '-2');
         	var $container = t.getContainer();
         	t.clear();
-        
+
             $toast[2] = t.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
             expect(jQuery(selectors.container).find('div.toast-title').html()).to.contain(sampleTitle + '-3-Visible');
@@ -222,11 +223,11 @@ describe('Toastr Unit Tests', function() {
 
 		it('info - pass title and message', function(done){
 			var $toast = t.info(sampleMsg, sampleTitle);
-	        
+
 	        expect(jQuery($toast).find('div.toast-title').html()).to.contain(sampleTitle);
 	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
 	        expect(jQuery($toast).hasClass(iconClasses.info)).to.be.true;
-	        
+
 	        $toast.remove();
 	        // clearContainerChildren();
 
@@ -247,7 +248,7 @@ describe('Toastr Unit Tests', function() {
 
 		it('info - pass no message nor title', function(done){
 			var $toast = t.info(); //Assert
-        	
+
         	expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
         	expect(jQuery($toast).find('div.toast-message').html()).to.be.undefined;
         	expect(jQuery($toast).hasClass(iconClasses.info)).to.be.true;
@@ -313,7 +314,7 @@ describe('Toastr Unit Tests', function() {
 
 		it('error - pass message, but no title', function(done){
 			var $toast = t.error(sampleMsg); //Assert
-	        
+
 	        expect(jQuery($toast).find('div.toast-title').length).to.equal(0);
 	        expect(jQuery($toast).find('div.toast-message').html()).to.contain(sampleMsg);
 	        expect(jQuery($toast).hasClass(iconClasses.error)).to.be.true;
@@ -473,7 +474,7 @@ describe('Toastr Unit Tests', function() {
 	        t.options.onShown = onShown;
 	        // Act
 	        var $toast = t.success(sampleMsg, sampleTitle);
-	        
+
             // Assert
             expect(run).to.be.true;
             //Teardown
@@ -481,7 +482,7 @@ describe('Toastr Unit Tests', function() {
             // clearContainerChildren();
             // start();
             done();
-	        
+
 	    });
 
 	    it('event - onHidden is executed', function (done) {
@@ -492,19 +493,19 @@ describe('Toastr Unit Tests', function() {
 	        t.options.onHidden = onHidden;
 	        t.options.timeOut = 1;
 	        //Act
-	        
-	        var $toast = t.success(sampleMsg, sampleTitle);
-	        
-	        setTimeout(function(){
-	        	// Assert
-	            // ok(run); //Teardown
-	            expect(run).to.be.true;
 
-	            $toast.remove();
-	            // clearContainerChildren();
-	            // start();
-	            done();
-	        }, 200)	        
+	        var $toast = t.success(sampleMsg, sampleTitle);
+
+			setTimeout(function () {
+				// Assert
+				// ok(run); //Teardown
+				expect(run).to.be.true;
+
+				$toast.remove();
+				// clearContainerChildren();
+				// start();
+				done();
+			}, 200);
 	    });
 
 	    it('event - onShown and onHidden are both executed', function (done) {
@@ -518,7 +519,7 @@ describe('Toastr Unit Tests', function() {
 	        t.options.timeOut = 1;
 	        //Act
 	        var $toast = t.success(sampleMsg, sampleTitle);
-	        
+
             // Assert
             // ok(onShowRun);
             // ok(onHideRun);
@@ -632,7 +633,7 @@ describe('Toastr Unit Tests', function() {
 	        var $first = t.success("First toast");
 	        var $second = t.success("Second toast");
 
-	        
+
         	var containerHtml = jQuery(t.getContainer()).html();
 
         	expect(containerHtml.indexOf("First toast")).to.be.above(containerHtml.indexOf("Second toast"));
@@ -650,7 +651,7 @@ describe('Toastr Unit Tests', function() {
 	        var $second = t.success("Second toast");
 
 	        var containerHtml = jQuery(t.getContainer()).html();
-	        
+
 	        expect(containerHtml.indexOf("First toast")).to.be.below(containerHtml.indexOf("Second toast"));
 
 	        $first.remove();
@@ -672,7 +673,7 @@ describe('Toastr Unit Tests', function() {
 
 		it('Container - position top-right', function (done) {
 	        //Arrange
-	        
+
 	        t.options.positionClass = positionClasses.topRight;
 	        //Act
 	        var $toast = t.success(sampleMsg);
@@ -687,7 +688,7 @@ describe('Toastr Unit Tests', function() {
 
 	    it('Container - position bottom-right', function (done) {
 	        //Arrange
-	        
+
 	        t.options.positionClass = positionClasses.bottomRight;
 
 	        //Act

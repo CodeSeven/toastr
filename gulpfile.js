@@ -1,47 +1,58 @@
-var gulp = require("gulp"),
-    babel = require("gulp-babel"),
-    rename = require("gulp-rename"),
-    sourcemaps = require('gulp-sourcemaps'),
-    closureCompiler = require('gulp-closure-compiler'),
-    jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs'),
-    mocha = require('gulp-mocha');
+var gulp = require('gulp');
+var $ = require('gulp-load-plugins')({ lazy: true });
+var args = require('yargs').argv;
+var config = require('./gulp.config')();
 
-gulp.task('test', function(){
-    return gulp.src('./tests/**/*.js')
-            .pipe(mocha());
-    });
+var colors = $.util.colors;
 
-gulp.task('jshint', function() {
-  return gulp.src('./src/*.es6')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+gulp.task('test', function () {
+    log('Testing');
+
+    return gulp.src(config.tests)
+        .pipe($.mocha());
 });
 
-gulp.task('jscs', function() {
-  return gulp.src('./src/*.es6')
-    .pipe(jscs());
+gulp.task('vet', function () {
+    log('Linting');
+
+    return gulp.src(config.alljs)
+        .pipe($.if(args.verbose, $.print()))
+        .pipe($.jshint())
+        .pipe($.jshint.reporter('jshint-stylish', { verbose: true }))
+        .pipe($.jshint.reporter('fail'))
+        .pipe($.jscs());
 });
 
-gulp.task('transpile', function(){
-    return gulp.src("./src/toastr.es6")
-        .pipe(sourcemaps.init())
-            .pipe(babel())
-            .pipe(rename("toastr.js"))
-        .pipe(sourcemaps.write('../maps'))
-        .pipe(gulp.dest("dist", {overwrite: true}));
+gulp.task('build', ['vet', 'styles'], function () {
+    log('Transpiling and Optimizing');
+
+    return gulp.src(config.source + config.mainFile)
+        .pipe($.sourcemaps.init())
+        .pipe($.babel())
+        .pipe($.uglify())
+        .pipe($.sourcemaps.write('./'))
+        .pipe(gulp.dest(config.build, { overwrite: true }));
 });
 
-gulp.task('build', ['default','closure'], function () {
+gulp.task('styles', function() {
+    log('Compiling Less --> CSS');
 
+    return gulp
+        .src(config.less)
+        .pipe($.plumber()) // exit gracefully if something fails after this
+        .pipe($.less())
+        .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+        .pipe(gulp.dest(config.build));
 });
 
-gulp.task('default', ['jshint', 'jscs', 'transpile']);
+gulp.task('default', ['build'], function () {
+    // Also builds
+});
 
-
+//TODO: remove closure?
 gulp.task('closure', function () {
-    return gulp.src('./dist/toastr.js')
-        .pipe(closureCompiler({
+    return gulp.src(config.build + config.mainFile)
+        .pipe($.closureCompiler({
             compilerPath: 'bower_components/closure-compiler/compiler.jar',
             fileName: 'toastr.closure.min.js',
             compilerFlags: {
@@ -52,5 +63,19 @@ gulp.task('closure', function () {
                 warning_level: 'VERBOSE'
             }
         }))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist'));
 });
+
+////////////////
+
+function log(msg) {
+    if (typeof(msg) === 'object') {
+        for (var item in msg) {
+            if (msg.hasOwnProperty(item)) {
+                $.util.log($.util.colors.blue(msg[item]));
+            }
+        }
+    } else {
+        $.util.log($.util.colors.blue(msg));
+    }
+}

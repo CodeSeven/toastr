@@ -11,6 +11,7 @@
  * Project: https://github.com/CodeSeven/toastr
  */
 
+/* jshint -W040 */
 class toastr {
 
     constructor(options) {
@@ -195,7 +196,7 @@ class toastr {
 
         if(typeof(toastElement) !== 'undefined'){
             let forceToastClosure = clearOptions && clearOptions.force ? clearOptions.force : false;
-            
+
             if (forceToastClosure || !toastElement.matches(':focus')) {
                 this.removeToast(toastElement);
 
@@ -203,7 +204,7 @@ class toastr {
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -522,14 +523,14 @@ class toastr {
 
         function shouldExit(options, map) {
             if (options.preventDuplicates) {
-                // if (typeof(this) !== 'undefined') { 
-                    
+                // if (typeof(this) !== 'undefined') {
+
                     if(map.message === this.previousToast){
-                            return true;    
+                            return true;
                     }else {
                         this.previousToast = map.message; // TODO: JSHint Possible String Violation
                     }
-                // } 
+                // }
             }
 
             return false;

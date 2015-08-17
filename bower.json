@@ -4,7 +4,7 @@
   "authors": [
     "Timothy Ferrell <timothyferrell@gmail.com>"
   ],
-  "main": "src/toastr.es6",
+  "main": "src/toastr.js",
   "moduleType": [
     "amd",
     "es6",
