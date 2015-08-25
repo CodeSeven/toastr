@@ -331,8 +331,11 @@
 
                 function setMessage() {
                     if (map.message) {
-                        $messageElement.append(!options.escapeHtml ? map.message : escapeHtml(map.message)).addClass(options.messageClass);
-                        $toastElement.append($messageElement);
+                        var message_lines = map.message.split('\n');
+                        for(var line = 0; line < message_lines.length; line++){
+                            $messageElement.append(!options.escapeHtml ? message_lines[line] : escapeHtml(message_lines[line])).addClass(options.messageClass);
+                            $toastElement.append($messageElement);
+                        }
                     }
                 }
 
