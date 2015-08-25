@@ -215,7 +215,6 @@
                 var intervalId = null;
                 var $toastElement = $('<div/>');
                 var $titleElement = $('<div/>');
-                var $messageElement = $('<div/>');
                 var $progressElement = $('<div/>');
                 var $closeElement = $(options.closeHtml);
                 var progressBar = {
@@ -331,8 +330,13 @@
 
                 function setMessage() {
                     if (map.message) {
-                        $messageElement.append(!options.escapeHtml ? map.message : escapeHtml(map.message)).addClass(options.messageClass);
-                        $toastElement.append($messageElement);
+                        var message_lines = map.message.split('\n');
+                        for(var i = 0; i < message_lines.length; i++){
+                            var line = message_lines[i];
+                            var $message_row = $('<div/>');
+                            $message_row.append(!options.escapeHtml ? line : escapeHtml(line)).addClass(options.messageClass);
+                            $toastElement.append($message_row);
+                        }
                     }
                 }
 
