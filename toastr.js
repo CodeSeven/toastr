@@ -184,6 +184,7 @@
                     closeHtml: '<button type="button">&times;</button>',
                     newestOnTop: true,
                     preventDuplicates: false,
+					rtl: false,
                     progressBar: false
                 };
             }
@@ -246,7 +247,8 @@
                     setTitle();
                     setMessage();
                     setCloseButton();
-                    setProgressBar();
+                    setRTL();
+					setProgressBar();
                     setSequence();
                 }
 
@@ -324,6 +326,12 @@
                     if (options.closeButton) {
                         $closeElement.addClass('toast-close-button').attr('role', 'button');
                         $toastElement.prepend($closeElement);
+                    }
+                }
+
+                function setRTL() {
+                    if (options.rtl) {
+                        $toastElement.addClass("rtl");
                     }
                 }
 

@@ -158,6 +158,13 @@ button.toast-close-button {
 		.opacity(0.8);
 	}
 
+	> div.rtl {
+		direction: rtl;
+		margin: 0 0 6px;
+		padding: 15px 50px 15px 15px;
+		background-position: right 15px center;
+	}
+
 	> :hover {
 		.boxShadow(0 0 12px @black);
 		.opacity(1);
@@ -223,6 +230,16 @@ button.toast-close-button {
 	.opacity(0.4);
 }
 
+/*Right to left*/
+
+.rtl {
+    .toast-close-button {
+		left: -0.3em;
+		float: left;
+	}
+}
+
+
 /*Responsive Design*/
 
 @media all and (max-width: 240px) {
@@ -232,10 +249,16 @@ button.toast-close-button {
 			padding: 8px 8px 8px 50px;
 			width: 11em;
 		}
+		> div.rtl {
+			padding: 8px 50px 8px 8px;
+		}
 
 		& .toast-close-button {
 			right: -0.2em;
 			top: -0.2em;
+		}
+		& .rtl .toast-close-button {
+			left: -0.2em;
 		}
 	}
 }
@@ -246,10 +269,16 @@ button.toast-close-button {
 			padding: 8px 8px 8px 50px;
 			width: 18em;
 		}
+		> div.rtl {
+			padding: 8px 50px 8px 8px;
+		}
 
 		& .toast-close-button {
 			right: -0.2em;
 			top: -0.2em;
+		}
+		& .rtl .toast-close-button {
+			left: -0.2em;
 		}
 	}
 }
@@ -259,6 +288,9 @@ button.toast-close-button {
 		> div {
 			padding: 15px 15px 15px 50px;
 			width: 25em;
+		}
+		> div.rtl {
+			padding: 15px 50px 15px 15px;
 		}
 	}
 }

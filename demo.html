@@ -45,6 +45,11 @@
                         </label>
                     </div>
                     <div class="controls">
+                        <label class="checkbox" for="rtl">
+                            <input id="rtl" type="checkbox" value="checked" class="input-mini" />Right To Left
+                        </label>
+                    </div>
+                    <div class="controls">
                         <label class="checkbox" for="progressBar">
                             <input id="progressBar" type="checkbox" value="checked" class="input-mini" />Progress Bar
                         </label>
@@ -224,7 +229,8 @@
                 closeButton: $('#closeButton').prop('checked'),
                 debug: $('#debugInfo').prop('checked'),
                 newestOnTop: $('#newestOnTop').prop('checked'),
-                progressBar: $('#progressBar').prop('checked'),
+                rtl: $('#rtl').prop('checked'),
+				progressBar: $('#progressBar').prop('checked'),
                 positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                 preventDuplicates: $('#preventDuplicates').prop('checked'),
                 onclick: null

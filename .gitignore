@@ -56,3 +56,9 @@ Thumbs.db
 # WebStorm #
 ######################
 .idea/
+
+#Local Development Files#
+vender
+local-demo.html
+local-toastr.js
+local-toastr.less

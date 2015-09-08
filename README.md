@@ -134,7 +134,7 @@ Visually indicate how long before a toast expires.
     toastr.options.progressBar = true; 
 
 ### rtl
-Display the toastr from right-to-left, both for the text and icon.
+Flip the toastr to  be displayed properly for right-to-left languages.
     toastr.options.rtl = true; 
 
 ## Building Toastr
