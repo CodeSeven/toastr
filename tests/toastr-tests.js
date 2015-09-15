@@ -1,15 +1,5 @@
 /* jshint -W117, -W030 */
-// var assert = require("assert")
-var chai = require('chai');
 var expect = chai.expect;
-
-// var fs = require('fs');
-// var vm = require('vm');
-// var path = './dist/toastr.js';
-
-// var code = fs.readFileSync(path);
-// vm.runInThisContext(code);
-
 var iconClasses = {
     error: 'toast-error',
     info: 'toast-info',
