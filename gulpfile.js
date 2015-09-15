@@ -2,14 +2,15 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')({ lazy: true });
 var args = require('yargs').argv;
 var config = require('./gulp.config')();
+var mochaPhantomJS = require('gulp-mocha-phantomjs');
 
 var colors = $.util.colors;
 
 gulp.task('test', function () {
     log('Testing');
 
-    return gulp.src(config.tests)
-        .pipe($.mocha());
+    return gulp.src('tests/tests.html')
+        .pipe(mochaPhantomJS());
 });
 
 gulp.task('vet', function () {
