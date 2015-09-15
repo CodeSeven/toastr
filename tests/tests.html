@@ -13,12 +13,13 @@
   <script src="../node_modules/chai/chai.js"></script>
   <script src="../dist/toastr.js"></script>
   <script>
+    console.log("toastr is:"+typeof(toastr))
     mocha.setup({
       ui: 'bdd',
       asyncOnly: true
     });
   </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script>jQuery.noConflict();</script>
   <script src="toastr-tests.js"></script>
   <script>mocha.run();</script>
