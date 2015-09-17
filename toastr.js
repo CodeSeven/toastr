@@ -21,7 +21,8 @@
                 error: 'error',
                 info: 'info',
                 success: 'success',
-                warning: 'warning'
+                warning: 'warning',
+                custom: 'custom'
             };
 
             var toastr = {
@@ -34,7 +35,8 @@
                 subscribe: subscribe,
                 success: success,
                 version: '2.1.2',
-                warning: warning
+                warning: warning,
+                custom: custom
             };
 
             var previousToast;
@@ -42,6 +44,17 @@
             return toastr;
 
             ////////////////
+            
+            //Custom notify
+            function custom(message, title, optionsOverride, iconClass) {
+                return notify({
+                    type: toastType.custom,
+                    iconClass: iconClass,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title
+                });
+            }
 
             function error(message, title, optionsOverride) {
                 return notify({
