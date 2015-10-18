@@ -375,6 +375,7 @@
                         easing: easing,
                         complete: function () {
                             removeToast($toastElement);
+                            clearTimeout(intervalId);
                             if (options.onHidden && response.state !== 'hidden') {
                                 options.onHidden();
                             }
