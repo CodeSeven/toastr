@@ -567,6 +567,33 @@
         clearContainerChildren();
     });
 
+    module('subscription');
+    asyncTest('subscribe - triggers 2 visible and 2 hidden response notifications while clicking on a toast', 1, function () {
+        //Arrange
+        var $toast = [];
+        var expectedReponses = [];
+        //Act
+        toastr.subscribe(function(response) {
+          if(response.options.testId) {
+            expectedReponses.push(response);
+          }
+        })
+
+        $toast[0] = toastr.info(sampleMsg, sampleTitle, {testId : 1});
+        $toast[1] = toastr.info(sampleMsg, sampleTitle, {testId : 2});
+
+        $toast[1].click()
+
+        setTimeout(function () {
+            // Assert
+            ok(expectedReponses.length === 4);
+            //Teardown
+            clearContainerChildren();
+            toastr.subscribe(null);
+            start();
+        }, delay);
+    });
+
     module('order of appearance');
     test('Newest toast on top', 1, function () {
         //Arrange
