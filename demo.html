@@ -138,16 +138,16 @@
                 <div class="control-group">
                     <div class="controls">
                         <label class="control-label" for="showDuration">Show Duration</label>
-                        <input id="showDuration" type="text" placeholder="ms" class="input-mini" value="300" />
+                        <input id="showDuration" type="number" placeholder="ms" class="input-mini" value="300"     />
 
                         <label class="control-label" for="hideDuration">Hide Duration</label>
-                        <input id="hideDuration" type="text" placeholder="ms" class="input-mini" value="1000" />
+                        <input id="hideDuration" type="number" placeholder="ms" class="input-mini" value="1000" />
 
                         <label class="control-label" for="timeOut">Time out</label>
-                        <input id="timeOut" type="text" placeholder="ms" class="input-mini" value="5000" />
+                        <input id="timeOut" type="number" placeholder="ms" class="input-mini" value="5000" />
 
                         <label class="control-label" for="extendedTimeOut">Extended time out</label>
-                        <input id="extendedTimeOut" type="text" placeholder="ms" class="input-mini" value="1000" />
+                        <input id="extendedTimeOut" type="number" placeholder="ms" class="input-mini" value="1000" />
                     </div>
                 </div>
             </div>
@@ -237,19 +237,19 @@
             }
 
             if ($showDuration.val().length) {
-                toastr.options.showDuration = $showDuration.val();
+                toastr.options.showDuration = parseInt($showDuration.val());
             }
 
             if ($hideDuration.val().length) {
-                toastr.options.hideDuration = $hideDuration.val();
+                toastr.options.hideDuration = parseInt($hideDuration.val());
             }
 
             if ($timeOut.val().length) {
-                toastr.options.timeOut = addClear ? 0 : $timeOut.val();
+                toastr.options.timeOut = addClear ? 0 : parseInt($timeOut.val());
             }
 
             if ($extendedTimeOut.val().length) {
-                toastr.options.extendedTimeOut = addClear ? 0 : $extendedTimeOut.val();
+                toastr.options.extendedTimeOut = addClear ? 0 : parseInt($extendedTimeOut.val());
             }
 
             if ($showEasing.val().length) {
@@ -277,12 +277,12 @@
             }
 
             $('#toastrOptions').text('Command: toastr["'
-                            + shortCutFunction
-                            + '"]("'
-                            + msg
-                            + (title ? '", "' + title : '')
-                            + '")\n\ntoastr.options = '
-                            + JSON.stringify(toastr.options, null, 2)
+                    + shortCutFunction
+                    + '"]("'
+                    + msg
+                    + (title ? '", "' + title : '')
+                    + '")\n\ntoastr.options = '
+                    + JSON.stringify(toastr.options, null, 2)
             );
 
             var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
