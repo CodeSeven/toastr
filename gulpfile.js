@@ -4,7 +4,6 @@ var del = require('del');
 var glob = require('glob');
 var karma = require('karma').server;
 var merge = require('merge-stream');
-var plato = require('plato');
 var plug = require('gulp-load-plugins')();
 
 var paths = {
@@ -27,12 +26,10 @@ gulp.task('help', plug.taskListing);
  * @return {Stream}
  */
 gulp.task('analyze', function() {
-    log('Analyzing source with JSHint, JSCS, and Plato');
+    log('Analyzing source with JSHint and JSCS');
 
     var jshint = analyzejshint([paths.js]);
     var jscs = analyzejscs([paths.js]);
-
-    startPlatoVisualizer();
 
     return merge(jshint, jscs);
 });
@@ -135,27 +132,6 @@ function analyzejscs(sources) {
     return gulp
         .src(sources)
         .pipe(plug.jscs('./.jscsrc'));
-}
-
-/**
- * Start Plato inspector and visualizer
- */
-function startPlatoVisualizer() {
-    log('Running Plato');
-
-    var files = glob.sync('toastr.js');
-
-    var options = {
-        title: 'Plato Inspections Report'
-    };
-    var outputDir = './report/plato';
-
-    plato.inspect(files, outputDir, options, platoCompleted);
-
-    function platoCompleted(report) {
-        var overview = plato.getOverviewReport(report);
-        log(overview.summary);
-    }
 }
 
 /**
