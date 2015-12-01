@@ -170,6 +170,7 @@
                     closeMethod: false,
                     closeDuration: false,
                     closeEasing: false,
+                    closeOnHover: true,
 
                     extendedTimeOut: 1000,
                     iconClasses: {
@@ -267,7 +268,10 @@
                 }
 
                 function handleEvents() {
-                    $toastElement.hover(stickAround, delayedHideToast);
+                    if (options.closeOnHover) {
+                        $toastElement.hover(stickAround, delayedHideToast);
+                    }
+
                     if (!options.onclick && options.tapToDismiss) {
                         $toastElement.click(hideToast);
                     }
