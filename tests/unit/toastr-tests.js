@@ -140,6 +140,33 @@
             start();
         }, delay);
     });
+    asyncTest('clear and show - clear toast after hover', 1, function () {
+        //Arrange
+        var $toast = toastr.info(sampleMsg, sampleTitle);
+        console.log($toast);
+        var $container = toastr.getContainer();
+        $toast.trigger("mouseout");
+        //Act
+        setTimeout(function () {
+            //Assert
+            ok($container.find('div.toast-title').length === 0, 'Toast clears after a mouse hover'); //Teardown
+            resetContainer();
+            start();
+        }, 500);
+    });
+    asyncTest('clear and show - do not clear toast after hover', 1, function () {
+        //Arrange
+        var $toast = toastr.info(sampleMsg, sampleTitle, { closeOnHover: false });
+        var $container = toastr.getContainer();
+        $toast.trigger("mouseout");
+        //Act
+        setTimeout(function () {
+            //Assert
+            ok($container.find('div.toast-title').length === 1, 'Toast does not clear after a mouse hover'); //Teardown
+            resetContainer();
+            start();
+        }, 500);
+    });
     test('clear and show - after clear all toasts new toast still appears', 1, function () {
         //Arrange
         var $toast = [];
