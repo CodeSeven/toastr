@@ -461,16 +461,16 @@ class toastr {
             	iconElement.classList.add('toast-icon');
                 switch(options.iconClass) {
                     case "toast-info":
-                        iconElement.innerHTML = "<i class='fa fa-info-circle'></i>";
+                        iconElement.innerHTML = "<i class='fa fa-info-circle fa-2x'></i>";
                         break;
                     case "toast-warn":
-                        iconElement.innerHTML = "<i class='fa fa-exclamation-triagle'></i>";
+                        iconElement.innerHTML = "<i class='fa fa-exclamation-triagle fa-2x'></i>";
                         break;
                     case "toast-error":
-                        iconElement.innerHTML = "<i class='fa fa-exclamation-circle'></i>";
+                        iconElement.innerHTML = "<i class='fa fa-exclamation-circle fa-2x'></i>";
                         break;
                     case "toastr-success":
-                        iconElement.innerHTML = "<i class='fa fa-check'></i>";
+                        iconElement.innerHTML = "<i class='fa fa-check fa-2x'></i>";
                         break;
                 }
             	toastElement.appendChild(iconElement);
