@@ -334,7 +334,7 @@ class toastr {
          * @type {Element}
          */
         let messageElement = document.createElement('div');
-	let iconElement = document.createElement('div');
+	    let iconElement = document.createElement('div');
         let progressElement = document.createElement('div');
         let closeElement = document.createElement('button');
             closeElement.innerHtml = options.closeHtml;
@@ -457,8 +457,22 @@ class toastr {
          * Good to go for v3.
          */
         function setIcon() {
-            if (typeof(map.iconClass)!=='undefined') {
+            if (typeof(options.iconClass)!=='undefined') {
             	iconElement.classList.add('toast-icon');
+                switch(options.iconClass) {
+                    case "toast-info":
+                        iconElement.innerHTML = "<i class='fa fa-info-circle'></i>";
+                        break;
+                    case "toast-warn":
+                        iconElement.innerHTML = "<i class='fa fa-exclamation-triagle'></i>";
+                        break;
+                    case "toast-error":
+                        iconElement.innerHTML = "<i class='fa fa-exclamation-circle'></i>";
+                        break;
+                    case "toastr-success":
+                        iconElement.innerHTML = "<i class='fa fa-check'></i>";
+                        break;
+                }
             	toastElement.appendChild(iconElement);
             	toastElement.classList.add(options.toastClass);
             }
