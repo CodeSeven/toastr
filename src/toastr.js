@@ -1,6 +1,6 @@
 /*
  * Toastr
- * Copyright 2012-2015
+ * Copyright 2012-2016
  * Authors: John Papa,  Tim Ferrell and Stephen Bero.
  * All Rights Reserved.
  * Use, reproduction, distribution, and modification of this code is subject to the terms and
