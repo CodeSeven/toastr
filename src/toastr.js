@@ -222,7 +222,7 @@ class toastr {
             return;
         }
 
-        // Use the element to get it's parent so we can remove it.
+        // Use the element to get its parent so we can remove it.
         toastElement.parentNode.removeChild(toastElement);
 
         toastElement = null;
@@ -334,6 +334,7 @@ class toastr {
          * @type {Element}
          */
         let messageElement = document.createElement('div');
+	let iconElement = document.createElement('div');
         let progressElement = document.createElement('div');
         let closeElement = document.createElement('button');
             closeElement.innerHtml = options.closeHtml;
@@ -457,7 +458,9 @@ class toastr {
          */
         function setIcon() {
             if (typeof(map.iconClass)!=='undefined') {
-                toastElement.classList.add(options.toastClass);
+            	iconElement.classList.add('toast-icon');
+            	toastElement.appendChild(iconElement);
+            	toastElement.classList.add(options.toastClass);
             }
         }
 
