@@ -35,10 +35,6 @@
 	font-weight: bold;
 }
 
-.toast-icon {
-    background-color: @green;
-}
-
 .toast-message {
 	.wordWrap();
 
@@ -164,7 +160,6 @@ button.toast-close-button {
 
     .toast-icon {
         float:left;
-        background-color:@green;
         height:100px;
         width:50px;
     }
@@ -196,20 +191,33 @@ button.toast-close-button {
 .toast-success {
 	background-color: @default-background-color;
 	border: 1px solid @green;
+    .toast-icon {
+        background-color: @green;
+    }
 }
 
 .toast-error {
 	background-color: @default-background-color;
 	border: 1px solid @red;
+    .toast-icon {
+        background-color: @red;
+    }
 }
 
 .toast-info {
 	background-color: @default-background-color;
-	border: 1px solid @orange;
+	border: 1px solid @blue;
+    .toast-icon {
+        background-color: @blue;
+    }
 }
 
 .toast-warning {
-	background-color: @orange;
+	background-color: @default-background-color;
+    border: 1px solid @orange;
+    .toast-icon {
+        background-color: @orange;
+    }
 }
 
 .toast-progress {
