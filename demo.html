@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Toastr Demo</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="dist/toastr.css">
 </head>
@@ -12,6 +13,19 @@
 	<script src="dist/toastr.js"></script>
 	<script>
 		var t = new toastr();
-		t.success('Hello World');
-	</script>
+		t.success('This is a success message.', 'Great news!');
+        t.info('This is an informational message.', 'Oh Word?');
+        t.warning('This is a warning message.', 'Better be careful.');
+        t.error('Blah blah blah Princess Bride Reference goes here.', 'You killed my father?');
+        setInterval(function () {
+            actions = ['success','info','warning','error'];
+            titles = ['Shag Carpet', 'Gummi Bears', 'Coca Cola', 'Bouncy Balls'];
+            messages = ['So soft and comfy.', 'Tastes so good and the texture so right.', 'An American classic.', 'Bounce so high!'];
+	        randTitle = titles[Math.floor(Math.random()*4)];
+            randMessage = messages[Math.floor(Math.random()*4)];
+            randAction = actions[Math.floor(Math.random()*4)];
+            actionToEval = "t."+randAction+"('"+randMessage+"','"+randTitle+"');";
+            eval(actionToEval);
+        },500);
+    </script>
 </html>
