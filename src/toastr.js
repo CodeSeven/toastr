@@ -277,12 +277,12 @@ class toastr {
                 warning: 'toast-warning'
             },
             iconClass: 'toast-info',
-            positionClass: 'toast-top-left',
-            timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+            positionClass: 'toast-top-right',
+            timeOut: 1000, // Set timeOut and extendedTimeOut to 0 to make it sticky
             titleClass: 'toast-title',
             messageClass: 'toast-message',
             target: 'body',
-            closeHtml: 'button',
+            closeHtml: 'CLOSE',
             newestOnTop: true,
             preventDuplicates: false,
             progressBar: false
@@ -316,8 +316,6 @@ class toastr {
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
 
-        console.log("opts", options);
-
         if (shouldExit.call(this, options, map)) {
             return;
         }
@@ -338,8 +336,10 @@ class toastr {
         let messageElement = document.createElement('div');
 	    let iconElement = document.createElement('div');
         let progressElement = document.createElement('div');
-        let closeElement = document.createElement('button');
-            closeElement.innerHtml = options.closeHtml;
+        let closeElement = document.createElement('div');
+            closeElement.innerHTML = options.closeHtml;
+        let message = map.message;
+        let title = map.title;
 
         var progressBar = {
             intervalId: null,
@@ -370,9 +370,9 @@ class toastr {
 
         function personalizeToast() {
             setIcon(iconClass);
-            setTitle();
-            setMessage();
-            setCloseButton();
+            setTitle(title);
+            setMessage(message);
+            setCloseButton(closeElement);
             setProgressBar();
         }
 
@@ -464,16 +464,16 @@ class toastr {
                 let innerContent = "";
                 switch(iconClass) {
                     case  "toast-info":
-                        innerContent = "<i class='fa fa-info-circle fa-2x'></i>";
+                        innerContent = "<i class='fa fa-info-circle'></i>";
                         break;
                     case "toast-warn":
-                        innerContent = "<i class='fa fa-exclamation-triangle fa-2x'></i>";
+                        innerContent = "<i class='fa fa-exclamation-triangle'></i>";
                         break;
                     case "toast-error":
-                        innerContent = "<i class='fa fa-exclamation-circle fa-2x'></i>";
+                        innerContent = "<i class='fa fa-exclamation-circle'></i>";
                         break;
                     case "toast-success":
-                        innerContent = "<i class='fa fa-check fa-2x'></i>";
+                        innerContent = "<i class='fa fa-check'></i>";
                         break;
                 }
                 iconElement.innerHTML = innerContent;
@@ -502,9 +502,9 @@ class toastr {
         /**
          * Good to go for v3.
          */
-        function setTitle() {
-            if (typeof(map.title) !== 'undefined') {
-                titleElement.innerHTML = map.title;
+        function setTitle(title) {
+            if (typeof(title) !== 'undefined') {
+                titleElement.innerHTML = title;
                 titleElement.classList.add(options.titleClass);
                 toastElement.appendChild(titleElement);
             }
@@ -513,11 +513,12 @@ class toastr {
         /**
          * Good to go for v3.
          */
-        function setMessage() {
-            if (typeof(map.message) !== 'undefined') {
+        function setMessage(message) {
+            console.log("message recv as", message);
+            if (typeof(message) !== 'undefined') {
 
                 let mapMessage = document.createElement('div');
-                mapMessage.innerHTML = map.message;
+                mapMessage.innerHTML = message;
 
                 messageElement.appendChild(mapMessage);
                 messageElement.classList.add(options.messageClass);
@@ -526,8 +527,9 @@ class toastr {
             }
         }
 
-        function setCloseButton() {
-            if (typeof(options.closeButton) !== 'undefined' && options.closeButton) {
+        function setCloseButton(closeElement) {
+            console.log(closeElement);
+            if (typeof(closeElement) !== 'undefined') {
                 closeElement.classList.add('toast-close-button');
                 closeElement.setAttribute('role','button');
                 closeElement.setAttribute('type','button');

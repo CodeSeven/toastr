@@ -25,14 +25,23 @@
 @near-black: #030303;
 @green: rgb(21,181,30);
 @red: #BD362F;
-@blue: #2F96B4;
+@blue: rgb(16,114,186);
 @orange: #F89406;
 @default-container-opacity: .8;
 @default-background-color: @white;
 
 // Styles
 .toast-title {
+    color: @near-black;
 	font-weight: bold;
+    padding: 10px 0px 10px 50px;
+    font-size: 10pt;
+}
+
+.toast-message {
+    color: @near-black;
+    padding: 0 0 0 50px;
+    font-size: 10pt;
 }
 
 .toast-message {
@@ -40,7 +49,7 @@
 
 	a,
 	label {
-		color: @white;
+		color: @near-black;
 	}
 
 		a:hover {
@@ -50,24 +59,14 @@
 }
 
 .toast-close-button {
-	position: relative;
-	right: -0.3em;
-	top: -0.3em;
+	position: absolute;
+	right: .4em;
+	bottom: .4em;
 	float: right;
-	font-size: 20px;
+	font-size: 12pt;
 	font-weight: bold;
-	color: @white;
-	-webkit-text-shadow: 0 1px 0 rgba(255,255,255,1);
-	text-shadow: 0 1px 0 rgba(255,255,255,1);
-	.opacity(0.8);
-
-	&:hover,
-	&:focus {
-		color: @black;
-		text-decoration: none;
-		cursor: pointer;
-		.opacity(0.4);
-	}
+	color: @near-black;
+	cursor: pointer;
 }
 
 /*Additional properties for button version
@@ -128,7 +127,8 @@ button.toast-close-button {
 }
 
 #toast-container {
-	position: fixed;
+	font-family: 'Roboto', sans-serif;
+    position: fixed;
 	z-index: 999999;
 	// The container should not be clickable.
 	pointer-events: none;
@@ -161,11 +161,11 @@ button.toast-close-button {
     .toast-icon {
         float:left;
         height:100px;
-        width:50px;
+        width:40px;
     }
 
     .toast-icon > i {
-        padding:10px 10px 10px 10px;
+        padding:12px 15px 15px 15px;
     }
 
 	/*overrides*/
