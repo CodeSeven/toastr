@@ -316,6 +316,8 @@ class toastr {
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
 
+        console.log("opts", options);
+
         if (shouldExit.call(this, options, map)) {
             return;
         }
@@ -367,7 +369,7 @@ class toastr {
         return toastElement;
 
         function personalizeToast() {
-            setIcon();
+            setIcon(iconClass);
             setTitle();
             setMessage();
             setCloseButton();
@@ -456,25 +458,27 @@ class toastr {
          * Adds a class to set the icon for the toast.
          * Good to go for v3.
          */
-        function setIcon() {
+        function setIcon(iconClass) {
             if (typeof(options.iconClass)!=='undefined') {
             	iconElement.classList.add('toast-icon');
-                switch(options.iconClass) {
-                    case "toast-info":
-                        iconElement.innerHTML = "<i class='fa fa-info-circle fa-2x'></i>";
+                let innerContent = "";
+                switch(iconClass) {
+                    case  "toast-info":
+                        innerContent = "<i class='fa fa-info-circle fa-2x'></i>";
                         break;
                     case "toast-warn":
-                        iconElement.innerHTML = "<i class='fa fa-exclamation-triagle fa-2x'></i>";
+                        innerContent = "<i class='fa fa-exclamation-triangle fa-2x'></i>";
                         break;
                     case "toast-error":
-                        iconElement.innerHTML = "<i class='fa fa-exclamation-circle fa-2x'></i>";
+                        innerContent = "<i class='fa fa-exclamation-circle fa-2x'></i>";
                         break;
-                    case "toastr-success":
-                        iconElement.innerHTML = "<i class='fa fa-check fa-2x'></i>";
+                    case "toast-success":
+                        innerContent = "<i class='fa fa-check fa-2x'></i>";
                         break;
                 }
+                iconElement.innerHTML = innerContent;
             	toastElement.appendChild(iconElement);
-            	toastElement.classList.add(options.toastClass);
+                toastElement.classList.add(options.toastClass);
             }
         }
 
