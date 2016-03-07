@@ -173,7 +173,7 @@
 
                     extendedTimeOut: 1000,
                     iconClasses: {
-                        error: 'toast-error',
+                        error: 'toast-danger',
                         info: 'toast-info',
                         success: 'toast-success',
                         warning: 'toast-warning'
