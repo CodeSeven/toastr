@@ -427,7 +427,7 @@
         })();
     });
 }(typeof define === 'function' && define.amd ? define : function (deps, factory) {
-    if (typeof module !== 'undefined' && module.exports) { //Node
+    if (typeof module !== 'undefined' && module.exports && typeof require === 'function') { //Node
         module.exports = factory(require('jquery'));
     } else {
         window.toastr = factory(window.jQuery);
