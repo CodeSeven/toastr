@@ -269,7 +269,7 @@
                 function handleEvents() {
                     $toastElement.hover(stickAround, delayedHideToast);
                     if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(hideToast);
+                        $toastElement.one('click', hideToast);
                     }
 
                     if (options.closeButton && $closeElement) {
@@ -284,7 +284,7 @@
                     }
 
                     if (options.onclick) {
-                        $toastElement.click(function (event) {
+                        $toastElement.one('click', function (event) {
                             options.onclick(event);
                             hideToast();
                         });
