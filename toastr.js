@@ -178,6 +178,8 @@
                         success: 'toast-success',
                         warning: 'toast-warning'
                     },
+                    backgroundColor: '',
+                    color: '',
                     iconClass: 'toast-info',
                     positionClass: 'toast-top-right',
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
@@ -311,6 +313,8 @@
                 function setIcon() {
                     if (map.iconClass) {
                         $toastElement.addClass(options.toastClass).addClass(iconClass);
+                        console.log(options.backgroundColor);
+                        if (options.backgroundColor) $toastElement.css("background-color", options.backgroundColor);
                     }
                 }
 
@@ -333,6 +337,7 @@
                     if (map.message) {
                         $messageElement.append(!options.escapeHtml ? map.message : escapeHtml(map.message)).addClass(options.messageClass);
                         $toastElement.append($messageElement);
+                        if (options.color) $messageElement.css("color", options.color);
                     }
                 }
 
