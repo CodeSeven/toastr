@@ -40,6 +40,11 @@
                         </label>
                     </div>
                     <div class="controls">
+                        <label class="checkbox" for="addBehaviorOnToastCloseClick">
+                            <input disabled id="addBehaviorOnToastCloseClick" type="checkbox" value="checked" class="input-mini" />Add behavior on toast close button click
+                        </label>
+                    </div>
+                    <div class="controls">
                         <label class="checkbox" for="debugInfo">
                             <input id="debugInfo" type="checkbox" value="checked" class="input-mini" />Debug
                         </label>
@@ -205,6 +210,15 @@
             return msg;
         };
 
+        $('#closeButton').click(function() {
+            if($(this).is(':checked')) {
+                $('#addBehaviorOnToastCloseClick').prop('disabled', false);
+            } else {
+                $('#addBehaviorOnToastCloseClick').prop('disabled', true);
+                $('#addBehaviorOnToastCloseClick').prop('checked', false);
+            }
+        });
+
         $('#showtoast').click(function () {
             var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
             var msg = $('#message').val();
@@ -233,6 +247,12 @@
             if ($('#addBehaviorOnToastClick').prop('checked')) {
                 toastr.options.onclick = function () {
                     alert('You can perform some custom action after a toast goes away');
+                };
+            }
+
+            if ($('#addBehaviorOnToastCloseClick').prop('checked')) {
+                toastr.options.onCloseClick = function () {
+                    alert('You can perform some custom action when the close button is clicked');
                 };
             }
 
