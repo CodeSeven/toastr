@@ -34,7 +34,8 @@
                 subscribe: subscribe,
                 success: success,
                 version: '2.1.2',
-                warning: warning
+                warning: warning,
+                notify: notify
             };
 
             var previousToast;

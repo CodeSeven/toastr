@@ -325,6 +325,39 @@
         $toast.remove();
         clearContainerChildren();
     });
+    module('generic');
+    test('generic - pass message and title', 2, function () {
+        //Arrange
+        //Act
+        var $toast = toastr.notify({message: sampleMsg, title: sampleTitle});
+        //Assert
+        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
+        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('generic - pass message, but no title', 2, function () {
+        //Arrange
+        //Act
+        var $toast = toastr.notify({message:sampleMsg}); //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('generic - no message nor title', 2, function () {
+        //Arrange
+        //Act
+        var $toast = toastr.notify({});
+        //Assert
+        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
 
 
     module('escape html', {
