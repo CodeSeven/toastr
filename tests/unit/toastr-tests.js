@@ -466,7 +466,12 @@
         clearContainerChildren();
     });
 
-    module('event');
+    module('event', {
+        teardown: function () {
+            toastr.options.closeButton = false;
+            toastr.options.hideDuration = 0;
+        }
+    });
     asyncTest('event - onShown is executed', 1, function () {
         // Arrange
         var run = false;
@@ -517,6 +522,27 @@
             ok(onShowRun);
             ok(onHideRun);
             //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, delay);
+    });
+
+    asyncTest('event - onCloseClick is executed', 1, function () {
+        //Arrange
+        var run = false;
+        toastr.options.closeButton = true;
+        toastr.options.closeDuration = 0;
+        toastr.options.hideDuration = 2000;
+        var onCloseClick = function () { run = true; };
+        toastr.options.onCloseClick = onCloseClick;
+        toastr.options.timeOut = 1;
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        $toast.find('button.toast-close-button').click();
+        setTimeout(function () {
+            // Assert
+            ok(run); //Teardown
             $toast.remove();
             clearContainerChildren();
             start();

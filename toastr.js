@@ -285,6 +285,11 @@
                             } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
                                 event.cancelBubble = true;
                             }
+
+                            if (options.onCloseClick) {
+                                options.onCloseClick(event);
+                            }
+
                             hideToast(true);
                         });
                     }
