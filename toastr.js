@@ -144,7 +144,7 @@
             function createContainer(options) {
                 $container = $('<div/>')
                     .attr('id', options.containerId)
-                    .addClass(options.positionClass)
+                    .addClass(options.positionClass);
 
                 $container.appendTo($(options.target));
                 return $container;
@@ -189,7 +189,7 @@
                     newestOnTop: true,
                     preventDuplicates: false,
                     progressBar: false,
-                    progressClass: 'toast-progress',
+                    progressClass: 'toast-progress'
                 };
             }
 
@@ -266,6 +266,20 @@
                     setCloseButton();
                     setProgressBar();
                     setSequence();
+                    setAria();
+                }
+
+                function setAria() {
+                    var ariaValue = '';
+                    switch(map.iconClass) {
+                        case 'toast-success':
+                        case 'toast-info':
+                            ariaValue =  'polite';
+                            break;
+                        default:
+                            ariaValue = 'assertive';
+                    }
+                    $toastElement.attr('aria-live', ariaValue)
                 }
 
                 function handleEvents() {
