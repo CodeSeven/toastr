@@ -76,6 +76,12 @@
 	}
 }
 
+.rtl .toast-close-button {
+	left: -0.3em;
+	float: left;
+	right: 0.3em;
+}
+
 /*Additional properties for button version
  iOS requires the button element instead of an anchor tag.
  If you want the anchor version, it requires `href="#"`.*/
@@ -160,6 +166,12 @@ button.toast-close-button {
 		.opacity(@default-container-opacity);
 	}
 
+	> div.rtl {
+		direction: rtl;
+		padding: 15px 50px 15px 15px;
+		background-position: right 15px center;
+	}
+
 	> div:hover {
 		.boxShadow(0 0 12px @black);
 		.opacity(1);
@@ -237,9 +249,18 @@ button.toast-close-button {
 			width: 11em;
 		}
 
+		> div.rtl {
+			padding: 8px 50px 8px 8px;
+		}
+
 		& .toast-close-button {
 			right: -0.2em;
 			top: -0.2em;
+		}
+
+		& .rtl .toast-close-button {
+			left: -0.2em;
+			right: 0.2em;
 		}
 	}
 }
@@ -251,9 +272,18 @@ button.toast-close-button {
 			width: 18em;
 		}
 
+		> div.rtl {
+			padding: 8px 50px 8px 8px;
+		}
+
 		& .toast-close-button {
 			right: -0.2em;
 			top: -0.2em;
+		}
+
+		& .rtl .toast-close-button {
+			left: -0.2em;
+			right: 0.2em;
 		}
 	}
 }
@@ -263,6 +293,10 @@ button.toast-close-button {
 		> div {
 			padding: 15px 15px 15px 50px;
 			width: 25em;
+		}
+
+		> div.rtl {
+			padding: 15px 50px 15px 15px;
 		}
 	}
 }

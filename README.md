@@ -175,6 +175,12 @@ Visually indicate how long before a toast expires.
 toastr.options.progressBar = true;
 ```
 
+### rtl
+Flip the toastr to be displayed properly for right-to-left languages.
+```js
+toastr.options.rtl = true; 
+```
+
 ## Building Toastr
 
 To build the minified and css versions of Toastr you will need [node](http://nodejs.org) installed. (Use Homebrew or Chocolatey.)

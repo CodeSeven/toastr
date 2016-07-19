@@ -55,6 +55,11 @@
                         </label>
                     </div>
                     <div class="controls">
+                        <label class="checkbox" for="rtl">
+                            <input id="rtl" type="checkbox" value="checked" class="input-mini" />Is Right-to-left
+                        </label>
+                    </div>
+                    <div class="controls">
                         <label class="checkbox" for="preventDuplicates">
                             <input id="preventDuplicates" type="checkbox" value="checked" class="input-mini" />Prevent Duplicates
                         </label>
@@ -239,6 +244,7 @@
                 debug: $('#debugInfo').prop('checked'),
                 newestOnTop: $('#newestOnTop').prop('checked'),
                 progressBar: $('#progressBar').prop('checked'),
+                rtl: $('#rtl').prop('checked'),
                 positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                 preventDuplicates: $('#preventDuplicates').prop('checked'),
                 onclick: null

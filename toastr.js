@@ -189,7 +189,8 @@
                     newestOnTop: true,
                     preventDuplicates: false,
                     progressBar: false,
-                    progressClass: 'toast-progress'
+                    progressClass: 'toast-progress',
+                    rtl: false
                 };
             }
 
@@ -265,13 +266,14 @@
                     setMessage();
                     setCloseButton();
                     setProgressBar();
+                    setRTL();
                     setSequence();
                     setAria();
                 }
 
                 function setAria() {
                     var ariaValue = '';
-                    switch(map.iconClass) {
+                    switch (map.iconClass) {
                         case 'toast-success':
                         case 'toast-info':
                             ariaValue =  'polite';
@@ -279,7 +281,7 @@
                         default:
                             ariaValue = 'assertive';
                     }
-                    $toastElement.attr('aria-live', ariaValue)
+                    $toastElement.attr('aria-live', ariaValue);
                 }
 
                 function handleEvents() {
@@ -379,6 +381,12 @@
                     if (options.progressBar) {
                         $progressElement.addClass(options.progressClass);
                         $toastElement.prepend($progressElement);
+                    }
+                }
+
+                function setRTL() {
+                    if (options.rtl) {
+                        $toastElement.addClass('rtl');
                     }
                 }
 
