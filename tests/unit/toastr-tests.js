@@ -466,6 +466,46 @@
         clearContainerChildren();
     });
 
+    module('rtl', {
+        teardown: function () {
+            toastr.options.rtl = false;
+        }
+    });
+    test('toastr is ltr by default', 1, function () {
+        //Arrange
+        //Act
+        //Assert
+        toastr.subscribe(function(response) {
+            equal(response.options.rtl, false, 'ltr by default (i.e. rtl=false)');
+        });
+        var $toast = toastr.success('');
+        //Teardown
+        toastr.subscribe(null);
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('ltr toastr does not have .rtl class', 1, function () {
+        //Arrange
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        ok($toast.hasClass('rtl') === false, 'ltr div container does not have .rtl class');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('rtl toastr has .rtl class', 1, function () {
+        //Arrange
+        toastr.options.rtl = true;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        ok($toast.hasClass('rtl'), 'rtl div container has .rtl class');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
     module('event', {
         teardown: function () {
             toastr.options.closeButton = false;
