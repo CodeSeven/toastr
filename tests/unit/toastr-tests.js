@@ -16,7 +16,7 @@
         bottomCenter: 'toast-bottom-center'
     };
     var sampleMsg = 'I don\'t think they really exist';
-    var sampleTitle = 'ROUS';
+    var sampleTitle = 'TEST';
     var selectors = {
         container: 'div#toast-container',
         toastInfo: 'div#toast-container > div.toast-info',
@@ -50,8 +50,6 @@
         toastr.clear($toast[1]);
         //Assert
         setTimeout(function () {
-            //debugger;
-            //console.log($container.children().length);
             ok($container && $container.children().length === 2);
             //Teardown
             resetContainer();
@@ -143,7 +141,6 @@
     asyncTest('clear and show - clear toast after hover', 1, function () {
         //Arrange
         var $toast = toastr.info(sampleMsg, sampleTitle);
-        console.log($toast);
         var $container = toastr.getContainer();
         $toast.trigger("mouseout");
         //Act
@@ -502,6 +499,52 @@
         //Assert
         ok($toast.hasClass('rtl'), 'rtl div container has .rtl class');
         //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
+    module('accessibility');
+    test('toastr success has aria polite',1,function() {
+        // Arrange
+        var $toast = toastr.success('');
+
+        // Act
+        ok($toast.attr('aria-live')==='polite', 'success toast has aria-live of polite');
+
+        // Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('toastr info has aria polite',1,function() {
+        // Arrange
+        var $toast = toastr.info('');
+
+        // Act
+        ok($toast.attr('aria-live')==='polite', 'info toast has aria-live of polite');
+
+        // Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('toastr warning has aria assertive',1,function() {
+        // Arrange
+        var $toast = toastr.warning('');
+
+        // Act
+        ok($toast.attr('aria-live')==='assertive', 'warning toast has aria-live of assertive');
+
+        // Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('toastr error has aria assertive',1,function() {
+        // Arrange
+        var $toast = toastr.error('');
+
+        // Act
+        ok($toast.attr('aria-live')==='assertive', 'error toast has aria-live of assertive');
+
+        // Teardown
         $toast.remove();
         clearContainerChildren();
     });
