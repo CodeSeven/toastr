@@ -1,9 +1,6 @@
 /* jshint node:true, camelcase:false */
 var gulp = require('gulp');
-var del = require('del');
-var glob = require('glob');
 var karma = require('karma').server;
-var merge = require('merge-stream');
 var plug = require('gulp-load-plugins')();
 
 var paths = {
@@ -13,7 +10,6 @@ var paths = {
     build: './build'
 };
 
-var colors = plug.util.colors;
 var log = plug.util.log;
 
 /**
@@ -25,7 +21,7 @@ gulp.task('help', plug.taskListing);
  * Lint the code, create coverage report, and a visualizer
  * @return {Stream}
  */
-gulp.task('analyze', function() {
+gulp.task('analyze', function () {
     log('Analyzing source with JSHint and JSCS');
 
     var jshint = analyzejshint([paths.js]);
@@ -38,7 +34,7 @@ gulp.task('analyze', function() {
  * Minify and bundle the app's JavaScript
  * @return {Stream}
  */
-gulp.task('js', function() {
+gulp.task('js', function () {
     log('Bundling, minifying, and copying the app\'s JavaScript');
 
     return gulp
@@ -48,7 +44,7 @@ gulp.task('js', function() {
         .pipe(plug.uglify({}))
         .pipe(plug.bytediff.stop(bytediffFormatter))
         .pipe(plug.sourcemaps.write('.'))
-        .pipe(plug.rename(function(path) {
+        .pipe(plug.rename(function (path) {
             if (path.extname === '.js') {
                 path.basename += '.min';
             }
@@ -60,12 +56,11 @@ gulp.task('js', function() {
  * Minify and bundle the CSS
  * @return {Stream}
  */
-gulp.task('css', function() {
+gulp.task('css', function () {
     log('Bundling, minifying, and copying the app\'s CSS');
 
     return gulp.src(paths.less)
         .pipe(plug.less())
-//        .pipe(plug.autoprefixer('last 2 version', '> 5%'))
         .pipe(gulp.dest(paths.build))
         .pipe(plug.bytediff.start())
         .pipe(plug.minifyCss({}))
@@ -77,7 +72,7 @@ gulp.task('css', function() {
 /**
  * Build js and css
  */
-gulp.task('default', ['js', 'css'], function() {
+gulp.task('default', ['js', 'css'], function () {
     log('Analyze, Build CSS and JS');
 });
 
@@ -87,7 +82,7 @@ gulp.task('default', ['js', 'css'], function() {
  * from the cmd line: gulp clean && gulp build
  * @return {Stream}
  */
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
     log('Cleaning: ' + plug.util.colors.blue(paths.report));
     log('Cleaning: ' + plug.util.colors.blue(paths.build));
 
@@ -101,8 +96,8 @@ gulp.task('clean', function(cb) {
  *    gulp test --startServers
  * @return {Stream}
  */
-gulp.task('test', function(done) {
-    startTests(true /*singleRun*/ , done);
+gulp.task('test', function (done) {
+    startTests(true /*singleRun*/, done);
 });
 
 ////////////////
