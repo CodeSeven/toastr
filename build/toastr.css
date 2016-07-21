@@ -37,6 +37,11 @@
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
   filter: alpha(opacity=40);
 }
+.rtl .toast-close-button {
+  left: -0.3em;
+  float: left;
+  right: 0.3em;
+}
 /*Additional properties for button version
  iOS requires the button element instead of an anchor tag.
  If you want the anchor version, it requires `href="#"`.*/
@@ -114,6 +119,11 @@ button.toast-close-button {
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   filter: alpha(opacity=80);
 }
+#toast-container > div.rtl {
+  direction: rtl;
+  padding: 15px 50px 15px 15px;
+  background-position: right 15px center;
+}
 #toast-container > div:hover {
   -moz-box-shadow: 0 0 12px #000000;
   -webkit-box-shadow: 0 0 12px #000000;
@@ -178,9 +188,16 @@ button.toast-close-button {
     padding: 8px 8px 8px 50px;
     width: 11em;
   }
+  #toast-container > div.rtl {
+    padding: 8px 50px 8px 8px;
+  }
   #toast-container .toast-close-button {
     right: -0.2em;
     top: -0.2em;
+  }
+  #toast-container .rtl .toast-close-button {
+    left: -0.2em;
+    right: 0.2em;
   }
 }
 @media all and (min-width: 241px) and (max-width: 480px) {
@@ -188,14 +205,24 @@ button.toast-close-button {
     padding: 8px 8px 8px 50px;
     width: 18em;
   }
+  #toast-container > div.rtl {
+    padding: 8px 50px 8px 8px;
+  }
   #toast-container .toast-close-button {
     right: -0.2em;
     top: -0.2em;
+  }
+  #toast-container .rtl .toast-close-button {
+    left: -0.2em;
+    right: 0.2em;
   }
 }
 @media all and (min-width: 481px) and (max-width: 768px) {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
     width: 25em;
+  }
+  #toast-container > div.rtl {
+    padding: 15px 50px 15px 15px;
   }
 }
