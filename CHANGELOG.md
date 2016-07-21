@@ -7,6 +7,7 @@
 ## Bug Fixes
 - Fixed some CSS that prevented touch events from propagating on iOS devices
 - Removed role attribute because it duplicated voice over on text-to-speech readers; kept aria-live.
+- Consistent line-heights for close button to resolve issues with Bootstrap.
 
 ## Dev Ops
 - Removed Plato from gulp
