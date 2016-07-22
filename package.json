@@ -38,8 +38,6 @@
     "jquery": ">=1.12.0"
   },
   "devDependencies": {
-    "del": "^0.1.3",
-    "glob": "^4.0.6",
     "gulp": "^3.8.10",
     "gulp-bytediff": "^0.2.0",
     "gulp-jscs": "^1.3.0",
