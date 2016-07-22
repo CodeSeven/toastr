@@ -16,7 +16,7 @@
         bottomCenter: 'toast-bottom-center'
     };
     var sampleMsg = 'I don\'t think they really exist';
-    var sampleTitle = 'ROUS';
+    var sampleTitle = 'TEST';
     var selectors = {
         container: 'div#toast-container',
         toastInfo: 'div#toast-container > div.toast-info',
@@ -50,8 +50,6 @@
         toastr.clear($toast[1]);
         //Assert
         setTimeout(function () {
-            //debugger;
-            //console.log($container.children().length);
             ok($container && $container.children().length === 2);
             //Teardown
             resetContainer();
@@ -139,6 +137,32 @@
             resetContainer();
             start();
         }, delay);
+    });
+    asyncTest('clear and show - clear toast after hover', 1, function () {
+        //Arrange
+        var $toast = toastr.info(sampleMsg, sampleTitle);
+        var $container = toastr.getContainer();
+        $toast.trigger("mouseout");
+        //Act
+        setTimeout(function () {
+            //Assert
+            ok($container.find('div.toast-title').length === 0, 'Toast clears after a mouse hover'); //Teardown
+            resetContainer();
+            start();
+        }, 500);
+    });
+    asyncTest('clear and show - do not clear toast after hover', 1, function () {
+        //Arrange
+        var $toast = toastr.info(sampleMsg, sampleTitle, { closeOnHover: false });
+        var $container = toastr.getContainer();
+        $toast.trigger("mouseout");
+        //Act
+        setTimeout(function () {
+            //Assert
+            ok($container.find('div.toast-title').length === 1, 'Toast does not clear after a mouse hover'); //Teardown
+            resetContainer();
+            start();
+        }, 500);
     });
     test('clear and show - after clear all toasts new toast still appears', 1, function () {
         //Arrange
@@ -439,7 +463,98 @@
         clearContainerChildren();
     });
 
-    module('event');
+    module('rtl', {
+        teardown: function () {
+            toastr.options.rtl = false;
+        }
+    });
+    test('toastr is ltr by default', 1, function () {
+        //Arrange
+        //Act
+        //Assert
+        toastr.subscribe(function(response) {
+            equal(response.options.rtl, false, 'ltr by default (i.e. rtl=false)');
+        });
+        var $toast = toastr.success('');
+        //Teardown
+        toastr.subscribe(null);
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('ltr toastr does not have .rtl class', 1, function () {
+        //Arrange
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        ok($toast.hasClass('rtl') === false, 'ltr div container does not have .rtl class');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('rtl toastr has .rtl class', 1, function () {
+        //Arrange
+        toastr.options.rtl = true;
+        //Act
+        var $toast = toastr.success('');
+        //Assert
+        ok($toast.hasClass('rtl'), 'rtl div container has .rtl class');
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
+    module('accessibility');
+    test('toastr success has aria polite',1,function() {
+        // Arrange
+        var $toast = toastr.success('');
+
+        // Act
+        ok($toast.attr('aria-live')==='polite', 'success toast has aria-live of polite');
+
+        // Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('toastr info has aria polite',1,function() {
+        // Arrange
+        var $toast = toastr.info('');
+
+        // Act
+        ok($toast.attr('aria-live')==='polite', 'info toast has aria-live of polite');
+
+        // Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('toastr warning has aria assertive',1,function() {
+        // Arrange
+        var $toast = toastr.warning('');
+
+        // Act
+        ok($toast.attr('aria-live')==='assertive', 'warning toast has aria-live of assertive');
+
+        // Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('toastr error has aria assertive',1,function() {
+        // Arrange
+        var $toast = toastr.error('');
+
+        // Act
+        ok($toast.attr('aria-live')==='assertive', 'error toast has aria-live of assertive');
+
+        // Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+
+    module('event', {
+        teardown: function () {
+            toastr.options.closeButton = false;
+            toastr.options.hideDuration = 0;
+        }
+    });
     asyncTest('event - onShown is executed', 1, function () {
         // Arrange
         var run = false;
@@ -490,6 +605,27 @@
             ok(onShowRun);
             ok(onHideRun);
             //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            start();
+        }, delay);
+    });
+
+    asyncTest('event - onCloseClick is executed', 1, function () {
+        //Arrange
+        var run = false;
+        toastr.options.closeButton = true;
+        toastr.options.closeDuration = 0;
+        toastr.options.hideDuration = 2000;
+        var onCloseClick = function () { run = true; };
+        toastr.options.onCloseClick = onCloseClick;
+        toastr.options.timeOut = 1;
+        //Act
+        var $toast = toastr.success(sampleMsg, sampleTitle);
+        $toast.find('button.toast-close-button').click();
+        setTimeout(function () {
+            // Assert
+            ok(run); //Teardown
             $toast.remove();
             clearContainerChildren();
             start();
@@ -565,6 +701,33 @@
 
         ok($container && $container.children().length === 2);
         clearContainerChildren();
+    });
+
+    module('subscription');
+    asyncTest('subscribe - triggers 2 visible and 2 hidden response notifications while clicking on a toast', 1, function () {
+        //Arrange
+        var $toast = [];
+        var expectedReponses = [];
+        //Act
+        toastr.subscribe(function(response) {
+          if(response.options.testId) {
+            expectedReponses.push(response);
+          }
+        })
+
+        $toast[0] = toastr.info(sampleMsg, sampleTitle, {testId : 1});
+        $toast[1] = toastr.info(sampleMsg, sampleTitle, {testId : 2});
+
+        $toast[1].click()
+
+        setTimeout(function () {
+            // Assert
+            ok(expectedReponses.length === 4);
+            //Teardown
+            clearContainerChildren();
+            toastr.subscribe(null);
+            start();
+        }, delay);
     });
 
     module('order of appearance');
