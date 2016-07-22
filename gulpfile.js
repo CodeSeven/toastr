@@ -1,6 +1,7 @@
 /* jshint node:true, camelcase:false */
 var gulp = require('gulp');
 var karma = require('karma').server;
+var merge = require('merge-stream');
 var plug = require('gulp-load-plugins')();
 
 var paths = {
