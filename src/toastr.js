@@ -382,11 +382,11 @@ class toastr {
             toastElement.addEventListener('mouseout', delayedHideToast);
 
             if (!options.onclick && options.tapToDismiss) {
-                toastElement.click(hideToast);
+                toastElement.addEventListener('click', hideToast);
             }
 
             if (options.closeButton && closeElement) {
-                closeElement.click(function (event) {
+                closeElement.addEventListener('click', function (event) {
                     if (event.stopPropagation) {
                         event.stopPropagation();
                     } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
@@ -397,7 +397,7 @@ class toastr {
             }
 
             if (options.onclick) {
-                toastElement.click(function () {
+                toastElement.addEventListener('click', function () {
                     options.onclick(); // TODO remove jQuery
                     hideToast();
                 });
