@@ -312,7 +312,7 @@ class toastr {
         let iconClass = map.iconClass || options.iconClass;
 
         if (typeof (map.optionsOverride) !== 'undefined') {
-            options = this.extend(options, map.optionsOverride);
+            options = Object.assign(options, map.optionsOverride);
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
 
@@ -644,7 +644,7 @@ class toastr {
      * @returns {Object}
      */
     getOptions() {
-        return this.extend(this.getDefaultOptions(), this.options);
+        return Object.assign(this.getDefaultOptions(), this.options);
     }
 
     /**
@@ -655,29 +655,6 @@ class toastr {
      */
     isElementVisible(element) {
         return element.offsetWidth > 0 && element.offsetHeight > 0; // TODO this doesn't work
-    }
-
-    /**
-     * Merge defaults with user options
-     * @param {Object} defaults Default settings
-     * @param {Object} options User options
-     * @returns {Object} Merged values of defaults and options
-     * @see http://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
-     */
-     extend ( defaults, options ) {
-        var extended = {};
-        var prop;
-        for (prop in defaults) {
-            if (Object.prototype.hasOwnProperty.call(defaults, prop)) {
-                extended[prop] = defaults[prop];
-            }
-        }
-        for (prop in options) {
-            if (Object.prototype.hasOwnProperty.call(options, prop)) {
-                extended[prop] = options[prop];
-            }
-        }
-        return extended;
     }
 }
 
