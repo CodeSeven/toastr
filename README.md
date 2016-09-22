@@ -6,6 +6,11 @@
 ## Current Version
 3.0.0-alpha
 
+## Prerequisites
+Tested and built with the versions specified below.
+
+Node 6.6.0
+
 ## Breaking Changes
 
 + Architectural changes using ES6 transpiled into ES5.
@@ -41,4 +46,3 @@ Copyright © 2012-2015
 
 ## License
 toastr is under MIT license - http://www.opensource.org/licenses/mit-license.php
-
