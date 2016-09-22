@@ -11,6 +11,16 @@ Tested and built with the versions specified below.
 
 Node 6.6.0
 
+## Building It
+
+`npm install`
+
+`gulp build`
+
+## Testing It
+
+`gulp test`
+
 ## Breaking Changes
 
 + Architectural changes using ES6 transpiled into ES5.
