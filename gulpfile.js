@@ -16,12 +16,11 @@ gulp.task('test', function () {
 gulp.task('vet', function () {
     log('Linting');
 
-    return gulp.src(config.alljs)
+    return gulp.src(config.js)
         .pipe($.if(args.verbose, $.print()))
-        .pipe($.jshint())
-        .pipe($.jshint.reporter('jshint-stylish', { verbose: true }))
-        .pipe($.jshint.reporter('fail'))
-        .pipe($.jscs());
+        .pipe($.eslint({ configFile: './.eslintrc.js' }))
+        .pipe($.eslint.format())
+        .pipe($.eslint.failOnError());
 });
 
 gulp.task('build', ['vet', 'styles'], function () {
