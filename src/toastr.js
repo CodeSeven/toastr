@@ -14,651 +14,643 @@
 /* jshint -W040 */
 class toastr {
 
-    constructor(options) {
-        this.container = null;
-        this.listener = null;
-        this.toastId = 0;
-        this.toastType = {
-            error: 'error',
-            info: 'info',
-            success: 'success',
-            warning: 'warning'
-        };
-        this.previousToast = undefined;
-        this.options = options;
+  constructor(options) {
+    this.container = null;
+    this.listener = null;
+    this.toastId = 0;
+    this.previousToast = undefined;
+    this.options = options;
 
-        return this;
+    this.toastType = {
+      error: 'error',
+      info: 'info',
+      success: 'success',
+      warning: 'warning',
+    };
+
+    this.defaultOptions = {
+      tapToDismiss: true,
+      toastClass: 'toast',
+      containerId: 'toast-container',
+      debug: false,
+
+      showMethod: 'fadeIn', // fadeIn, slideDown, and show are built into jQuery
+      showDuration: 300,
+      showEasing: 'swing', // swing and linear are built into jQuery
+      onShown: undefined,
+      hideMethod: 'fadeOut',
+      hideDuration: 1000,
+      hideEasing: 'swing',
+      onHidden: undefined,
+
+      extendedTimeOut: 1000,
+      iconClasses: {
+        error: 'toast-error',
+        info: 'toast-info',
+        success: 'toast-success',
+        warning: 'toast-warning',
+      },
+      iconClass: 'toast-info',
+      positionClass: 'toast-top-right',
+      timeOut: 1000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+      titleClass: 'toast-title',
+      messageClass: 'toast-message',
+      target: 'body',
+      closeHtml: 'CLOSE',
+      newestOnTop: true,
+      preventDuplicates: false,
+      progressBar: false,
+    };
+
+    return this;
+  }
+
+  /**
+   * Gets the current options for toastr.
+   * Includes defaults where not overriden.
+   * @private
+   * @returns {Object}
+   */
+  getOptions() {
+    return Object.assign(this.defaultOptions, this.options);
+  }
+
+  /**
+   * Retrieves the container element.
+   * @param options
+   * @param {boolean} createContainer Create a container if one does not already exist.
+   * @returns {Element}
+   */
+  getContainer(options, createContainer) {
+    let opt = options;
+
+    if (typeof (options) === 'undefined') {
+      opt = this.getOptions();
     }
 
-    /**
-     * Retrieves the container element.
-     * @param options
-     * @param {boolean} createContainer Whether or not to create a container if one does not already exist.
-     * @returns {Element}
-     */
-    getContainer(options, createContainer){
+    this.container = document.getElementById(opt.containerId);
 
-        if (typeof(options) == 'undefined') {
-            options = this.getOptions();
+    if (this.container !== null) {
+      return this.container;
+    }
+
+    if (createContainer) {
+      this.container = this.createContainer(opt);
+    }
+
+    return this.container;
+  }
+
+  /**
+   * Checks if the provided element is visible on screen.
+   * @private
+   * @param element
+   * @returns {boolean}
+   */
+  isElementVisible(element) { // eslint-disable-line class-methods-use-this
+    return element.offsetWidth > 0 && element.offsetHeight > 0; // TODO this doesn't work
+  }
+
+
+  /**
+   * Creates a toast with the 'error' styling.
+   * @param message {string}
+   * @param title {string}
+   * @param optionsOverride {object}
+   */
+  error(message, title, optionsOverride) {
+    return this.notify({
+      type: this.toastType.error,
+      iconClass: this.getOptions().iconClasses.error,
+      message,
+      optionsOverride,
+      title,
+    });
+  }
+
+  /**
+   * Creates a toast with the 'info' styling.
+   * @param message {string}
+   * @param title {string}
+   * @param optionsOverride {object}
+   */
+  info(message, title, optionsOverride) {
+    return this.notify({
+      type: this.toastType.info,
+      iconClass: this.getOptions().iconClasses.info,
+      message,
+      optionsOverride,
+      title,
+    });
+  }
+
+  /**
+   * Creates a toast with the 'success' styling.
+   * @param message {string}
+   * @param title {string}
+   * @param optionsOverride {object}
+   */
+  success(message, title, optionsOverride) {
+    return this.notify({
+      type: this.toastType.success,
+      iconClass: this.getOptions().iconClasses.success,
+      message,
+      optionsOverride,
+      title,
+    });
+  }
+
+  /**
+   * Creates a toast with the 'warning' styling.
+   * @param message {string}
+   * @param title {string}
+   * @param optionsOverride {object}
+   */
+  warning(message, title, optionsOverride) {
+    return this.notify({
+      type: this.toastType.warning,
+      iconClass: this.getOptions().iconClasses.warning,
+      message,
+      optionsOverride,
+      title,
+    });
+  }
+
+  /**
+   * Adds a listener to when a toast is shown.
+   * @param callback
+   */
+  subscribe(callback) {
+    this.listener = callback;
+  }
+
+  /**
+   * Clears the provided toast element from the screen, executing animations.
+   * @param {Element} toastElement
+   * @param clearOptions
+   */
+  clear(toastElement, clearOptions) {
+    const options = this.getOptions();
+
+    if (this.container === null) {
+      this.getContainer(options, false);
+    }
+
+    if (!this.clearToast(toastElement, options, clearOptions)) {
+      this.clearContainer(options);
+    }
+  }
+
+  /**
+   * Removes a toast from the screen, without executing animations.
+   * Good to go for v3.
+   * @param {Element} toastElement The toast to be removed.
+   */
+  remove(toastElement) {
+    const options = this.getOptions();
+
+    if (typeof (this.container) === 'undefined') {
+      this.getContainer(options, false);
+    }
+
+    if (typeof (toastElement) === 'undefined' && toastElement.matches(':focus')) {
+      this.removeToast(toastElement);
+      return;
+    }
+
+    if (!this.container.hasChildNodes()) {
+      this.container.remove();
+    }
+  }
+
+  /**
+   * Clears all toasts from the container.
+   * @param options
+   */
+  clearContainer(options) {
+    if (this.container) {
+      const numToastsToClear = this.container.children.length;
+
+      for (let i = numToastsToClear - 1; i >= 0; i -= 1) {
+        const item = this.container.children[i];
+        this.clearToast(item, options);
+      }
+
+      // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
+    }
+  }
+
+  /**
+   * Clears a toast.
+   * @private
+   * @param toastElement
+   * @param options
+   * @param clearOptions
+   * @returns {boolean}
+   */
+  clearToast(toastElement, options, clearOptions) {
+    if (typeof (toastElement) !== 'undefined') {
+      const forceToastClosure = clearOptions && clearOptions.force ? clearOptions.force : false;
+
+      if (forceToastClosure || !toastElement.matches(':focus')) {
+        this.removeToast(toastElement);
+
+        // TODO: Show exit animation and do callback etc
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Removes a toast from the screen.
+   * @param toastElement
+   */
+  removeToast(toastElement) {
+    if (typeof (this.container) === 'undefined') {
+      this.container = this.getContainer();
+    }
+
+    if (this.isElementVisible(toastElement)) return;
+
+    // Use the element to get its parent so we can remove it.
+    toastElement.parentNode.removeChild(toastElement);
+
+    toastElement = null; // eslint-disable-line no-param-reassign
+
+    if (this.container.childNodes.length === 0 && this.container.parentNode) {
+      this.container.parentNode.removeChild(this.container);
+      this.previousToast = undefined;
+    }
+  }
+
+  /**
+   * Creates the toastr container.
+   * @private
+   * @param options
+   * @returns {Element}
+   * @see Updated for v3.
+   */
+  createContainer(options) {
+    const container = document.createElement('div');
+    container.classList.add(options.positionClass);
+    container.setAttribute('id', options.containerId);
+    container.setAttribute('aria-live', 'polite');
+    container.setAttribute('role', 'alert');
+
+    this.container = container;
+
+    document.querySelector(options.target).appendChild(this.container);
+
+    return this.container;
+  }
+
+  /**
+   * Broadcast toast notification to the listener object.
+   * @param {object} args Arguments to provide to the listener callback.
+   */
+  publish(args) {
+    if (typeof (this.listener) === 'undefined' || this.listener === null) {
+      return;
+    }
+
+    this.listener(args);
+  }
+
+  /**
+   * Core method for generating toasts.
+   * @param map
+   * @returns {Element}
+   */
+  notify(map) {
+    let options = this.getOptions();
+    let iconClass = map.iconClass || options.iconClass;
+
+    if (typeof (map.optionsOverride) !== 'undefined') {
+      options = Object.assign(options, map.optionsOverride);
+      iconClass = map.optionsOverride.iconClass || iconClass;
+    }
+
+    this.toastId += 1;
+
+    const container = this.getContainer(options, true);
+    const titleElement = document.createElement('div');
+    const messageElement = document.createElement('div');
+    const iconElement = document.createElement('div');
+    const progressElement = document.createElement('div');
+    const closeElement = document.createElement('div');
+    closeElement.innerHTML = options.closeHtml;
+    const message = map.message;
+    const title = map.title;
+
+    const progressBar = {
+      intervalId: null,
+      hideEta: null,
+      maxHideTime: null,
+    };
+
+    const response = {
+      toastId: this.toastId,
+      state: 'visible',
+      startTime: new Date(),
+      options,
+      map,
+    };
+
+    let intervalId = null;
+    let toastElement = document.createElement('div');
+    toastElement.classList.add(iconClass);
+
+    const shouldExit = (opt, mapping) => {
+      if (options.preventDuplicates) {
+        // if (typeof(this) !== 'undefined') {
+
+        if (mapping.message === this.previousToast) {
+          return true;
         }
 
-        this.container = document.getElementById(options.containerId);
+        this.previousToast = map.message; // TODO: JSHint Possible String Violation
+      }
 
-        if (this.container !== null) {
-            return this.container;
-        }
+      return false;
+    };
 
-        if (createContainer) {
-            this.container = this.createContainer(options);
-        }
-
-        return this.container;
+    if (shouldExit.call(this, options, map)) {
+      return null;
     }
 
-    /**
-     * Creates a toast with the 'error' styling.
-     * @param message {string}
-     * @param title {string}
-     * @param optionsOverride {object}
-     */
-    error(message, title, optionsOverride){
-        return this.notify({
-            type: this.toastType.error,
-            iconClass: this.getOptions().iconClasses.error,
-            message: message,
-            optionsOverride: optionsOverride,
-            title: title,
-        });
-    }
+    const setSequence = () => {
+      const localContainer = this.getContainer();
+
+      if (options.newestOnTop) {
+        const firstNode = localContainer.firstChild;
+        localContainer.insertBefore(toastElement, firstNode);
+
+        // console.log(this.container);
+        // TODO: Not yet supported in v3
+      } else {
+        localContainer.appendChild(toastElement); // TODO: JSHint Possible String Violation
+      }
+
+      this.container = localContainer;
+    };
 
     /**
-     * Creates a toast with the 'info' styling.
-     * @param message {string}
-     * @param title {string}
-     * @param optionsOverride {object}
-     */
-    info(message, title, optionsOverride) {
-        return this.notify({
-            type: this.toastType.info,
-            iconClass: this.getOptions().iconClasses.info,
-            message: message,
-            optionsOverride: optionsOverride,
-            title: title
-        });
-    }
-
-    /**
-     * Creates a toast with the 'success' styling.
-     * @param message {string}
-     * @param title {string}
-     * @param optionsOverride {object}
-     */
-    success(message, title, optionsOverride) {
-        return this.notify({
-            type: this.toastType.success,
-            iconClass: this.getOptions().iconClasses.success,
-            message: message,
-            optionsOverride: optionsOverride,
-            title: title
-        });
-    }
-
-    /**
-     * Creates a toast with the 'warning' styling.
-     * @param message {string}
-     * @param title {string}
-     * @param optionsOverride {object}
-     */
-    warning(message, title, optionsOverride) {
-        return this.notify({
-            type: this.toastType.warning,
-            iconClass: this.getOptions().iconClasses.warning,
-            message: message,
-            optionsOverride: optionsOverride,
-            title: title
-        });
-    }
-
-    /**
-     * Adds a listener to when a toast is shown.
-     * @param callback
-     */
-    subscribe(callback) {
-        this.listener = callback;
-    }
-
-    /**
-     * Clears the provided toast element from the screen, executing animations.
-     * @param {Element} toastElement
-     * @param clearOptions
-     */
-    clear(toastElement, clearOptions) {
-
-        var options = this.getOptions();
-
-        if (this.container === null) {
-            this.getContainer(options,false);
-        }
-
-        if (!this.clearToast(toastElement, options, clearOptions)) {
-            this.clearContainer(options);
-        }
-    }
-
-    /**
-     * Removes a toast from the screen, without executing animations.
      * Good to go for v3.
-     * @param {Element} toastElement The toast to be removed.
      */
-    remove(toastElement) {
-        let options = this.getOptions();
-
-        if (typeof(this.container) === 'undefined') {
-            this.getContainer(options, false);
-        }
-
-        if(typeof(toastElement) === 'undefined' && toastElement.matches(':focus')) {
-            this.removeToast(toastElement);
-            return;
-        }
-
-        if (!this.container.hasChildNodes()) {
-            this.container.remove();
-        }
-    }
+    const setTitle = (localTitle) => {
+      if (typeof (localTitle) !== 'undefined') {
+        titleElement.innerHTML = localTitle;
+        titleElement.classList.add(options.titleClass);
+        toastElement.appendChild(titleElement);
+      }
+    };
 
     /**
-     * Clears all toasts from the container.
-     * @param options
+     * Good to go for v3.
      */
-    clearContainer (options) {
-        if(this.container){
-            let numToastsToClear = this.container.children.length;
+    const setMessage = (localMessage) => {
+      console.log('message recv as', localMessage);
 
-            for(var i = numToastsToClear - 1; i >= 0 ; --i){
-                var item = this.container.children[i];
+      if (typeof (message) !== 'undefined') {
+        const mapMessage = document.createElement('div');
+        mapMessage.innerHTML = message;
 
-                this.clearToast(item, options);
-            }
-            // this.container.childNodes.forEach(item => this.clearToast(item, options, false));
-        }
-    }
+        messageElement.appendChild(mapMessage);
+        messageElement.classList.add(options.messageClass);
+
+        toastElement.appendChild(messageElement);
+      }
+    };
 
     /**
-     * Clears a toast.
-     * @private
-     * @param toastElement
-     * @param options
-     * @param clearOptions
-     * @returns {boolean}
+     * Adds a class to set the icon for the toast.
+     * Good to go for v3.
      */
-    clearToast (toastElement, options, clearOptions) {
+    const setIcon = (localIconClass) => {
+      if (typeof (options.iconClass) !== 'undefined') {
+        iconElement.classList.add('toast-icon');
 
-        if(typeof(toastElement) !== 'undefined'){
-            let forceToastClosure = clearOptions && clearOptions.force ? clearOptions.force : false;
+        let innerContent = '';
 
-            if (forceToastClosure || !toastElement.matches(':focus')) {
-                this.removeToast(toastElement);
-
-                // TODO: Show exit animation and do callback etc
-                return true;
-            }
+        switch (localIconClass) {
+          case 'toast-info':
+            innerContent = '<i class="fa fa-info-circle"></i>';
+            break;
+          case 'toast-warn':
+            innerContent = '<i class="fa fa-exclamation-triangle"></i>';
+            break;
+          case 'toast-error':
+            innerContent = '<i class="fa fa-exclamation-circle"></i>';
+            break;
+          case 'toast-success':
+            innerContent = '<i class="fa fa-check"></i>';
+            break;
+          default:
+            break;
         }
 
-        return false;
-    }
+        iconElement.innerHTML = innerContent;
+        toastElement.appendChild(iconElement);
+        toastElement.classList.add(options.toastClass);
+      }
+    };
+
+    const setCloseButton = (localCloseElement) => {
+      console.log(localCloseElement);
+
+      if (typeof (localCloseElement) !== 'undefined') {
+        localCloseElement.classList.add('toast-close-button');
+        localCloseElement.setAttribute('role', 'button');
+        localCloseElement.setAttribute('type', 'button');
+        toastElement.appendChild(localCloseElement);
+      }
+    };
+
+    const setProgressBar = () => {
+      if (typeof (options.progressBar) !== 'undefined' && options.progressBar) {
+        progressElement.classList.add('toast-progress');
+        toastElement.appendChild(progressElement);
+      }
+    };
+
+    const personalizeToast = () => {
+      setIcon(iconClass);
+      setTitle(title);
+      setMessage(message);
+      setCloseButton(closeElement);
+      setProgressBar();
+    };
 
     /**
-     * Removes a toast from the screen.
-     * @param toastElement
+     * Defines the animation for animating toasts onto the document.
+     * @param {Element} toastElement The element to be animated in.
+     * @param {Function} animationFinishedCallback Executed when the animation is completed.
      */
-    removeToast(toastElement) {
+    const animateToastIn = (localToastElement, animationFinishedCallback) => {
+      const animateInPlayer = localToastElement.animate([
+        { opacity: 0 },
+        { opacity: 1 },
+      ], {
+        duration: options.showDuration,
+        iterations: 1,
+        delay: 0,
+      });
 
-        if (typeof(this.container) === 'undefined') {
-            this.container = this.getContainer();
+      animateInPlayer.onfinish = animationFinishedCallback;
+    };
+
+    /**
+     * Defines the animation for animating toasts off of the document.
+     * @param {Element} toastElement The element to be animated out.
+     * @param {Function} animationFinishedCallback Executed when the animation is completed.
+     */
+    const animateToastOut = (localToastElement, animationFinishedCallback) => {
+      const animateInPlayer = localToastElement.animate([
+        { opacity: 1 },
+        { opacity: 0 },
+      ], {
+        duration: options.hideDuration,
+        iterations: 1,
+        delay: 0,
+      });
+
+      animateInPlayer.onfinish = animationFinishedCallback;
+    };
+
+    const hideToast = (override) => {
+      if (toastElement.matches(':focus') && !override) return;
+
+      clearTimeout(progressBar.intervalId);
+
+      console.log('Hiding toast now.', toastElement);
+
+      // const removeFunction = this.removeToast; // TODO: JSHint Possible String Violation
+
+      if (typeof (options.onHidden) === 'function') {
+        options.onHidden();
+      }
+
+      const animationFinishedCallback = (args) => {
+        console.log('Toast is now hiding.', args);
+
+        const parentNode = toastElement.parentNode;
+
+        // Repeating myself. Try to find a way to not duplicate code.
+        // Use the element to get it's parent so we can remove it.
+        if (parentNode !== null) {
+          parentNode.removeChild(toastElement);
+
+          if (!parentNode.hasChildNodes()) {
+            container.parentNode.removeChild(container);
+            this.previousToast = undefined;
+          }
         }
-
-        if (this.isElementVisible(toastElement)) {
-            return;
-        }
-
-        // Use the element to get its parent so we can remove it.
-        toastElement.parentNode.removeChild(toastElement);
 
         toastElement = null;
+      };
 
-        if (this.container.childNodes.length === 0 && this.container.parentNode) {
-            this.container.parentNode.removeChild(this.container);
-            this.previousToast = undefined;
-        }
-    }
+      animateToastOut(toastElement, animationFinishedCallback);
+    };
 
-
-    /**
-     * Creates the toastr container.
-     * @private
-     * @param options
-     * @returns {Element}
-     * @see Updated for v3.
-     */
-    createContainer(options) {
-        this.container = document.createElement('div');
-        this.container.classList.add(options.positionClass);
-        this.container.setAttribute('id',options.containerId);
-        this.container.setAttribute('aria-live','polite');
-        this.container.setAttribute('role','alert');
-
-        document.querySelector(options.target).appendChild(this.container);
-
-        return this.container;
-    }
-
-    getDefaultOptions() {
-        return {
-            tapToDismiss: true,
-            toastClass: 'toast',
-            containerId: 'toast-container',
-            debug: false,
-
-            showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
-            showDuration: 300,
-            showEasing: 'swing', //swing and linear are built into jQuery
-            onShown: undefined,
-            hideMethod: 'fadeOut',
-            hideDuration: 1000,
-            hideEasing: 'swing',
-            onHidden: undefined,
-
-            extendedTimeOut: 1000,
-            iconClasses: {
-                error: 'toast-error',
-                info: 'toast-info',
-                success: 'toast-success',
-                warning: 'toast-warning'
-            },
-            iconClass: 'toast-info',
-            positionClass: 'toast-top-right',
-            timeOut: 1000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-            titleClass: 'toast-title',
-            messageClass: 'toast-message',
-            target: 'body',
-            closeHtml: 'CLOSE',
-            newestOnTop: true,
-            preventDuplicates: false,
-            progressBar: false
-        };
-    }
+    const updateProgress = () => {
+      const progress = progressBar.hideEta - new Date().getTime();
+      const percentage = (progress / progressBar.maxHideTime) * 100;
+      progressElement.style.width = `${percentage}%`;
+    };
 
     /**
-     * Broadcast toast notification to the listener object.
-     * @param {object} args Arguments to provide to the listener callback.
+     * Pushes the current toast out for display.
      */
-    publish(args) {
+    const displayToast = () => {
+      console.log('Appending toast to container.', toastElement);
 
-        if (typeof(this.listener) === 'undefined' || this.listener === null) {
-            return;
+      // container.appendChild(toastElement);
+      setSequence.call(this);
+
+      if (typeof (options.onShown) === 'function') {
+        options.onShown();
+      }
+
+      const animationFinishedCallback = (args) => {
+        console.log('Toast animation in completed.', args);
+
+        if (options.timeOut > 0) {
+          intervalId = setTimeout(hideToast, options.timeOut);
+          progressBar.maxHideTime = parseFloat(options.timeOut);
+          progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+          if (options.progressBar) {
+            progressBar.intervalId = setInterval(updateProgress, 10);
+          }
         }
+      };
 
-        this.listener(args);
+      animateToastIn(toastElement, animationFinishedCallback);
+    };
+
+    const delayedHideToast = () => {
+      if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+        intervalId = setTimeout(hideToast, options.extendedTimeOut);
+        progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
+        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+      }
+    };
+
+    const stickAround = () => {
+      clearTimeout(intervalId);
+      progressBar.hideEta = 0;
+
+      // toastElement.stop(true, true)[options.showMethod]( // TODO Remove jQuery
+      // {duration: options.showDuration, easing: options.showEasing}
+      // );
+    };
+
+    const handleEvents = () => {
+      toastElement.addEventListener('mouseover', stickAround);
+      toastElement.addEventListener('mouseout', delayedHideToast);
+
+      if (!options.onclick && options.tapToDismiss) {
+        toastElement.addEventListener('click', hideToast);
+      }
+
+      if (options.closeButton && closeElement) {
+        closeElement.addEventListener('click', (event) => {
+          if (event.stopPropagation) {
+            event.stopPropagation();
+          } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
+            event.cancelBubble = true; // eslint-disable-line no-param-reassign
+          }
+
+          hideToast(true);
+        });
+      }
+
+      if (options.onclick) {
+        toastElement.addEventListener('click', () => {
+          options.onclick(); // TODO remove jQuery
+          hideToast();
+        });
+      }
+    };
+
+    personalizeToast.call(this);
+
+    displayToast.call(this);
+
+    handleEvents();
+
+    this.publish(response);
+
+    if (options.debug && console) {
+      console.log(response);
     }
 
-    /**
-     * Core method for generating toasts.
-     * @param map
-     * @returns {Element}
-     */
-    notify(map) {
-        let options = this.getOptions();
-        let iconClass = map.iconClass || options.iconClass;
-
-        if (typeof (map.optionsOverride) !== 'undefined') {
-            options = Object.assign(options, map.optionsOverride);
-            iconClass = map.optionsOverride.iconClass || iconClass;
-        }
-
-        if (shouldExit.call(this, options, map)) {
-            return;
-        }
-
-        this.toastId++;
-        let container = this.getContainer(options, true);
-
-        var intervalId = null;
-        let toastElement = document.createElement('div');
-        toastElement.classList.add(iconClass);
-
-        let titleElement = document.createElement('div');
-
-        /**
-         *
-         * @type {Element}
-         */
-        let messageElement = document.createElement('div');
-	    let iconElement = document.createElement('div');
-        let progressElement = document.createElement('div');
-        let closeElement = document.createElement('div');
-            closeElement.innerHTML = options.closeHtml;
-        let message = map.message;
-        let title = map.title;
-
-        var progressBar = {
-            intervalId: null,
-            hideEta: null,
-            maxHideTime: null
-        };
-        var response = {
-            toastId: this.toastId,
-            state: 'visible',
-            startTime: new Date(),
-            options: options,
-            map: map
-        };
-
-        personalizeToast.call(this);
-
-        displayToast.call(this);
-
-        handleEvents();
-
-        this.publish(response);
-
-        if (options.debug && console) {
-            console.log(response);
-        }
-
-        return toastElement;
-
-        function personalizeToast() {
-            setIcon(iconClass);
-            setTitle(title);
-            setMessage(message);
-            setCloseButton(closeElement);
-            setProgressBar();
-        }
-
-        function handleEvents() {
-
-            toastElement.addEventListener('mouseover', stickAround);
-            toastElement.addEventListener('mouseout', delayedHideToast);
-
-            if (!options.onclick && options.tapToDismiss) {
-                toastElement.addEventListener('click', hideToast);
-            }
-
-            if (options.closeButton && closeElement) {
-                closeElement.addEventListener('click', function (event) {
-                    if (event.stopPropagation) {
-                        event.stopPropagation();
-                    } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
-                        event.cancelBubble = true;
-                    }
-                    hideToast(true);
-                });
-            }
-
-            if (options.onclick) {
-                toastElement.addEventListener('click', function () {
-                    options.onclick(); // TODO remove jQuery
-                    hideToast();
-                });
-            }
-        }
-
-        /**
-         * Pushes the current toast out for display.
-         */
-        function displayToast() {
-
-            console.log("Appending toast to container.", toastElement);
-
-            // container.appendChild(toastElement);
-            setSequence.call(this);
-
-            if(typeof(options.onShown) === 'function'){
-                options.onShown();
-            }
-
-            let animationFinishedCallback = function (args) {
-
-                console.log('Toast animation in completed.', args);
-
-                if (options.timeOut > 0) {
-                    intervalId = setTimeout(hideToast, options.timeOut);
-                    progressBar.maxHideTime = parseFloat(options.timeOut);
-                    progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-                    if (options.progressBar) {
-                        progressBar.intervalId = setInterval(updateProgress, 10);
-                    }
-                }
-            };
-
-            animateToastIn(toastElement, animationFinishedCallback);
-
-        }
-
-        /**
-         * Defines the animation for animating toasts onto the document.
-         * @param {Element} toastElement The element to be animated in.
-         * @param {Function} animationFinishedCallback The function to be executed when the animation is completed.
-         */
-        function animateToastIn(toastElement, animationFinishedCallback) {
-            let animateInPlayer = toastElement.animate([
-                {opacity: 0},
-                {opacity: 1}
-            ], {
-                duration: options.showDuration,
-                iterations: 1,
-                delay: 0
-            });
-            animateInPlayer.onfinish = animationFinishedCallback;
-        }
-
-
-        /**
-         * Adds a class to set the icon for the toast.
-         * Good to go for v3.
-         */
-        function setIcon(iconClass) {
-            if (typeof(options.iconClass)!=='undefined') {
-            	iconElement.classList.add('toast-icon');
-                let innerContent = "";
-                switch(iconClass) {
-                    case  "toast-info":
-                        innerContent = "<i class='fa fa-info-circle'></i>";
-                        break;
-                    case "toast-warn":
-                        innerContent = "<i class='fa fa-exclamation-triangle'></i>";
-                        break;
-                    case "toast-error":
-                        innerContent = "<i class='fa fa-exclamation-circle'></i>";
-                        break;
-                    case "toast-success":
-                        innerContent = "<i class='fa fa-check'></i>";
-                        break;
-                }
-                iconElement.innerHTML = innerContent;
-            	toastElement.appendChild(iconElement);
-                toastElement.classList.add(options.toastClass);
-            }
-        }
-
-        function setSequence() {
-            let container = this.getContainer();
-
-            if (options.newestOnTop) {
-                var firstNode = container.firstChild;
-
-                container.insertBefore(toastElement, firstNode);
-
-                // console.log(this.container);
-                // TODO: Not yet supported in v3
-            } else {
-                container.appendChild(toastElement); // TODO: JSHint Possible String Violation
-            }
-
-            this.container = container;
-        }
-
-        /**
-         * Good to go for v3.
-         */
-        function setTitle(title) {
-            if (typeof(title) !== 'undefined') {
-                titleElement.innerHTML = title;
-                titleElement.classList.add(options.titleClass);
-                toastElement.appendChild(titleElement);
-            }
-        }
-
-        /**
-         * Good to go for v3.
-         */
-        function setMessage(message) {
-            console.log("message recv as", message);
-            if (typeof(message) !== 'undefined') {
-
-                let mapMessage = document.createElement('div');
-                mapMessage.innerHTML = message;
-
-                messageElement.appendChild(mapMessage);
-                messageElement.classList.add(options.messageClass);
-
-                toastElement.appendChild(messageElement);
-            }
-        }
-
-        function setCloseButton(closeElement) {
-            console.log(closeElement);
-            if (typeof(closeElement) !== 'undefined') {
-                closeElement.classList.add('toast-close-button');
-                closeElement.setAttribute('role','button');
-                closeElement.setAttribute('type','button');
-                toastElement.appendChild(closeElement);
-            }
-        }
-
-        function setProgressBar() {
-            if (typeof(options.progressBar) !== 'undefined' && options.progressBar) {
-                progressElement.classList.add('toast-progress');
-                toastElement.appendChild(progressElement);
-            }
-        }
-
-        function shouldExit(options, map) {
-            if (options.preventDuplicates) {
-                // if (typeof(this) !== 'undefined') {
-
-                    if(map.message === this.previousToast){
-                            return true;
-                    }else {
-                        this.previousToast = map.message; // TODO: JSHint Possible String Violation
-                    }
-                // }
-            }
-
-            return false;
-        }
-
-        function hideToast(override) {
-            if (toastElement.matches(':focus') && !override) {
-                return;
-            }
-
-            clearTimeout(progressBar.intervalId);
-
-            console.log("Hiding toast now.", toastElement);
-
-            let removeFunction = this.removeToast; // TODO: JSHint Possible String Violation
-
-            if(typeof(options.onHidden) === 'function'){
-                options.onHidden();
-            }
-
-            let animationFinishedCallback = function(args) {
-                console.log("Toast is now hiding.", args);
-
-                let parentNode = toastElement.parentNode;
-
-                // Repeating myself. Try to find a way to not duplicate code.
-                // Use the element to get it's parent so we can remove it.
-                if(parentNode !== null){
-                    parentNode.removeChild(toastElement);
-
-                    if (!parentNode.hasChildNodes()) {
-                        container.parentNode.removeChild(container);
-                        this.previousToast = undefined;
-                    }
-                }
-
-                toastElement = null;
-            };
-
-            animateToastOut(toastElement,animationFinishedCallback);
-
-        }
-
-        /**
-         * Defines the animation for animating toasts off of the document.
-         * @param {Element} toastElement The element to be animated out.
-         * @param {Function} animationFinishedCallback The function to be executed when the animation is completed.
-         */
-        function animateToastOut(toastElement, animationFinishedCallback) {
-            let animateInPlayer = toastElement.animate([
-                {opacity: 1},
-                {opacity: 0}
-            ], {
-                duration: options.hideDuration,
-                iterations: 1,
-                delay: 0
-            });
-            animateInPlayer.onfinish = animationFinishedCallback;
-        }
-
-
-        function delayedHideToast() {
-            if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-                intervalId = setTimeout(hideToast, options.extendedTimeOut);
-                progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
-                progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-            }
-        }
-
-        function stickAround() {
-            clearTimeout(intervalId);
-            progressBar.hideEta = 0;
-            // toastElement.stop(true, true)[options.showMethod]( // TODO Remove jQuery
-                // {duration: options.showDuration, easing: options.showEasing}
-            // );
-        }
-
-        function updateProgress() {
-            var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-            progressElement.style.width = percentage + '%';
-        }
-    }
-
-    /**
-     * Gets the current options for toastr.
-     * Includes defaults where not overriden.
-     * @private
-     * @returns {Object}
-     */
-    getOptions() {
-        return Object.assign(this.getDefaultOptions(), this.options);
-    }
-
-    /**
-     * Checks if the provided element is visible on screen.
-     * @private
-     * @param element
-     * @returns {boolean}
-     */
-    isElementVisible(element) {
-        return element.offsetWidth > 0 && element.offsetHeight > 0; // TODO this doesn't work
-    }
+    return toastElement;
+  }
 }
 
 // This makes toastr an export for closure's sake
-if(typeof(window) !== 'undefined'){
-    window.toastr = toastr;
+if (typeof (window) !== 'undefined') {
+  window.toastr = toastr;
 }
