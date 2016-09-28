@@ -277,6 +277,10 @@ class toastr {
     // Use the element to get its parent so we can remove it.
     toastElement.parentNode.removeChild(toastElement);
 
+    if (toastElement.timeoutId !== null) {
+      clearTimeout(toastElement.timeoutId);
+    }
+
     toastElement = null; // eslint-disable-line no-param-reassign
 
     if (this.container.childNodes.length === 0 && this.container.parentNode) {
@@ -358,7 +362,7 @@ class toastr {
       map,
     };
 
-    let intervalId = null;
+    let timeoutId = null;
     let toastElement = document.createElement('div');
     toastElement.classList.add(iconClass);
 
@@ -520,9 +524,10 @@ class toastr {
     };
 
     const hideToast = (override) => {
+      if (toastElement === null) return;
       if (toastElement.matches(':focus') && !override) return;
 
-      clearTimeout(progressBar.intervalId);
+      clearInterval(progressBar.intervalId);
 
       console.log('Hiding toast now.', toastElement);
 
@@ -534,6 +539,8 @@ class toastr {
 
       const animationFinishedCallback = (args) => {
         console.log('Toast is now hiding.', args);
+
+        if (toastElement === null) return;
 
         const parentNode = toastElement.parentNode;
 
@@ -577,7 +584,7 @@ class toastr {
         console.log('Toast animation in completed.', args);
 
         if (options.timeOut > 0) {
-          intervalId = setTimeout(hideToast, options.timeOut);
+          timeoutId = setTimeout(hideToast, options.timeOut);
           progressBar.maxHideTime = parseFloat(options.timeOut);
           progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
           if (options.progressBar) {
@@ -591,14 +598,14 @@ class toastr {
 
     const delayedHideToast = () => {
       if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-        intervalId = setTimeout(hideToast, options.extendedTimeOut);
+        timeoutId = setTimeout(hideToast, options.extendedTimeOut);
         progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
       }
     };
 
     const stickAround = () => {
-      clearTimeout(intervalId);
+      clearTimeout(timeoutId);
       progressBar.hideEta = 0;
 
       // toastElement.stop(true, true)[options.showMethod]( // TODO Remove jQuery
