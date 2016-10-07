@@ -312,7 +312,7 @@
                     if (options.onclick) {
                         $toastElement.click(function (event) {
                             options.onclick(event);
-                            if(options.tapToDismiss) {
+                            if (options.tapToDismiss) {
                                 hideToast();
                             }
                         });
