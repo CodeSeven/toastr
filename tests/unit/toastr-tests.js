@@ -322,6 +322,67 @@
         $toast.remove();
         clearContainerChildren();
     });
+    
+    module('default titles', {
+        teardown: function() {
+            toastr.options.successTitle = undefined,
+            toastr.options.errorTitle = undefined,
+            toastr.options.warningTitle = undefined,
+            toastr.options.infoTitle = undefined
+        }
+    });
+    test('success - has default title', 2, function() {
+        var title = 'Success';
+        //Arrange
+        toastr.options.successTitle = title;
+        //Act
+        var $toast = toastr.success('My success toast');
+        //Assert
+        equal($toast.find('div.toast-title').length, 1, 'Has a default title');
+        equal($toast.find('div.toast-title').html(), title, 'Title matches our default title')
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('error - has default title', 2, function() {
+        var title = 'Error';
+        //Arrange
+        toastr.options.errorTitle = title;
+        //Act
+        var $toast = toastr.error('My error toast');
+        //Assert
+        equal($toast.find('div.toast-title').length, 1, 'Has a default title');
+        equal($toast.find('div.toast-title').html(), title, 'Title matches our default title')
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('warning - has default title', 2, function() {
+        var title = 'warning';
+        //Arrange
+        toastr.options.warningTitle = title;
+        //Act
+        var $toast = toastr.warning('My warning toast');
+        //Assert
+        equal($toast.find('div.toast-title').length, 1, 'Has a default title');
+        equal($toast.find('div.toast-title').html(), title, 'Title matches our default title')
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
+    test('info - has default title', 2, function() {
+        var title = 'info';
+        //Arrange
+        toastr.options.infoTitle = title;
+        //Act
+        var $toast = toastr.info('My info toast');
+        //Assert
+        equal($toast.find('div.toast-title').length, 1, 'Has a default title');
+        equal($toast.find('div.toast-title').html(), title, 'Title matches our default title')
+        //Teardown
+        $toast.remove();
+        clearContainerChildren();
+    });
 
 
     module('escape html', {
