@@ -177,6 +177,105 @@
         //Teardown
         resetContainer();
     });
+    module('remove');
+    asyncTest('remove - show 3 toasts, remove the 2nd', 1, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3');
+        var $container = toastr.getContainer();
+        //Act
+        toastr.remove($toast[1]);
+        //Assert
+        setTimeout(function () {
+            ok($container && $container.children().length === 2);
+            //Teardown
+            resetContainer();
+            start();
+        }, 1000);
+    });
+    asyncTest('remove - show 3 toasts, remove all 3, 0 left', 1, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3');
+        var $container = toastr.getContainer();
+        //Act
+        toastr.remove();
+        //Assert
+        setTimeout(function () {
+            ok($container && $container.children().length === 0);
+            //Teardown
+            resetContainer();
+            start();
+        }, delay);
+    });
+    asyncTest('remove and show - show 2 toasts, remove both, then show 1 more', 2, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        var $container = toastr.getContainer();
+        toastr.remove();
+        //Act
+        setTimeout(function () {
+            $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+            //Assert
+            equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a remove');
+            ok($toast[2].is(':visible'), 'Toast after a remove is visible');
+            //Teardown
+            resetContainer();
+            start();
+        }, delay);
+    });
+    asyncTest('remove and show - remove removes toast container', 2, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        var $container = toastr.getContainer();
+        toastr.remove();
+        //Act
+        setTimeout(function () {
+            //Assert
+            equal($(selectors.container).length, 0, 'Toast container does not exist');
+            ok(!$toast[1].is(':visible'), 'Toast after a remove is visible');
+            //Teardown
+            resetContainer();
+            start();
+        }, delay);
+    });
+    asyncTest('remove and show - after remove new toast creates container', 1, function () {
+        //Arrange
+        var $toast = [];
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        var $container = toastr.getContainer();
+        toastr.remove();
+        //Act
+        setTimeout(function () {
+            $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+            //Assert
+            equal($(selectors.container).find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a remove'); //Teardown
+            resetContainer();
+            start();
+        }, delay);
+    });
+    test('remove and show - after remove all toasts new toast still appears', 1, function () {
+        //Arrange
+        var $toast = [];
+        //Act
+        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
+        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
+        toastr.remove();
+        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
+        //Assert
+        ok($toast[2].is(':visible'), 'Toast after a remove is visible');
+        //Teardown
+        resetContainer();
+    });
     module('info');
     test('info - pass title and message', 3, function () {
         //Arrange
