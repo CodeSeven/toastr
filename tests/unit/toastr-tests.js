@@ -186,7 +186,7 @@
         $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3');
         var $container = toastr.getContainer();
         //Act
-        toastr.remove($toast[1]);
+        toastr.remove($toast[1], { force: true });
         //Assert
         setTimeout(function () {
             ok($container && $container.children().length === 2);
