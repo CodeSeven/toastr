@@ -55,7 +55,7 @@
 
             function getContainer(options, create) {
                 if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
+                $container = $('#' + options.containerId + '[position =' + options.positionClass + ']');
                 if ($container.length) {
                     return $container;
                 }
@@ -144,6 +144,7 @@
             function createContainer(options) {
                 $container = $('<div/>')
                     .attr('id', options.containerId)
+                    .attr('position', options.positionClass)
                     .addClass(options.positionClass);
 
                 $container.appendTo($(options.target));
