@@ -43,7 +43,7 @@ npm install --save toastr
 
 ## Breaking Changes
 
-####Animation Changes
+#### Animation Changes
 The following animations options have been deprecated and should be replaced:
 
  - Replace `options.fadeIn` with `options.showDuration`
@@ -131,7 +131,7 @@ toastr.options.onCloseClick = function() { console.log('close button clicked'); 
 ### Animation Options
 Toastr will supply default animations, so you do not have to provide any of these settings. However you have the option to override the animations if you like.
 
-####Easings
+#### Easings
 Optionally override the animation easing to show or hide the toasts. Default is swing. swing and linear are built into jQuery.
 ```js
 toastr.options.showEasing = 'swing';
@@ -146,7 +146,7 @@ toastr.options.hideEasing = 'easeInBack';
 toastr.options.closeEasing = 'easeInBack';
 ```
 
-####Animation Method
+#### Animation Method
 Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut. The methods fadeIn/fadeOut, slideDown/slideUp, and show/hide are built into jQuery.
 ```js
 toastr.options.showMethod = 'slideDown';
@@ -154,13 +154,13 @@ toastr.options.hideMethod = 'slideUp';
 toastr.options.closeMethod = 'slideUp';
 ```
 
-###Prevent Duplicates
+### Prevent Duplicates
 Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to the previous toast based on their message content.
 ```js
 toastr.options.preventDuplicates = true;
 ```
 
-###Timeouts
+### Timeouts
 Control how toastr interacts with users by setting timeouts appropriately. Timeouts can be disabled by setting them to 0.
 ```js
 toastr.options.timeOut = 30; // How long the toast will display without user interaction
@@ -168,7 +168,7 @@ toastr.options.extendedTimeOut = 60; // How long the toast will display after a 
 ```
 
 
-###Progress Bar
+### Progress Bar
 Visually indicate how long before a toast expires.
 ```js
 toastr.options.progressBar = true;
