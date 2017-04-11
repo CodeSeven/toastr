@@ -88,7 +88,7 @@ toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {ti
 ```
 
 ### Escape HTML characters
-In case you want to escape HTML charaters in title and message
+In case you want to escape HTML characters in title and message
 
 	toastr.options.escapeHtml = true;
 
