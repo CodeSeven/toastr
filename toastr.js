@@ -460,7 +460,7 @@
                 $toastElement.remove();
                 $toastElement = null;
                 if ($container.children().length === 0) {
-                    $container.remove();
+                    // $container.remove();
                     previousToast = undefined;
                 }
             }
