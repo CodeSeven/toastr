@@ -38,6 +38,28 @@ bower install toastr
 npm install --save toastr
 ```
 
+#### [Ruby on Rails](https://github.com/tylergannon/toastr-rails)
+```ruby
+# Gemfile
+
+gem 'toastr-rails'
+```
+
+```coffee
+# application.coffee
+
+#= require toastr
+```
+
+```scss
+// application.scss
+
+@import "toastr";
+```
+
+
+
+
 ## Wiki and Change Log
 [Wiki including Change Log](https://github.com/CodeSeven/toastr/wiki)
 
@@ -177,7 +199,7 @@ toastr.options.progressBar = true;
 ### rtl
 Flip the toastr to be displayed properly for right-to-left languages.
 ```js
-toastr.options.rtl = true; 
+toastr.options.rtl = true;
 ```
 
 ## Building Toastr
