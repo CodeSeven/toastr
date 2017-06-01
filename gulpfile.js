@@ -144,8 +144,8 @@ function startTests(singleRun, done) {
 
     ////////////////
 
-    function karmaCompleted() {
-        done();
+    function karmaCompleted(err) {
+        done(err);
     }
 }
 

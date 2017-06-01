@@ -107,9 +107,12 @@
                 }
             }
 
-            function remove($toastElement) {
+            function remove($toastElement, removeOptions) {
                 var options = getOptions();
                 if (!$container) { getContainer(options); }
+                if ($toastElement && removeOptions && removeOptions.force) {
+                    $toastElement.hide();
+                }
                 if ($toastElement && $(':focus', $toastElement).length === 0) {
                     removeToast($toastElement);
                     return;
@@ -323,8 +326,10 @@
 
                 function displayToast() {
                     $toastElement.hide();
-                    
-                    options.onCreate();
+
+                    if (typeof options.onCreate === 'function') {
+                        options.onCreate();
+                    }
 
                     $toastElement[options.showMethod](
                         {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
