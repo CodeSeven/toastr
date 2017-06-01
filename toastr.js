@@ -49,7 +49,7 @@
                     iconClass: getOptions().iconClasses.error,
                     message: message,
                     optionsOverride: optionsOverride,
-                    title: title
+                    title: title || getOptions().errorTitle
                 });
             }
 
@@ -71,7 +71,7 @@
                     iconClass: getOptions().iconClasses.info,
                     message: message,
                     optionsOverride: optionsOverride,
-                    title: title
+                    title: title || getOptions().infoTitle
                 });
             }
 
@@ -85,7 +85,7 @@
                     iconClass: getOptions().iconClasses.success,
                     message: message,
                     optionsOverride: optionsOverride,
-                    title: title
+                    title: title || getOptions().successTitle
                 });
             }
 
@@ -95,7 +95,7 @@
                     iconClass: getOptions().iconClasses.warning,
                     message: message,
                     optionsOverride: optionsOverride,
-                    title: title
+                    title: title || getOptions().warningTitle
                 });
             }
 
@@ -171,7 +171,10 @@
                     closeDuration: false,
                     closeEasing: false,
                     closeOnHover: true,
-
+                    successTitle: undefined,
+                    errorTitle: undefined,
+                    warningTitle: undefined,
+                    infoTitle: undefined,
                     extendedTimeOut: 1000,
                     iconClasses: {
                         error: 'toast-error',
