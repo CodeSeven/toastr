@@ -437,6 +437,10 @@
                         intervalId = setTimeout(hideToast, options.extendedTimeOut);
                         progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
                         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+                        if (options.progressBar) {
+                            clearTimeout(progressBar.intervalId);
+                            progressBar.intervalId = setInterval(updateProgress, 10);
+                        }
                     }
                 }
 
