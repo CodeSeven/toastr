@@ -157,6 +157,7 @@
                     containerId: 'toast-container',
                     debug: false,
 
+                    onCreate: undefined,
                     showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
                     showDuration: 300,
                     showEasing: 'swing', //swing and linear are built into jQuery
@@ -319,6 +320,8 @@
 
                 function displayToast() {
                     $toastElement.hide();
+                    
+                    options.onCreate();
 
                     $toastElement[options.showMethod](
                         {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
