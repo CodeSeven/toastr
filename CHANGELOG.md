@@ -110,7 +110,7 @@ You can also override the CSS/LESS for `#toast-container .toast-close-button`
 ### Animation Options
 Toastr will supply default animations, so you do not have to provide any of these settings. However you have the option to override the animations if you like.
 
-####Easings
+#### Easings
 Optionally override the animation easing to show or hide the toasts. Default is swing. swing and linear are built into jQuery.
 
 	toastr.options.showEasing = 'swing';
@@ -121,14 +121,14 @@ Using the jQuery Easing plugin (http://www.gsgd.co.uk/sandbox/jquery/easing/)
 	toastr.options.showEasing = 'easeOutBounce';
 	toastr.options.hideEasing = 'easeInBack';
 
-####Animation Method
+#### Animation Method
 Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut. The methods fadeIn/fadeOut, slideDown/slideUp, and show/hide are built into jQuery.
 
 	toastr.options.showMethod = 'slideDown'; 
 	toastr.options.hideMethod = 'slideUp'; 
 	
 
-###Timeouts
+### Timeouts
 Control how toastr interacts with users by setting timeouts appropriately.
 
 	toastr.options.timeout = 30; // How long the toast will display without user interaction
@@ -136,7 +136,7 @@ Control how toastr interacts with users by setting timeouts appropriately.
 
 ## Breaking Changes
 
-###Animation Changes
+### Animation Changes
 The following animations options have been deprecated and should be replaced:
  
  - Replace `options.fadeIn` with `options.showDuration`
