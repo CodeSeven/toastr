@@ -55,7 +55,7 @@
 
             function getContainer(options, create) {
                 if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
+                $container = $(options.target).find('#' + options.containerId);
                 if ($container.length) {
                     return $container;
                 }
