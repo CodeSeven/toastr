@@ -1,4 +1,16 @@
-@import "variables";
+$toast-message-text-color: #ffffff !default;
+$toast-message-link-hover-text-color: #cccccc !default;
+$toast-close-button-focus-text-color: #000000 !default;
+
+$toast-container-hover-box-shadow-color: #000000 !default;
+$toast-container-moz-box-shadow-color: #999999 !default;
+$toast-progress-bg-color: #000000 !default;
+
+$toast-bg-color: #030303 !default;
+$toast-success-bg-color: #51a351 !default;
+$toast-error-bg-color: #bd362f !default;
+$toast-info-bg-color: #2f96b4 !default;
+$toast-warning-bg-color: #f89406 !default;
 
 .toast-title {
   font-weight: bold;
