@@ -12,6 +12,10 @@ $toast-error-bg-color: #bd362f !default;
 $toast-info-bg-color: #2f96b4 !default;
 $toast-warning-bg-color: #f89406 !default;
 
+$toast-opacity-percent: 80 !default;
+$toast-opacity: 0.8 !default;
+
+
 .toast-title {
   font-weight: bold;
 }
@@ -37,9 +41,9 @@ $toast-warning-bg-color: #f89406 !default;
   color: $toast-message-text-color;
   -webkit-text-shadow: 0 1px 0 $toast-message-text-color;
   text-shadow: 0 1px 0 $toast-message-text-color;
-  opacity: 0.8;
-  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  filter: alpha(opacity=80);
+  opacity: $toast-opacity;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=$toast-opacity-percent);
+  filter: alpha(opacity=$toast-opacity-percent);
 }
 .toast-close-button:hover,
 .toast-close-button:focus {
@@ -122,9 +126,9 @@ button.toast-close-button {
   -webkit-box-shadow: 0 0 12px $toast-container-moz-box-shadow-color;
   box-shadow: 0 0 12px $toast-container-moz-box-shadow-color;
   color: $toast-message-text-color;
-  opacity: 0.8;
-  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  filter: alpha(opacity=80);
+  opacity: $toast-opacity;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=$toast-opacity-percent);
+  filter: alpha(opacity=$toast-opacity-percent);
 }
 #toast-container > div:hover {
   -moz-box-shadow: 0 0 12px $toast-container-hover-box-shadow-color;
