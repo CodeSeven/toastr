@@ -146,8 +146,8 @@ toastr.options.newestOnTop = false;
 // Define a callback for when the toast is shown/hidden/clicked
 toastr.options.onShown = function() { console.log('hello'); }
 toastr.options.onHidden = function() { console.log('goodbye'); }
-toastr.options.onclick = function() { console.log('clicked'); }
-toastr.options.onCloseClick = function() { console.log('close button clicked'); }
+toastr.options.onclick = function(event) { console.log('clicked'); }
+toastr.options.onCloseClick = function(event) { console.log('close button clicked'); }
 ```
 
 ### Animation Options
