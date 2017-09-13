@@ -36,6 +36,10 @@ bower install toastr
 #### [npm](https://www.npmjs.com/package/toastr)
 ```
 npm install --save toastr
+
+// If using within a TypeScript project, also get the TypeScript Definition file
+npm install -D @types/toastr
+
 ```
 
 #### [Ruby on Rails](https://github.com/tylergannon/toastr-rails)
