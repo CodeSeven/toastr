@@ -24,16 +24,19 @@
 }
 
 // Variables
-@black: #000000;
-@grey: #999999;
-@light-grey: #CCCCCC;
-@white: #FFFFFF;
-@near-black: #030303;
-@green: #51A351;
-@red: #BD362F;
-@blue: #2F96B4;
-@orange: #F89406;
-@default-container-opacity: .8;
+@toastr-close: #FFFFFF;
+@toastr-close-hover: #000000;
+@toastr-progress: #000000;
+@toastr-shadow: #999999;
+@toastr-shadow-hover: #000000;
+@toastr-link-hover: #CCCCCC;
+@toastr-text: #FFFFFF;
+@toastr-background: #030303;
+@toastr-success: #51A351;
+@toastr-error: #BD362F;
+@toastr-info: #2F96B4;
+@toastr-warning: #F89406;
+@toastr-default-container-opacity: .8;
 
 // Styles
 .toast-title {
@@ -45,11 +48,11 @@
 
 	a,
 	label {
-		color: @white;
+		color: @toastr-text;
 	}
 
 		a:hover {
-			color: @light-grey;
+			color: @toastr-link-hover;
 			text-decoration: none;
 		}
 }
@@ -61,7 +64,7 @@
 	float: right;
 	font-size: 20px;
 	font-weight: bold;
-	color: @white;
+	color: @toastr-close;
 	-webkit-text-shadow: 0 1px 0 rgba(255,255,255,1);
 	text-shadow: 0 1px 0 rgba(255,255,255,1);
 	.opacity(0.8);
@@ -69,7 +72,7 @@
 
 	&:hover,
 	&:focus {
-		color: @black;
+		color: @toastr-close-hover;
 		text-decoration: none;
 		cursor: pointer;
 		.opacity(0.4);
@@ -161,9 +164,9 @@ button.toast-close-button {
 		.borderRadius(3px 3px 3px 3px);
 		background-position: 15px center;
 		background-repeat: no-repeat;
-		.boxShadow(0 0 12px @grey);
-		color: @white;
-		.opacity(@default-container-opacity);
+		.boxShadow(0 0 12px @toastr-shadow);
+		color: @toastr-text;
+		.opacity(@toastr-default-container-opacity);
 	}
 
 	> div.rtl {
@@ -173,7 +176,7 @@ button.toast-close-button {
 	}
 
 	> div:hover {
-		.boxShadow(0 0 12px @black);
+		.boxShadow(0 0 12px @toastr-shadow-hover);
 		.opacity(1);
 		cursor: pointer;
 	}
@@ -210,23 +213,23 @@ button.toast-close-button {
 }
 
 .toast {
-	background-color: @near-black;
+	background-color: @toastr-background;
 }
 
 .toast-success {
-	background-color: @green;
+	background-color: @toastr-success;
 }
 
 .toast-error {
-	background-color: @red;
+	background-color: @toastr-error;
 }
 
 .toast-info {
-	background-color: @blue;
+	background-color: @toastr-info;
 }
 
 .toast-warning {
-	background-color: @orange;
+	background-color: @toastr-warning;
 }
 
 .toast-progress {
@@ -234,7 +237,7 @@ button.toast-close-button {
 	left: 0;
 	bottom: 0;
 	height: 4px;
-	background-color: @black;
+	background-color: @toastr-progress;
 	.opacity(0.4);
 }
 
