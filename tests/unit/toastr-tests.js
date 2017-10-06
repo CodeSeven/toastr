@@ -20,7 +20,7 @@
     var selectors = {
         container: 'div#toast-container',
         toastInfo: 'div#toast-container > div.toast-info',
-        toastWarning: 'div#toast-container > div.toast-success',
+        toastWarning: 'div#toast-container > div.toast-warning',
         toastError: 'div#toast-container > div.toast-error',
         toastSuccess: 'div#toast-container > div.toast-success'
     };
