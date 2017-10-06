@@ -21,11 +21,13 @@
                 error: 'error',
                 info: 'info',
                 success: 'success',
-                warning: 'warning'
+                warning: 'warning',
+                custom: 'custom'
             };
 
             var toastr = {
                 clear: clear,
+                custom: custom,
                 remove: remove,
                 error: error,
                 getContainer: getContainer,
@@ -93,6 +95,16 @@
                 return notify({
                     type: toastType.warning,
                     iconClass: getOptions().iconClasses.warning,
+                    message: message,
+                    optionsOverride: optionsOverride,
+                    title: title
+                });
+            }
+
+            function custom(message, title, optionsOverride) {
+                return notify({
+                    type: toastType.custom,
+                    iconClass: getOptions().iconClass,
                     message: message,
                     optionsOverride: optionsOverride,
                     title: title

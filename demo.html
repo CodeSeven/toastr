@@ -10,6 +10,10 @@
         .row {
             margin-left: 0;
         }
+        .toast-custom {
+            background-color: #0000A0;
+            background-image: url("data:image/gif;base64,R0lGOD lhCwAOAMQfAP////7+/vj4+Hh4eHd3d/v7+/Dw8HV1dfLy8ubm5vX19e3t7fr 6+nl5edra2nZ2dnx8fMHBwYODg/b29np6eujo6JGRkeHh4eTk5LCwsN3d3dfX 13Jycp2dnevr6////yH5BAEAAB8ALAAAAAALAA4AAAVq4NFw1DNAX/o9imAsB tKpxKRd1+YEWUoIiUoiEWEAApIDMLGoRCyWiKThenkwDgeGMiggDLEXQkDoTh CKNLpQDgjeAsY7MHgECgx8YR8oHwNHfwADBACGh4EDA4iGAYAEBAcQIg0Dk gcEIQA7") !important;
+        }
     </style>
 </head>
 
@@ -93,6 +97,13 @@
                         <label class="radio">
                             <input type="radio" name="toasts" value="error" />Error
                         </label>
+                        <label class="radio">
+                            <input type="radio" name="toasts" value="custom" />Custom
+                        </label>
+                        <div id="customClassContainer" style="display:none">
+                            <label class="control-label" for="customClass">Icon Class</label>
+                            <input id="customClass" type="text" class="input-small" value="toast-custom" />
+                        </div>
                     </div>
                 </div>
                 <div class="control-group" id="positionGroup">
@@ -215,6 +226,15 @@
             return msg;
         };
 
+        $('#toastTypeGroup').click(function() {
+            var toastType = $("#toastTypeGroup input:radio:checked").val();
+            if (toastType === 'custom') {
+                $('#customClassContainer').show();
+            } else {
+                $('#customClassContainer').hide();
+            }
+        });
+
         $('#closeButton').click(function() {
             if($(this).is(':checked')) {
                 $('#addBehaviorOnToastCloseClick').prop('disabled', false);
@@ -249,6 +269,9 @@
                 preventDuplicates: $('#preventDuplicates').prop('checked'),
                 onclick: null
             };
+            if (shortCutFunction === 'custom') {
+                toastr.options.iconClass = $('#customClass').val();
+            }
 
             if ($('#addBehaviorOnToastClick').prop('checked')) {
                 toastr.options.onclick = function () {
