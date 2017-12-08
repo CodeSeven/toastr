@@ -144,8 +144,12 @@ function startTests(singleRun, done) {
 
     ////////////////
 
-    function karmaCompleted() {
-        done();
+    function karmaCompleted(exitCode) {
+        if (exitCode === 0) {
+            done();
+        } else {
+            process.exit(exitCode);
+        }
     }
 }
 
