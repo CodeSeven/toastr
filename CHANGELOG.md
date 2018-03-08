@@ -1,3 +1,6 @@
+# 2.1.4 (2017-12-07)
+- Same as 2.1.3, except 2.1.4 is on NPM
+
 # 2.1.3 (2016-07-22)
 
 ## New Features

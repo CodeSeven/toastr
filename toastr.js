@@ -33,7 +33,7 @@
                 options: {},
                 subscribe: subscribe,
                 success: success,
-                version: '2.1.3',
+                version: '2.1.4',
                 warning: warning
             };
 
