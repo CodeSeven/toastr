@@ -653,7 +653,7 @@
         $toast[3] = toastr.info(sampleMsg, sampleTitle);
         var $container = toastr.getContainer();
 
-        ok($container && $container.children().length === 3);
+        ok($container && $container.children().length === 2);
 
         clearContainerChildren();
     });
