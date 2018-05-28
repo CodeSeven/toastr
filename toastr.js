@@ -37,7 +37,7 @@
                 warning: warning
             };
 
-            var previousToast;
+            var previousToast=[];
 
             return toastr;
 
@@ -398,10 +398,11 @@
 
                 function shouldExit(options, map) {
                     if (options.preventDuplicates) {
-                        if (map.message === previousToast) {
+                        var pos =previousToast.indexOf(map.message)
+                        if (pos >= 0) {
                             return true;
                         } else {
-                            previousToast = map.message;
+                            previousToast.push(map.message);
                         }
                     }
                     return false;
@@ -467,7 +468,7 @@
                 $toastElement = null;
                 if ($container.children().length === 0) {
                     $container.remove();
-                    previousToast = undefined;
+                    previousToast = [];
                 }
             }
 
