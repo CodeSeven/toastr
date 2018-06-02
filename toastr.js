@@ -190,7 +190,8 @@
                     preventDuplicates: false,
                     progressBar: false,
                     progressClass: 'toast-progress',
-                    rtl: false
+                    rtl: false,
+                    typeBasedOverrides: {}
                 };
             }
 
@@ -201,7 +202,12 @@
 
             function notify(map) {
                 var options = getOptions();
-                var iconClass = map.iconClass || options.iconClass;
+
+                // extend the options object with type specific overrides
+                if (typeof (options.typeBasedOverrides[map.type]) !== 'undefined') {
+                    options = $.extend(options, options.typeBasedOverrides[map.type]);
+                    iconClass = options.typeBasedOverrides[map.type] || iconClass;
+                }
 
                 if (typeof (map.optionsOverride) !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
