@@ -183,12 +183,19 @@ toastr.options.preventDuplicates = true;
 ```
 
 ### Timeouts
-Control how toastr interacts with users by setting timeouts appropriately. Timeouts can be disabled by setting them to 0.
+Control how toastr interacts with users by setting timeouts appropriately.
 ```js
 toastr.options.timeOut = 30; // How long the toast will display without user interaction
 toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
 ```
 
+### Prevent from Auto Hiding
+To prevent toastr from closing based on the timeouts, set the `timeOut` and `extendedTimeOut` options to `0`. The toastr will persist until selected.
+
+```js
+toastr.options.timeOut = 0;
+toastr.options.extendedTimeOut = 0;
+```
 
 ### Progress Bar
 Visually indicate how long before a toast expires.
