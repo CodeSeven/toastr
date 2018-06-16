@@ -5,14 +5,17 @@
 Browser testing provided by BrowserStack.
 
 ## Current Version
-2.1.3
+2.1.4
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
 - [Demo using FontAwesome icons with toastr](http://plnkr.co/edit/6W9URNyyp2ItO4aUWzBB?p=preview)
 
-## [CDNjs](https://cdnjs.com/libraries/toastr.js)
-Toastr is hosted at CDN JS
+## CDNs
+[![cdnjs](https://img.shields.io/cdnjs/v/toastr.js.svg)](https://cdnjs.com/libraries/toastr.js)
+[![jsdelivr](https://data.jsdelivr.com/v1/package/npm/toastr/badge)](https://www.jsdelivr.com/package/npm/toastr)
+
+Toastr is hosted at cdnjs and jsdelivr
 
 #### Debug
 - [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css)
@@ -38,12 +41,39 @@ bower install toastr
 npm install --save toastr
 ```
 
+#### [yarn](https://yarnpkg.com/en/package/toastr)
+```
+yarn add toastr
+```
+
+#### [Ruby on Rails](https://github.com/tylergannon/toastr-rails)
+```ruby
+# Gemfile
+
+gem 'toastr-rails'
+```
+
+```coffee
+# application.coffee
+
+#= require toastr
+```
+
+```scss
+// application.scss
+
+@import "toastr";
+```
+
+
+
+
 ## Wiki and Change Log
 [Wiki including Change Log](https://github.com/CodeSeven/toastr/wiki)
 
 ## Breaking Changes
 
-####Animation Changes
+#### Animation Changes
 The following animations options have been deprecated and should be replaced:
 
  - Replace `options.fadeIn` with `options.showDuration`
@@ -88,7 +118,7 @@ toastr.success('We do have the Kapua suite available.', 'Turtle Bay Resort', {ti
 ```
 
 ### Escape HTML characters
-In case you want to escape HTML charaters in title and message
+In case you want to escape HTML characters in title and message
 
 	toastr.options.escapeHtml = true;
 
@@ -131,7 +161,7 @@ toastr.options.onCloseClick = function() { console.log('close button clicked'); 
 ### Animation Options
 Toastr will supply default animations, so you do not have to provide any of these settings. However you have the option to override the animations if you like.
 
-####Easings
+#### Easings
 Optionally override the animation easing to show or hide the toasts. Default is swing. swing and linear are built into jQuery.
 ```js
 toastr.options.showEasing = 'swing';
@@ -146,7 +176,7 @@ toastr.options.hideEasing = 'easeInBack';
 toastr.options.closeEasing = 'easeInBack';
 ```
 
-####Animation Method
+#### Animation Method
 Use the jQuery show/hide method of your choice. These default to fadeIn/fadeOut. The methods fadeIn/fadeOut, slideDown/slideUp, and show/hide are built into jQuery.
 ```js
 toastr.options.showMethod = 'slideDown';
@@ -154,21 +184,28 @@ toastr.options.hideMethod = 'slideUp';
 toastr.options.closeMethod = 'slideUp';
 ```
 
-###Prevent Duplicates
+### Prevent Duplicates
 Rather than having identical toasts stack, set the preventDuplicates property to true. Duplicates are matched to the previous toast based on their message content.
 ```js
 toastr.options.preventDuplicates = true;
 ```
 
-###Timeouts
-Control how toastr interacts with users by setting timeouts appropriately. Timeouts can be disabled by setting them to 0.
+### Timeouts
+Control how toastr interacts with users by setting timeouts appropriately.
 ```js
 toastr.options.timeOut = 30; // How long the toast will display without user interaction
 toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
 ```
 
+### Prevent from Auto Hiding
+To prevent toastr from closing based on the timeouts, set the `timeOut` and `extendedTimeOut` options to `0`. The toastr will persist until selected.
 
-###Progress Bar
+```js
+toastr.options.timeOut = 0;
+toastr.options.extendedTimeOut = 0;
+```
+
+### Progress Bar
 Visually indicate how long before a toast expires.
 ```js
 toastr.options.progressBar = true;
@@ -177,7 +214,7 @@ toastr.options.progressBar = true;
 ### rtl
 Flip the toastr to be displayed properly for right-to-left languages.
 ```js
-toastr.options.rtl = true; 
+toastr.options.rtl = true;
 ```
 
 ## Building Toastr
