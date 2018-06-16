@@ -41,6 +41,11 @@ bower install toastr
 npm install --save toastr
 ```
 
+#### [yarn](https://yarnpkg.com/en/package/toastr)
+```
+yarn add toastr
+```
+
 #### [Ruby on Rails](https://github.com/tylergannon/toastr-rails)
 ```ruby
 # Gemfile
