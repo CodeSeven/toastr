@@ -11,8 +11,11 @@ Browser testing provided by BrowserStack.
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
 - [Demo using FontAwesome icons with toastr](http://plnkr.co/edit/6W9URNyyp2ItO4aUWzBB?p=preview)
 
-## [CDNjs](https://cdnjs.com/libraries/toastr.js)
-Toastr is hosted at CDN JS
+## CDNs
+[![cdnjs](https://img.shields.io/cdnjs/v/toastr.js.svg)](https://cdnjs.com/libraries/toastr.js)
+[![jsdelivr](https://data.jsdelivr.com/v1/package/npm/toastr/badge)](https://www.jsdelivr.com/package/npm/toastr)
+
+Toastr is hosted at cdnjs and jsdelivr
 
 #### Debug
 - [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css)
