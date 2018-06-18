@@ -39,6 +39,10 @@ bower install toastr
 #### [npm](https://www.npmjs.com/package/toastr)
 ```
 npm install --save toastr
+
+// If using within a TypeScript project, also get the TypeScript Definition file
+npm install -D @types/toastr
+
 ```
 
 #### [yarn](https://yarnpkg.com/en/package/toastr)
