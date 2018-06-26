@@ -190,6 +190,7 @@
                     preventDuplicates: false,
                     progressBar: false,
                     progressClass: 'toast-progress',
+                    invertProgressBar: false,
                     rtl: false
                 };
             }
@@ -444,6 +445,9 @@
 
                 function updateProgress() {
                     var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
+                    if (options.invertProgressBar) {
+                        percentage = 100 - percentage;
+                    }
                     $progressElement.width(percentage + '%');
                 }
             }

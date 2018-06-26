@@ -463,6 +463,44 @@
         clearContainerChildren();
     });
 
+    module('invertProgressBar', {
+        teardown: function () {
+            toastr.options.invertProgressBar = false;
+            toastr.options.progressBar = false;
+        }
+    });
+    test('progress bar goes from right to left by default', 1, function () {
+        //Arrange
+        //Act
+        //Assert
+        toastr.subscribe(function(response) {
+            equal(response.options.invertProgressBar, false, 'right to left progressbar (invertProgressBar=false)');
+        });
+        var $toast = toastr.success('');
+        //Teardown
+        toastr.subscribe(null);
+        $toast.remove();
+        clearContainerChildren();
+    });
+    asyncTest('progressbar moves from left to right with invertProgressBar', 1, function () {
+        //Arrange
+        toastr.options.progressBar = true;
+        toastr.options.invertProgressBar = true;
+        toastr.options.timeOut = 10000;
+        //Act
+        var $toast = toastr.info(sampleMsg, sampleTitle);
+        setTimeout(function () {
+            //Assert
+            ok($toast.find('div.toast-progress').width() < 50, 'progressbar moves inverted');
+
+            //Teardown
+            $toast.remove();
+            clearContainerChildren();
+            resetContainer();
+            start();
+        }, 200);
+    });
+
     module('rtl', {
         teardown: function () {
             toastr.options.rtl = false;
