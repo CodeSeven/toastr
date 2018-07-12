@@ -153,7 +153,7 @@
             function getDefaults() {
                 return {
                     tapToDismiss: true,
-                    toastClass: 'toast',
+                    toastClass: 'toastr',
                     containerId: 'toast-container',
                     debug: false,
 
