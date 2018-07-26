@@ -1,35 +1,102 @@
-.toast-title {
-  font-weight: bold;
+body {
+  /* some browsers need actual css as first line */
 }
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+  @else {
+    @content;
+  }
+}
+
+// uncomment if you have bootstrap source
+/*@import "bootstrap4/_functions.scss";
+@import "bootstrap4/_variables.scss";
+@import "bootstrap4/_mixins.scss";*/
+
+$font-weight-bold: 700 !default;
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$blue: #007bff !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #dc3545 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #28a745 !default;
+$teal: #20c997 !default;
+$cyan: #17a2b8 !default;
+
+$primary: $blue !default;
+$secondary: $gray-600 !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
+
+$zindex-popover: 1060 !default;
+
+$grid-breakpoints: ( xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px ) !default;
+
+.toast-title {
+  font-weight: $font-weight-bold;
+}
+
 .toast-message {
   -ms-word-wrap: break-word;
   word-wrap: break-word;
 }
+
 .toast-message a,
 .toast-message label {
-  color: #ffffff;
+  color: $white;
 }
+
 .toast-message a:hover {
-  color: #cccccc;
+  color: $gray-400;
   text-decoration: none;
 }
+
 .toast-close-button {
   position: relative;
-  right: -0.3em;
-  top: -0.3em;
+  right: -0.2em;
+  top: -0.2em;
   float: right;
   font-size: 20px;
   font-weight: bold;
-  color: #ffffff;
-  -webkit-text-shadow: 0 1px 0 #ffffff;
-  text-shadow: 0 1px 0 #ffffff;
+  color: $white;
+  -webkit-text-shadow: 0 1px 0 $white;
+  text-shadow: 0 1px 0 $white;
   opacity: 0.8;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   filter: alpha(opacity=80);
 }
 .toast-close-button:hover,
 .toast-close-button:focus {
-  color: #000000;
+  color: $black;
   text-decoration: none;
   cursor: pointer;
   opacity: 0.4;
@@ -84,7 +151,7 @@ button.toast-close-button {
 }
 #toast-container {
   position: fixed;
-  z-index: 999999;
+  z-index: $zindex-popover;
   /*overrides*/
 
 }
@@ -97,25 +164,26 @@ button.toast-close-button {
   position: relative;
   overflow: hidden;
   margin: 0 0 6px;
-  padding: 15px 15px 15px 50px;
-  width: 300px;
+  padding: 8px 8px 8px 50px;
+  max-width: 300px;
+  width: 18em;
   -moz-border-radius: 3px 3px 3px 3px;
   -webkit-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
   background-position: 15px center;
   background-repeat: no-repeat;
-  -moz-box-shadow: 0 0 12px #999999;
-  -webkit-box-shadow: 0 0 12px #999999;
-  box-shadow: 0 0 12px #999999;
-  color: #ffffff;
+  -moz-box-shadow: 0 0 12px $gray-500;
+  -webkit-box-shadow: 0 0 12px $gray-500;
+  box-shadow: 0 0 12px $gray-500;
+  color: $white;
   opacity: 0.8;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   filter: alpha(opacity=80);
 }
 #toast-container > div:hover {
-  -moz-box-shadow: 0 0 12px #000000;
-  -webkit-box-shadow: 0 0 12px #000000;
-  box-shadow: 0 0 12px #000000;
+  -moz-box-shadow: 0 0 12px $black;
+  -webkit-box-shadow: 0 0 12px $black;
+  box-shadow: 0 0 12px $black;
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   filter: alpha(opacity=100);
@@ -146,56 +214,45 @@ button.toast-close-button {
   margin-right: auto;
 }
 .toast {
-  background-color: #030303;
+  background-color: $gray-900;
 }
 .toast-success {
-  background-color: #51a351;
+  background-color: $success;
 }
 .toast-error {
-  background-color: #bd362f;
+  background-color: $danger;
 }
 .toast-info {
-  background-color: #2f96b4;
+  background-color: $info;
 }
 .toast-warning {
-  background-color: #f89406;
+  background-color: $warning;
 }
-
 .toast-progress {
   position: absolute;
   left: 0;
   bottom: 0;
   height: 4px;
-  background-color: #000000;
+  background-color: $black;
   opacity: 0.4;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
   filter: alpha(opacity=40);
 }
 
 /*Responsive Design*/
-@media all and (max-width: 240px) {
-  #toast-container > div {
-    padding: 8px 8px 8px 50px;
-    width: 11em;
-  }
-  #toast-container .toast-close-button {
-    right: -0.2em;
-    top: -0.2em;
-  }
-}
-@media all and (min-width: 241px) and (max-width: 480px) {
-  #toast-container > div {
-    padding: 8px 8px 8px 50px;
-    width: 18em;
-  }
-  #toast-container .toast-close-button {
-    right: -0.2em;
-    top: -0.2em;
-  }
-}
-@media all and (min-width: 481px) and (max-width: 768px) {
+@include media-breakpoint-up(sm) {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
+  }
+
+  #toast-container .toast-close-button {
+    right: -0.3em;
+    top: -0.3em;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  #toast-container > div {
     width: 25em;
   }
 }
