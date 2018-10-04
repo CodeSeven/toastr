@@ -351,6 +351,9 @@
                 function setTitle() {
                     if (map.title) {
                         var suffix = map.title;
+                        if (typeof options.transformTitle === 'function') {
+                            suffix = options.transformTitle(map.title);
+                        }
                         if (options.escapeHtml) {
                             suffix = escapeHtml(map.title);
                         }
@@ -362,6 +365,9 @@
                 function setMessage() {
                     if (map.message) {
                         var suffix = map.message;
+                        if (typeof options.transformMessage === 'function') {
+                            suffix = options.transformMessage(map.message);
+                        }
                         if (options.escapeHtml) {
                             suffix = escapeHtml(map.message);
                         }
