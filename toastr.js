@@ -188,6 +188,9 @@
                     target: 'body',
                     closeHtml: '<button type="button">&times;</button>',
                     closeClass: 'toast-close-button',
+                    lockHtml: '<button type="button"><svg fill="rgb(255 255 255)" enable-background="new 0 0 24 24" height="14px" id="Layer_1" version="1.1" viewBox="0 0 24 24" width="14px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path clip-rule="evenodd" d="M20.002,24.001H4.014c-1.104,0-1.998-0.896-1.998-2.001V11.994  c0-1.105,0.895-2.002,1.998-2.002h0.999V6.991c0-3.868,3.132-7.004,6.995-7.004s6.995,3.136,6.995,7.004v3.001h0.999  c1.104,0,1.998,0.896,1.998,2.002V22C22,23.104,21.105,24.001,20.002,24.001z M16.005,6.991c0-2.21-1.79-4.002-3.997-4.002  S8.011,4.781,8.011,6.991v3.001h7.994V6.991z" fill-rule="evenodd"/></svg></button>',
+                    lockClass: 'toast-close-button',
+                    locked: false, // Define if toastr is locked by lockButton click
                     newestOnTop: true,
                     preventDuplicates: false,
                     progressBar: false,
@@ -222,6 +225,7 @@
                 var $messageElement = $('<div/>');
                 var $progressElement = $('<div/>');
                 var $closeElement = $(options.closeHtml);
+                var $lockElement = $(options.lockHtml);
                 var progressBar = {
                     intervalId: null,
                     hideEta: null,
@@ -267,6 +271,7 @@
                     setTitle();
                     setMessage();
                     setCloseButton();
+                    setLockButton();
                     setProgressBar();
                     setRTL();
                     setSequence();
@@ -311,6 +316,21 @@
                         });
                     }
 
+                    if (options.lockButton && $lockElement) {
+                        $lockElement.click(function (event) {
+                            if (event.stopPropagation) {
+                                event.stopPropagation();
+                            }
+
+                            if(!options.locked) {
+                                options.locked = true;
+                            } else {
+                                options.locked = false;
+                                hideToast(true);
+                            }
+                        });
+                    }
+
                     if (options.onclick) {
                         $toastElement.click(function (event) {
                             options.onclick(event);
@@ -323,8 +343,6 @@
 
                 function displayToast() {
                     $toastElement.hide();
-                    
-                    options.onCreate();
 
                     $toastElement[options.showMethod](
                         {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
@@ -380,6 +398,13 @@
                     if (options.closeButton) {
                         $closeElement.addClass(options.closeClass).attr('role', 'button');
                         $toastElement.prepend($closeElement);
+                    }
+                }
+
+                function setLockButton() {
+                    if(options.lockButton) {
+                        $lockElement.addClass(options.lockClass).attr('role', 'button');
+                        $toastElement.prepend($lockElement);
                     }
                 }
 
