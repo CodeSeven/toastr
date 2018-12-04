@@ -281,7 +281,7 @@
                         default:
                             ariaValue = 'assertive';
                     }
-                    $toastElement.attr('aria-live', ariaValue);
+                    $toastElement.attr('aria-live', ariaValue).attr("role", "alert");
                 }
 
                 function handleEvents() {
