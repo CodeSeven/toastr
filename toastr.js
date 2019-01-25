@@ -52,8 +52,8 @@ const toastr = () => {
 
     function getContainer(options, create) {
         if (!options) { options = getOptions(); }
-        $container = $('#' + options.containerId);
-        if ($container.length) {
+        $container = document.getElementById(options.containerId);
+        if ($container) {
             return $container;
         }
         if (create) {
@@ -107,43 +107,52 @@ const toastr = () => {
     function remove($toastElement) {
         var options = getOptions();
         if (!$container) { getContainer(options); }
-        if ($toastElement && $(':focus', $toastElement).length === 0) {
+        if ($toastElement && $toastElement !== document.activeElement) {
             removeToast($toastElement);
             return;
         }
-        if ($container.children().length) {
-            $container.remove();
+        if (!$container.hasChildNodes()) {
+            $container.parentNode.removeChild($container);
         }
     }
 
     // internal functions
 
     function clearContainer(options) {
-        var toastsToClear = $container.children();
+        var toastsToClear = $container.childNodes;
+
         for (var i = toastsToClear.length - 1; i >= 0; i--) {
-            clearToast($(toastsToClear[i]), options);
+            clearToast(toastsToClear[i], options);
         }
     }
 
     function clearToast($toastElement, options, clearOptions) {
         var force = clearOptions && clearOptions.force ? clearOptions.force : false;
-        if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
-            $toastElement[options.hideMethod]({
-                duration: options.hideDuration,
-                easing: options.hideEasing,
-                complete: function () { removeToast($toastElement); }
-            });
+        if ($toastElement && (force || $toastElement !== document.activeElement)) {
+            // todo hide effect
+            removeToast($toastElement);
+            // $toastElement[options.hideMethod]({
+            //     duration: options.hideDuration,
+            //     easing: options.hideEasing,
+            //     complete: function () { removeToast($toastElement); }
+            // });
             return true;
         }
         return false;
     }
 
     function createContainer(options) {
-        $container = $('<div/>')
-            .attr('id', options.containerId)
-            .addClass(options.positionClass);
+        $container = document.createElement('div')
 
-        $container.appendTo($(options.target));
+        $container.setAttribute('id', options.containerId)
+        $container.classList.add(options.positionClass);
+
+        const target = document.getElementsByTagName(options.target);
+
+        if (target && target[0]) {
+            target[0].appendChild($container);
+        }
+
         return $container;
     }
 
@@ -201,7 +210,8 @@ const toastr = () => {
         var iconClass = map.iconClass || options.iconClass;
 
         if (typeof (map.optionsOverride) !== 'undefined') {
-            options = $.extend(options, map.optionsOverride);
+            // todo
+            // options = $.extend(options, map.optionsOverride);
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
 
@@ -212,11 +222,14 @@ const toastr = () => {
         $container = getContainer(options, true);
 
         var intervalId = null;
-        var $toastElement = $('<div/>');
-        var $titleElement = $('<div/>');
-        var $messageElement = $('<div/>');
-        var $progressElement = $('<div/>');
-        var $closeElement = $(options.closeHtml);
+        var $toastElement = document.createElement('div');
+        var $titleElement = document.createElement('div');
+        var $messageElement = document.createElement('div');
+        var $progressElement = document.createElement('div');
+        var createdElement = document.createElement('div');
+        createdElement.innerHTML = options.closeHtml.trim();
+        var $closeElement = createdElement.firstChild;
+
         var progressBar = {
             intervalId: null,
             hideEta: null,
@@ -278,20 +291,21 @@ const toastr = () => {
                 default:
                     ariaValue = 'assertive';
             }
-            $toastElement.attr('aria-live', ariaValue);
+            $toastElement.setAttribute('aria-live', ariaValue);
         }
 
         function handleEvents() {
             if (options.closeOnHover) {
-                $toastElement.hover(stickAround, delayedHideToast);
+                $toastElement.addEventListener('mouseenter', stickAround);
+                $toastElement.addEventListener('mouseleave', delayedHideToast);
             }
 
             if (!options.onclick && options.tapToDismiss) {
-                $toastElement.click(hideToast);
+                $toastElement.addEventListener('click', hideToast);
             }
 
             if (options.closeButton && $closeElement) {
-                $closeElement.click(function (event) {
+                $closeElement.addEventListener('click', function (event) {
                     if (event.stopPropagation) {
                         event.stopPropagation();
                     } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
@@ -307,7 +321,7 @@ const toastr = () => {
             }
 
             if (options.onclick) {
-                $toastElement.click(function (event) {
+                $toastElement.addEventListener('click', function (event) {
                     options.onclick(event);
                     hideToast();
                 });
@@ -315,11 +329,16 @@ const toastr = () => {
         }
 
         function displayToast() {
-            $toastElement.hide();
+            // todo hide toast
+            // $toastElement.hide();
 
-            $toastElement[options.showMethod](
-                { duration: options.showDuration, easing: options.showEasing, complete: options.onShown }
-            );
+            // todo fade out toast
+            if (options.onShown) {
+                options.onShown();
+            }
+            // $toastElement[options.showMethod](
+            //     {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
+            // );
 
             if (options.timeOut > 0) {
                 intervalId = setTimeout(hideToast, options.timeOut);
@@ -333,15 +352,15 @@ const toastr = () => {
 
         function setIcon() {
             if (map.iconClass) {
-                $toastElement.addClass(options.toastClass).addClass(iconClass);
+                $toastElement.classList.add(options.toastClass, iconClass);
             }
         }
 
         function setSequence() {
             if (options.newestOnTop) {
-                $container.prepend($toastElement);
+                $container.parentNode.insertBefore($toastElement, $container);
             } else {
-                $container.append($toastElement);
+                $container.appendChild($toastElement);
             }
         }
 
@@ -351,8 +370,9 @@ const toastr = () => {
                 if (options.escapeHtml) {
                     suffix = escapeHtml(map.title);
                 }
-                $titleElement.append(suffix).addClass(options.titleClass);
-                $toastElement.append($titleElement);
+                $titleElement.innerHTML = suffix;
+                $titleElement.classList.add(options.titleClass);
+                $toastElement.appendChild($titleElement);
             }
         }
 
@@ -362,28 +382,29 @@ const toastr = () => {
                 if (options.escapeHtml) {
                     suffix = escapeHtml(map.message);
                 }
-                $messageElement.append(suffix).addClass(options.messageClass);
-                $toastElement.append($messageElement);
+                $messageElement.innerHTML = suffix
+                $messageElement.classList.add(options.messageClass);
+                $toastElement.appendChild($messageElement);
             }
         }
 
         function setCloseButton() {
             if (options.closeButton) {
-                $closeElement.addClass(options.closeClass).attr('role', 'button');
-                $toastElement.prepend($closeElement);
+                $closeElement.classList.add(options.closeClass).setAttribute('role', 'button');
+                $toastElement.parentNode.insertBefore($closeElement, $toastElement);
             }
         }
 
         function setProgressBar() {
             if (options.progressBar) {
-                $progressElement.addClass(options.progressClass);
-                $toastElement.prepend($progressElement);
+                $progressElement.classList.add(options.progressClass);
+                $toastElement.parentNode.insertBefore($progressElement, $toastElement);
             }
         }
 
         function setRTL() {
             if (options.rtl) {
-                $toastElement.addClass('rtl');
+                $toastElement.classList.add('rtl');
             }
         }
 
@@ -403,24 +424,24 @@ const toastr = () => {
             var duration = override && options.closeDuration !== false ?
                 options.closeDuration : options.hideDuration;
             var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
-            if ($(':focus', $toastElement).length && !override) {
+            if ($toastElement === document.activeElement && !override) {
                 return;
             }
             clearTimeout(progressBar.intervalId);
-            return $toastElement[method]({
-                duration: duration,
-                easing: easing,
-                complete: function () {
-                    removeToast($toastElement);
-                    clearTimeout(intervalId);
-                    if (options.onHidden && response.state !== 'hidden') {
-                        options.onHidden();
-                    }
-                    response.state = 'hidden';
-                    response.endTime = new Date();
-                    publish(response);
-                }
-            });
+            // todo fade out toast
+            removeToast($toastElement);
+            clearTimeout(intervalId);
+            if (options.onHidden && response.state !== 'hidden') {
+                options.onHidden();
+            }
+            response.state = 'hidden';
+            response.endTime = new Date();
+            publish(response);
+
+            // return $toastElement[method]({
+            //     duration: duration,
+            //     easing: easing,
+            // });
         }
 
         function delayedHideToast() {
@@ -434,30 +455,40 @@ const toastr = () => {
         function stickAround() {
             clearTimeout(intervalId);
             progressBar.hideEta = 0;
-            $toastElement.stop(true, true)[options.showMethod](
-                { duration: options.showDuration, easing: options.showEasing }
-            );
+            // todo
+            // $toastElement.stop(true, true)[options.showMethod](
+            //     {duration: options.showDuration, easing: options.showEasing}
+            // );
         }
 
         function updateProgress() {
             var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-            $progressElement.width(percentage + '%');
+            $progressElement.style.width = percentage + '%';
         }
     }
 
     function getOptions() {
-        return $.extend({}, getDefaults(), toastr.options);
+        return getDefaults();
+        // todo
+        // return $.extend({}, getDefaults(), toastr.options);
     }
 
     function removeToast($toastElement) {
         if (!$container) { $container = getContainer(); }
-        if ($toastElement.is(':visible')) {
+        // todo set after visible state
+        // as this will be a transition of css
+        $toastElement.parentNode.removeChild($toastElement);
+        // check if visible
+        if ($toastElement.offsetWidth > 0 && $toastElement.offsetHeight > 0) {
             return;
         }
-        $toastElement.remove();
+
         $toastElement = null;
-        if ($container.children().length === 0) {
-            $container.remove();
+        if (!$container.hasChildNodes()) {
+            if ($container.parentNode) {
+                $container.parentNode.removeChild($container);
+            }
+
             previousToast = undefined;
         }
     }
