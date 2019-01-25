@@ -10,28 +10,30 @@
  *
  * Project: https://github.com/CodeSeven/toastr
  */
-const toastr = () => {
+import merge from 'lodash.merge';
+
+const toastr = (options = {}) => {
     var $container;
     var listener;
     var toastId = 0;
     var toastType = {
-        error: 'error',
         info: 'info',
+        error: 'error',
+        warning: 'warning',
         success: 'success',
-        warning: 'warning'
     };
 
     var toastr = {
-        clear: clear,
-        remove: remove,
-        error: error,
-        getContainer: getContainer,
-        info: info,
-        options: {},
-        subscribe: subscribe,
-        success: success,
         version: '2.1.4',
-        warning: warning
+        getContainer,
+        subscribe,
+        success,
+        warning,
+        options,
+        remove,
+        clear,
+        error,
+        info,
     };
 
     var previousToast;
@@ -210,8 +212,7 @@ const toastr = () => {
         var iconClass = map.iconClass || options.iconClass;
 
         if (typeof (map.optionsOverride) !== 'undefined') {
-            // todo
-            // options = $.extend(options, map.optionsOverride);
+            options = merge({}, options, map.optionsOverride);
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
 
@@ -358,7 +359,7 @@ const toastr = () => {
 
         function setSequence() {
             if (options.newestOnTop) {
-                $container.parentNode.insertBefore($toastElement, $container);
+                $container.insertBefore($toastElement, $container.firstChild);
             } else {
                 $container.appendChild($toastElement);
             }
@@ -390,15 +391,16 @@ const toastr = () => {
 
         function setCloseButton() {
             if (options.closeButton) {
-                $closeElement.classList.add(options.closeClass).setAttribute('role', 'button');
-                $toastElement.parentNode.insertBefore($closeElement, $toastElement);
+                $closeElement.classList.add(options.closeClass)
+                $closeElement.setAttribute('role', 'button');
+                $toastElement.insertBefore($closeElement, $toastElement.firstChild);
             }
         }
 
         function setProgressBar() {
             if (options.progressBar) {
                 $progressElement.classList.add(options.progressClass);
-                $toastElement.parentNode.insertBefore($progressElement, $toastElement);
+                $toastElement.insertBefore($progressElement, $toastElement.firstChild);
             }
         }
 
@@ -468,9 +470,7 @@ const toastr = () => {
     }
 
     function getOptions() {
-        return getDefaults();
-        // todo
-        // return $.extend({}, getDefaults(), toastr.options);
+        return merge({}, getDefaults(), toastr.options);
     }
 
     function removeToast($toastElement) {
