@@ -96,7 +96,7 @@
     "typescript-eslint-parser": "^22.0.0"
   },
   "scripts": {
-    "prepublishOnly": "npm run build",
+    "prepublish": "npm run build",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
     "lint": "eslint \"./src/**/*.ts\"",
