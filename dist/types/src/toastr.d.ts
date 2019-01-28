@@ -44,12 +44,12 @@ declare const toastr: (options?: any) => {
     version: string;
     getContainer: (options?: any, create?: any) => HTMLElement | null;
     subscribe: (callback: Function) => void;
-    success: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => void | HTMLElement;
-    warning: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => void | HTMLElement;
+    success: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => HTMLElement;
+    warning: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => HTMLElement;
     options: any;
     remove: ($toastElement: any) => void;
     clear: ($toastElement: any, clearOptions: any) => void;
-    error: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => void | HTMLElement;
-    info: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => void | HTMLElement;
+    error: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => HTMLElement;
+    info: (message: string, title: string, optionsOverride?: ToastrOptions | undefined) => HTMLElement;
 };
 export default toastr;

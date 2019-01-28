@@ -14,7 +14,7 @@ import merge from 'lodash/merge';
 
 import { version } from '../package.json';
 
-type ToastrOptions = {
+type ToastrDefaultOptions = {
   tapToDismiss: boolean;
   toastClass: string;
   containerId: string;
@@ -33,9 +33,6 @@ type ToastrOptions = {
   closeEasing: boolean;
   closeOnHover: boolean;
 
-  onclick?: Function;
-  onCloseClick?: Function;
-  closeButton: boolean;
   extendedTimeOut: number;
   iconClasses: {
     error: string;
@@ -59,7 +56,13 @@ type ToastrOptions = {
   rtl: boolean;
 }
 
-const toastr = (options: any = {}) => {
+type ToastrOptions = ToastrDefaultOptions & {
+  onclick?: Function;
+  onCloseClick?: Function;
+  closeButton: boolean;
+};
+
+const toastrModule = (options: any = {}): any => {
   let $container: HTMLElement | null = null;
   let listener: any;
   let toastId = 0;
@@ -89,7 +92,7 @@ const toastr = (options: any = {}) => {
 
   // //////////////
 
-  function error(message: string, title: string, optionsOverride?: ToastrOptions) {
+  function error(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
     return notify({
       type: toastType.error,
       iconClass: getOptions().iconClasses.error,
@@ -99,7 +102,7 @@ const toastr = (options: any = {}) => {
     });
   }
 
-  function getContainer(options: any = null, create: any = null) {
+  function getContainer(options: any = null, create: any = null): HTMLElement {
     if (!options) { options = getOptions(); }
     $container = document.getElementById(options.containerId);
     if ($container) {
@@ -111,7 +114,7 @@ const toastr = (options: any = {}) => {
     return $container;
   }
 
-  function info(message: string, title: string, optionsOverride?: ToastrOptions) {
+  function info(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
     return notify({
       type: toastType.info,
       iconClass: getOptions().iconClasses.info,
@@ -121,11 +124,11 @@ const toastr = (options: any = {}) => {
     });
   }
 
-  function subscribe(callback: Function) {
+  function subscribe(callback: Function): void {
     listener = callback;
   }
 
-  function success(message: string, title: string, optionsOverride?: ToastrOptions) {
+  function success(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
     return notify({
       type: toastType.success,
       iconClass: getOptions().iconClasses.success,
@@ -135,7 +138,7 @@ const toastr = (options: any = {}) => {
     });
   }
 
-  function warning(message: string, title: string, optionsOverride?: ToastrOptions) {
+  function warning(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
     return notify({
       type: toastType.warning,
       iconClass: getOptions().iconClasses.warning,
@@ -145,7 +148,7 @@ const toastr = (options: any = {}) => {
     });
   }
 
-  function clear($toastElement: any, clearOptions: any) {
+  function clear($toastElement: any, clearOptions: any): void {
     const options = getOptions();
     if (!$container) { getContainer(options); }
     if (!clearToast($toastElement, options, clearOptions)) {
@@ -153,7 +156,7 @@ const toastr = (options: any = {}) => {
     }
   }
 
-  function remove($toastElement: any) {
+  function remove($toastElement: any): void {
     const options = getOptions();
     if (!$container) { getContainer(options); }
     if (!$container) { return; }
@@ -172,7 +175,7 @@ const toastr = (options: any = {}) => {
 
   // internal functions
 
-  function clearContainer(options: any) {
+  function clearContainer(options: any): void {
     if (!$container) {
       return;
     }
@@ -214,7 +217,7 @@ const toastr = (options: any = {}) => {
     return $container;
   }
 
-  function getDefaults() {
+  function getDefaults(): ToastrDefaultOptions {
     return {
       tapToDismiss: true,
       toastClass: 'toast',
@@ -258,12 +261,12 @@ const toastr = (options: any = {}) => {
     };
   }
 
-  function publish(args: any) {
+  function publish(args: any): void {
     if (!listener) { return; }
     listener(args);
   }
 
-  function notify(map: any): HTMLElement | void {
+  function notify(map: any): HTMLElement | null {
     let options = getOptions();
     let iconClass = map.iconClass || options.iconClass;
 
@@ -272,9 +275,11 @@ const toastr = (options: any = {}) => {
       iconClass = map.optionsOverride.iconClass || iconClass;
     }
 
-    if (shouldExit(options, map)) { return; }
+    if (shouldExit(options, map)) {
+      return null;
+    }
 
-    toastId++;
+    toastId += 1;
 
     $container = getContainer(options, true);
 
@@ -315,7 +320,7 @@ const toastr = (options: any = {}) => {
 
     return $toastElement;
 
-    function escapeHtml(source: any) {
+    function escapeHtml(source: any): void {
       if (source == null) {
         source = '';
       }
@@ -328,7 +333,7 @@ const toastr = (options: any = {}) => {
         .replace(/>/g, '&gt;');
     }
 
-    function personalizeToast() {
+    function personalizeToast(): void {
       setIcon();
       setTitle();
       setMessage();
@@ -339,7 +344,7 @@ const toastr = (options: any = {}) => {
       setAria();
     }
 
-    function setAria() {
+    function setAria(): void {
       let ariaValue = '';
       switch (map.iconClass) {
         case 'toast-success':
@@ -352,7 +357,7 @@ const toastr = (options: any = {}) => {
       $toastElement.setAttribute('aria-live', ariaValue);
     }
 
-    function handleEvents() {
+    function handleEvents(): void {
       if (options.closeOnHover) {
         $toastElement.addEventListener('mouseenter', stickAround);
         $toastElement.addEventListener('mouseleave', delayedHideToast);
@@ -390,7 +395,7 @@ const toastr = (options: any = {}) => {
       }
     }
 
-    function displayToast() {
+    function displayToast(): void {
       // todo hide toast
       // $toastElement.hide();
 
@@ -412,13 +417,13 @@ const toastr = (options: any = {}) => {
       }
     }
 
-    function setIcon() {
+    function setIcon(): void {
       if (map.iconClass) {
         $toastElement.classList.add(options.toastClass, iconClass);
       }
     }
 
-    function setSequence() {
+    function setSequence(): void {
       if (!$container) {
         return;
       }
@@ -430,7 +435,7 @@ const toastr = (options: any = {}) => {
       }
     }
 
-    function setTitle() {
+    function setTitle(): void {
       if (map.title) {
         let suffix = map.title;
         if (options.escapeHtml) {
@@ -442,7 +447,7 @@ const toastr = (options: any = {}) => {
       }
     }
 
-    function setMessage() {
+    function setMessage(): void {
       if (map.message) {
         let suffix = map.message;
         if (options.escapeHtml) {
@@ -454,7 +459,7 @@ const toastr = (options: any = {}) => {
       }
     }
 
-    function setCloseButton() {
+    function setCloseButton(): void {
       if (options.closeButton) {
         $closeElement.classList.add(options.closeClass);
         $closeElement.setAttribute('role', 'button');
@@ -462,20 +467,20 @@ const toastr = (options: any = {}) => {
       }
     }
 
-    function setProgressBar() {
+    function setProgressBar(): void {
       if (options.progressBar) {
         $progressElement.classList.add(options.progressClass);
         $toastElement.insertBefore($progressElement, $toastElement.firstChild);
       }
     }
 
-    function setRTL() {
+    function setRTL(): void {
       if (options.rtl) {
         $toastElement.classList.add('rtl');
       }
     }
 
-    function shouldExit(options: any, map: any) {
+    function shouldExit(options: any, map: any): boolean {
       if (options.preventDuplicates) {
         if (map.message === previousToast) {
           return true;
@@ -485,7 +490,7 @@ const toastr = (options: any = {}) => {
       return false;
     }
 
-    function hideToast(override: any = null) {
+    function hideToast(override: any = null): void {
       const method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
       const duration = override && options.closeDuration !== false
         ? options.closeDuration : options.hideDuration;
@@ -510,7 +515,7 @@ const toastr = (options: any = {}) => {
       // });
     }
 
-    function delayedHideToast() {
+    function delayedHideToast(): void {
       if (options.timeOut > 0 || options.extendedTimeOut > 0) {
         intervalId = setTimeout(hideToast, options.extendedTimeOut);
         progressBar.maxHideTime = options.extendedTimeOut;
@@ -518,7 +523,7 @@ const toastr = (options: any = {}) => {
       }
     }
 
-    function stickAround() {
+    function stickAround(): void {
       clearTimeout(intervalId);
       progressBar.hideEta = 0;
       // todo
@@ -527,8 +532,12 @@ const toastr = (options: any = {}) => {
       // );
     }
 
-    function updateProgress() {
-      const percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
+    function updateProgress(): void {
+      const percentage = (
+        (progressBar.hideEta - (new Date().getTime()))
+        / progressBar.maxHideTime
+      ) * 100;
+
       $progressElement.style.width = `${percentage}%`;
     }
   }
@@ -537,7 +546,7 @@ const toastr = (options: any = {}) => {
     return merge({}, getDefaults(), toastr.options);
   }
 
-  function removeToast($toastElement: any) {
+  function removeToast($toastElement: any): void {
     if (!$container) { getContainer(); }
     if (!$container) {
       return;
@@ -561,4 +570,4 @@ const toastr = (options: any = {}) => {
   }
 };
 
-export default toastr;
+export default toastrModule;
