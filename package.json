@@ -102,6 +102,6 @@
     "lint": "eslint \"./src/**/*.ts\"",
     "fix": "npm run lint -- --fix",
     "start": "rollup -c rollup.config.ts -w",
-    "test": "gulp test"
+    "test": "echo 'no tests yet'"
   }
 }
