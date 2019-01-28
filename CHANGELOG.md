@@ -1,3 +1,7 @@
+3.0.0-alpha.1 - January, 28 2019
+
+* 6e5c230 Feat: add some types (JPeer264)
+
 3.0.0-alpha.0 - January, 28 2019
 
 * 7e3fc00 Chore: update tets (JPeer264)
