@@ -1,7 +1,9 @@
 {
   "name": "toastr",
   "filename": "build/toastr.min.js",
-  "main": "toastr.js",
+  "main": "dist/toastr.umd.js",
+  "module": "dist/toastr.es5.js",
+  "typings": "dist/types/toastr.d.ts",
   "style": "build/toastr.min.css",
   "version": "2.1.4",
   "description": "ToastrJS is a JavaScript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.",
@@ -36,9 +38,10 @@
   ],
   "dependencies": {
     "jquery": ">=1.12.0",
-    "lodash.merge": "^4.6.1"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.120",
     "gulp": "^3.8.10",
     "gulp-bytediff": "^0.2.0",
     "gulp-jscs": "^1.3.0",
@@ -58,12 +61,24 @@
     "karma-coverage": "^1.1.1",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-qunit": "^0.1.3",
+    "lodash.camelcase": "^4.3.0",
     "merge-stream": "^0.1.6",
     "phantomjs-prebuilt": "^2.1.14",
     "plato": "^1.2.2",
-    "qunitjs": "~1.14.0"
+    "qunitjs": "~1.14.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.19.2",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.2.4"
   },
   "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "start": "rollup -c rollup.config.ts -w",
     "test": "gulp test"
   }
 }
