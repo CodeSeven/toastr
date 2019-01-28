@@ -2342,14 +2342,14 @@
       };
       var previousToast;
       return toastr;
-      ////////////////
+      // //////////////
       function error(message, title, optionsOverride) {
           return notify({
               type: toastType.error,
               iconClass: getOptions().iconClasses.error,
               message: message,
               optionsOverride: optionsOverride,
-              title: title
+              title: title,
           });
       }
       function getContainer(options, create) {
@@ -2373,7 +2373,7 @@
               iconClass: getOptions().iconClasses.info,
               message: message,
               optionsOverride: optionsOverride,
-              title: title
+              title: title,
           });
       }
       function subscribe(callback) {
@@ -2385,7 +2385,7 @@
               iconClass: getOptions().iconClasses.success,
               message: message,
               optionsOverride: optionsOverride,
-              title: title
+              title: title,
           });
       }
       function warning(message, title, optionsOverride) {
@@ -2394,7 +2394,7 @@
               iconClass: getOptions().iconClasses.warning,
               message: message,
               optionsOverride: optionsOverride,
-              title: title
+              title: title,
           });
       }
       function clear($toastElement, clearOptions) {
@@ -2474,7 +2474,7 @@
                   error: 'toast-error',
                   info: 'toast-info',
                   success: 'toast-success',
-                  warning: 'toast-warning'
+                  warning: 'toast-warning',
               },
               iconClass: 'toast-info',
               positionClass: 'toast-top-right',
@@ -2489,7 +2489,7 @@
               preventDuplicates: false,
               progressBar: false,
               progressClass: 'toast-progress',
-              rtl: false
+              rtl: false,
           };
       }
       function publish(args) {
@@ -2521,7 +2521,7 @@
           var progressBar = {
               intervalId: null,
               hideEta: null,
-              maxHideTime: null
+              maxHideTime: null,
           };
           var response = {
               toastId: toastId,
@@ -2529,7 +2529,7 @@
               startTime: new Date(),
               endTime: undefined,
               options: options,
-              map: map
+              map: map,
           };
           personalizeToast();
           displayToast();
@@ -2678,17 +2678,15 @@
                   if (map.message === previousToast) {
                       return true;
                   }
-                  else {
-                      previousToast = map.message;
-                  }
+                  previousToast = map.message;
               }
               return false;
           }
           function hideToast(override) {
               if (override === void 0) { override = null; }
               var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
-              var duration = override && options.closeDuration !== false ?
-                  options.closeDuration : options.hideDuration;
+              var duration = override && options.closeDuration !== false
+                  ? options.closeDuration : options.hideDuration;
               var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
               if ($toastElement === document.activeElement && !override) {
                   return;
@@ -2725,7 +2723,7 @@
           }
           function updateProgress() {
               var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-              $progressElement.style.width = percentage + '%';
+              $progressElement.style.width = percentage + "%";
           }
       }
       function getOptions() {

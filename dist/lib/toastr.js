@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  *
  * Project: https://github.com/CodeSeven/toastr
  */
-var lodash_merge_1 = require("lodash.merge");
+var merge_1 = require("lodash/merge");
 var toastr = function (options) {
     if (options === void 0) { options = {}; }
     var $container;
@@ -38,14 +38,14 @@ var toastr = function (options) {
     };
     var previousToast;
     return toastr;
-    ////////////////
+    // //////////////
     function error(message, title, optionsOverride) {
         return notify({
             type: toastType.error,
             iconClass: getOptions().iconClasses.error,
             message: message,
             optionsOverride: optionsOverride,
-            title: title
+            title: title,
         });
     }
     function getContainer(options, create) {
@@ -69,7 +69,7 @@ var toastr = function (options) {
             iconClass: getOptions().iconClasses.info,
             message: message,
             optionsOverride: optionsOverride,
-            title: title
+            title: title,
         });
     }
     function subscribe(callback) {
@@ -81,7 +81,7 @@ var toastr = function (options) {
             iconClass: getOptions().iconClasses.success,
             message: message,
             optionsOverride: optionsOverride,
-            title: title
+            title: title,
         });
     }
     function warning(message, title, optionsOverride) {
@@ -90,7 +90,7 @@ var toastr = function (options) {
             iconClass: getOptions().iconClasses.warning,
             message: message,
             optionsOverride: optionsOverride,
-            title: title
+            title: title,
         });
     }
     function clear($toastElement, clearOptions) {
@@ -170,7 +170,7 @@ var toastr = function (options) {
                 error: 'toast-error',
                 info: 'toast-info',
                 success: 'toast-success',
-                warning: 'toast-warning'
+                warning: 'toast-warning',
             },
             iconClass: 'toast-info',
             positionClass: 'toast-top-right',
@@ -185,7 +185,7 @@ var toastr = function (options) {
             preventDuplicates: false,
             progressBar: false,
             progressClass: 'toast-progress',
-            rtl: false
+            rtl: false,
         };
     }
     function publish(args) {
@@ -198,7 +198,7 @@ var toastr = function (options) {
         var options = getOptions();
         var iconClass = map.iconClass || options.iconClass;
         if (typeof (map.optionsOverride) !== 'undefined') {
-            options = lodash_merge_1.default({}, options, map.optionsOverride);
+            options = merge_1.default({}, options, map.optionsOverride);
             iconClass = map.optionsOverride.iconClass || iconClass;
         }
         if (shouldExit(options, map)) {
@@ -217,7 +217,7 @@ var toastr = function (options) {
         var progressBar = {
             intervalId: null,
             hideEta: null,
-            maxHideTime: null
+            maxHideTime: null,
         };
         var response = {
             toastId: toastId,
@@ -225,7 +225,7 @@ var toastr = function (options) {
             startTime: new Date(),
             endTime: undefined,
             options: options,
-            map: map
+            map: map,
         };
         personalizeToast();
         displayToast();
@@ -374,17 +374,15 @@ var toastr = function (options) {
                 if (map.message === previousToast) {
                     return true;
                 }
-                else {
-                    previousToast = map.message;
-                }
+                previousToast = map.message;
             }
             return false;
         }
         function hideToast(override) {
             if (override === void 0) { override = null; }
             var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
-            var duration = override && options.closeDuration !== false ?
-                options.closeDuration : options.hideDuration;
+            var duration = override && options.closeDuration !== false
+                ? options.closeDuration : options.hideDuration;
             var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
             if ($toastElement === document.activeElement && !override) {
                 return;
@@ -421,11 +419,11 @@ var toastr = function (options) {
         }
         function updateProgress() {
             var percentage = ((progressBar.hideEta - (new Date().getTime())) / progressBar.maxHideTime) * 100;
-            $progressElement.style.width = percentage + '%';
+            $progressElement.style.width = percentage + "%";
         }
     }
     function getOptions() {
-        return lodash_merge_1.default({}, getDefaults(), toastr.options);
+        return merge_1.default({}, getDefaults(), toastr.options);
     }
     function removeToast($toastElement) {
         if (!$container) {
