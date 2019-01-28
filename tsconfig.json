@@ -15,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "declarationDir": "dist/types",
     "outDir": "dist/lib",
     "typeRoots": [

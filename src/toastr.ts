@@ -12,8 +12,55 @@
  */
 import merge from 'lodash/merge';
 
+import { version } from '../package.json';
+
+type ToastrOptions = {
+  tapToDismiss: boolean;
+  toastClass: string;
+  containerId: string;
+  debug: boolean;
+
+  showMethod: 'fadeIn' | 'slideDown' | 'show';
+  showDuration: number;
+  showEasing: 'swing' | 'linear';
+  onShown?: Function;
+  hideMethod: 'fadeOut';
+  hideDuration: number;
+  hideEasing: 'swing';
+  onHidden?: Function;
+  closeMethod: boolean;
+  closeDuration: boolean;
+  closeEasing: boolean;
+  closeOnHover: boolean;
+
+  onclick?: Function;
+  onCloseClick?: Function;
+  closeButton: boolean;
+  extendedTimeOut: number;
+  iconClasses: {
+    error: string;
+    info: string;
+    success: string;
+    warning: string;
+  };
+  iconClass: string;
+  positionClass: string;
+  timeOut: number; // Set timeOut and extendedTimeOut to 0 to make it sticky
+  titleClass: string;
+  messageClass: string;
+  escapeHtml: boolean;
+  target: string;
+  closeHtml: string;
+  closeClass: string;
+  newestOnTop: boolean;
+  preventDuplicates: boolean;
+  progressBar: boolean;
+  progressClass: string;
+  rtl: boolean;
+}
+
 const toastr = (options: any = {}) => {
-  let $container: any;
+  let $container: HTMLElement | null = null;
   let listener: any;
   let toastId = 0;
   const toastType = {
@@ -24,7 +71,7 @@ const toastr = (options: any = {}) => {
   };
 
   const toastr = {
-    version: '2.1.4',
+    version,
     getContainer,
     subscribe,
     success,
@@ -36,13 +83,13 @@ const toastr = (options: any = {}) => {
     info,
   };
 
-  let previousToast: any;
+  let previousToast: HTMLElement | null = null;
 
   return toastr;
 
   // //////////////
 
-  function error(message: string, title: string, optionsOverride: any) {
+  function error(message: string, title: string, optionsOverride?: ToastrOptions) {
     return notify({
       type: toastType.error,
       iconClass: getOptions().iconClasses.error,
@@ -64,7 +111,7 @@ const toastr = (options: any = {}) => {
     return $container;
   }
 
-  function info(message: string, title: string, optionsOverride: any) {
+  function info(message: string, title: string, optionsOverride?: ToastrOptions) {
     return notify({
       type: toastType.info,
       iconClass: getOptions().iconClasses.info,
@@ -78,7 +125,7 @@ const toastr = (options: any = {}) => {
     listener = callback;
   }
 
-  function success(message: string, title: string, optionsOverride: any) {
+  function success(message: string, title: string, optionsOverride?: ToastrOptions) {
     return notify({
       type: toastType.success,
       iconClass: getOptions().iconClasses.success,
@@ -88,7 +135,7 @@ const toastr = (options: any = {}) => {
     });
   }
 
-  function warning(message: string, title: string, optionsOverride: any) {
+  function warning(message: string, title: string, optionsOverride?: ToastrOptions) {
     return notify({
       type: toastType.warning,
       iconClass: getOptions().iconClasses.warning,
@@ -109,18 +156,27 @@ const toastr = (options: any = {}) => {
   function remove($toastElement: any) {
     const options = getOptions();
     if (!$container) { getContainer(options); }
+    if (!$container) { return; }
     if ($toastElement && $toastElement !== document.activeElement) {
       removeToast($toastElement);
       return;
     }
     if (!$container.hasChildNodes()) {
-      $container.parentNode.removeChild($container);
+      const parentNode = $container.parentElement;
+
+      if (parentNode) {
+        parentNode.removeChild($container);
+      }
     }
   }
 
   // internal functions
 
   function clearContainer(options: any) {
+    if (!$container) {
+      return;
+    }
+
     const toastsToClear = $container.childNodes;
 
     for (let i = toastsToClear.length - 1; i >= 0; i--) {
@@ -128,7 +184,7 @@ const toastr = (options: any = {}) => {
     }
   }
 
-  function clearToast($toastElement: any, options: any, clearOptions: any = null) {
+  function clearToast($toastElement: any, options: any, clearOptions: any = null): boolean {
     const force = clearOptions && clearOptions.force ? clearOptions.force : false;
     if ($toastElement && (force || $toastElement !== document.activeElement)) {
       // todo hide effect
@@ -143,7 +199,7 @@ const toastr = (options: any = {}) => {
     return false;
   }
 
-  function createContainer(options: any) {
+  function createContainer(options: any): HTMLElement {
     $container = document.createElement('div');
 
     $container.setAttribute('id', options.containerId);
@@ -207,7 +263,7 @@ const toastr = (options: any = {}) => {
     listener(args);
   }
 
-  function notify(map: any) {
+  function notify(map: any): HTMLElement | void {
     let options = getOptions();
     let iconClass = map.iconClass || options.iconClass;
 
@@ -303,7 +359,7 @@ const toastr = (options: any = {}) => {
       }
 
       if (!options.onclick && options.tapToDismiss) {
-        $toastElement.addEventListener('click', (hideToast as any));
+        $toastElement.addEventListener('click', hideToast);
       }
 
       if (options.closeButton && $closeElement) {
@@ -324,7 +380,11 @@ const toastr = (options: any = {}) => {
 
       if (options.onclick) {
         $toastElement.addEventListener('click', (event) => {
-          options.onclick(event);
+          // ts needs another check here
+          if (options.onclick) {
+            options.onclick(event);
+          }
+
           hideToast();
         });
       }
@@ -344,7 +404,7 @@ const toastr = (options: any = {}) => {
 
       if (options.timeOut > 0) {
         intervalId = setTimeout(hideToast, options.timeOut);
-        progressBar.maxHideTime = parseFloat(options.timeOut);
+        progressBar.maxHideTime = options.timeOut;
         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
         if (options.progressBar) {
           progressBar.intervalId = setInterval(updateProgress, 10);
@@ -359,6 +419,10 @@ const toastr = (options: any = {}) => {
     }
 
     function setSequence() {
+      if (!$container) {
+        return;
+      }
+
       if (options.newestOnTop) {
         $container.insertBefore($toastElement, $container.firstChild);
       } else {
@@ -449,7 +513,7 @@ const toastr = (options: any = {}) => {
     function delayedHideToast() {
       if (options.timeOut > 0 || options.extendedTimeOut > 0) {
         intervalId = setTimeout(hideToast, options.extendedTimeOut);
-        progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
+        progressBar.maxHideTime = options.extendedTimeOut;
         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
       }
     }
@@ -469,12 +533,15 @@ const toastr = (options: any = {}) => {
     }
   }
 
-  function getOptions() {
+  function getOptions(): ToastrOptions {
     return merge({}, getDefaults(), toastr.options);
   }
 
   function removeToast($toastElement: any) {
-    if (!$container) { $container = getContainer(); }
+    if (!$container) { getContainer(); }
+    if (!$container) {
+      return;
+    }
     // todo set after visible state
     // as this will be a transition of css
     $toastElement.parentNode.removeChild($toastElement);
@@ -489,7 +556,7 @@ const toastr = (options: any = {}) => {
         $container.parentNode.removeChild($container);
       }
 
-      previousToast = undefined;
+      previousToast = null;
     }
   }
 };

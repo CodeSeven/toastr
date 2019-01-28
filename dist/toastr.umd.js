@@ -2305,6 +2305,8 @@
 
   var merge_1 = merge;
 
+  var version = "3.0.0-alpha.0";
+
   /*
    * Toastr
    * Copyright 2012-2015
@@ -2319,7 +2321,7 @@
    */
   var toastr = function (options) {
       if (options === void 0) { options = {}; }
-      var $container;
+      var $container = null;
       var listener;
       var toastId = 0;
       var toastType = {
@@ -2329,7 +2331,7 @@
           success: 'success',
       };
       var toastr = {
-          version: '2.1.4',
+          version: version,
           getContainer: getContainer,
           subscribe: subscribe,
           success: success,
@@ -2340,7 +2342,7 @@
           error: error,
           info: info,
       };
-      var previousToast;
+      var previousToast = null;
       return toastr;
       // //////////////
       function error(message, title, optionsOverride) {
@@ -2411,16 +2413,25 @@
           if (!$container) {
               getContainer(options);
           }
+          if (!$container) {
+              return;
+          }
           if ($toastElement && $toastElement !== document.activeElement) {
               removeToast($toastElement);
               return;
           }
           if (!$container.hasChildNodes()) {
-              $container.parentNode.removeChild($container);
+              var parentNode = $container.parentElement;
+              if (parentNode) {
+                  parentNode.removeChild($container);
+              }
           }
       }
       // internal functions
       function clearContainer(options) {
+          if (!$container) {
+              return;
+          }
           var toastsToClear = $container.childNodes;
           for (var i = toastsToClear.length - 1; i >= 0; i--) {
               clearToast(toastsToClear[i], options);
@@ -2596,7 +2607,10 @@
               }
               if (options.onclick) {
                   $toastElement.addEventListener('click', function (event) {
-                      options.onclick(event);
+                      // ts needs another check here
+                      if (options.onclick) {
+                          options.onclick(event);
+                      }
                       hideToast();
                   });
               }
@@ -2613,7 +2627,7 @@
               // );
               if (options.timeOut > 0) {
                   intervalId = setTimeout(hideToast, options.timeOut);
-                  progressBar.maxHideTime = parseFloat(options.timeOut);
+                  progressBar.maxHideTime = options.timeOut;
                   progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
                   if (options.progressBar) {
                       progressBar.intervalId = setInterval(updateProgress, 10);
@@ -2626,6 +2640,9 @@
               }
           }
           function setSequence() {
+              if (!$container) {
+                  return;
+              }
               if (options.newestOnTop) {
                   $container.insertBefore($toastElement, $container.firstChild);
               }
@@ -2709,7 +2726,7 @@
           function delayedHideToast() {
               if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                   intervalId = setTimeout(hideToast, options.extendedTimeOut);
-                  progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
+                  progressBar.maxHideTime = options.extendedTimeOut;
                   progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
               }
           }
@@ -2731,7 +2748,10 @@
       }
       function removeToast($toastElement) {
           if (!$container) {
-              $container = getContainer();
+              getContainer();
+          }
+          if (!$container) {
+              return;
           }
           // todo set after visible state
           // as this will be a transition of css
@@ -2745,7 +2765,7 @@
               if ($container.parentNode) {
                   $container.parentNode.removeChild($container);
               }
-              previousToast = undefined;
+              previousToast = null;
           }
       }
   };

@@ -1,0 +1,107 @@
+{
+    "name": "toastr2",
+    "main": "dist/toastr.umd.js",
+    "module": "dist/toastr.es5.js",
+    "typings": "dist/types/toastr.d.ts",
+    "style": "build/toastr.min.css",
+    "version": "3.0.0-alpha.0",
+    "description": "ToastrJS is a JavaScript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.",
+    "homepage": "http://www.toastrjs.com",
+    "keywords": [
+        "Toastr",
+        "ToastrJS",
+        "toastr.js"
+    ],
+    "lint-staged": {
+        "*.ts": [
+            "eslint --fix",
+            "git add"
+        ]
+    },
+    "maintainers": [
+        {
+            "name": "Jan peer Stöcklmair",
+            "web": "https://jpeer.at",
+            "twitter": "@jpeer264"
+        }
+    ],
+    "authors": [
+        {
+            "name": "John Papa",
+            "web": "http://www.johnpapa.net",
+            "twitter": "@john_papa"
+        },
+        {
+            "name": "Tim Ferrell",
+            "web": "https://twitter.com/ferrell_tim",
+            "twitter": "@ferrell_tim"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/CodeSeven/toastr.git"
+    },
+    "bugs": "http://stackoverflow.com/questions/tagged/toastr",
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://www.opensource.org/licenses/mit-license.php"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.12.0",
+        "lodash": "^4.17.11"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.120",
+        "eslint": "^5.12.1",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-config-typescript": "^1.1.0",
+        "eslint-plugin-import": "^2.15.0",
+        "eslint-plugin-typescript": "^0.14.0",
+        "gulp": "^3.8.10",
+        "gulp-bytediff": "^0.2.0",
+        "gulp-jscs": "^1.3.0",
+        "gulp-jshint": "^1.9.0",
+        "gulp-less": "^3.0.3",
+        "gulp-load-plugins": "^0.7.1",
+        "gulp-load-utils": "0.0.4",
+        "gulp-minify-css": "^0.3.11",
+        "gulp-rename": "^1.2.0",
+        "gulp-sourcemaps": "^1.2.8",
+        "gulp-task-listing": "^0.3.0",
+        "gulp-uglify": "^1.0.1",
+        "gulp-util": "^3.0.1",
+        "husky": "^1.3.1",
+        "jquery": ">=1.12.0",
+        "jshint-stylish": "^1.0.0",
+        "karma": "^1.7.0",
+        "karma-coverage": "^1.1.1",
+        "karma-phantomjs-launcher": "^1.0.4",
+        "karma-qunit": "^0.1.3",
+        "lint-staged": "^8.1.0",
+        "lodash.camelcase": "^4.3.0",
+        "merge-stream": "^0.1.6",
+        "phantomjs-prebuilt": "^2.1.14",
+        "plato": "^1.2.2",
+        "qunitjs": "~1.14.0",
+        "rollup": "^1.1.2",
+        "rollup-plugin-commonjs": "^9.2.0",
+        "rollup-plugin-json": "^3.1.0",
+        "rollup-plugin-node-resolve": "^4.0.0",
+        "rollup-plugin-sourcemaps": "^0.4.2",
+        "rollup-plugin-typescript2": "^0.19.2",
+        "typedoc": "^0.14.2",
+        "typescript": "^3.2.4",
+        "typescript-eslint-parser": "^22.0.0"
+    },
+    "scripts": {
+        "prepublish": "npm run build",
+        "prebuild": "rimraf dist",
+        "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+        "lint": "eslint \"./src/**/*.ts\"",
+        "fix": "npm run lint -- --fix",
+        "start": "rollup -c rollup.config.ts -w",
+        "test": "echo 'no tests yet'"
+    }
+}

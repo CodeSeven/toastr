@@ -13,9 +13,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Project: https://github.com/CodeSeven/toastr
  */
 var merge_1 = require("lodash/merge");
+var package_json_1 = require("../package.json");
 var toastr = function (options) {
     if (options === void 0) { options = {}; }
-    var $container;
+    var $container = null;
     var listener;
     var toastId = 0;
     var toastType = {
@@ -25,7 +26,7 @@ var toastr = function (options) {
         success: 'success',
     };
     var toastr = {
-        version: '2.1.4',
+        version: package_json_1.version,
         getContainer: getContainer,
         subscribe: subscribe,
         success: success,
@@ -36,7 +37,7 @@ var toastr = function (options) {
         error: error,
         info: info,
     };
-    var previousToast;
+    var previousToast = null;
     return toastr;
     // //////////////
     function error(message, title, optionsOverride) {
@@ -107,16 +108,25 @@ var toastr = function (options) {
         if (!$container) {
             getContainer(options);
         }
+        if (!$container) {
+            return;
+        }
         if ($toastElement && $toastElement !== document.activeElement) {
             removeToast($toastElement);
             return;
         }
         if (!$container.hasChildNodes()) {
-            $container.parentNode.removeChild($container);
+            var parentNode = $container.parentElement;
+            if (parentNode) {
+                parentNode.removeChild($container);
+            }
         }
     }
     // internal functions
     function clearContainer(options) {
+        if (!$container) {
+            return;
+        }
         var toastsToClear = $container.childNodes;
         for (var i = toastsToClear.length - 1; i >= 0; i--) {
             clearToast(toastsToClear[i], options);
@@ -292,7 +302,10 @@ var toastr = function (options) {
             }
             if (options.onclick) {
                 $toastElement.addEventListener('click', function (event) {
-                    options.onclick(event);
+                    // ts needs another check here
+                    if (options.onclick) {
+                        options.onclick(event);
+                    }
                     hideToast();
                 });
             }
@@ -309,7 +322,7 @@ var toastr = function (options) {
             // );
             if (options.timeOut > 0) {
                 intervalId = setTimeout(hideToast, options.timeOut);
-                progressBar.maxHideTime = parseFloat(options.timeOut);
+                progressBar.maxHideTime = options.timeOut;
                 progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
                 if (options.progressBar) {
                     progressBar.intervalId = setInterval(updateProgress, 10);
@@ -322,6 +335,9 @@ var toastr = function (options) {
             }
         }
         function setSequence() {
+            if (!$container) {
+                return;
+            }
             if (options.newestOnTop) {
                 $container.insertBefore($toastElement, $container.firstChild);
             }
@@ -405,7 +421,7 @@ var toastr = function (options) {
         function delayedHideToast() {
             if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                 intervalId = setTimeout(hideToast, options.extendedTimeOut);
-                progressBar.maxHideTime = parseFloat(options.extendedTimeOut);
+                progressBar.maxHideTime = options.extendedTimeOut;
                 progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
             }
         }
@@ -427,7 +443,10 @@ var toastr = function (options) {
     }
     function removeToast($toastElement) {
         if (!$container) {
-            $container = getContainer();
+            getContainer();
+        }
+        if (!$container) {
+            return;
         }
         // todo set after visible state
         // as this will be a transition of css
@@ -441,7 +460,7 @@ var toastr = function (options) {
             if ($container.parentNode) {
                 $container.parentNode.removeChild($container);
             }
-            previousToast = undefined;
+            previousToast = null;
         }
     }
 };
