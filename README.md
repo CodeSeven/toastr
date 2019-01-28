@@ -1,11 +1,11 @@
 # toastr
+
+> Note: this is a fork of [toastr](https://github.com/CodeSeven/toastr). This library is made to use it without jQuery and with Typescript
+
 **toastr** is a Javascript library for non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
 
 [![Build Status](https://travis-ci.org/CodeSeven/toastr.svg)](https://travis-ci.org/CodeSeven/toastr)
 Browser testing provided by BrowserStack.
-
-## Current Version
-2.1.4
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html

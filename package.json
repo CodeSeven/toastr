@@ -1,6 +1,5 @@
 {
-  "name": "toastr",
-  "filename": "build/toastr.min.js",
+  "name": "toastr2",
   "main": "dist/toastr.umd.js",
   "module": "dist/toastr.es5.js",
   "typings": "dist/types/toastr.d.ts",
@@ -20,6 +19,13 @@
     ]
   },
   "maintainers": [
+    {
+      "name": "Jan peer Stöcklmair",
+      "web": "https://jpeer.at",
+      "twitter": "@jpeer264"
+    }
+  ],
+  "authors": [
     {
       "name": "John Papa",
       "web": "http://www.johnpapa.net",
@@ -90,6 +96,7 @@
     "typescript-eslint-parser": "^22.0.0"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
     "lint": "eslint \"./src/**/*.ts\"",
