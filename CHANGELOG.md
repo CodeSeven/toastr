@@ -1,3 +1,7 @@
+3.0.0-alpha.2 - January, 28 2019
+
+* e202935 Chore: change typings location (JPeer264)
+
 3.0.0-alpha.1 - January, 28 2019
 
 * 6e5c230 Feat: add some types (JPeer264)
