@@ -2305,7 +2305,7 @@
 
   var merge_1 = merge;
 
-  var version = "3.0.0-alpha.0";
+  var version = "3.0.0-alpha.1";
 
   /*
    * Toastr
