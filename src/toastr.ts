@@ -2,14 +2,14 @@ import merge from 'lodash/merge';
 
 import { version } from '../package.json';
 
-type ToastType = {
+export type ToastType = {
   info: string;
   error: string;
   warning: string;
   success: string;
 };
 
-type ToastrOptions = {
+export type ToastrOptions = {
   tapToDismiss: boolean;
   toastClass: string;
   containerId: string;
@@ -55,7 +55,7 @@ type ToastrOptions = {
   rtl: boolean;
 }
 
-type NotifyMap = {
+export type NotifyMap = {
   type: string;
   optionsOverride?: ToastrOptions;
   iconClass: string;
