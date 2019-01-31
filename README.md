@@ -26,14 +26,16 @@ Toastr is hosted at cdnjs and jsdelivr
 
 ## Install
 
-#### [npm](https://www.npmjs.com/package/toastr)
+> Important: This is project is still in alpha so it is released under the `next` tag
+
+#### [npm](https://www.npmjs.com/package/toastr2)
 ```
-npm install toastr2
+npm install toastr2@next
 ```
 
-#### [yarn](https://yarnpkg.com/en/package/toastr)
+#### [yarn](https://yarnpkg.com/en/package/toastr2)
 ```
-yarn add toastr2
+yarn add toastr2@next
 ```
 
 ## Wiki and Change Log

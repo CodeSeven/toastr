@@ -2299,7 +2299,7 @@ var merge = _createAssigner(function(object, source, srcIndex) {
 
 var merge_1 = merge;
 
-var version = "3.0.0-alpha.2";
+var version = "3.0.0-alpha.3";
 
 var Toastr = /** @class */ (function () {
     function Toastr(options) {
