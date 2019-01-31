@@ -1,3 +1,8 @@
+3.0.0-alpha.4 - January, 31 2019
+
+* 44ad8b2 Chore: remove next tag (JPeer264)
+* e364183 Docs: update readme (JPeer264)
+
 3.0.0-alpha.3 - January, 31 2019
 
 * d95a7c1 ocs: update docs (JPeer264)
