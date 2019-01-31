@@ -64,8 +64,6 @@ export type NotifyMap = {
 }
 
 class Toastr {
-  private $container: HTMLElement = document.createElement('div');
-
   private listener: any;
 
   private toastId = 0;
@@ -125,6 +123,8 @@ class Toastr {
     onCloseClick: () => { },
     closeButton: false,
   };
+
+  public $container: HTMLElement = document.createElement('div');
 
   public constructor(options?: ToastrOptions) {
     this.options = merge({}, this.options, options);
@@ -227,7 +227,7 @@ class Toastr {
     this.listener(args);
   }
 
-  public clear($toastElement: any, clearOptions: any) {
+  public clear($toastElement?: any, clearOptions?: any) {
     if (!this.$container) {
       this.getContainer(this.options);
     }

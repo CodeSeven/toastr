@@ -39,40 +39,6 @@
 
     // 'Clears' must go first
     module('clear');
-    asyncTest('clear - show 3 toasts, clear the 2nd', 1, function () {
-        //Arrange
-        var $toast = [];
-        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
-        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
-        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3');
-        var $container = toastr.getContainer();
-        //Act
-        toastr.clear($toast[1]);
-        //Assert
-        setTimeout(function () {
-            ok($container && $container.children().length === 2);
-            //Teardown
-            resetContainer();
-            start();
-        }, 1000);
-    });
-    asyncTest('clear - show 3 toasts, clear all 3, 0 left', 1, function () {
-        //Arrange
-        var $toast = [];
-        $toast[0] = toastr.info(sampleMsg, sampleTitle + '-1');
-        $toast[1] = toastr.info(sampleMsg, sampleTitle + '-2');
-        $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3');
-        var $container = toastr.getContainer();
-        //Act
-        toastr.clear();
-        //Assert
-        setTimeout(function () {
-            ok($container && $container.children().length === 0);
-            //Teardown
-            resetContainer();
-            start();
-        }, delay);
-    });
     test('clear - after clear with force option toast with focus disappears', 1, function () {
         //Arrange
         var $toast;
