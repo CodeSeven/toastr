@@ -4,7 +4,7 @@ var merge_1 = require("lodash/merge");
 var package_json_1 = require("../package.json");
 var Toastr = /** @class */ (function () {
     function Toastr(options) {
-        this.$container = document.createElement('div');
+        this.$container = null;
         this.toastId = 0;
         this.previousToast = null;
         this.toastType = {
@@ -56,6 +56,7 @@ var Toastr = /** @class */ (function () {
             closeButton: false,
         };
         this.options = merge_1.default({}, this.options, options);
+        debugger;
         this.createContainer();
     }
     Toastr.prototype.createContainer = function () {
@@ -71,9 +72,8 @@ var Toastr = /** @class */ (function () {
     Toastr.prototype.getContainer = function (options, create) {
         if (options === void 0) { options = this.options; }
         if (create === void 0) { create = null; }
-        var $container = document.getElementById(options.containerId);
-        if ($container) {
-            this.$container = $container;
+        this.$container = document.getElementById(options.containerId);
+        if (this.$container) {
             return this.$container;
         }
         if (create) {
@@ -443,4 +443,4 @@ var Toastr = /** @class */ (function () {
     return Toastr;
 }());
 exports.default = Toastr;
-//# sourceMappingURL=toastr.js.map
+//# sourceMappingURL=Toastr2.js.map

@@ -1,20 +1,15 @@
-/*
- * Toastr
- * Copyright 2012-2015
- * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
- * All Rights Reserved.
- * Use, reproduction, distribution, and modification of this code is subject to the terms and
- * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
- *
- * ARIA Support: Greta Krafsig
- *
- * Project: https://github.com/CodeSeven/toastr
- */
 import merge from 'lodash/merge';
 
 import { version } from '../package.json';
 
-type ToastrDefaultOptions = {
+type ToastType = {
+  info: string;
+  error: string;
+  warning: string;
+  success: string;
+};
+
+type ToastrOptions = {
   tapToDismiss: boolean;
   toastClass: string;
   containerId: string;
@@ -53,145 +48,269 @@ type ToastrDefaultOptions = {
   preventDuplicates: boolean;
   progressBar: boolean;
   progressClass: string;
+  onclick?: Function;
+
+  onCloseClick?: Function;
+  closeButton: boolean;
   rtl: boolean;
 }
 
-type ToastrOptions = ToastrDefaultOptions & {
-  onclick?: Function;
-  onCloseClick?: Function;
-  closeButton: boolean;
-};
+type NotifyMap = {
+  type: string;
+  optionsOverride?: ToastrOptions;
+  iconClass: string;
+  title: string;
+  message: string;
+}
 
-const toastrModule = (options: any = {}): any => {
-  let $container: HTMLElement | null = null;
-  let listener: any;
-  let toastId = 0;
-  const toastType = {
+class Toastr {
+  private $container: HTMLElement = document.createElement('div');
+
+  private listener: any;
+
+  private toastId = 0;
+
+  private previousToast: string | null = null;
+
+  private toastType: ToastType = {
     info: 'info',
     error: 'error',
     warning: 'warning',
     success: 'success',
   };
 
-  const toastr = {
-    version,
-    getContainer,
-    subscribe,
-    success,
-    warning,
-    options,
-    remove,
-    clear,
-    error,
-    info,
+  private version = version;
+
+  private options: ToastrOptions = {
+    tapToDismiss: true,
+    toastClass: 'toast',
+    containerId: 'toast-container',
+    debug: false,
+
+    showMethod: 'fadeIn', // fadeIn, slideDown, and show are built into jQuery
+    showDuration: 300,
+    showEasing: 'swing', // swing and linear are built into jQuery
+    onShown: undefined,
+    hideMethod: 'fadeOut',
+    hideDuration: 1000,
+    hideEasing: 'swing',
+    onHidden: undefined,
+    closeMethod: false,
+    closeDuration: false,
+    closeEasing: false,
+    closeOnHover: true,
+
+    extendedTimeOut: 1000,
+    iconClasses: {
+      error: 'toast-error',
+      info: 'toast-info',
+      success: 'toast-success',
+      warning: 'toast-warning',
+    },
+    iconClass: 'toast-info',
+    positionClass: 'toast-top-right',
+    timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+    titleClass: 'toast-title',
+    messageClass: 'toast-message',
+    escapeHtml: false,
+    target: 'body',
+    closeHtml: '<button type="button">&times;</button>',
+    closeClass: 'toast-close-button',
+    newestOnTop: true,
+    preventDuplicates: false,
+    progressBar: false,
+    progressClass: 'toast-progress',
+    rtl: false,
+
+    onCloseClick: () => { },
+    closeButton: false,
   };
 
-  let previousToast: HTMLElement | null = null;
+  protected constructor(options?: ToastrOptions) {
+    this.options = merge({}, this.options, options);
 
-  return toastr;
-
-  // //////////////
-
-  function error(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
-    return notify({
-      type: toastType.error,
-      iconClass: getOptions().iconClasses.error,
-      message,
-      optionsOverride,
-      title,
-    });
+    this.createContainer();
   }
 
-  function getContainer(options: any = null, create: any = null): HTMLElement {
-    if (!options) { options = getOptions(); }
-    $container = document.getElementById(options.containerId);
+  public createContainer(): HTMLElement {
+    this.$container = document.createElement('div');
+
+    this.$container.setAttribute('id', this.options.containerId);
+    this.$container.classList.add(this.options.positionClass);
+
+    const target = document.getElementsByTagName(this.options.target);
+
+    if (target && target[0]) {
+      target[0].appendChild(this.$container);
+    }
+
+    return this.$container;
+  }
+
+  public getContainer(options: any = this.options, create: any = null): HTMLElement {
+    const $container = document.getElementById(options.containerId);
+
     if ($container) {
-      return $container;
+      this.$container = $container;
+
+      return this.$container;
     }
+
     if (create) {
-      $container = createContainer(options);
+      this.$container = this.createContainer();
     }
-    return $container;
+
+    return this.$container;
   }
 
-  function info(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
-    return notify({
-      type: toastType.info,
-      iconClass: getOptions().iconClasses.info,
+  public error(
+    message: string,
+    title: string,
+    optionsOverride?: ToastrOptions,
+  ): HTMLElement | null {
+    return this.notify({
+      type: this.toastType.error,
+      iconClass: this.options.iconClasses.error,
       message,
       optionsOverride,
       title,
     });
   }
 
-  function subscribe(callback: Function): void {
-    listener = callback;
-  }
-
-  function success(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
-    return notify({
-      type: toastType.success,
-      iconClass: getOptions().iconClasses.success,
+  public warning(
+    message: string,
+    title: string,
+    optionsOverride?: ToastrOptions,
+  ): HTMLElement | null {
+    return this.notify({
+      type: this.toastType.warning,
+      iconClass: this.options.iconClasses.warning,
       message,
       optionsOverride,
       title,
     });
   }
 
-  function warning(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement {
-    return notify({
-      type: toastType.warning,
-      iconClass: getOptions().iconClasses.warning,
+  public success(
+    message: string,
+    title: string,
+    optionsOverride?: ToastrOptions,
+  ): HTMLElement | null {
+    return this.notify({
+      type: this.toastType.success,
+      iconClass: this.options.iconClasses.success,
       message,
       optionsOverride,
       title,
     });
   }
 
-  function clear($toastElement: any, clearOptions: any): void {
-    const options = getOptions();
-    if (!$container) { getContainer(options); }
-    if (!clearToast($toastElement, options, clearOptions)) {
-      clearContainer(options);
-    }
+  public info(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null {
+    return this.notify({
+      type: this.toastType.info,
+      iconClass: this.options.iconClasses.info,
+      message,
+      optionsOverride,
+      title,
+    });
   }
 
-  function remove($toastElement: any): void {
-    const options = getOptions();
-    if (!$container) { getContainer(options); }
-    if (!$container) { return; }
-    if ($toastElement && $toastElement !== document.activeElement) {
-      removeToast($toastElement);
+  public subscribe(callback: Function): void {
+    this.listener = callback;
+  }
+
+  public publish(args: any): void {
+    if (!this.listener) {
       return;
     }
-    if (!$container.hasChildNodes()) {
-      const parentNode = $container.parentElement;
+
+    this.listener(args);
+  }
+
+  public clear($toastElement: any, clearOptions: any) {
+    if (!this.$container) {
+      this.getContainer(this.options);
+    }
+
+    if (!this.clearToast($toastElement, this.options, clearOptions)) {
+      this.clearContainer(this.options);
+    }
+  }
+
+  public remove($toastElement: any) {
+    if (!this.$container) {
+      this.getContainer(this.options);
+    }
+
+    if (!this.$container) {
+      return;
+    }
+
+    if ($toastElement && $toastElement !== document.activeElement) {
+      this.removeToast($toastElement);
+
+      return;
+    }
+
+    if (!this.$container.hasChildNodes()) {
+      const parentNode = this.$container.parentElement;
 
       if (parentNode) {
-        parentNode.removeChild($container);
+        parentNode.removeChild(this.$container);
       }
     }
   }
 
-  // internal functions
+  public removeToast($toastElement: any) {
+    if (!this.$container) {
+      this.getContainer();
+    }
 
-  function clearContainer(options: any): void {
-    if (!$container) {
+    if (!this.$container) {
       return;
     }
 
-    const toastsToClear = $container.childNodes;
+    // todo set after visible state
+    // as this will be a transition of css
+    $toastElement.parentNode.removeChild($toastElement);
+    // check if visible
+    if ($toastElement.offsetWidth > 0 && $toastElement.offsetHeight > 0) {
+      return;
+    }
 
-    for (let i = toastsToClear.length - 1; i >= 0; i--) {
-      clearToast(toastsToClear[i], options);
+    // todo check if null makes sense
+    // $toastElement = null;
+
+    if (!this.$container.hasChildNodes()) {
+      if (this.$container.parentNode) {
+        this.$container.parentNode.removeChild(this.$container);
+      }
+
+      this.previousToast = null;
     }
   }
 
-  function clearToast($toastElement: any, options: any, clearOptions: any = null): boolean {
+  private clearContainer(options: any) {
+    if (!this.$container) {
+      return;
+    }
+
+    const toastsToClear = this.$container.childNodes;
+
+    for (let i = toastsToClear.length - 1; i >= 0; i--) {
+      this.clearToast(toastsToClear[i], options);
+    }
+  }
+
+  private clearToast(
+    $toastElement: any,
+    options: any = this.options,
+    clearOptions: any = null,
+  ): boolean {
     const force = clearOptions && clearOptions.force ? clearOptions.force : false;
     if ($toastElement && (force || $toastElement !== document.activeElement)) {
       // todo hide effect
-      removeToast($toastElement);
+      this.removeToast($toastElement);
       // $toastElement[options.hideMethod]({
       //     duration: options.hideDuration,
       //     easing: options.hideEasing,
@@ -199,89 +318,36 @@ const toastrModule = (options: any = {}): any => {
       // });
       return true;
     }
+
     return false;
   }
 
-  function createContainer(options: any): HTMLElement {
-    $container = document.createElement('div');
+  private notify(map: NotifyMap): HTMLElement | null {
+    let iconClass = map.iconClass || this.options.iconClass;
 
-    $container.setAttribute('id', options.containerId);
-    $container.classList.add(options.positionClass);
+    const shouldExit = (options: any, exitMap: NotifyMap): boolean => {
+      if (this.options.preventDuplicates) {
+        if (exitMap.message === this.previousToast) {
+          return true;
+        }
 
-    const target = document.getElementsByTagName(options.target);
-
-    if (target && target[0]) {
-      target[0].appendChild($container);
-    }
-
-    return $container;
-  }
-
-  function getDefaults(): ToastrDefaultOptions {
-    return {
-      tapToDismiss: true,
-      toastClass: 'toast',
-      containerId: 'toast-container',
-      debug: false,
-
-      showMethod: 'fadeIn', // fadeIn, slideDown, and show are built into jQuery
-      showDuration: 300,
-      showEasing: 'swing', // swing and linear are built into jQuery
-      onShown: undefined,
-      hideMethod: 'fadeOut',
-      hideDuration: 1000,
-      hideEasing: 'swing',
-      onHidden: undefined,
-      closeMethod: false,
-      closeDuration: false,
-      closeEasing: false,
-      closeOnHover: true,
-
-      extendedTimeOut: 1000,
-      iconClasses: {
-        error: 'toast-error',
-        info: 'toast-info',
-        success: 'toast-success',
-        warning: 'toast-warning',
-      },
-      iconClass: 'toast-info',
-      positionClass: 'toast-top-right',
-      timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-      titleClass: 'toast-title',
-      messageClass: 'toast-message',
-      escapeHtml: false,
-      target: 'body',
-      closeHtml: '<button type="button">&times;</button>',
-      closeClass: 'toast-close-button',
-      newestOnTop: true,
-      preventDuplicates: false,
-      progressBar: false,
-      progressClass: 'toast-progress',
-      rtl: false,
+        this.previousToast = exitMap.message;
+      }
+      return false;
     };
-  }
 
-  function publish(args: any): void {
-    if (!listener) { return; }
-    listener(args);
-  }
-
-  function notify(map: any): HTMLElement | null {
-    let options = getOptions();
-    let iconClass = map.iconClass || options.iconClass;
-
-    if (typeof (map.optionsOverride) !== 'undefined') {
-      options = merge({}, options, map.optionsOverride);
+    if (typeof map.optionsOverride !== 'undefined') {
+      this.options = merge({}, this.options, map.optionsOverride);
       iconClass = map.optionsOverride.iconClass || iconClass;
     }
 
-    if (shouldExit(options, map)) {
+    if (shouldExit(this.options, map)) {
       return null;
     }
 
-    toastId += 1;
+    this.toastId += 1;
 
-    $container = getContainer(options, true);
+    this.$container = this.getContainer(this.options, true);
 
     let intervalId: any = null;
     const $toastElement = document.createElement('div');
@@ -289,7 +355,7 @@ const toastrModule = (options: any = {}): any => {
     const $messageElement = document.createElement('div');
     const $progressElement = document.createElement('div');
     const createdElement = document.createElement('div');
-    createdElement.innerHTML = options.closeHtml.trim();
+    createdElement.innerHTML = this.options.closeHtml.trim();
     const $closeElement: any = createdElement.firstChild;
 
     const progressBar: any = {
@@ -298,53 +364,60 @@ const toastrModule = (options: any = {}): any => {
       maxHideTime: null,
     };
     const response: any = {
-      toastId,
+      toastId: this.toastId,
       state: 'visible',
       startTime: new Date(),
       endTime: undefined,
-      options,
+      options: this.options,
       map,
     };
 
-    personalizeToast();
+    const hideToast = (override: any = null): void => {
+      // const method = override && this.options.closeMethod !== false
+      //   ? this.options.closeMethod
+      //   : this.options.hideMethod;
 
-    displayToast();
+      // const duration = override && this.options.closeDuration !== false
+      //   ? this.options.closeDuration
+      //   : this.options.hideDuration;
 
-    handleEvents();
+      // const easing = override && this.options.closeEasing !== false
+      //   ? this.options.closeEasing
+      //   : this.options.hideEasing;
 
-    publish(response);
-
-    if (options.debug && console) {
-      console.log(response);
-    }
-
-    return $toastElement;
-
-    function escapeHtml(source: any): void {
-      if (source == null) {
-        source = '';
+      if ($toastElement === document.activeElement && !override) {
+        return;
       }
 
-      return source
+      clearTimeout(progressBar.intervalId);
+      // todo fade out toast
+      this.removeToast($toastElement);
+      clearTimeout(intervalId);
+      if (this.options.onHidden && response.state !== 'hidden') {
+        this.options.onHidden();
+      }
+      response.state = 'hidden';
+      response.endTime = new Date();
+      this.publish(response);
+
+      // return $toastElement[method]({
+      //     duration: duration,
+      //     easing: easing,
+      // });
+    };
+
+    const escapeHtml = (source: any): string => {
+      const newSource = source !== null ? source : '';
+
+      return newSource
         .replace(/&/g, '&amp;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
-    }
+    };
 
-    function personalizeToast(): void {
-      setIcon();
-      setTitle();
-      setMessage();
-      setCloseButton();
-      setProgressBar();
-      setRTL();
-      setSequence();
-      setAria();
-    }
-
-    function setAria(): void {
+    const setAria = (): void => {
       let ariaValue = '';
       switch (map.iconClass) {
         case 'toast-success':
@@ -355,219 +428,186 @@ const toastrModule = (options: any = {}): any => {
           ariaValue = 'assertive';
       }
       $toastElement.setAttribute('aria-live', ariaValue);
-    }
+    };
 
-    function handleEvents(): void {
-      if (options.closeOnHover) {
+    const delayedHideToast = (): void => {
+      if (this.options.timeOut > 0 || this.options.extendedTimeOut > 0) {
+        intervalId = setTimeout(hideToast, this.options.extendedTimeOut);
+        progressBar.maxHideTime = this.options.extendedTimeOut;
+        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+      }
+    };
+
+    const stickAround = (): void => {
+      clearTimeout(intervalId);
+      progressBar.hideEta = 0;
+      // todo
+      // $toastElement.stop(true, true)[this.options.showMethod](
+      //     {duration: this.options.showDuration, easing: this.options.showEasing}
+      // );
+    };
+
+    const handleEvents = (): void => {
+      if (this.options.closeOnHover) {
         $toastElement.addEventListener('mouseenter', stickAround);
         $toastElement.addEventListener('mouseleave', delayedHideToast);
       }
 
-      if (!options.onclick && options.tapToDismiss) {
+      if (!this.options.onclick && this.options.tapToDismiss) {
         $toastElement.addEventListener('click', hideToast);
       }
 
-      if (options.closeButton && $closeElement) {
+      if (this.options.closeButton && $closeElement) {
         $closeElement.addEventListener('click', (event: any) => {
           if (event.stopPropagation) {
             event.stopPropagation();
           } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
+            // eslint-disable-next-line no-param-reassign
             event.cancelBubble = true;
           }
 
-          if (options.onCloseClick) {
-            options.onCloseClick(event);
+          if (this.options.onCloseClick) {
+            this.options.onCloseClick(event);
           }
 
           hideToast(true);
         });
       }
 
-      if (options.onclick) {
+      if (this.options.onclick) {
         $toastElement.addEventListener('click', (event) => {
           // ts needs another check here
-          if (options.onclick) {
-            options.onclick(event);
+          if (this.options.onclick) {
+            this.options.onclick(event);
           }
 
           hideToast();
         });
       }
-    }
+    };
 
-    function displayToast(): void {
-      // todo hide toast
-      // $toastElement.hide();
-
-      // todo fade out toast
-      if (options.onShown) {
-        options.onShown();
-      }
-      // $toastElement[options.showMethod](
-      //     {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
-      // );
-
-      if (options.timeOut > 0) {
-        intervalId = setTimeout(hideToast, options.timeOut);
-        progressBar.maxHideTime = options.timeOut;
-        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-        if (options.progressBar) {
-          progressBar.intervalId = setInterval(updateProgress, 10);
-        }
-      }
-    }
-
-    function setIcon(): void {
-      if (map.iconClass) {
-        $toastElement.classList.add(options.toastClass, iconClass);
-      }
-    }
-
-    function setSequence(): void {
-      if (!$container) {
-        return;
-      }
-
-      if (options.newestOnTop) {
-        $container.insertBefore($toastElement, $container.firstChild);
-      } else {
-        $container.appendChild($toastElement);
-      }
-    }
-
-    function setTitle(): void {
+    const setTitle = (): void => {
       if (map.title) {
         let suffix = map.title;
-        if (options.escapeHtml) {
+        if (this.options.escapeHtml) {
           suffix = escapeHtml(map.title);
         }
         $titleElement.innerHTML = suffix;
-        $titleElement.classList.add(options.titleClass);
+        $titleElement.classList.add(this.options.titleClass);
         $toastElement.appendChild($titleElement);
       }
-    }
+    };
 
-    function setMessage(): void {
+    const setMessage = (): void => {
       if (map.message) {
         let suffix = map.message;
-        if (options.escapeHtml) {
+
+        if (this.options.escapeHtml) {
           suffix = escapeHtml(map.message);
         }
+
         $messageElement.innerHTML = suffix;
-        $messageElement.classList.add(options.messageClass);
+        $messageElement.classList.add(this.options.messageClass);
         $toastElement.appendChild($messageElement);
       }
-    }
+    };
 
-    function setCloseButton(): void {
-      if (options.closeButton) {
-        $closeElement.classList.add(options.closeClass);
+    const setCloseButton = (): void => {
+      if (this.options.closeButton) {
+        $closeElement.classList.add(this.options.closeClass);
         $closeElement.setAttribute('role', 'button');
         $toastElement.insertBefore($closeElement, $toastElement.firstChild);
       }
-    }
+    };
 
-    function setProgressBar(): void {
-      if (options.progressBar) {
-        $progressElement.classList.add(options.progressClass);
+    const setProgressBar = (): void => {
+      if (this.options.progressBar) {
+        $progressElement.classList.add(this.options.progressClass);
         $toastElement.insertBefore($progressElement, $toastElement.firstChild);
       }
-    }
+    };
 
-    function setRTL(): void {
-      if (options.rtl) {
+    const setRTL = (): void => {
+      if (this.options.rtl) {
         $toastElement.classList.add('rtl');
       }
-    }
+    };
 
-    function shouldExit(options: any, map: any): boolean {
-      if (options.preventDuplicates) {
-        if (map.message === previousToast) {
-          return true;
-        }
-        previousToast = map.message;
+    const setIcon = (): void => {
+      if (map.iconClass) {
+        $toastElement.classList.add(this.options.toastClass, iconClass);
       }
-      return false;
-    }
+    };
 
-    function hideToast(override: any = null): void {
-      const method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
-      const duration = override && options.closeDuration !== false
-        ? options.closeDuration : options.hideDuration;
-      const easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
-      if ($toastElement === document.activeElement && !override) {
+    const setSequence = (): void => {
+      if (!this.$container) {
         return;
       }
-      clearTimeout(progressBar.intervalId);
-      // todo fade out toast
-      removeToast($toastElement);
-      clearTimeout(intervalId);
-      if (options.onHidden && response.state !== 'hidden') {
-        options.onHidden();
+
+      if (this.options.newestOnTop) {
+        this.$container.insertBefore($toastElement, this.$container.firstChild);
+      } else {
+        this.$container.appendChild($toastElement);
       }
-      response.state = 'hidden';
-      response.endTime = new Date();
-      publish(response);
+    };
 
-      // return $toastElement[method]({
-      //     duration: duration,
-      //     easing: easing,
-      // });
-    }
-
-    function delayedHideToast(): void {
-      if (options.timeOut > 0 || options.extendedTimeOut > 0) {
-        intervalId = setTimeout(hideToast, options.extendedTimeOut);
-        progressBar.maxHideTime = options.extendedTimeOut;
-        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-      }
-    }
-
-    function stickAround(): void {
-      clearTimeout(intervalId);
-      progressBar.hideEta = 0;
-      // todo
-      // $toastElement.stop(true, true)[options.showMethod](
-      //     {duration: options.showDuration, easing: options.showEasing}
-      // );
-    }
-
-    function updateProgress(): void {
+    const updateProgress = (): void => {
       const percentage = (
         (progressBar.hideEta - (new Date().getTime()))
         / progressBar.maxHideTime
       ) * 100;
 
       $progressElement.style.width = `${percentage}%`;
-    }
-  }
+    };
 
-  function getOptions(): ToastrOptions {
-    return merge({}, getDefaults(), toastr.options);
-  }
+    const displayToast = (): void => {
+      // todo hide toast
+      // $toastElement.hide();
 
-  function removeToast($toastElement: any): void {
-    if (!$container) { getContainer(); }
-    if (!$container) {
-      return;
-    }
-    // todo set after visible state
-    // as this will be a transition of css
-    $toastElement.parentNode.removeChild($toastElement);
-    // check if visible
-    if ($toastElement.offsetWidth > 0 && $toastElement.offsetHeight > 0) {
-      return;
-    }
-
-    $toastElement = null;
-    if (!$container.hasChildNodes()) {
-      if ($container.parentNode) {
-        $container.parentNode.removeChild($container);
+      // todo fade out toast
+      if (this.options.onShown) {
+        this.options.onShown();
       }
+      // $toastElement[this.options.showMethod](
+      // eslint-disable-next-line
+      //     {duration: this.options.showDuration, easing: this.options.showEasing, complete: this.options.onShown}
+      // );
 
-      previousToast = null;
+      if (this.options.timeOut > 0) {
+        intervalId = setTimeout(hideToast, this.options.timeOut);
+        progressBar.maxHideTime = this.options.timeOut;
+        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+        if (this.options.progressBar) {
+          progressBar.intervalId = setInterval(updateProgress, 10);
+        }
+      }
+    };
+
+    const personalizeToast = (): void => {
+      setIcon();
+      setTitle();
+      setMessage();
+      setCloseButton();
+      setProgressBar();
+      setRTL();
+      setSequence();
+      setAria();
+    };
+
+    personalizeToast();
+
+    displayToast();
+
+    handleEvents();
+
+    this.publish(response);
+
+    if (this.options.debug && console) {
+      console.log(response);
     }
-  }
-};
 
-export default toastrModule;
+    return $toastElement;
+  }
+}
+
+export default Toastr;

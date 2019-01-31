@@ -50,7 +50,7 @@ declare class Toastr {
     private options;
     protected constructor(options?: ToastrOptions);
     createContainer(): HTMLElement;
-    getContainer(options?: any, create?: any): HTMLElement;
+    getContainer(options?: any, create?: any): HTMLElement | null;
     error(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
     warning(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
     success(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
