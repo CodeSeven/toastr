@@ -185,9 +185,9 @@
 </footer>
 
 <script type="module">
-    import toastr from './toastr.js';
+    import Toastr from './src/Toastr.js';
 
-    const toast = toastr();
+    const toast = new Toastr();
 
     toast.error('message', 'title');
     toast.error('message', 'title');
