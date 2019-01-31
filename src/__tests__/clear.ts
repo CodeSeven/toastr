@@ -4,6 +4,10 @@ const sampleMsg = 'I don\'t think they really exist';
 const sampleTitle = 'TEST';
 
 describe('clear', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
+
   it('show 3 toasts, clear the 2nd', () => {
     const toastr = new Toastr();
 
