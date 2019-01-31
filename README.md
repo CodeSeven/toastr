@@ -26,47 +26,15 @@ Toastr is hosted at cdnjs and jsdelivr
 
 ## Install
 
-#### [NuGet Gallery](http://nuget.org/packages/toastr)
-```
-Install-Package toastr
-```
-
-#### [Bower](http://bower.io/search/?q=toastr)
-```
-bower install toastr
-```
-
 #### [npm](https://www.npmjs.com/package/toastr)
 ```
-npm install --save toastr
+npm install toastr2
 ```
 
 #### [yarn](https://yarnpkg.com/en/package/toastr)
 ```
-yarn add toastr
+yarn add toastr2
 ```
-
-#### [Ruby on Rails](https://github.com/tylergannon/toastr-rails)
-```ruby
-# Gemfile
-
-gem 'toastr-rails'
-```
-
-```coffee
-# application.coffee
-
-#= require toastr
-```
-
-```scss
-// application.scss
-
-@import "toastr";
-```
-
-
-
 
 ## Wiki and Change Log
 [Wiki including Change Log](https://github.com/CodeSeven/toastr/wiki)
@@ -88,7 +56,12 @@ For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html)
 
 1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>`
 
-2. Link to toastr.js `<script src="toastr.js"></script>`
+2. Import toastr2
+	```js
+	import Toastr from 'toastr2';
+
+	const toastr = new Toastr();
+	```
 
 3. use toastr to display a toast for info, success, warning or error
 	```js

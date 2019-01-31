@@ -39,7 +39,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/CodeSeven/toastr.git"
+    "url": "git://github.com/JPeer264/toastr.git"
   },
   "bugs": "http://stackoverflow.com/questions/tagged/toastr",
   "licenses": [
