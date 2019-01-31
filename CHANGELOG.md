@@ -1,3 +1,12 @@
+3.0.0-alpha.3 - January, 31 2019
+
+* d95a7c1 ocs: update docs (JPeer264)
+* c0da425 Chore: update eslint dev dependencies (JPeer264)
+* 923fb90 Refactor: uppercase Toastr (JPeer264)
+* d11d136 Feat: export types (JPeer264)
+* 67158b7 Feat: Toastr. change to class (JPeer264)
+* f55780b Chore: add more types (JPeer264)
+
 3.0.0-alpha.2 - January, 28 2019
 
 * e202935 Chore: change typings location (JPeer264)

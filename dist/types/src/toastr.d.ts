@@ -1,4 +1,10 @@
-declare type ToastrOptions = {
+export declare type ToastType = {
+    info: string;
+    error: string;
+    warning: string;
+    success: string;
+};
+export declare type ToastrOptions = {
     tapToDismiss: boolean;
     toastClass: string;
     containerId: string;
@@ -39,6 +45,13 @@ declare type ToastrOptions = {
     onCloseClick?: Function;
     closeButton: boolean;
     rtl: boolean;
+};
+export declare type NotifyMap = {
+    type: string;
+    optionsOverride?: ToastrOptions;
+    iconClass: string;
+    title: string;
+    message: string;
 };
 declare class Toastr {
     private $container;
