@@ -17,6 +17,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "declarationDir": "dist/types",
     "outDir": "dist/lib",
     "typeRoots": [
@@ -25,5 +26,8 @@
   },
   "include": [
     "src"
+  ],
+  "modules": [
+    "node_modules"
   ]
 }

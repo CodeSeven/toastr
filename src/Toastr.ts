@@ -126,7 +126,7 @@ class Toastr {
     closeButton: false,
   };
 
-  protected constructor(options?: ToastrOptions) {
+  public constructor(options?: ToastrOptions) {
     this.options = merge({}, this.options, options);
 
     this.createContainer();
