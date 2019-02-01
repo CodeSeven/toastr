@@ -20,6 +20,7 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$",
     "globals": {
       "ts-jest": {
         "tsConfig": "tsconfig.json"
@@ -83,7 +84,7 @@
     "typescript-eslint-parser": "^22.0.0"
   },
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublish": "npm run build", 
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
     "lint": "eslint \"./src/**/*.ts\"",
