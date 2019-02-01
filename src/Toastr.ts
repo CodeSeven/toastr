@@ -2,57 +2,58 @@ import merge from 'lodash/merge';
 
 import { version } from '../package.json';
 
+type Required<T> = {
+  [P in keyof T]-?: T[P];
+}
+
 export type ToastType = {
-  info: string;
-  error: string;
-  warning: string;
-  success: string;
+  info?: string;
+  error?: string;
+  warning?: string;
+  success?: string;
 };
 
-export type ToastrOptions = {
-  tapToDismiss: boolean;
-  toastClass: string;
-  containerId: string;
-  debug: boolean;
+export type RequiredToastType = Required<ToastType>;
 
-  showMethod: 'fadeIn' | 'slideDown' | 'show';
-  showDuration: number;
-  showEasing: 'swing' | 'linear';
+export type ToastrOptions<T = ToastType> = {
+  tapToDismiss?: boolean;
+  toastClass?: string;
+  containerId?: string;
+  debug?: boolean;
+
+  showMethod?: 'fadeIn' | 'slideDown' | 'show';
+  showDuration?: number;
+  showEasing?: 'swing' | 'linear';
   onShown?: Function;
-  hideMethod: 'fadeOut';
-  hideDuration: number;
-  hideEasing: 'swing';
+  hideMethod?: 'fadeOut';
+  hideDuration?: number;
+  hideEasing?: 'swing';
   onHidden?: Function;
-  closeMethod: boolean;
-  closeDuration: boolean;
-  closeEasing: boolean;
-  closeOnHover: boolean;
+  closeMethod?: boolean;
+  closeDuration?: boolean;
+  closeEasing?: boolean;
+  closeOnHover?: boolean;
 
-  extendedTimeOut: number;
-  iconClasses: {
-    error: string;
-    info: string;
-    success: string;
-    warning: string;
-  };
-  iconClass: string;
-  positionClass: string;
-  timeOut: number; // Set timeOut and extendedTimeOut to 0 to make it sticky
-  titleClass: string;
-  messageClass: string;
-  escapeHtml: boolean;
-  target: string;
-  closeHtml: string;
-  closeClass: string;
-  newestOnTop: boolean;
-  preventDuplicates: boolean;
-  progressBar: boolean;
-  progressClass: string;
+  extendedTimeOut?: number;
+  iconClasses?: T;
+  iconClass?: string;
+  positionClass?: string;
+  timeOut?: number; // Set timeOut and extendedTimeOut to 0 to make it sticky
+  titleClass?: string;
+  messageClass?: string;
+  escapeHtml?: boolean;
+  target?: string;
+  closeHtml?: string;
+  closeClass?: string;
+  newestOnTop?: boolean;
+  preventDuplicates?: boolean;
+  progressBar?: boolean;
+  progressClass?: string;
   onclick?: Function;
 
   onCloseClick?: Function;
-  closeButton: boolean;
-  rtl: boolean;
+  closeButton?: boolean;
+  rtl?: boolean;
 }
 
 export type NotifyMap = {
@@ -70,7 +71,7 @@ class Toastr {
 
   private previousToast: string | null = null;
 
-  private toastType: ToastType = {
+  private toastType: RequiredToastType = {
     info: 'info',
     error: 'error',
     warning: 'warning',
@@ -79,7 +80,7 @@ class Toastr {
 
   private version = version;
 
-  private options: ToastrOptions = {
+  private options: Required<ToastrOptions<RequiredToastType>> = {
     tapToDismiss: true,
     toastClass: 'toast',
     containerId: 'toast-container',
@@ -88,11 +89,11 @@ class Toastr {
     showMethod: 'fadeIn', // fadeIn, slideDown, and show are built into jQuery
     showDuration: 300,
     showEasing: 'swing', // swing and linear are built into jQuery
-    onShown: undefined,
+    onShown: () => { },
     hideMethod: 'fadeOut',
     hideDuration: 1000,
     hideEasing: 'swing',
-    onHidden: undefined,
+    onHidden: () => { },
     closeMethod: false,
     closeDuration: false,
     closeEasing: false,
@@ -122,6 +123,8 @@ class Toastr {
 
     onCloseClick: () => { },
     closeButton: false,
+
+    onclick: () => { },
   };
 
   public $container: HTMLElement = document.createElement('div');
