@@ -305,7 +305,7 @@ class Toastr {
 
     const toastsToClear = this.$container.childNodes;
 
-    for (let i = toastsToClear.length - 1; i >= 0; i--) {
+    for (let i = toastsToClear.length - 1; i >= 0; i -= 1) {
       this.clearToast(toastsToClear[i], options);
     }
   }
