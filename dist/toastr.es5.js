@@ -2299,7 +2299,7 @@ var merge = _createAssigner(function(object, source, srcIndex) {
 
 var merge_1 = merge;
 
-var version = "3.0.0-alpha.4";
+var version = "3.0.0-alpha.5";
 
 var Toastr = /** @class */ (function () {
     function Toastr(options) {
@@ -2320,11 +2320,11 @@ var Toastr = /** @class */ (function () {
             showMethod: 'fadeIn',
             showDuration: 300,
             showEasing: 'swing',
-            onShown: undefined,
+            onShown: function () { },
             hideMethod: 'fadeOut',
             hideDuration: 1000,
             hideEasing: 'swing',
-            onHidden: undefined,
+            onHidden: function () { },
             closeMethod: false,
             closeDuration: false,
             closeEasing: false,
@@ -2352,6 +2352,7 @@ var Toastr = /** @class */ (function () {
             rtl: false,
             onCloseClick: function () { },
             closeButton: false,
+            onclick: function () { },
         };
         this.$container = document.createElement('div');
         this.options = merge_1({}, this.options, options);

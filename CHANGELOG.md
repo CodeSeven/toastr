@@ -1,3 +1,7 @@
+3.0.0-alpha.6 - February, 01 2019
+
+* 6ad4726 Fix: optional types (JPeer264)
+
 3.0.0-alpha.5 - February, 01 2019
 
 * 7658574 Chore: add root dir to jest (JPeer264)

@@ -2305,7 +2305,7 @@
 
   var merge_1 = merge;
 
-  var version = "3.0.0-alpha.4";
+  var version = "3.0.0-alpha.5";
 
   var Toastr = /** @class */ (function () {
       function Toastr(options) {
@@ -2326,11 +2326,11 @@
               showMethod: 'fadeIn',
               showDuration: 300,
               showEasing: 'swing',
-              onShown: undefined,
+              onShown: function () { },
               hideMethod: 'fadeOut',
               hideDuration: 1000,
               hideEasing: 'swing',
-              onHidden: undefined,
+              onHidden: function () { },
               closeMethod: false,
               closeDuration: false,
               closeEasing: false,
@@ -2358,6 +2358,7 @@
               rtl: false,
               onCloseClick: function () { },
               closeButton: false,
+              onclick: function () { },
           };
           this.$container = document.createElement('div');
           this.options = merge_1({}, this.options, options);
