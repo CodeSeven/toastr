@@ -51,19 +51,19 @@ The following animations options have been deprecated and should be replaced:
 
 ## Quick Start
 
-### 3 Easy Steps
+### 2 Easy Steps
 For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html).
 
-1. Link to toastr.css `<link href="toastr.css" rel="stylesheet"/>`
-
-2. Import toastr2
+1. Import toastr2 (js and css)
 	```js
 	import Toastr from 'toastr2';
+
+	import 'toastr2/dist/toastr.min.css;
 
 	const toastr = new Toastr();
 	```
 
-3. use toastr to display a toast for info, success, warning or error
+2. use toastr to display a toast for info, success, warning or error
 	```js
 	// Display an info toast with no title
 	toastr.info('Are you the 6 fingered man?')
@@ -99,7 +99,7 @@ In case you want to escape HTML characters in title and message
 Optionally enable a close button
 ```js
 toastr.options.closeButton = true;
-````
+```
 
 Optionally override the close button's HTML.
 
@@ -125,10 +125,10 @@ toastr.options.newestOnTop = false;
 ### Callbacks
 ```js
 // Define a callback for when the toast is shown/hidden/clicked
-toastr.options.onShown = function() { console.log('hello'); }
-toastr.options.onHidden = function() { console.log('goodbye'); }
-toastr.options.onclick = function() { console.log('clicked'); }
-toastr.options.onCloseClick = function() { console.log('close button clicked'); }
+toastr.options.onShown = () => console.log('hello');
+toastr.options.onHidden = () => console.log('goodbye');
+toastr.options.onclick = () => console.log('clicked');
+toastr.options.onCloseClick = () => console.log('close button clicked');
 ```
 
 ### Animation Options
@@ -195,15 +195,14 @@ toastr.options.rtl = true;
 To build the minified and css versions of Toastr you will need [node](http://nodejs.org) installed. (Use Homebrew or Chocolatey.)
 
 ```
-npm install -g gulp karma-cli
 npm install
 ```
 
 At this point the dependencies have been installed and you can build Toastr
 
-- Run the analytics `gulp analyze`
-- Run the test `gulp test`
-- Run the build `gulp`
+- Run the analytics `npm run lint`
+- Run the test `npm test`
+- Run the build `npm run build`
 
 ## Contributing
 
