@@ -81,7 +81,7 @@ class Toastr {
 
   private version = version;
 
-  private options: Required<ToastrOptions<RequiredToastType>> = {
+  public options: Required<ToastrOptions<RequiredToastType>> = {
     tapToDismiss: true,
     toastClass: 'toast',
     containerId: 'toast-container',
