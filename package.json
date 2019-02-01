@@ -20,7 +20,7 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$",
+    "rootDir": "src",
     "globals": {
       "ts-jest": {
         "tsConfig": "tsconfig.json"
