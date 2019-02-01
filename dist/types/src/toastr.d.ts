@@ -54,14 +54,14 @@ export declare type NotifyMap = {
     message: string;
 };
 declare class Toastr {
-    private $container;
     private listener;
     private toastId;
     private previousToast;
     private toastType;
     private version;
     private options;
-    protected constructor(options?: ToastrOptions);
+    $container: HTMLElement;
+    constructor(options?: ToastrOptions);
     createContainer(): HTMLElement;
     getContainer(options?: any, create?: any): HTMLElement;
     error(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
@@ -70,7 +70,7 @@ declare class Toastr {
     info(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
     subscribe(callback: Function): void;
     publish(args: any): void;
-    clear($toastElement: any, clearOptions: any): void;
+    clear($toastElement?: any, clearOptions?: any): void;
     remove($toastElement: any): void;
     removeToast($toastElement: any): void;
     private clearContainer;

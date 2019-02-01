@@ -4,7 +4,7 @@
   "module": "dist/toastr.es5.js",
   "typings": "dist/types/src/toastr.d.ts",
   "style": "build/toastr.min.css",
-  "version": "3.0.0-alpha.4",
+  "version": "3.0.0-alpha.5",
   "description": "ToastrJS is a JavaScript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.",
   "homepage": "http://www.toastrjs.com",
   "keywords": [
@@ -84,7 +84,7 @@
     "typescript-eslint-parser": "^22.0.0"
   },
   "scripts": {
-    "prepublish": "npm run build", 
+    "prepublish": "npm run build",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts",
     "lint": "eslint \"./src/**/*.ts\"",

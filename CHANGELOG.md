@@ -1,3 +1,20 @@
+3.0.0-alpha.5 - February, 01 2019
+
+* 7658574 Chore: add root dir to jest (JPeer264)
+* 728b6af Chore: jest update testregex (JPeer264)
+* d180e21 Test: fix tests (JPeer264)
+* 432ebdf Chore: update rollup (JPeer264)
+* 4472a88 Chore: update travis (JPeer264)
+* c7c135b Test: outsource tests to have smaller test files (JPeer264)
+* e40b76c Test: add first two tests (JPeer264)
+* a482700 Chore: update test script (JPeer264)
+* a8a9b00 Test: add basic jest tests (JPeer264)
+* ce6e4a7 Chore: remove karma, prepare for jest (JPeer264)
+* 5f95f0d Chore: remove and clearup dependencies (JPeer264)
+* 2335d62 Chore: update little demo (JPeer264)
+* fbae88d Chore: remove jshint (JPeer264)
+* 7d51529 Refactor: remove nuget (JPeer264)
+
 3.0.0-alpha.4 - January, 31 2019
 
 * 44ad8b2 Chore: remove next tag (JPeer264)

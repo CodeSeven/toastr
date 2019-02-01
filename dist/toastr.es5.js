@@ -2303,7 +2303,6 @@ var version = "3.0.0-alpha.4";
 
 var Toastr = /** @class */ (function () {
     function Toastr(options) {
-        this.$container = document.createElement('div');
         this.toastId = 0;
         this.previousToast = null;
         this.toastType = {
@@ -2354,6 +2353,7 @@ var Toastr = /** @class */ (function () {
             onCloseClick: function () { },
             closeButton: false,
         };
+        this.$container = document.createElement('div');
         this.options = merge_1({}, this.options, options);
         this.createContainer();
     }

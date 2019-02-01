@@ -2309,7 +2309,6 @@
 
   var Toastr = /** @class */ (function () {
       function Toastr(options) {
-          this.$container = document.createElement('div');
           this.toastId = 0;
           this.previousToast = null;
           this.toastType = {
@@ -2360,6 +2359,7 @@
               onCloseClick: function () { },
               closeButton: false,
           };
+          this.$container = document.createElement('div');
           this.options = merge_1({}, this.options, options);
           this.createContainer();
       }

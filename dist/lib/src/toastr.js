@@ -1,10 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var merge_1 = require("lodash/merge");
+var merge_1 = __importDefault(require("lodash/merge"));
 var package_json_1 = require("../package.json");
 var Toastr = /** @class */ (function () {
     function Toastr(options) {
-        this.$container = document.createElement('div');
         this.toastId = 0;
         this.previousToast = null;
         this.toastType = {
@@ -55,6 +57,7 @@ var Toastr = /** @class */ (function () {
             onCloseClick: function () { },
             closeButton: false,
         };
+        this.$container = document.createElement('div');
         this.options = merge_1.default({}, this.options, options);
         this.createContainer();
     }
