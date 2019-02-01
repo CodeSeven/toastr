@@ -60,8 +60,8 @@ export type NotifyMap = {
   type: string;
   optionsOverride?: ToastrOptions;
   iconClass: string;
-  title: string;
-  message: string;
+  title?: string;
+  message?: string;
 }
 
 class Toastr {
@@ -167,8 +167,8 @@ class Toastr {
   }
 
   public error(
-    message: string,
-    title: string,
+    message?: string,
+    title?: string,
     optionsOverride?: ToastrOptions,
   ): HTMLElement | null {
     return this.notify({
@@ -181,8 +181,8 @@ class Toastr {
   }
 
   public warning(
-    message: string,
-    title: string,
+    message?: string,
+    title?: string,
     optionsOverride?: ToastrOptions,
   ): HTMLElement | null {
     return this.notify({
@@ -195,8 +195,8 @@ class Toastr {
   }
 
   public success(
-    message: string,
-    title: string,
+    message?: string,
+    title?: string,
     optionsOverride?: ToastrOptions,
   ): HTMLElement | null {
     return this.notify({
@@ -208,7 +208,11 @@ class Toastr {
     });
   }
 
-  public info(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null {
+  public info(
+    message?: string,
+    title?: string,
+    optionsOverride?: ToastrOptions,
+  ): HTMLElement | null {
     return this.notify({
       type: this.toastType.info,
       iconClass: this.options.iconClasses.info,
@@ -335,7 +339,7 @@ class Toastr {
           return true;
         }
 
-        this.previousToast = exitMap.message;
+        this.previousToast = exitMap.message || '';
       }
       return false;
     };
