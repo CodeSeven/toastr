@@ -2486,7 +2486,7 @@
               return;
           }
           var toastsToClear = this.$container.childNodes;
-          for (var i = toastsToClear.length - 1; i >= 0; i--) {
+          for (var i = toastsToClear.length - 1; i >= 0; i -= 1) {
               this.clearToast(toastsToClear[i], options);
           }
       };
@@ -2508,32 +2508,33 @@
       };
       Toastr.prototype.notify = function (map) {
           var _this = this;
+          var options = this.options;
           var iconClass = map.iconClass || this.options.iconClass;
-          var shouldExit = function (options, exitMap) {
-              if (_this.options.preventDuplicates) {
+          var shouldExit = function (opts, exitMap) {
+              if (opts.preventDuplicates) {
                   if (exitMap.message === _this.previousToast) {
                       return true;
                   }
-                  _this.previousToast = exitMap.message;
+                  _this.previousToast = exitMap.message || '';
               }
               return false;
           };
           if (typeof map.optionsOverride !== 'undefined') {
-              this.options = merge_1({}, this.options, map.optionsOverride);
+              options = merge_1({}, options, map.optionsOverride);
               iconClass = map.optionsOverride.iconClass || iconClass;
           }
-          if (shouldExit(this.options, map)) {
+          if (shouldExit(options, map)) {
               return null;
           }
           this.toastId += 1;
-          this.$container = this.getContainer(this.options, true);
+          this.$container = this.getContainer(options, true);
           var intervalId = null;
           var $toastElement = document.createElement('div');
           var $titleElement = document.createElement('div');
           var $messageElement = document.createElement('div');
           var $progressElement = document.createElement('div');
           var createdElement = document.createElement('div');
-          createdElement.innerHTML = this.options.closeHtml.trim();
+          createdElement.innerHTML = options.closeHtml.trim();
           var $closeElement = createdElement.firstChild;
           var progressBar = {
               intervalId: null,
@@ -2545,7 +2546,7 @@
               state: 'visible',
               startTime: new Date(),
               endTime: undefined,
-              options: this.options,
+              options: options,
               map: map,
           };
           var hideToast = function (override) {
@@ -2566,8 +2567,8 @@
               // todo fade out toast
               _this.removeToast($toastElement);
               clearTimeout(intervalId);
-              if (_this.options.onHidden && response.state !== 'hidden') {
-                  _this.options.onHidden();
+              if (options.onHidden && response.state !== 'hidden') {
+                  options.onHidden();
               }
               response.state = 'hidden';
               response.endTime = new Date();
@@ -2599,9 +2600,9 @@
               $toastElement.setAttribute('aria-live', ariaValue);
           };
           var delayedHideToast = function () {
-              if (_this.options.timeOut > 0 || _this.options.extendedTimeOut > 0) {
-                  intervalId = setTimeout(hideToast, _this.options.extendedTimeOut);
-                  progressBar.maxHideTime = _this.options.extendedTimeOut;
+              if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+                  intervalId = setTimeout(hideToast, options.extendedTimeOut);
+                  progressBar.maxHideTime = options.extendedTimeOut;
                   progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
               }
           };
@@ -2609,19 +2610,19 @@
               clearTimeout(intervalId);
               progressBar.hideEta = 0;
               // todo
-              // $toastElement.stop(true, true)[this.options.showMethod](
-              //     {duration: this.options.showDuration, easing: this.options.showEasing}
+              // $toastElement.stop(true, true)[options.showMethod](
+              //     {duration: options.showDuration, easing: options.showEasing}
               // );
           };
           var handleEvents = function () {
-              if (_this.options.closeOnHover) {
-                  $toastElement.addEventListener('mouseenter', stickAround);
-                  $toastElement.addEventListener('mouseleave', delayedHideToast);
+              if (options.closeOnHover) {
+                  $toastElement.addEventListener('mouseenter', function () { return stickAround(); });
+                  $toastElement.addEventListener('mouseout', function () { return delayedHideToast(); });
               }
-              if (!_this.options.onclick && _this.options.tapToDismiss) {
+              if (!options.onclick && options.tapToDismiss) {
                   $toastElement.addEventListener('click', hideToast);
               }
-              if (_this.options.closeButton && $closeElement) {
+              if (options.closeButton && $closeElement) {
                   $closeElement.addEventListener('click', function (event) {
                       if (event.stopPropagation) {
                           event.stopPropagation();
@@ -2630,17 +2631,17 @@
                           // eslint-disable-next-line no-param-reassign
                           event.cancelBubble = true;
                       }
-                      if (_this.options.onCloseClick) {
-                          _this.options.onCloseClick(event);
+                      if (options.onCloseClick) {
+                          options.onCloseClick(event);
                       }
                       hideToast(true);
                   });
               }
-              if (_this.options.onclick) {
+              if (options.onclick) {
                   $toastElement.addEventListener('click', function (event) {
                       // ts needs another check here
-                      if (_this.options.onclick) {
-                          _this.options.onclick(event);
+                      if (options.onclick) {
+                          options.onclick(event);
                       }
                       hideToast();
                   });
@@ -2649,53 +2650,53 @@
           var setTitle = function () {
               if (map.title) {
                   var suffix = map.title;
-                  if (_this.options.escapeHtml) {
+                  if (options.escapeHtml) {
                       suffix = escapeHtml(map.title);
                   }
                   $titleElement.innerHTML = suffix;
-                  $titleElement.classList.add(_this.options.titleClass);
+                  $titleElement.classList.add(options.titleClass);
                   $toastElement.appendChild($titleElement);
               }
           };
           var setMessage = function () {
               if (map.message) {
                   var suffix = map.message;
-                  if (_this.options.escapeHtml) {
+                  if (options.escapeHtml) {
                       suffix = escapeHtml(map.message);
                   }
                   $messageElement.innerHTML = suffix;
-                  $messageElement.classList.add(_this.options.messageClass);
+                  $messageElement.classList.add(options.messageClass);
                   $toastElement.appendChild($messageElement);
               }
           };
           var setCloseButton = function () {
-              if (_this.options.closeButton) {
-                  $closeElement.classList.add(_this.options.closeClass);
+              if (options.closeButton) {
+                  $closeElement.classList.add(options.closeClass);
                   $closeElement.setAttribute('role', 'button');
                   $toastElement.insertBefore($closeElement, $toastElement.firstChild);
               }
           };
           var setProgressBar = function () {
-              if (_this.options.progressBar) {
-                  $progressElement.classList.add(_this.options.progressClass);
+              if (options.progressBar) {
+                  $progressElement.classList.add(options.progressClass);
                   $toastElement.insertBefore($progressElement, $toastElement.firstChild);
               }
           };
           var setRTL = function () {
-              if (_this.options.rtl) {
+              if (options.rtl) {
                   $toastElement.classList.add('rtl');
               }
           };
           var setIcon = function () {
               if (map.iconClass) {
-                  $toastElement.classList.add(_this.options.toastClass, iconClass);
+                  $toastElement.classList.add(options.toastClass, iconClass);
               }
           };
           var setSequence = function () {
               if (!_this.$container) {
                   return;
               }
-              if (_this.options.newestOnTop) {
+              if (options.newestOnTop) {
                   _this.$container.insertBefore($toastElement, _this.$container.firstChild);
               }
               else {
@@ -2711,18 +2712,18 @@
               // todo hide toast
               // $toastElement.hide();
               // todo fade out toast
-              if (_this.options.onShown) {
-                  _this.options.onShown();
+              if (options.onShown) {
+                  options.onShown();
               }
-              // $toastElement[this.options.showMethod](
+              // $toastElement[options.showMethod](
               // eslint-disable-next-line
-              //     {duration: this.options.showDuration, easing: this.options.showEasing, complete: this.options.onShown}
+              //     {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
               // );
-              if (_this.options.timeOut > 0) {
-                  intervalId = setTimeout(hideToast, _this.options.timeOut);
-                  progressBar.maxHideTime = _this.options.timeOut;
+              if (options.timeOut > 0) {
+                  intervalId = setTimeout(hideToast, options.timeOut);
+                  progressBar.maxHideTime = options.timeOut;
                   progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-                  if (_this.options.progressBar) {
+                  if (options.progressBar) {
                       progressBar.intervalId = setInterval(updateProgress, 10);
                   }
               }
@@ -2741,7 +2742,7 @@
           displayToast();
           handleEvents();
           this.publish(response);
-          if (this.options.debug && console) {
+          if (options.debug && console) {
               console.log(response);
           }
           return $toastElement;

@@ -1,3 +1,13 @@
+3.0.0-alpha.7 - February, 01 2019
+
+* 5ca4b4d Chore: remove rollup docstrings, add dynamic style build (JPeer264)
+* d9e426a Docs: update docs (JPeer264)
+* eee1ba0 Feat: make options public so they can be changed (JPeer264)
+* 295d4fa Style: remove one eslint error (JPeer264)
+* 051f26f Chore: move tests, update rollup (JPeer264)
+* a1f991f Test: add more tests (JPeer264)
+* c8d33f5 Test: finish refactoring clear tests (JPeer264)
+
 3.0.0-alpha.6 - February, 01 2019
 
 * 6ad4726 Fix: optional types (JPeer264)

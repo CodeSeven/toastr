@@ -1,3 +1,4 @@
+import './toastr.scss';
 declare type Required<T> = {
     [P in keyof T]-?: T[P];
 };
@@ -49,8 +50,8 @@ export declare type NotifyMap = {
     type: string;
     optionsOverride?: ToastrOptions;
     iconClass: string;
-    title: string;
-    message: string;
+    title?: string;
+    message?: string;
 };
 declare class Toastr {
     private listener;
@@ -58,15 +59,15 @@ declare class Toastr {
     private previousToast;
     private toastType;
     private version;
-    private options;
+    options: Required<ToastrOptions<RequiredToastType>>;
     $container: HTMLElement;
     constructor(options?: ToastrOptions);
     createContainer(): HTMLElement;
     getContainer(options?: any, create?: any): HTMLElement;
-    error(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
-    warning(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
-    success(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
-    info(message: string, title: string, optionsOverride?: ToastrOptions): HTMLElement | null;
+    error(message?: string, title?: string, optionsOverride?: ToastrOptions): HTMLElement | null;
+    warning(message?: string, title?: string, optionsOverride?: ToastrOptions): HTMLElement | null;
+    success(message?: string, title?: string, optionsOverride?: ToastrOptions): HTMLElement | null;
+    info(message?: string, title?: string, optionsOverride?: ToastrOptions): HTMLElement | null;
     subscribe(callback: Function): void;
     publish(args: any): void;
     clear($toastElement?: any, clearOptions?: any): void;
