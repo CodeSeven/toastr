@@ -1,5 +1,6 @@
 import merge from 'lodash/merge';
 
+import './toastr.scss';
 import { version } from '../package.json';
 
 type Required<T> = {

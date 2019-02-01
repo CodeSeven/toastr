@@ -3,7 +3,7 @@
   "main": "dist/toastr.umd.js",
   "module": "dist/toastr.es5.js",
   "typings": "dist/types/src/toastr.d.ts",
-  "style": "build/toastr.min.css",
+  "style": "dist/toastr.min.css",
   "version": "3.0.0-alpha.6",
   "description": "ToastrJS is a JavaScript library for Gnome / Growl type non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.",
   "homepage": "http://www.toastrjs.com",
@@ -19,8 +19,26 @@
     ]
   },
   "jest": {
-    "preset": "ts-jest",
-    "rootDir": "src",
+    "browser": true,
+    "testRegex": "(\\.|/)(test|spec)\\.ts?$",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "\\.(scss)$": "<rootDir>/styleMock.ts"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "rootDir": "__tests__",
+    "modulePaths": [
+      "<rootDir>"
+    ],
     "globals": {
       "ts-jest": {
         "tsConfig": "tsconfig.json"
@@ -74,10 +92,12 @@
     "jquery": "^3.3.1",
     "lint-staged": "^8.1.0",
     "lodash.camelcase": "^4.3.0",
+    "node-sass": "^4.11.0",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-typescript2": "^0.19.2",
     "ts-jest": "^23.10.5",

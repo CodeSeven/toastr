@@ -1,4 +1,4 @@
-import Toastr from '../Toastr';
+import Toastr from '../src/Toastr';
 
 describe('Toastr', () => {
   beforeEach(() => {

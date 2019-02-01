@@ -1,7 +1,9 @@
 import $ from 'jquery';
 
-import defaults from './defaults.json';
-import Toastr from '../Toastr';
+import Toastr from '../src/Toastr';
+
+// eslint-disable-next-line typescript/no-var-requires
+const defaults = require('./defaults.json');
 
 const sampleMsg = 'I don\'t think they really exist';
 const sampleTitle = 'TEST';

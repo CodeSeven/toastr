@@ -1,24 +1,26 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import sourceMaps from 'rollup-plugin-sourcemaps';
-import camelCase from 'lodash.camelcase';
 import typescript from 'rollup-plugin-typescript2';
 import json from 'rollup-plugin-json';
+import postcss from 'rollup-plugin-postcss';
 
 import pkg from './package.json';
 
-const libraryName = 'Toastr';
-
 export default {
-  input: `src/${libraryName}.ts`,
+  input: 'src/Toastr.ts',
   output: [
     {
       file: pkg.main,
-      name: camelCase(libraryName),
+      name: 'toastr',
       format: 'umd',
       sourcemap: true,
     },
-    { file: pkg.module, format: 'es', sourcemap: true },
+    {
+      file: pkg.module,
+      format: 'es',
+      sourcemap: true,
+    },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: ['lodash'],
@@ -29,7 +31,9 @@ export default {
     // Allow json resolution
     json(),
     // Compile TypeScript files
-    typescript({ useTsconfigDeclarationDir: true }),
+    typescript({
+      useTsconfigDeclarationDir: true,
+    }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs({
       include: 'node_modules/**',
@@ -43,5 +47,11 @@ export default {
 
     // Resolve source maps to the original source
     sourceMaps(),
+
+    postcss({
+      sourceMap: true,
+      extract: 'dist/toastr.min.css',
+      minimize: true,
+    }),
   ],
 };
