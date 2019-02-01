@@ -326,10 +326,11 @@ class Toastr {
   }
 
   private notify(map: NotifyMap): HTMLElement | null {
+    let { options } = this;
     let iconClass = map.iconClass || this.options.iconClass;
 
-    const shouldExit = (options: any, exitMap: NotifyMap): boolean => {
-      if (this.options.preventDuplicates) {
+    const shouldExit = (opts: ToastrOptions, exitMap: NotifyMap): boolean => {
+      if (opts.preventDuplicates) {
         if (exitMap.message === this.previousToast) {
           return true;
         }
@@ -340,17 +341,17 @@ class Toastr {
     };
 
     if (typeof map.optionsOverride !== 'undefined') {
-      this.options = merge({}, this.options, map.optionsOverride);
+      options = merge({}, options, map.optionsOverride);
       iconClass = map.optionsOverride.iconClass || iconClass;
     }
 
-    if (shouldExit(this.options, map)) {
+    if (shouldExit(options, map)) {
       return null;
     }
 
     this.toastId += 1;
 
-    this.$container = this.getContainer(this.options, true);
+    this.$container = this.getContainer(options, true);
 
     let intervalId: any = null;
     const $toastElement = document.createElement('div');
@@ -358,7 +359,7 @@ class Toastr {
     const $messageElement = document.createElement('div');
     const $progressElement = document.createElement('div');
     const createdElement = document.createElement('div');
-    createdElement.innerHTML = this.options.closeHtml.trim();
+    createdElement.innerHTML = options.closeHtml.trim();
     const $closeElement: any = createdElement.firstChild;
 
     const progressBar: any = {
@@ -371,7 +372,7 @@ class Toastr {
       state: 'visible',
       startTime: new Date(),
       endTime: undefined,
-      options: this.options,
+      options,
       map,
     };
 
@@ -396,8 +397,8 @@ class Toastr {
       // todo fade out toast
       this.removeToast($toastElement);
       clearTimeout(intervalId);
-      if (this.options.onHidden && response.state !== 'hidden') {
-        this.options.onHidden();
+      if (options.onHidden && response.state !== 'hidden') {
+        options.onHidden();
       }
       response.state = 'hidden';
       response.endTime = new Date();
@@ -434,9 +435,9 @@ class Toastr {
     };
 
     const delayedHideToast = (): void => {
-      if (this.options.timeOut > 0 || this.options.extendedTimeOut > 0) {
-        intervalId = setTimeout(hideToast, this.options.extendedTimeOut);
-        progressBar.maxHideTime = this.options.extendedTimeOut;
+      if (options.timeOut > 0 || options.extendedTimeOut > 0) {
+        intervalId = setTimeout(hideToast, options.extendedTimeOut);
+        progressBar.maxHideTime = options.extendedTimeOut;
         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
       }
     };
@@ -445,22 +446,22 @@ class Toastr {
       clearTimeout(intervalId);
       progressBar.hideEta = 0;
       // todo
-      // $toastElement.stop(true, true)[this.options.showMethod](
-      //     {duration: this.options.showDuration, easing: this.options.showEasing}
+      // $toastElement.stop(true, true)[options.showMethod](
+      //     {duration: options.showDuration, easing: options.showEasing}
       // );
     };
 
     const handleEvents = (): void => {
-      if (this.options.closeOnHover) {
-        $toastElement.addEventListener('mouseenter', stickAround);
-        $toastElement.addEventListener('mouseleave', delayedHideToast);
+      if (options.closeOnHover) {
+        $toastElement.addEventListener('mouseenter', () => stickAround());
+        $toastElement.addEventListener('mouseout', () => delayedHideToast());
       }
 
-      if (!this.options.onclick && this.options.tapToDismiss) {
+      if (!options.onclick && options.tapToDismiss) {
         $toastElement.addEventListener('click', hideToast);
       }
 
-      if (this.options.closeButton && $closeElement) {
+      if (options.closeButton && $closeElement) {
         $closeElement.addEventListener('click', (event: any) => {
           if (event.stopPropagation) {
             event.stopPropagation();
@@ -469,19 +470,19 @@ class Toastr {
             event.cancelBubble = true;
           }
 
-          if (this.options.onCloseClick) {
-            this.options.onCloseClick(event);
+          if (options.onCloseClick) {
+            options.onCloseClick(event);
           }
 
           hideToast(true);
         });
       }
 
-      if (this.options.onclick) {
+      if (options.onclick) {
         $toastElement.addEventListener('click', (event) => {
           // ts needs another check here
-          if (this.options.onclick) {
-            this.options.onclick(event);
+          if (options.onclick) {
+            options.onclick(event);
           }
 
           hideToast();
@@ -492,11 +493,11 @@ class Toastr {
     const setTitle = (): void => {
       if (map.title) {
         let suffix = map.title;
-        if (this.options.escapeHtml) {
+        if (options.escapeHtml) {
           suffix = escapeHtml(map.title);
         }
         $titleElement.innerHTML = suffix;
-        $titleElement.classList.add(this.options.titleClass);
+        $titleElement.classList.add(options.titleClass);
         $toastElement.appendChild($titleElement);
       }
     };
@@ -505,40 +506,40 @@ class Toastr {
       if (map.message) {
         let suffix = map.message;
 
-        if (this.options.escapeHtml) {
+        if (options.escapeHtml) {
           suffix = escapeHtml(map.message);
         }
 
         $messageElement.innerHTML = suffix;
-        $messageElement.classList.add(this.options.messageClass);
+        $messageElement.classList.add(options.messageClass);
         $toastElement.appendChild($messageElement);
       }
     };
 
     const setCloseButton = (): void => {
-      if (this.options.closeButton) {
-        $closeElement.classList.add(this.options.closeClass);
+      if (options.closeButton) {
+        $closeElement.classList.add(options.closeClass);
         $closeElement.setAttribute('role', 'button');
         $toastElement.insertBefore($closeElement, $toastElement.firstChild);
       }
     };
 
     const setProgressBar = (): void => {
-      if (this.options.progressBar) {
-        $progressElement.classList.add(this.options.progressClass);
+      if (options.progressBar) {
+        $progressElement.classList.add(options.progressClass);
         $toastElement.insertBefore($progressElement, $toastElement.firstChild);
       }
     };
 
     const setRTL = (): void => {
-      if (this.options.rtl) {
+      if (options.rtl) {
         $toastElement.classList.add('rtl');
       }
     };
 
     const setIcon = (): void => {
       if (map.iconClass) {
-        $toastElement.classList.add(this.options.toastClass, iconClass);
+        $toastElement.classList.add(options.toastClass, iconClass);
       }
     };
 
@@ -547,7 +548,7 @@ class Toastr {
         return;
       }
 
-      if (this.options.newestOnTop) {
+      if (options.newestOnTop) {
         this.$container.insertBefore($toastElement, this.$container.firstChild);
       } else {
         this.$container.appendChild($toastElement);
@@ -568,19 +569,19 @@ class Toastr {
       // $toastElement.hide();
 
       // todo fade out toast
-      if (this.options.onShown) {
-        this.options.onShown();
+      if (options.onShown) {
+        options.onShown();
       }
-      // $toastElement[this.options.showMethod](
+      // $toastElement[options.showMethod](
       // eslint-disable-next-line
-      //     {duration: this.options.showDuration, easing: this.options.showEasing, complete: this.options.onShown}
+      //     {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
       // );
 
-      if (this.options.timeOut > 0) {
-        intervalId = setTimeout(hideToast, this.options.timeOut);
-        progressBar.maxHideTime = this.options.timeOut;
+      if (options.timeOut > 0) {
+        intervalId = setTimeout(hideToast, options.timeOut);
+        progressBar.maxHideTime = options.timeOut;
         progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-        if (this.options.progressBar) {
+        if (options.progressBar) {
           progressBar.intervalId = setInterval(updateProgress, 10);
         }
       }
@@ -605,7 +606,7 @@ class Toastr {
 
     this.publish(response);
 
-    if (this.options.debug && console) {
+    if (options.debug && console) {
       console.log(response);
     }
 
