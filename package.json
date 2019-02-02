@@ -28,12 +28,7 @@
     "url": "git://github.com/CodeSeven/toastr.git"
   },
   "bugs": "http://stackoverflow.com/questions/tagged/toastr",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/mit-license.php"
-    }
-  ],
+  "license": "MIT",
   "dependencies": {
     "jquery": ">=1.12.0"
   },
