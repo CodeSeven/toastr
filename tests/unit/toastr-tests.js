@@ -37,99 +37,12 @@
 
     var delay = toastr.options.timeOut + 500;
 
-
-    module('escape html', {
-        teardown: function () {
-            toastr.options.escapeHtml = false;
-        }
-    });
-    test('info - escape html', 2, function () {
-        //Arrange
-        toastr.options.escapeHtml = true;
-        //Act
-        var $toast = toastr.info('html <strong>message</strong>', 'html <u>title</u>');
-        //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
-    });
-    test('warning - escape html', 2, function () {
-        //Arrange
-        toastr.options.escapeHtml = true;
-        //Act
-        var $toast = toastr.warning('html <strong>message</strong>', 'html <u>title</u>');
-        //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
-    });
-    test('error - escape html', 2, function () {
-        //Arrange
-        toastr.options.escapeHtml = true;
-        //Act
-        var $toast = toastr.error('html <strong>message</strong>', 'html <u>title</u>');
-        //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
-    });
-    test('success - escape html', 2, function () {
-        //Arrange
-        toastr.options.escapeHtml = true;
-        //Act
-        var $toast = toastr.success('html <strong>message</strong>', 'html <u>title</u>');
-        //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
-    });
-
     module('closeButton', {
         teardown: function () {
             toastr.options.closeButton = false;
         }
     });
-    test('close button disabled', 1, function () {
-        //Arrange
-        toastr.options.closeButton = false;
-        //Act
-        var $toast = toastr.success('');
-        //Assert
-        equal($toast.find('button.toast-close-button').length, 0, 'close button should not exist with closeButton=false');
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
-    });
-    test('close button enabled', 1, function () {
-        //Arrange
-        toastr.options.closeButton = true;
-        //Act
-        var $toast = toastr.success('');
-        //Assert
-        equal($toast.find('button.toast-close-button').length, 1, 'close button should exist with closeButton=true');
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
-    });
-    test('close button has type=button', 1, function () {
-        //Arrange
-        toastr.options.closeButton = true;
-        //Act
-        var $toast = toastr.success('');
-        //Assert
-        equal($toast.find('button[type="button"].toast-close-button').length, 1, 'close button should have type=button');
-        //Teardown
-        $toast.remove();
-        clearContainerChildren();
-    });
+
     asyncTest('close button duration', 1, function () {
         //Arrange
         toastr.options.closeButton = true;

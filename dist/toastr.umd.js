@@ -2305,7 +2305,7 @@
 
   var merge_1 = merge;
 
-  var version = "3.0.0-alpha.6";
+  var version = "3.0.0-alpha.7";
 
   var Toastr = /** @class */ (function () {
       function Toastr(options) {

@@ -23,7 +23,7 @@ export declare type ToastrOptions<T = ToastType> = {
     hideEasing?: 'swing';
     onHidden?: Function;
     closeMethod?: boolean;
-    closeDuration?: boolean;
+    closeDuration?: number | false;
     closeEasing?: boolean;
     closeOnHover?: boolean;
     extendedTimeOut?: number;
