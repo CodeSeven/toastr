@@ -1,5 +1,6 @@
 import merge from 'lodash/merge';
 
+import ProgressBar from './additions/ProgressBar';
 import './toastr.scss';
 import { version } from '../package.json';
 
@@ -359,19 +360,14 @@ class Toastr {
     this.$container = this.getContainer(options, true);
 
     let intervalId: any = null;
+    let progressBar: null | ProgressBar = null;
     const $toastElement = document.createElement('div');
     const $titleElement = document.createElement('div');
     const $messageElement = document.createElement('div');
-    const $progressElement = document.createElement('div');
     const createdElement = document.createElement('div');
     createdElement.innerHTML = options.closeHtml.trim();
     const $closeElement: any = createdElement.firstChild;
 
-    const progressBar: any = {
-      intervalId: null,
-      hideEta: null,
-      maxHideTime: null,
-    };
     const response: any = {
       toastId: this.toastId,
       state: 'visible',
@@ -398,13 +394,19 @@ class Toastr {
         return;
       }
 
-      clearTimeout(progressBar.intervalId);
+      if (progressBar) {
+        progressBar.stop();
+      }
+
       // todo fade out toast
       this.removeToast($toastElement);
+
       clearTimeout(intervalId);
+
       if (options.onHidden && response.state !== 'hidden') {
         options.onHidden();
       }
+
       response.state = 'hidden';
       response.endTime = new Date();
       this.publish(response);
@@ -442,14 +444,20 @@ class Toastr {
     const delayedHideToast = (): void => {
       if (options.timeOut > 0 || options.extendedTimeOut > 0) {
         intervalId = setTimeout(hideToast, options.extendedTimeOut);
-        progressBar.maxHideTime = options.extendedTimeOut;
-        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+
+        if (progressBar) {
+          progressBar.reset(options.extendedTimeOut);
+          progressBar.start();
+        }
       }
     };
 
     const stickAround = (): void => {
       clearTimeout(intervalId);
-      progressBar.hideEta = 0;
+
+      if (progressBar) {
+        progressBar.stop();
+      }
       // todo
       // $toastElement.stop(true, true)[options.showMethod](
       //     {duration: options.showDuration, easing: options.showEasing}
@@ -458,7 +466,7 @@ class Toastr {
 
     const handleEvents = (): void => {
       if (options.closeOnHover) {
-        $toastElement.addEventListener('mouseenter', () => stickAround());
+        $toastElement.addEventListener('mouseover', () => stickAround());
         $toastElement.addEventListener('mouseout', () => delayedHideToast());
       }
 
@@ -531,8 +539,7 @@ class Toastr {
 
     const setProgressBar = (): void => {
       if (options.progressBar) {
-        $progressElement.classList.add(options.progressClass);
-        $toastElement.insertBefore($progressElement, $toastElement.firstChild);
+        progressBar = new ProgressBar($toastElement, options.progressClass);
       }
     };
 
@@ -560,15 +567,6 @@ class Toastr {
       }
     };
 
-    const updateProgress = (): void => {
-      const percentage = (
-        (progressBar.hideEta - (new Date().getTime()))
-        / progressBar.maxHideTime
-      ) * 100;
-
-      $progressElement.style.width = `${percentage}%`;
-    };
-
     const displayToast = (): void => {
       // todo hide toast
       // $toastElement.hide();
@@ -584,10 +582,10 @@ class Toastr {
 
       if (options.timeOut > 0) {
         intervalId = setTimeout(hideToast, options.timeOut);
-        progressBar.maxHideTime = options.timeOut;
-        progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-        if (options.progressBar) {
-          progressBar.intervalId = setInterval(updateProgress, 10);
+
+        if (progressBar) {
+          progressBar.reset(options.timeOut);
+          progressBar.start();
         }
       }
     };

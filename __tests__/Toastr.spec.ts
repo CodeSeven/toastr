@@ -128,4 +128,22 @@ describe('Toastr', () => {
       expect(toastr.$container.children).toHaveLength(0);
     });
   });
+
+  describe('progressbar', () => {
+    it('progress bar disabled', () => {
+      toastr.options.progressBar = false;
+
+      const toast: any = toastr.success('');
+
+      expect($(toast).find('div.toast-progress').length).toBe(0);
+    });
+
+    it('progress bar enabled', () => {
+      toastr.options.progressBar = true;
+
+      const toast: any = toastr.success('');
+
+      expect($(toast).find('div.toast-progress').length).toBe(1);
+    });
+  });
 });
