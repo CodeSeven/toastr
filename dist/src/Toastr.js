@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var merge_1 = __importDefault(require("lodash/merge"));
+var ProgressBar_1 = __importDefault(require("./additions/ProgressBar"));
 require("./toastr.scss");
 var package_json_1 = require("../package.json");
 var Toastr = /** @class */ (function () {
@@ -228,18 +229,13 @@ var Toastr = /** @class */ (function () {
         this.toastId += 1;
         this.$container = this.getContainer(options, true);
         var intervalId = null;
+        var progressBar = null;
         var $toastElement = document.createElement('div');
         var $titleElement = document.createElement('div');
         var $messageElement = document.createElement('div');
-        var $progressElement = document.createElement('div');
         var createdElement = document.createElement('div');
         createdElement.innerHTML = options.closeHtml.trim();
         var $closeElement = createdElement.firstChild;
-        var progressBar = {
-            intervalId: null,
-            hideEta: null,
-            maxHideTime: null,
-        };
         var response = {
             toastId: this.toastId,
             state: 'visible',
@@ -262,7 +258,9 @@ var Toastr = /** @class */ (function () {
             if ($toastElement === document.activeElement && !override) {
                 return;
             }
-            clearTimeout(progressBar.intervalId);
+            if (progressBar) {
+                progressBar.stop();
+            }
             // todo fade out toast
             _this.removeToast($toastElement);
             clearTimeout(intervalId);
@@ -301,13 +299,17 @@ var Toastr = /** @class */ (function () {
         var delayedHideToast = function () {
             if (options.timeOut > 0 || options.extendedTimeOut > 0) {
                 intervalId = setTimeout(hideToast, options.extendedTimeOut);
-                progressBar.maxHideTime = options.extendedTimeOut;
-                progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
+                if (progressBar) {
+                    progressBar.reset(options.extendedTimeOut);
+                    progressBar.start();
+                }
             }
         };
         var stickAround = function () {
             clearTimeout(intervalId);
-            progressBar.hideEta = 0;
+            if (progressBar) {
+                progressBar.stop();
+            }
             // todo
             // $toastElement.stop(true, true)[options.showMethod](
             //     {duration: options.showDuration, easing: options.showEasing}
@@ -315,7 +317,7 @@ var Toastr = /** @class */ (function () {
         };
         var handleEvents = function () {
             if (options.closeOnHover) {
-                $toastElement.addEventListener('mouseenter', function () { return stickAround(); });
+                $toastElement.addEventListener('mouseover', function () { return stickAround(); });
                 $toastElement.addEventListener('mouseout', function () { return delayedHideToast(); });
             }
             if (!options.onclick && options.tapToDismiss) {
@@ -377,8 +379,7 @@ var Toastr = /** @class */ (function () {
         };
         var setProgressBar = function () {
             if (options.progressBar) {
-                $progressElement.classList.add(options.progressClass);
-                $toastElement.insertBefore($progressElement, $toastElement.firstChild);
+                progressBar = new ProgressBar_1.default($toastElement, options.progressClass);
             }
         };
         var setRTL = function () {
@@ -402,11 +403,6 @@ var Toastr = /** @class */ (function () {
                 _this.$container.appendChild($toastElement);
             }
         };
-        var updateProgress = function () {
-            var percentage = ((progressBar.hideEta - (new Date().getTime()))
-                / progressBar.maxHideTime) * 100;
-            $progressElement.style.width = percentage + "%";
-        };
         var displayToast = function () {
             // todo hide toast
             // $toastElement.hide();
@@ -420,10 +416,9 @@ var Toastr = /** @class */ (function () {
             // );
             if (options.timeOut > 0) {
                 intervalId = setTimeout(hideToast, options.timeOut);
-                progressBar.maxHideTime = options.timeOut;
-                progressBar.hideEta = new Date().getTime() + progressBar.maxHideTime;
-                if (options.progressBar) {
-                    progressBar.intervalId = setInterval(updateProgress, 10);
+                if (progressBar) {
+                    progressBar.reset(options.timeOut);
+                    progressBar.start();
                 }
             }
         };

@@ -1,3 +1,8 @@
+3.0.0-alpha.8 - February, 24 2019
+
+* c7ce7c2 Fix: wrong progressbar behavior (closes #1) (JPeer264)
+* c4883d9 Test: add more unit tests (JPeer264)
+
 3.0.0-alpha.7 - February, 01 2019
 
 * 5ca4b4d Chore: remove rollup docstrings, add dynamic style build (JPeer264)
