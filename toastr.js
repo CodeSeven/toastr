@@ -190,6 +190,7 @@
                     closeClass: 'toast-close-button',
                     newestOnTop: true,
                     preventDuplicates: false,
+                    preventOpenDuplicates: false,
                     progressBar: false,
                     progressClass: 'toast-progress',
                     rtl: false
@@ -403,6 +404,17 @@
                         } else {
                             previousToast = map.message;
                         }
+                    }
+                    if(options.preventOpenDuplicates){
+                        if ($container != undefined && $container.children().length > 0){
+                            var chi = $container.children();
+                            for (var i = chi.length - 1; i >= 0; i--) {
+                                var p = chi[i].querySelector('.'+options.messageClass);
+                                if(map.message === p.innerHTML){
+                                    return true;
+                                }
+                            }
+                        }                
                     }
                     return false;
                 }
