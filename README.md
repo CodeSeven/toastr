@@ -18,11 +18,11 @@ Browser testing provided by BrowserStack.
 Toastr is hosted at cdnjs and jsdelivr
 
 #### Debug
-- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css)
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css)
 
 #### Minified
-- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js)
-- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css)
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js](//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js)
+- [//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css](//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css)
 
 ## Install
 
