@@ -277,9 +277,9 @@ npm install
 
 At this point the dependencies have been installed and you can build Toastr
 
-- Run the analytics `gulp analyze`
-- Run the test `gulp test`
-- Run the build `gulp`
+- Run the linter `npm run eslint`
+- Run the test `npm test`
+- Run the build `npm run build`
 
 ## Contributing
 

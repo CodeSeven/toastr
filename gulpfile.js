@@ -1,29 +1,24 @@
-/* jshint node:true, camelcase:false */
-var gulp = require('gulp');
-var karma = require('karma').server;
-var merge = require('merge-stream');
-var plug = require('gulp-load-plugins')();
+const gulp = require('gulp');
+const karma = require('karma').server;
+const plug = require('gulp-load-plugins')();
 
-var paths = {
+const paths = {
   js: './toastr.js',
   less: './toastr.less',
   report: './report',
   build: './build'
 };
 
-var log = plug.util.log;
+const log = plug.util.log;
 
 /**
  * Lint the code, create coverage report, and a visualizer
  * @return {Stream}
  */
-gulp.task('analyze', function() {
-  log('Analyzing source with JSHint and JSCS');
-
-  var jshint = analyzejshint([paths.js]);
-  var jscs = analyzejscs([paths.js]);
-
-  return merge(jshint, jscs);
+gulp.task('eslint', function() {
+  log('Analyzing source with ESLINT');
+  const eslint = runEslint([paths.js]);
+  return eslint;
 });
 
 /**
@@ -31,13 +26,13 @@ gulp.task('analyze', function() {
  * @return {Stream}
  */
 gulp.task('js', function() {
-  log("Bundling, minifying, and copying the app's JavaScript");
+  log('Bundling, minifying, and copying the app\'s JavaScript');
 
   return gulp
     .src(paths.js)
     .pipe(plug.sourcemaps.init())
     .pipe(plug.bytediff.start())
-    .pipe(plug.uglify({}))
+    .pipe(plug.terser({}))
     .pipe(plug.bytediff.stop(bytediffFormatter))
     .pipe(plug.sourcemaps.write('.'))
     .pipe(
@@ -55,7 +50,7 @@ gulp.task('js', function() {
  * @return {Stream}
  */
 gulp.task('css', function() {
-  log("Bundling, minifying, and copying the app's CSS");
+  log('Bundling, minifying, and copying the app\'s CSS');
 
   return gulp
     .src(paths.less)
@@ -71,8 +66,8 @@ gulp.task('css', function() {
 /**
  * Build js and css
  */
-gulp.task('default', gulp.parallel('js', 'css'), function() {
-  log('Analyze, Build CSS and JS');
+gulp.task('build', gulp.parallel('js', 'css'), function() {
+  log('Lint, Build CSS and JS');
 });
 
 /**
@@ -82,11 +77,12 @@ gulp.task('default', gulp.parallel('js', 'css'), function() {
  * @return {Stream}
  */
 gulp.task('clean', function(cb) {
-  log('Cleaning: ' + plug.util.colors.blue(paths.report));
-  log('Cleaning: ' + plug.util.colors.blue(paths.build));
+  log(`Cleaning: ${plug.util.colors.blue(paths.report)}`);
+  log(`Cleaning: ${plug.util.colors.blue(paths.build)}`);
 
-  var delPaths = [paths.build, paths.report];
-  del(delPaths, cb);
+  const delPaths = [paths.build, paths.report];
+  const del = require('del');
+  del(delPaths).then(() => cb);
 });
 
 /**
@@ -96,34 +92,23 @@ gulp.task('clean', function(cb) {
  * @return {Stream}
  */
 gulp.task('test', function(done) {
-  startTests(true /*singleRun*/, done);
+  startTests(true /* singleRun*/, done);
 });
 
-////////////////
+// //////////////
 
 /**
- * Execute JSHint on given source files
- * @param  {Array} sources
- * @param  {String} overrideRcFile
- * @return {Stream}
+ * Execute ESLINT on given source files
+ * @param {Array} sources Source files array
+ * @return {Stream} Returns the stream
  */
-function analyzejshint(sources, overrideRcFile) {
-  var jshintrcFile = overrideRcFile || './.jshintrc';
-  log('Running JSHint');
+function runEslint(sources) {
+  log('Running eslint');
   return gulp
     .src(sources)
-    .pipe(plug.jshint(jshintrcFile))
-    .pipe(plug.jshint.reporter('jshint-stylish'));
-}
-
-/**
- * Execute JSCS on given source files
- * @param  {Array} sources
- * @return {Stream}
- */
-function analyzejscs(sources) {
-  log('Running JSCS');
-  return gulp.src(sources).pipe(plug.jscs('./.jscsrc'));
+    .pipe(plug.eslint())
+    .pipe(plug.eslint.format())
+    .pipe(plug.eslint.failOnError());
 }
 
 /**
@@ -135,18 +120,19 @@ function analyzejscs(sources) {
 function startTests(singleRun, done) {
   karma.start(
     {
-      configFile: __dirname + '/karma.conf.js',
-      singleRun: !!singleRun
+      configFile: `${__dirname}/karma.conf.js`,
+      singleRun: Boolean(singleRun)
     },
     karmaCompleted
   );
 
-  ////////////////
+  // //////////////
 
   function karmaCompleted(exitCode) {
     if (exitCode === 0) {
       done();
     } else {
+      // eslint-disable-next-line no-process-exit
       process.exit(exitCode);
     }
   }
@@ -158,19 +144,10 @@ function startTests(singleRun, done) {
  * @return {String}      Difference in bytes, formatted
  */
 function bytediffFormatter(data) {
-  var difference = data.savings > 0 ? ' smaller.' : ' larger.';
-  return (
-    data.fileName +
-    ' went from ' +
-    (data.startSize / 1000).toFixed(2) +
-    ' kB to ' +
-    (data.endSize / 1000).toFixed(2) +
-    ' kB' +
-    ' and is ' +
-    formatPercent(1 - data.percent, 2) +
-    '%' +
-    difference
-  );
+  const difference = data.savings > 0 ? ' smaller.' : ' larger.';
+  return `${data.fileName} went from ${(data.startSize / 1000).toFixed(2)}  kB to ${(
+    data.endSize / 1000
+  ).toFixed(2)} kB and is ${formatPercent(1 - data.percent, 2)}% ${difference}`;
 }
 
 /**
