@@ -6,12 +6,11 @@ Toastr Release Checklist
    - package.json
    - nuget versions and dependency versions
    - readme file for github repo
-   - Consider HotTowel VSIX
 2. Gulp
    - run main demo
-   - `gulp analyze`
-   - `gulp test`
-   - `gulp`
+   - `npm run eslint`
+   - `npm test`
+   - `npm run build`
 3. Nuget
    - Copy new files in
    - Build
@@ -29,4 +28,4 @@ Toastr Release Checklist
 8. Release on Github
    - Tag with semver
    - Attach all artifacts
-9. Blog post
+9. Share
