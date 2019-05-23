@@ -48,7 +48,6 @@
     "gulp-minify-css": "^0.3.11",
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.2.8",
-    "gulp-task-listing": "^0.3.0",
     "gulp-terser": "^1.2.0",
     "gulp-util": "^3.0.1",
     "karma": "^1.7.0",
