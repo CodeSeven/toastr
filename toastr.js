@@ -59,7 +59,7 @@
         if (!options) {
           options = getOptions();
         }
-        $container = $(`# ${options.containerId}`);
+        $container = $(`#${options.containerId}`);
         if ($container.length) {
           return $container;
         }
@@ -164,7 +164,7 @@
         return {
           tapToDismiss: true,
           toastClass: 'toast',
-          containerId: 'toast-container',
+          containerId: 'toastcontainer',
           debug: false,
 
           showMethod: 'fadeIn', // fadeIn, slideDown, and show are built into jQuery
