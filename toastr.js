@@ -140,19 +140,15 @@
                     };
                     switch (options.hideMethod) {
                         case 'fadeOut':
-                            console.log('fadeOut');
                             $toastElement.fadeOut(animationOptions);
                             break;
                         case 'slideUp':
-                            console.log('slideUp');
                             $toastElement.slideUp(animationOptions);
                             break;
                         case 'hide':
-                            console.log('hide');
                             $toastElement.hide(animationOptions);
                             break;
                         default:
-                            console.log('default');
                             $toastElement.hide(animationOptions);
                     }
                     return true;
@@ -461,19 +457,15 @@
                     };
                     switch (method) {
                         case 'fadeOut':
-                            console.log('fadeout');
                             return $toastElement.fadeOut(animationOptions);
                             break;
                         case 'slideUp':
-                            console.log('slideUp');
                             return $toastElement.slideUp(animationOptions);
                             break;
                         case 'hide':
-                            console.log('hide');
                             return $toastElement.hide(animationOptions);
                             break;
                         default:
-                            console.log('default');
                             return $toastElement.hide(animationOptions);
                     }
                 }
