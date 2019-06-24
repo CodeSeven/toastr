@@ -131,11 +131,26 @@
             function clearToast ($toastElement, options, clearOptions) {
                 var force = clearOptions && clearOptions.force ? clearOptions.force : false;
                 if ($toastElement && (force || $(':focus', $toastElement).length === 0)) {
-                    $toastElement[options.hideMethod]({
+                    const animationOptions = {
                         duration: options.hideDuration,
                         easing: options.hideEasing,
-                        complete: function () { removeToast($toastElement); }
-                    });
+                        complete: function() {
+                            removeToast($toastElement);
+                        }
+                    };
+                    switch (options.hideMethod) {
+                        case 'fadeOut':
+                            $toastElement.fadeOut(animationOptions);
+                            break;
+                        case 'slideUp':
+                            $toastElement.slideUp(animationOptions);
+                            break;
+                        case 'hide':
+                            $toastElement.hide(animationOptions);
+                            break;
+                        default:
+                            $toastElement.hide(animationOptions);
+                    }
                     return true;
                 }
                 return false;
@@ -320,9 +335,24 @@
                 function displayToast() {
                     $toastElement.hide();
 
-                    $toastElement[options.showMethod](
-                        {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
-                    );
+                    const animationOptions = {
+                        duration: options.showDuration,
+                        easing: options.showEasing,
+                        complete: options.onShown
+                    };
+                    switch (options.showMethod) {
+                        case 'fadeIn':
+                            $toastElement.fadeIn(animationOptions);
+                            break;
+                        case 'slideDown':
+                            $toastElement.slideDown(animationOptions);
+                            break;
+                        case 'show':
+                            $toastElement.show(animationOptions);
+                            break;
+                        default:
+                            $toastElement.show(animationOptions);
+                    }
 
                     if (options.timeOut > 0) {
                         intervalId = setTimeout(hideToast, options.timeOut);
@@ -410,10 +440,11 @@
                         return;
                     }
                     clearTimeout(progressBar.intervalId);
-                    return $toastElement[method]({
+
+                    const animationOptions = {
                         duration: duration,
                         easing: easing,
-                        complete: function () {
+                        complete: function() {
                             removeToast($toastElement);
                             clearTimeout(intervalId);
                             if (options.onHidden && response.state !== 'hidden') {
@@ -423,7 +454,20 @@
                             response.endTime = new Date();
                             publish(response);
                         }
-                    });
+                    };
+                    switch (method) {
+                        case 'fadeOut':
+                            return $toastElement.fadeOut(animationOptions);
+                            break;
+                        case 'slideUp':
+                            return $toastElement.slideUp(animationOptions);
+                            break;
+                        case 'hide':
+                            return $toastElement.hide(animationOptions);
+                            break;
+                        default:
+                            return $toastElement.hide(animationOptions);
+                    }
                 }
 
                 function delayedHideToast() {
