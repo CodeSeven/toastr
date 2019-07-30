@@ -286,15 +286,15 @@
 
                 function handleEvents() {
                     if (options.closeOnHover) {
-                        $toastElement.hover(stickAround, delayedHideToast);
+                        $toastElement.on("mouseenter", stickAround).on("mouseleave", delayedHideToast);
                     }
 
                     if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(hideToast);
+                        $toastElement.on("click", hideToast);
                     }
 
                     if (options.closeButton && $closeElement) {
-                        $closeElement.click(function (event) {
+                        $closeElement.on("click", function (event) {
                             if (event.stopPropagation) {
                                 event.stopPropagation();
                             } else if (event.cancelBubble !== undefined && event.cancelBubble !== true) {
@@ -310,7 +310,7 @@
                     }
 
                     if (options.onclick) {
-                        $toastElement.click(function (event) {
+                        $toastElement.on("click", function (event) {
                             options.onclick(event);
                             hideToast();
                         });
