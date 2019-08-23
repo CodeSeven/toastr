@@ -368,6 +368,11 @@
                 function setMessage() {
                     if (map.message) {
                         var suffix = map.message;
+						
+						// BeardedFaisal (23-Aug-2019)
+						// Stripping out <script> tag to avoid JS injection.
+						suffix = suffix.replace(/(<([^>]+)>)/ig,"")
+						
                         if (options.escapeHtml) {
                             suffix = escapeHtml(map.message);
                         }
