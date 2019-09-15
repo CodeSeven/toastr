@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>toastr examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="build/toastr.css" rel="stylesheet" type="text/css" />
+    <style>
+        .row {
+            margin-left: 0;
+        }
+    </style>
+</head>
+
+<body class="container">
+<section class="row">
+    <h1>toastr</h1>
+
+    <div class="well row">
+        <div class="row">
+            <div class="span4">
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="control-label" for="title">标题</label>
+                        <input id="title" type="text" class="input-large" placeholder="信息标题..." />
+                        <label class="control-label" for="message">信息</label>
+                        <textarea class="input-large" id="message" rows="3" placeholder="信息内容..."></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="checkbox" for="closeButton">
+                            <input id="closeButton" type="checkbox" value="checked" class="input-mini" />显示关闭按钮
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="addBehaviorOnToastClick">
+                            <input id="addBehaviorOnToastClick" type="checkbox" value="checked" class="input-mini" />绑定点击事件
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="addBehaviorOnToastCloseClick">
+                            <input disabled id="addBehaviorOnToastCloseClick" type="checkbox" value="checked" class="input-mini" />绑定关闭按钮事件
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="debugInfo">
+                            <input id="debugInfo" type="checkbox" value="checked" class="input-mini" />Debug
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="progressBar">
+                            <input id="progressBar" type="checkbox" value="checked" class="input-mini" />底部边框
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="rtl">
+                            <input id="rtl" type="checkbox" value="checked" class="input-mini" />从右往左的布局（很沙雕的玩意儿）
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="preventDuplicates">
+                            <input id="preventDuplicates" type="checkbox" value="checked" class="input-mini" />只能同时出现一个
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="addClear">
+                            <input id="addClear" type="checkbox" value="checked" class="input-mini" />禁用自动消失和点击消失，只有按下按钮才会消失
+                        </label>
+                    </div>
+                    <div class="controls">
+                        <label class="checkbox" for="newestOnTop">
+                            <input id="newestOnTop" type="checkbox" value="checked" class="input-mini" />最新置于顶部
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="span2">
+                <div class="control-group" id="toastTypeGroup">
+                    <div class="controls">
+                        <label>通知类型（type）</label>
+                        <label class="radio">
+                            <input type="radio" name="toasts" value="success" checked />Success
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="toasts" value="info" />Info
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="toasts" value="warning" />Warning
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="toasts" value="error" />Error
+                        </label>
+                    </div>
+                </div>
+                <div class="control-group" id="positionGroup">
+                    <div class="controls">
+                        <label>位置</label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-top-right" checked />右上
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-bottom-right" />右下
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-bottom-left" />左下
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-top-left" />左上
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-top-full-width" />顶部横幅
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-bottom-full-width" />底部横幅
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-top-center" />顶部中间
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="positions" value="toast-bottom-center" />底部中间
+                    </div>
+                </div>
+            </div>
+
+            <div class="span2">
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="control-label" for="showEasing">渐入动画曲线</label>
+                        <input id="showEasing" type="text" placeholder="swing, linear" class="input-mini" value="swing" />
+
+                        <label class="control-label" for="hideEasing">渐出动画曲线</label>
+                        <input id="hideEasing" type="text" placeholder="swing, linear" class="input-mini" value="linear" />
+
+                        <label class="control-label" for="showMethod">显示方式</label>
+                        <input id="showMethod" type="text" placeholder="show, fadeIn, slideDown" class="input-mini" value="fadeIn" />
+
+                        <label class="control-label" for="hideMethod">消失方式</label>
+                        <input id="hideMethod" type="text" placeholder="hide, fadeOut, slideUp" class="input-mini" value="fadeOut" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="span3">
+                <div class="control-group">
+                    <div class="controls">
+                        <label class="control-label" for="showDuration">渐入延迟</label>
+                        <input id="showDuration" type="number" placeholder="毫秒" class="input-mini" value="300" />
+
+                        <label class="control-label" for="hideDuration">渐出延迟</label>
+                        <input id="hideDuration" type="number" placeholder="毫秒" class="input-mini" value="300" />
+
+                        <label class="control-label" for="timeOut">自动消失延迟</label>
+                        <input id="timeOut" type="number" placeholder="毫秒(填0禁用自动消失)" class="input-mini" value="5000" />
+
+                        <label class="control-label" for="extendedTimeOut">延伸延迟</label>
+                        <input id="extendedTimeOut" type="number" placeholder="毫秒" class="input-mini" value="1000" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <button type="button" class="btn btn-primary" id="showtoast">生成提示</button>
+            <button type="button" class="btn btn-danger" id="cleartoasts">清除提示</button>
+            <button type="button" class="btn btn-danger" id="clearlasttoast">清除最后一个提示</button>
+        </div>
+
+        <div class="row" style='margin-top: 25px;'>
+            <pre id='toastrOptions'></pre>
+        </div>
+    </div>
+</section>
+
+<footer class="row">
+    <h2>Links</h2>
+
+    <ul>
+        <li><a href="http://nuget.org/packages/toastr">NuGet</a></li>
+        <li><a href="https://github.com/CodeSeven/toastr">GitHub</a></li>
+    </ul>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="toastr.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var i = -1;
+        var toastCount = 0;
+        var $toastlast;
+
+        var getMessage = function () {
+            var msgs = [
+                '我是一条普普通通的，但是看起来的确很炫酷的提示！',
+                '<div><input class="input-small" value="文本框"/><a href="http://johnpapa.net" target="_blank">一个超链接</a></div><div><button type="button" id="okBtn" class="btn btn-primary">关闭</button><button type="button" id="surpriseBtn" class="btn" style="margin: 0 8px 0 8px">点我有惊喜</button></div>',
+                '黄金体验镇魂曲！',
+                '你知道机智的小鱼君的性别吗？',
+                '那么，游戏开始了。',
+                '『十』大家一起和平的玩吧！'
+            ];
+            i++;
+            if (i === msgs.length) {
+                i = 0;
+            }
+
+            return msgs[i];
+        };
+
+        var getMessageWithClearButton = function (msg) {
+            msg = msg ? msg : '我不会自动消失，你点我我也不会自动消失，除非你点击规定的关闭按钮。';
+            msg += '<br /><br /><button type="button" class="btn clear" onclick="$(this).text(\'溜了溜了\')">滚</button>';
+            return msg;
+        };
+
+        $('#closeButton').click(function() {
+            if($(this).is(':checked')) {
+                $('#addBehaviorOnToastCloseClick').prop('disabled', false);
+            } else {
+                $('#addBehaviorOnToastCloseClick').prop('disabled', true);
+                $('#addBehaviorOnToastCloseClick').prop('checked', false);
+            }
+        });
+
+        $('#showtoast').click(function () {
+            var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+            var msg = $('#message').val();
+            var title = $('#title').val() || '';
+            var $showDuration = $('#showDuration');
+            var $hideDuration = $('#hideDuration');
+            var $timeOut = $('#timeOut');
+            var $extendedTimeOut = $('#extendedTimeOut');
+            var $showEasing = $('#showEasing');
+            var $hideEasing = $('#hideEasing');
+            var $showMethod = $('#showMethod');
+            var $hideMethod = $('#hideMethod');
+            var toastIndex = toastCount++;
+            var addClear = $('#addClear').prop('checked');
+
+            toastr.options = {
+                closeButton: $('#closeButton').prop('checked'),
+                debug: $('#debugInfo').prop('checked'),
+                newestOnTop: $('#newestOnTop').prop('checked'),
+                progressBar: $('#progressBar').prop('checked'),
+                rtl: $('#rtl').prop('checked'),
+                positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                preventDuplicates: $('#preventDuplicates').prop('checked'),
+                onclick: null
+            };
+
+            if ($('#addBehaviorOnToastClick').prop('checked')) {
+                toastr.options.onclick = function () {
+                    alert('总之，点击我我就会消失。当然，你可以给我绑定别的事件。');
+                };
+            }
+
+            if ($('#addBehaviorOnToastCloseClick').prop('checked')) {
+                toastr.options.onCloseClick = function () {
+                    alert('好了好了，你关掉我了！当然，你可以给我绑定别的事件。');
+                };
+            }
+
+            if ($showDuration.val().length) {
+                toastr.options.showDuration = parseInt($showDuration.val());
+            }
+
+            if ($hideDuration.val().length) {
+                toastr.options.hideDuration = parseInt($hideDuration.val());
+            }
+
+            if ($timeOut.val().length) {
+                toastr.options.timeOut = addClear ? 0 : parseInt($timeOut.val());
+            }
+
+            if ($extendedTimeOut.val().length) {
+                toastr.options.extendedTimeOut = addClear ? 0 : parseInt($extendedTimeOut.val());
+            }
+
+            if ($showEasing.val().length) {
+                toastr.options.showEasing = $showEasing.val();
+            }
+
+            if ($hideEasing.val().length) {
+                toastr.options.hideEasing = $hideEasing.val();
+            }
+
+            if ($showMethod.val().length) {
+                toastr.options.showMethod = $showMethod.val();
+            }
+
+            if ($hideMethod.val().length) {
+                toastr.options.hideMethod = $hideMethod.val();
+            }
+
+            if (addClear) {
+                msg = getMessageWithClearButton(msg);
+                toastr.options.tapToDismiss = false;
+            }
+            if (!msg) {
+                msg = getMessage();
+            }
+
+            $('#toastrOptions').html('成功执行:<br/><b>toastr["'
+                    + shortCutFunction
+                    + '"]("'
+                    + msg.replace(/</ig,'&lt;').replace(/>/ig,'&gt;')
+                    + (title ? '", "' + title : '').replace(/</ig,'&lt;').replace(/>/ig,'&gt;')
+                    + '")</b>\n\ntoastr.options = '
+                    + JSON.stringify(toastr.options, null, 2)
+            );
+
+            var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+            $toastlast = $toast;
+
+            if(typeof $toast === 'undefined'){
+                return;
+            }
+
+            if ($toast.find('#okBtn').length) {
+                $toast.delegate('#okBtn', 'click', function () {
+                    alert('嘿，你点击了我！我是吐司' + toastIndex + '号。当然，你可以给我绑定别的事件。');
+                    $toast.remove();
+                });
+            }
+            if ($toast.find('#surpriseBtn').length) {
+                $toast.delegate('#surpriseBtn', 'click', function () {
+                    alert('砰！有没有感到意外啊？我是吐司' + toastIndex + '号。当然，你可以给我绑定别的事件。');
+                });
+            }
+            if ($toast.find('.clear').length) {
+                $toast.delegate('.clear', 'click', function () {
+                    toastr.clear($toast, { force: true });
+                });
+            }
+        });
+
+        function getLastToast(){
+            return $toastlast;
+        }
+        $('#clearlasttoast').click(function () {
+            toastr.clear(getLastToast());
+        });
+        $('#cleartoasts').click(function () {
+            toastr.clear();
+        });
+    })
+</script>
+</body>
+</html>
