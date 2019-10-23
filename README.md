@@ -191,10 +191,10 @@ toastr.options.preventDuplicates = true;
 ```
 
 ### Timeouts
-Control how toastr interacts with users by setting timeouts appropriately.
+Control how toastr interacts with users by setting timeouts. Timeout values are specified in milliseconds. Zero means *do not timeout*.
 ```js
-toastr.options.timeOut = 30; // How long the toast will display without user interaction
-toastr.options.extendedTimeOut = 60; // How long the toast will display after a user hovers over it
+toastr.options.timeOut = 3000; // How long the toast displays without user interaction (3 secs)
+toastr.options.extendedTimeOut = 6000; // How long the toast displays after user hovers over it (6 secs)
 ```
 
 ### Prevent from Auto Hiding
