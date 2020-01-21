@@ -304,13 +304,18 @@
                             hideToast(true);
                         });
                     }
-                    
+
                     $toastElement.click(function (event) {
                         if (options.onclick) {
                             options.onclick(event);
                         }
                         if (options.tapToDismiss) {
-                            hideToast();
+                            // Using override = true in case the click happens on a child element.
+                            // There was an 'unintended feature' previously because this was called as:
+                            // $toastElement.click(hideToast);
+                            // hideToast was being called with the click event as the first parameter, which is truthy
+                            // so override was always enabled.
+                            hideToast(true);
                         }
                     });
                 }
