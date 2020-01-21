@@ -289,10 +289,6 @@
                         $toastElement.hover(stickAround, delayedHideToast);
                     }
 
-                    if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(hideToast);
-                    }
-
                     if (options.closeButton && $closeElement) {
                         $closeElement.click(function (event) {
                             if (event.stopPropagation) {
@@ -309,12 +305,19 @@
                         });
                     }
 
-                    if (options.onclick) {
-                        $toastElement.click(function (event) {
+                    $toastElement.click(function (event) {
+                        if (options.onclick) {
                             options.onclick(event);
-                            hideToast();
-                        });
-                    }
+                        }
+                        if (options.tapToDismiss) {
+                            // Using override = true in case the click happens on a child element.
+                            // There was an 'unintended feature' previously because this was called as:
+                            // $toastElement.click(hideToast);
+                            // hideToast was being called with the click event as the first parameter, which is truthy
+                            // so override was always enabled.
+                            hideToast(true);
+                        }
+                    });
                 }
 
                 function displayToast() {
