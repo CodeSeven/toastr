@@ -289,10 +289,6 @@
                         $toastElement.hover(stickAround, delayedHideToast);
                     }
 
-                    if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(hideToast);
-                    }
-
                     if (options.closeButton && $closeElement) {
                         $closeElement.click(function (event) {
                             if (event.stopPropagation) {
@@ -308,13 +304,15 @@
                             hideToast(true);
                         });
                     }
-
-                    if (options.onclick) {
-                        $toastElement.click(function (event) {
+                    
+                    $toastElement.click(function (event) {
+                        if (options.onclick) {
                             options.onclick(event);
+                        }
+                        if (options.tapToDismiss) {
                             hideToast();
-                        });
-                    }
+                        }
+                    });
                 }
 
                 function displayToast() {
