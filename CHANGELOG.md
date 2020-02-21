@@ -1,3 +1,11 @@
+3.0.0-alpha.10 - February, 21 2020
+
+* 082fbcc Chore: update github repo (JPeer264)
+* 4d387ab Docs: update badges in readme (JPeer264)
+* 1a4ee5b Chore: update jest and outsource config (JPeer264)
+* 4ec0ecf Chore: update husky and lint-staged (JPeer264)
+* 9e13188 Chore: different method of publishing (JPeer264)
+
 3.0.0-alpha.9 - February, 21 2020
 
 * 6f025df Fix: add multiple classes divided by a space (closes #3) (JPeer264)
