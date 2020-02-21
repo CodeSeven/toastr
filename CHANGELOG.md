@@ -1,3 +1,7 @@
+3.0.0-alpha.9 - February, 21 2020
+
+* 6f025df Fix: add multiple classes divided by a space (closes #3) (JPeer264)
+
 3.0.0-alpha.8 - February, 24 2019
 
 * c7ce7c2 Fix: wrong progressbar behavior (closes #1) (JPeer264)

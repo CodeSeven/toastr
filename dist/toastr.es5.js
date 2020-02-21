@@ -2337,7 +2337,7 @@ var ProgressBar = /** @class */ (function () {
     return ProgressBar;
 }());
 
-var version = "3.0.0-alpha.7";
+var version = "3.0.0-alpha.8";
 
 var Toastr = /** @class */ (function () {
     function Toastr(options) {
@@ -2618,7 +2618,7 @@ var Toastr = /** @class */ (function () {
         };
         var setAria = function () {
             var ariaValue = '';
-            switch (map.iconClass) {
+            switch (iconClass) {
                 case 'toast-success':
                 case 'toast-info':
                     ariaValue = 'polite';
@@ -2720,8 +2720,16 @@ var Toastr = /** @class */ (function () {
             }
         };
         var setIcon = function () {
-            if (map.iconClass) {
-                $toastElement.classList.add(options.toastClass, iconClass);
+            var _a;
+            if (iconClass) {
+                var toastClasses = void 0;
+                if (Array.isArray(options.toastClass)) {
+                    toastClasses = options.toastClass;
+                }
+                else {
+                    toastClasses = options.toastClass.split(' ');
+                }
+                (_a = $toastElement.classList).add.apply(_a, toastClasses.concat([iconClass]));
             }
         };
         var setSequence = function () {

@@ -11,7 +11,7 @@ export declare type ToastType = {
 export declare type RequiredToastType = Required<ToastType>;
 export declare type ToastrOptions<T = ToastType> = {
     tapToDismiss?: boolean;
-    toastClass?: string;
+    toastClass?: string | string[];
     containerId?: string;
     debug?: boolean;
     showMethod?: 'fadeIn' | 'slideDown' | 'show';
