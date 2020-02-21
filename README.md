@@ -4,8 +4,7 @@
 
 **toastr** is a Javascript library for non-blocking notifications The goal is to create a simple core library that can be customized and extended.
 
-[![Build Status](https://travis-ci.org/CodeSeven/toastr.svg)](https://travis-ci.org/CodeSeven/toastr)
-Browser testing provided by BrowserStack.
+[![Build Status](https://travis-ci.com/JPeer264/toastr.svg?branch=master)](https://travis-ci.com/JPeer264/toastr)
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
@@ -13,7 +12,7 @@ Browser testing provided by BrowserStack.
 
 ## CDNs
 [![cdnjs](https://img.shields.io/cdnjs/v/toastr.js.svg)](https://cdnjs.com/libraries/toastr.js)
-[![jsdelivr](https://data.jsdelivr.com/v1/package/npm/toastr/badge)](https://www.jsdelivr.com/package/npm/toastr)
+[![jsdelivr](https://data.jsdelivr.com/v1/package/npm/toastr2/badge)](https://www.jsdelivr.com/package/npm/toastr2)
 
 Toastr is hosted at cdnjs and jsdelivr
 
@@ -35,9 +34,6 @@ npm install toastr2
 ```
 yarn add toastr2
 ```
-
-## Wiki and Change Log
-[Wiki including Change Log](https://github.com/CodeSeven/toastr/wiki)
 
 ## Breaking Changes
 
