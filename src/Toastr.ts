@@ -313,6 +313,7 @@ class Toastr {
 
   private clearToast(
     $toastElement: any,
+    // eslint-disable-next-line no-unused-vars
     options: any = this.options,
     clearOptions: any = null,
   ): boolean {
@@ -551,13 +552,9 @@ class Toastr {
 
     const setIcon = (): void => {
       if (iconClass) {
-        let toastClasses: string[];
-
-        if (Array.isArray(options.toastClass)) {
-          toastClasses = options.toastClass;
-        } else {
-          toastClasses = options.toastClass.split(' ');
-        }
+        const toastClasses = Array.isArray(options.toastClass)
+          ? options.toastClass
+          : options.toastClass.split(' ');
 
         $toastElement.classList.add(...toastClasses, iconClass);
       }
