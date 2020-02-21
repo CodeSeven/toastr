@@ -31,6 +31,26 @@ describe('Toastr', () => {
     expect(document.getElementById('toast-container')).toBeDefined();
   });
 
+  it('should allow two toastClasses | issue #3', () => {
+    expect.assertions(3);
+
+    const toastrString = new Toastr({ toastClass: 'one' });
+    const toastrArray = new Toastr({ toastClass: ['one', 'two'] });
+    const toastrArrayString = new Toastr({ toastClass: 'one two' });
+
+    const successString = toastrString.success();
+    const successArray = toastrArray.success();
+    const successArrayString = toastrArrayString.success();
+
+    if (!successString || !successArray || !successArrayString) {
+      return;
+    }
+
+    expect(successString.className).toBe('one toast-success');
+    expect(successArray.className).toBe('one two toast-success');
+    expect(successArrayString.className).toBe('one two toast-success');
+  });
+
   ([
     'info',
     'warning',

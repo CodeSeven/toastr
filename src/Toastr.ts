@@ -19,7 +19,7 @@ export type RequiredToastType = Required<ToastType>;
 
 export type ToastrOptions<T = ToastType> = {
   tapToDismiss?: boolean;
-  toastClass?: string;
+  toastClass?: string | string[];
   containerId?: string;
   debug?: boolean;
 
@@ -430,7 +430,7 @@ class Toastr {
 
     const setAria = (): void => {
       let ariaValue = '';
-      switch (map.iconClass) {
+      switch (iconClass) {
         case 'toast-success':
         case 'toast-info':
           ariaValue = 'polite';
@@ -550,8 +550,16 @@ class Toastr {
     };
 
     const setIcon = (): void => {
-      if (map.iconClass) {
-        $toastElement.classList.add(options.toastClass, iconClass);
+      if (iconClass) {
+        let toastClasses: string[];
+
+        if (Array.isArray(options.toastClass)) {
+          toastClasses = options.toastClass;
+        } else {
+          toastClasses = options.toastClass.split(' ');
+        }
+
+        $toastElement.classList.add(...toastClasses, iconClass);
       }
     };
 
