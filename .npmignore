@@ -1,0 +1,6 @@
+node_modules
+__tests__
+.vscode
+docs
+tests
+.rpt2_cache

@@ -1,5 +1,5 @@
 node_modules
-bower_components
+dist
 .rpt2_cache
 
 # Ignore Visual Studio  Project #
