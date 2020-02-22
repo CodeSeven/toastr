@@ -224,7 +224,7 @@ class Toastr {
     });
   }
 
-  public subscribe(callback: Function): void {
+  public subscribe(callback: (response: Toastr) => void): void {
     this.listener = callback;
   }
 

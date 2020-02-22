@@ -166,4 +166,129 @@ describe('Toastr', () => {
       expect($(toast).find('div.toast-progress').length).toBe(1);
     });
   });
+
+  describe('rtl', () => {
+    beforeEach(() => {
+      toastr.options.rtl = true;
+    });
+
+    it('toastr is ltr by default', (done) => {
+      const thisToastr = new Toastr();
+
+      expect.assertions(1);
+
+      thisToastr.subscribe((response) => {
+        expect(response.options.rtl).toBe(false);
+
+        done();
+      });
+
+      thisToastr.success('');
+    });
+
+    it('ltr toastr does not have .rtl class', () => {
+      const thisToastr = new Toastr();
+      const toastrSuccess: any = thisToastr.success('');
+
+      expect($(toastrSuccess).hasClass('rtl')).toBe(false);
+    });
+
+    it('rtl toastr has .rtl class', () => {
+      const toastrSuccess: any = toastr.success('');
+
+      expect($(toastrSuccess).hasClass('rtl')).toBe(true);
+    });
+  });
+
+  describe('accessibility', () => {
+    it('toastr success has aria polite', () => {
+      const toastrSuccess: any = toastr.success('');
+
+      expect($(toastrSuccess).attr('aria-live')).toBe('polite');
+    });
+
+    it('toastr info has aria polite', () => {
+      const toastrSuccess: any = toastr.info('');
+
+      expect($(toastrSuccess).attr('aria-live')).toBe('polite');
+    });
+
+    it('toastr error has aria assertive', () => {
+      const toastrSuccess: any = toastr.error('');
+
+      expect($(toastrSuccess).attr('aria-live')).toBe('assertive');
+    });
+
+    it('toastr warning has aria assertive', () => {
+      const toastrSuccess: any = toastr.warning('');
+
+      expect($(toastrSuccess).attr('aria-live')).toBe('assertive');
+    });
+  });
+
+  describe('event', () => {
+    beforeEach(() => {
+      toastr.options.closeButton = false;
+      toastr.options.hideDuration = 0;
+      toastr.options.timeOut = 1;
+    });
+
+    it('onShown is Executed', () => {
+      toastr.options.onShown = jest.fn();
+      toastr.success('');
+
+      expect(toastr.options.onShown).toHaveBeenCalledTimes(1);
+    });
+
+    it('onHidden is Executed', async () => {
+      toastr.options.onHidden = jest.fn();
+      toastr.success('');
+
+      await new Promise(res => setTimeout(res, 1));
+
+      expect(toastr.options.onHidden).toHaveBeenCalledTimes(1);
+    });
+
+    it('onShown and onHidden are both executed', async () => {
+      toastr.options.onShown = jest.fn();
+      toastr.options.onHidden = jest.fn();
+      toastr.success('');
+
+      expect(toastr.options.onShown).toHaveBeenCalledTimes(1);
+      await new Promise(res => setTimeout(res, 1));
+      expect(toastr.options.onHidden).toHaveBeenCalledTimes(1);
+    });
+
+    it('onCloseClick is executed', () => {
+      toastr.options.closeButton = true;
+      toastr.options.closeDuration = 0;
+      toastr.options.hideDuration = 2000;
+      toastr.options.onCloseClick = jest.fn();
+
+      const $toastrSuccess = $(toastr.success(defaults.sampleMsg, defaults.sampleTitle) as any);
+
+      $toastrSuccess.find('button.toast-close-button').click();
+
+      expect(toastr.options.onCloseClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('message appears when no show or hide method functions provided', () => {
+      const $toastrSuccess = $(toastr.success(defaults.sampleMsg, defaults.sampleTitle) as any);
+
+      expect($toastrSuccess.hasClass(defaults.iconClasses.success)).toBe(true);
+    });
+
+    it('prevent duplicate sequential toasts', () => {
+      toastr.options.preventDuplicates = true;
+
+      toastr.info(sampleMsg, sampleTitle);
+      toastr.info(sampleMsg, sampleTitle);
+      toastr.info(`${sampleMsg} 1`, sampleTitle);
+      toastr.info(sampleMsg, sampleTitle);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.children()).toHaveLength(3);
+    });
+  });
 });
