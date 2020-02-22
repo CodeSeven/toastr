@@ -326,4 +326,49 @@ describe('Toastr', () => {
       expect($container.children()).toHaveLength(2);
     });
   });
+
+  describe('subscription', () => {
+    // todo jpeer: check if that test is correct
+    it.skip('triggers 2 visible and 2 hidden response notifications while clicking on a toast', async () => {
+      const expectedReponses: Toastr[] = [];
+
+      toastr.subscribe((response) => {
+        if ((response.options as any).testId) {
+          expectedReponses.push(response);
+        }
+      });
+
+      toastr.info(sampleMsg, sampleTitle, { testId: 1 } as any);
+
+      const $toastrInfo = $(toastr.info(sampleMsg, sampleTitle, { testId: 2 } as any) as any);
+
+      $toastrInfo.click();
+
+      expect(expectedReponses).toHaveLength(4);
+    });
+  });
+
+  describe('order or appearance', () => {
+    it('newest toast on top', () => {
+      toastr.options.newestOnTop = true;
+
+      toastr.success('First toast');
+      toastr.success('Second toast');
+
+      const containerHtml = $(toastr.getContainer()).html();
+
+      expect(containerHtml.indexOf('First toast') > containerHtml.indexOf('Second toast')).toBe(true);
+    });
+
+    it('oldest toast on top', () => {
+      toastr.options.newestOnTop = false;
+
+      toastr.success('First toast');
+      toastr.success('Second toast');
+
+      const containerHtml = $(toastr.getContainer()).html();
+
+      expect(containerHtml.indexOf('First toast') < containerHtml.indexOf('Second toast')).toBe(true);
+    });
+  });
 });

@@ -37,66 +37,6 @@
 
     var delay = toastr.options.timeOut + 500;
 
-    module('subscription');
-    asyncTest('subscribe - triggers 2 visible and 2 hidden response notifications while clicking on a toast', 1, function () {
-        //Arrange
-        var $toast = [];
-        var expectedReponses = [];
-        //Act
-        toastr.subscribe(function(response) {
-          if(response.options.testId) {
-            expectedReponses.push(response);
-          }
-        })
-
-        $toast[0] = toastr.info(sampleMsg, sampleTitle, {testId : 1});
-        $toast[1] = toastr.info(sampleMsg, sampleTitle, {testId : 2});
-
-        $toast[1].click()
-
-        setTimeout(function () {
-            // Assert
-            ok(expectedReponses.length === 4);
-            //Teardown
-            clearContainerChildren();
-            toastr.subscribe(null);
-            start();
-        }, delay);
-    });
-
-    module('order of appearance');
-    test('Newest toast on top', 1, function () {
-        //Arrange
-        resetContainer();
-        toastr.options.newestOnTop = true;
-        //Act
-        var $first = toastr.success("First toast");
-        var $second = toastr.success("Second toast");
-        //Assert
-        var containerHtml = toastr.getContainer().html();
-        ok(containerHtml.indexOf("First toast") > containerHtml.indexOf("Second toast"), 'Newest toast is on top');
-        //Teardown
-        $first.remove();
-        $second.remove();
-        resetContainer();
-    });
-
-    test('Oldest toast on top', 1, function () {
-        //Arrange
-        resetContainer();
-        toastr.options.newestOnTop = false;
-        //Act
-        var $first = toastr.success("First toast");
-        var $second = toastr.success("Second toast");
-        //Assert
-        var containerHtml = toastr.getContainer().html();
-        ok(containerHtml.indexOf("First toast") < containerHtml.indexOf("Second toast"), 'Oldest toast is on top');
-        //Teardown
-        $first.remove();
-        $second.remove();
-        resetContainer();
-    });
-
     // These must go last
     module('positioning');
     test('Container - position top-right', 1, function () {
