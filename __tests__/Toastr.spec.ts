@@ -371,4 +371,66 @@ describe('Toastr', () => {
       expect(containerHtml.indexOf('First toast') < containerHtml.indexOf('Second toast')).toBe(true);
     });
   });
+
+  describe('positioning', () => {
+    it('position top-right', () => {
+      toastr.options.positionClass = defaults.positionClasses.topRight;
+
+      toastr.success(defaults.sampleMsg);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.hasClass(defaults.positionClasses.topRight)).toBe(true);
+    });
+
+    it('position bottom-right', () => {
+      toastr.options.positionClass = defaults.positionClasses.bottomRight;
+
+      toastr.success(defaults.sampleMsg);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.hasClass(defaults.positionClasses.bottomRight)).toBe(true);
+    });
+
+    it('position bottom-center', () => {
+      toastr.options.positionClass = defaults.positionClasses.bottomCenter;
+
+      toastr.success(defaults.sampleMsg);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.hasClass(defaults.positionClasses.bottomCenter)).toBe(true);
+    });
+
+    it('position bottom-left', () => {
+      toastr.options.positionClass = defaults.positionClasses.bottomLeft;
+
+      toastr.success(defaults.sampleMsg);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.hasClass(defaults.positionClasses.bottomLeft)).toBe(true);
+    });
+
+    it('position top-left', () => {
+      toastr.options.positionClass = defaults.positionClasses.topLeft;
+
+      toastr.success(defaults.sampleMsg);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.hasClass(defaults.positionClasses.topLeft)).toBe(true);
+    });
+
+    it('position top-center', () => {
+      toastr.options.positionClass = defaults.positionClasses.topCenter;
+
+      toastr.success(defaults.sampleMsg);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.hasClass(defaults.positionClasses.topCenter)).toBe(true);
+    });
+  });
 });
