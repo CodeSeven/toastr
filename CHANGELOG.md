@@ -1,3 +1,12 @@
+3.0.0-alpha.11 - February, 22 2020
+
+* 0d66761 Test: remove old test setup files (JPeer264)
+* 34212fd Test: refactor positioning tests (JPeer264)
+* 2c24295 Test: refactor subscription and appearance (JPeer264)
+* 6c44622 Test: finish event refactoring (JPeer264)
+* 11dd222 Test: refactor more tests (JPeer264)
+* 92f4806 Style: if to better looking ternary operator (JPeer264)
+
 3.0.0-alpha.10 - February, 21 2020
 
 * 082fbcc Chore: update github repo (JPeer264)
