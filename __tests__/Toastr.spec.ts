@@ -290,5 +290,40 @@ describe('Toastr', () => {
 
       expect($container.children()).toHaveLength(3);
     });
+
+    it('prevent dupliacate sequential toasts, but allow previous after clear', () => {
+      toastr.options.preventDuplicates = true;
+
+      toastr.info(sampleMsg, sampleTitle);
+      toastr.info(sampleMsg, sampleTitle);
+      toastr.clear();
+      toastr.info(sampleMsg, sampleTitle);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.children()).toHaveLength(1);
+    });
+
+    it('allow duplicate sequential toasts', () => {
+      toastr.options.preventDuplicates = false;
+
+      toastr.info(sampleMsg, sampleTitle);
+      toastr.info(sampleMsg, sampleTitle);
+      toastr.info(sampleMsg, sampleTitle);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.children()).toHaveLength(3);
+    });
+
+    it('allow preventDuplicates option to be overridden', () => {
+      toastr.info(sampleMsg, sampleTitle, { preventDuplicates: true });
+      toastr.info(sampleMsg, sampleTitle, { preventDuplicates: true });
+      toastr.info(sampleMsg, sampleTitle);
+
+      const $container = $(toastr.getContainer());
+
+      expect($container.children()).toHaveLength(2);
+    });
   });
 });
