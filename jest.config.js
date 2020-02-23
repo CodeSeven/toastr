@@ -12,6 +12,7 @@ module.exports = {
     'ts',
     'json',
   ],
+  setupFiles: ['core-js'],
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },

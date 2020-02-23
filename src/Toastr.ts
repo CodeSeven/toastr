@@ -3,6 +3,7 @@ import merge from 'lodash/merge';
 import ProgressBar from './additions/ProgressBar';
 import './toastr.scss';
 import { version } from '../package.json';
+import addClasses from './helpers/addClasses';
 
 type Required<T> = {
   [P in keyof T]-?: T[P];
@@ -38,19 +39,19 @@ export type ToastrOptions<T = ToastType> = {
 
   extendedTimeOut?: number;
   iconClasses?: T;
-  iconClass?: string;
-  positionClass?: string;
+  iconClass?: string | string[];
+  positionClass?: string | string[];
   timeOut?: number; // Set timeOut and extendedTimeOut to 0 to make it sticky
-  titleClass?: string;
-  messageClass?: string;
+  titleClass?: string | string[];
+  messageClass?: string | string[];
   escapeHtml?: boolean;
   target?: string;
   closeHtml?: string;
-  closeClass?: string;
+  closeClass?: string | string[];
   newestOnTop?: boolean;
   preventDuplicates?: boolean;
   progressBar?: boolean;
-  progressClass?: string;
+  progressClass?: string | string[];
   onclick?: Function;
 
   onCloseClick?: Function;
@@ -141,7 +142,7 @@ class Toastr {
     this.$container = document.createElement('div');
 
     this.$container.setAttribute('id', this.options.containerId);
-    this.$container.classList.add(this.options.positionClass);
+    addClasses(this.$container, this.options.positionClass);
 
     const target = document.getElementsByTagName(this.options.target);
 
@@ -511,7 +512,7 @@ class Toastr {
           suffix = escapeHtml(map.title);
         }
         $titleElement.innerHTML = suffix;
-        $titleElement.classList.add(options.titleClass);
+        addClasses($titleElement, options.titleClass);
         $toastElement.appendChild($titleElement);
       }
     };
@@ -525,14 +526,14 @@ class Toastr {
         }
 
         $messageElement.innerHTML = suffix;
-        $messageElement.classList.add(options.messageClass);
+        addClasses($messageElement, options.messageClass);
         $toastElement.appendChild($messageElement);
       }
     };
 
     const setCloseButton = (): void => {
       if (options.closeButton) {
-        $closeElement.classList.add(options.closeClass);
+        addClasses($closeElement, options.closeClass);
         $closeElement.setAttribute('role', 'button');
         $toastElement.insertBefore($closeElement, $toastElement.firstChild);
       }
@@ -546,17 +547,13 @@ class Toastr {
 
     const setRTL = (): void => {
       if (options.rtl) {
-        $toastElement.classList.add('rtl');
+        addClasses($toastElement, 'rtl');
       }
     };
 
     const setIcon = (): void => {
       if (iconClass) {
-        const toastClasses = Array.isArray(options.toastClass)
-          ? options.toastClass
-          : options.toastClass.split(' ');
-
-        $toastElement.classList.add(...toastClasses, iconClass);
+        addClasses($toastElement, options.toastClass, iconClass);
       }
     };
 

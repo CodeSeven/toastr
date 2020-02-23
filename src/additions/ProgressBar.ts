@@ -1,3 +1,5 @@
+import addClasses from '../helpers/addClasses';
+
 class ProgressBar {
   private hideEta: number = 0;
 
@@ -11,11 +13,11 @@ class ProgressBar {
 
   public progressElement: HTMLDivElement;
 
-  public constructor(toastElement: HTMLDivElement, progressClass: string = '') {
+  public constructor(toastElement: HTMLDivElement, progressClass: string | string[] = '') {
     this.toastElement = toastElement;
     this.progressElement = document.createElement('div');
 
-    this.progressElement.classList.add(progressClass);
+    addClasses(this.progressElement, progressClass);
     this.toastElement.insertBefore(this.progressElement, this.toastElement.firstChild);
   }
 
