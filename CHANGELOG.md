@@ -1,3 +1,7 @@
+3.0.0-alpha.12 - February, 23 2020
+
+* 3e2bef0 Fix: add more cases with string[] to add classes (ref #3) (JPeer264)
+
 3.0.0-alpha.11 - February, 22 2020
 
 * 0d66761 Test: remove old test setup files (JPeer264)
