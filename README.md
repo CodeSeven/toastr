@@ -1,4 +1,4 @@
-# toastr
+# toastr2
 
 > Note: this is a fork of [toastr](https://github.com/CodeSeven/toastr). This library is made to use it without jQuery and with Typescript
 
@@ -7,7 +7,7 @@
 [![Build Status](https://travis-ci.com/JPeer264/toastr.svg?branch=master)](https://travis-ci.com/JPeer264/toastr)
 
 ## Demo
-- Demo can be found at http://codeseven.github.io/toastr/demo.html
+- Demo can be found at https://jpeer264.github.io/toastr2/demo.html
 - [Demo using FontAwesome icons with toastr](http://plnkr.co/edit/6W9URNyyp2ItO4aUWzBB?p=preview)
 
 ## CDNs
@@ -48,7 +48,7 @@ The following animations options have been deprecated and should be replaced:
 ## Quick Start
 
 ### 2 Easy Steps
-For other API calls, see the [demo](http://codeseven.github.io/toastr/demo.html).
+For other API calls, see the [demo](https://jpeer264.github.io/toastr2/demo.html).
 
 1. Import toastr2 (js and css)
 	```js
