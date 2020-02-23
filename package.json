@@ -54,13 +54,14 @@
     }
   ],
   "dependencies": {
+    "array.prototype.flat": "^1.2.3",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "@types/array.prototype.flat": "^1.2.1",
     "@types/jest": "^23.3.13",
     "@types/jquery": "^3.3.29",
     "@types/lodash": "^4.14.120",
-    "core-js": "^3.6.4",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-typescript": "^1.1.0",
