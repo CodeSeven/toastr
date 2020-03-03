@@ -72,7 +72,7 @@
     "jquery": "^3.3.1",
     "lint-staged": "^10.0.7",
     "lodash.camelcase": "^4.3.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-json": "^3.1.0",
