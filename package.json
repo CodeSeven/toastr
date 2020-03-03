@@ -47,12 +47,7 @@
     "url": "git://github.com/JPeer264/toastr2.git"
   },
   "bugs": "http://stackoverflow.com/questions/tagged/toastr",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/mit-license.php"
-    }
-  ],
+  "license": "MIT",
   "dependencies": {
     "array.prototype.flat": "^1.2.3",
     "lodash": "^4.17.11"
