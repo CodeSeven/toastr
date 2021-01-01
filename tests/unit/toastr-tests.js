@@ -2,27 +2,27 @@
 /// <reference path="../qunit/qunit.js" />
 (function () {
     var iconClasses = {
-        error: 'toast-error',
-        info: 'toast-info',
-        success: 'toast-success',
-        warning: 'toast-warning'
+        error: 'toastr-error',
+        info: 'toastr-info',
+        success: 'toastr-success',
+        warning: 'toastr-warning'
     };
     var positionClasses = {
-        topRight: 'toast-top-right',
-        bottomRight: 'toast-bottom-right',
-        bottomLeft: 'toast-bottom-left',
-        topLeft: 'toast-top-left',
-        topCenter: 'toast-top-center',
-        bottomCenter: 'toast-bottom-center'
+        topRight: 'toastr-top-right',
+        bottomRight: 'toastr-bottom-right',
+        bottomLeft: 'toastr-bottom-left',
+        topLeft: 'toastr-top-left',
+        topCenter: 'toastr-top-center',
+        bottomCenter: 'toastr-bottom-center'
     };
     var sampleMsg = 'I don\'t think they really exist';
     var sampleTitle = 'TEST';
     var selectors = {
-        container: 'div#toast-container',
-        toastInfo: 'div#toast-container > div.toast-info',
-        toastWarning: 'div#toast-container > div.toast-success',
-        toastError: 'div#toast-container > div.toast-error',
-        toastSuccess: 'div#toast-container > div.toast-success'
+        container: 'div#toastr-container',
+        toastInfo: 'div#toastr-container > div.toastr-info',
+        toastWarning: 'div#toastr-container > div.toastr-success',
+        toastError: 'div#toastr-container > div.toastr-error',
+        toastSuccess: 'div#toastr-container > div.toastr-success'
     };
 
     toastr.options = {
@@ -98,7 +98,7 @@
         setTimeout(function () {
             $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
-            equal($toast[2].find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear');
+            equal($toast[2].find('div.toastr-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear');
             ok($toast[2].is(':visible'), 'Toast after a clear is visible');
             //Teardown
             resetContainer();
@@ -133,7 +133,7 @@
         setTimeout(function () {
             $toast[2] = toastr.info(sampleMsg, sampleTitle + '-3-Visible');
             //Assert
-            equal($(selectors.container).find('div.toast-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear'); //Teardown
+            equal($(selectors.container).find('div.toastr-title').html(), sampleTitle + '-3-Visible', 'Finds toast after a clear'); //Teardown
             resetContainer();
             start();
         }, delay);
@@ -146,7 +146,7 @@
         //Act
         setTimeout(function () {
             //Assert
-            ok($container.find('div.toast-title').length === 0, 'Toast clears after a mouse hover'); //Teardown
+            ok($container.find('div.toastr-title').length === 0, 'Toast clears after a mouse hover'); //Teardown
             resetContainer();
             start();
         }, 500);
@@ -159,7 +159,7 @@
         //Act
         setTimeout(function () {
             //Assert
-            ok($container.find('div.toast-title').length === 1, 'Toast does not clear after a mouse hover'); //Teardown
+            ok($container.find('div.toastr-title').length === 1, 'Toast does not clear after a mouse hover'); //Teardown
             resetContainer();
             start();
         }, 500);
@@ -183,8 +183,8 @@
         //Act
         var $toast = toastr.info(sampleMsg, sampleTitle);
         //Assert
-        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').html(), sampleTitle, 'Sets title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.info), 'Sets info icon');
         //Teardown
         $toast.remove();
@@ -195,8 +195,8 @@
         //Act
         var $toast = toastr.info(sampleMsg);
         //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets null title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.info), 'Sets info icon');
         //Teardown
         $toast.remove();
@@ -206,8 +206,8 @@
         //Arrange
         //Act
         var $toast = toastr.info(); //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-        equal($toast.find('div.toast-message').html(), null, 'Sets message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets null title');
+        equal($toast.find('div.toastr-message').html(), null, 'Sets message');
         ok($toast.hasClass(iconClasses.info), 'Sets info icon');
         //Teardown
         $toast.remove();
@@ -219,8 +219,8 @@
         //Act
         var $toast = toastr.warning(sampleMsg, sampleTitle);
         //Assert
-        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').html(), sampleTitle, 'Sets title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
         //Teardown
         $toast.remove();
@@ -231,8 +231,8 @@
         //Act
         var $toast = toastr.warning(sampleMsg);
         //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
         //Teardown
         $toast.remove();
@@ -243,8 +243,8 @@
         //Act
         var $toast = toastr.warning('');
         //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets null title');
+        equal($toast.find('div.toastr-message').length, 0, 'Sets empty message');
         ok($toast.hasClass(iconClasses.warning), 'Sets warning icon');
         //Teardown
         $toast.remove();
@@ -256,8 +256,8 @@
         //Act
         var $toast = toastr.error(sampleMsg, sampleTitle);
         //Assert
-        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').html(), sampleTitle, 'Sets title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.error), 'Sets error icon');
         //Teardown
         $toast.remove();
@@ -267,8 +267,8 @@
         //Arrange
         //Act
         var $toast = toastr.error(sampleMsg); //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.error), 'Sets error icon');
         //Teardown
         $toast.remove();
@@ -279,8 +279,8 @@
         //Act
         var $toast = toastr.error('');
         //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toastr-message').length, 0, 'Sets empty message');
         ok($toast.hasClass(iconClasses.error), 'Sets error icon');
         //Teardown
         $toast.remove();
@@ -292,8 +292,8 @@
         //Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
         //Assert
-        equal($toast.find('div.toast-title').html(), sampleTitle, 'Sets title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').html(), sampleTitle, 'Sets title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.success), 'Sets success icon');
         //Teardown
         $toast.remove();
@@ -304,8 +304,8 @@
         //Act
         var $toast = toastr.success(sampleMsg);
         //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets empty title');
-        equal($toast.find('div.toast-message').html(), sampleMsg, 'Sets message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets empty title');
+        equal($toast.find('div.toastr-message').html(), sampleMsg, 'Sets message');
         ok($toast.hasClass(iconClasses.success), 'Sets success icon');
         //Teardown
         $toast.remove();
@@ -316,8 +316,8 @@
         //Act
         var $toast = toastr.success('');
         //Assert
-        equal($toast.find('div.toast-title').length, 0, 'Sets null title');
-        equal($toast.find('div.toast-message').length, 0, 'Sets empty message');
+        equal($toast.find('div.toastr-title').length, 0, 'Sets null title');
+        equal($toast.find('div.toastr-message').length, 0, 'Sets empty message');
         ok($toast.hasClass(iconClasses.success), 'Sets success icon'); //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -335,8 +335,8 @@
         //Act
         var $toast = toastr.info('html <strong>message</strong>', 'html <u>title</u>');
         //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
+        equal($toast.find('div.toastr-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
+        equal($toast.find('div.toastr-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -347,8 +347,8 @@
         //Act
         var $toast = toastr.warning('html <strong>message</strong>', 'html <u>title</u>');
         //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
+        equal($toast.find('div.toastr-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
+        equal($toast.find('div.toastr-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -359,8 +359,8 @@
         //Act
         var $toast = toastr.error('html <strong>message</strong>', 'html <u>title</u>');
         //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
+        equal($toast.find('div.toastr-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
+        equal($toast.find('div.toastr-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -371,8 +371,8 @@
         //Act
         var $toast = toastr.success('html <strong>message</strong>', 'html <u>title</u>');
         //Assert
-        equal($toast.find('div.toast-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
-        equal($toast.find('div.toast-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
+        equal($toast.find('div.toastr-title').html(), 'html &lt;u&gt;title&lt;/u&gt;', 'Title is escaped');
+        equal($toast.find('div.toastr-message').html(), 'html &lt;strong&gt;message&lt;/strong&gt;', 'Message is escaped');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -389,7 +389,7 @@
         //Act
         var $toast = toastr.success('');
         //Assert
-        equal($toast.find('button.toast-close-button').length, 0, 'close button should not exist with closeButton=false');
+        equal($toast.find('button.toastr-close-button').length, 0, 'close button should not exist with closeButton=false');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -400,7 +400,7 @@
         //Act
         var $toast = toastr.success('');
         //Assert
-        equal($toast.find('button.toast-close-button').length, 1, 'close button should exist with closeButton=true');
+        equal($toast.find('button.toastr-close-button').length, 1, 'close button should exist with closeButton=true');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -411,7 +411,7 @@
         //Act
         var $toast = toastr.success('');
         //Assert
-        equal($toast.find('button[type="button"].toast-close-button').length, 1, 'close button should have type=button');
+        equal($toast.find('button[type="button"].toastr-close-button').length, 1, 'close button should have type=button');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -424,7 +424,7 @@
         var $container = toastr.getContainer();
         //Act
         var $toast = toastr.success('');
-        $toast.find('button.toast-close-button').click();
+        $toast.find('button.toastr-close-button').click();
         setTimeout(function () {
             //Assert
             ok($container && $container.children().length === 0, 'close button should support own hide animation');
@@ -446,7 +446,7 @@
         //Act
         var $toast = toastr.success('');
         //Assert
-        equal($toast.find('div.toast-progress').length, 0, 'progress bar should not exist with progressBar=false');
+        equal($toast.find('div.toastr-progress').length, 0, 'progress bar should not exist with progressBar=false');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -457,7 +457,7 @@
         //Act
         var $toast = toastr.success('');
         //Assert
-        equal($toast.find('div.toast-progress').length, 1, 'progress bar should exist with progressBar=true');
+        equal($toast.find('div.toastr-progress').length, 1, 'progress bar should exist with progressBar=true');
         //Teardown
         $toast.remove();
         clearContainerChildren();
@@ -622,7 +622,7 @@
         toastr.options.timeOut = 1;
         //Act
         var $toast = toastr.success(sampleMsg, sampleTitle);
-        $toast.find('button.toast-close-button').click();
+        $toast.find('button.toastr-close-button').click();
         setTimeout(function () {
             // Assert
             ok(run); //Teardown
