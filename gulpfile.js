@@ -73,7 +73,7 @@ gulp.task('css', function () {
 /**
  * Build js and css
  */
-gulp.task('default', ['js', 'css'], function () {
+gulp.task('default', gulp.series('js', 'css'), function () {
     log('Analyze, Build CSS and JS');
 });
 
