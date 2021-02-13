@@ -101,6 +101,12 @@ button.toastr-close-button {
 	width: 100%;
 }
 
+.toastr-top-center-nav-margin {
+	top: 65px;
+	right: 0;
+	width: 100%;
+}
+
 .toastr-bottom-center {
 	bottom: 0;
 	right: 0;
@@ -109,6 +115,12 @@ button.toastr-close-button {
 
 .toastr-top-full-width {
 	top: 0;
+	right: 0;
+	width: 100%;
+}
+
+.toastr-top-full-width-nav-margin {
+	top: 65px;
 	right: 0;
 	width: 100%;
 }
@@ -124,8 +136,18 @@ button.toastr-close-button {
 	left: 12px;
 }
 
+.toastr-top-left-nav-margin {
+	top: 65px;
+	left: 12px;
+}
+
 .toastr-top-right {
 	top: 12px;
+	right: 12px;
+}
+
+.toastr-top-right-nav-margin {
+	top: 65px;
 	right: 12px;
 }
 
@@ -195,6 +217,7 @@ button.toastr-close-button {
 	}
 
 	/*overrides*/
+	&.toastr-top-center-nav-margin > div,
 	&.toastr-top-center > div,
 	&.toastr-bottom-center > div {
 		width: 300px;
@@ -202,6 +225,7 @@ button.toastr-close-button {
 		margin-right: auto;
 	}
 
+	&.toastr-top-full-width-nav-margin > div,
 	&.toastr-top-full-width > div,
 	&.toastr-bottom-full-width > div {
 		width: 96%;
