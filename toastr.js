@@ -153,8 +153,8 @@
             function getDefaults() {
                 return {
                     tapToDismiss: true,
-                    toastClass: 'toast',
-                    containerId: 'toast-container',
+                    toastClass: 'toastr',
+                    containerId: 'toastr-container',
                     debug: false,
 
                     showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
@@ -172,24 +172,24 @@
 
                     extendedTimeOut: 1000,
                     iconClasses: {
-                        error: 'toast-error',
-                        info: 'toast-info',
-                        success: 'toast-success',
-                        warning: 'toast-warning'
+                        error: 'toastr-error',
+                        info: 'toastr-info',
+                        success: 'toastr-success',
+                        warning: 'toastr-warning'
                     },
-                    iconClass: 'toast-info',
-                    positionClass: 'toast-top-right',
+                    iconClass: 'toastr-info',
+                    positionClass: 'toastr-top-right',
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-                    titleClass: 'toast-title',
-                    messageClass: 'toast-message',
+                    titleClass: 'toastr-title',
+                    messageClass: 'toastr-message',
                     escapeHtml: false,
                     target: 'body',
                     closeHtml: '<button type="button">&times;</button>',
-                    closeClass: 'toast-close-button',
+                    closeClass: 'toastr-close-button',
                     newestOnTop: true,
                     preventDuplicates: false,
                     progressBar: false,
-                    progressClass: 'toast-progress',
+                    progressClass: 'toastr-progress',
                     rtl: false
                 };
             }
@@ -274,8 +274,8 @@
                 function setAria() {
                     var ariaValue = '';
                     switch (map.iconClass) {
-                        case 'toast-success':
-                        case 'toast-info':
+                        case 'toastr-success':
+                        case 'toastr-info':
                             ariaValue =  'polite';
                             break;
                         default:
