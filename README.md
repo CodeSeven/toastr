@@ -5,7 +5,7 @@
 Browser testing provided by BrowserStack.
 
 ## Current Version
-2.1.4
+2.1.5
 
 ## Demo
 - Demo can be found at http://codeseven.github.io/toastr/demo.html
