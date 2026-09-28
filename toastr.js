@@ -38,10 +38,8 @@
             };
 
             var previousToast;
-
             return toastr;
 
-            ////////////////
 
             function error(message, title, optionsOverride) {
                 return notify({
@@ -79,12 +77,13 @@
                 listener = callback;
             }
 
-            function success(message, title, optionsOverride) {
+            function success(message, title, optionsOverride, defaultMessage) {
                 return notify({
                     type: toastType.success,
                     iconClass: getOptions().iconClasses.success,
                     message: message,
                     optionsOverride: optionsOverride,
+                    defaultMessage: defaultMessage,
                     title: title
                 });
             }
@@ -143,9 +142,8 @@
 
             function createContainer(options) {
                 $container = $('<div/>')
-                    .attr('id', options.containerId)
-                    .addClass(options.positionClass);
-
+                .attr('id', options.containerId)
+                .addClass(options.positionClass);
                 $container.appendTo($(options.target));
                 return $container;
             }
@@ -202,18 +200,17 @@
             function notify(map) {
                 var options = getOptions();
                 var iconClass = map.iconClass || options.iconClass;
-
-                if (typeof (map.optionsOverride) !== 'undefined') {
+                if (typeof map.optionsOverride !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
                     iconClass = map.optionsOverride.iconClass || iconClass;
                 }
-
-                if (shouldExit(options, map)) { return; }
-
+                
+                
+                if (shouldExit(options, map)) { return}
+                
                 toastId++;
-
+                
                 $container = getContainer(options, true);
-
                 var intervalId = null;
                 var $toastElement = $('<div/>');
                 var $titleElement = $('<div/>');
@@ -240,10 +237,6 @@
                 handleEvents();
 
                 publish(response);
-
-                if (options.debug && console) {
-                    console.log(response);
-                }
 
                 return $toastElement;
 
@@ -284,11 +277,12 @@
                     $toastElement.attr('aria-live', ariaValue);
                 }
 
-                function handleEvents() {
+                function handleEvents() {   
                     if (options.closeOnHover) {
                         $toastElement.hover(stickAround, delayedHideToast);
                     }
 
+                  
                     if (!options.onclick && options.tapToDismiss) {
                         $toastElement.click(hideToast);
                     }
@@ -319,7 +313,6 @@
 
                 function displayToast() {
                     $toastElement.hide();
-
                     $toastElement[options.showMethod](
                         {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
                     );
@@ -345,6 +338,7 @@
                         $container.prepend($toastElement);
                     } else {
                         $container.append($toastElement);
+                    
                     }
                 }
 
@@ -391,11 +385,20 @@
                 }
 
                 function shouldExit(options, map) {
-                    if (options.preventDuplicates) {
-                        if (map.message === previousToast) {
-                            return true;
-                        } else {
-                            previousToast = map.message;
+                    if(map.message && options.preventDuplicates)
+                    {
+                        if(map.defaultMessage && previousToast != undefined)
+                        {
+                            const $toast = $container.children('.toast');
+                            if ($toast.length) {
+                                $toast.find('.toast-message').text(map.message);
+                                return true;
+                            }
+                        }
+                        else
+                            {
+                            if(map.message == previousToast) return true;
+                            else previousToast = map.message;
                         }
                     }
                     return false;
@@ -457,6 +460,7 @@
                 if ($toastElement.is(':visible')) {
                     return;
                 }
+
                 $toastElement.remove();
                 $toastElement = null;
                 if ($container.children().length === 0) {
