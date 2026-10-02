@@ -23,7 +23,7 @@
                 success: 'success',
                 warning: 'warning'
             };
-
+            
             var toastr = {
                 clear: clear,
                 remove: remove,
@@ -38,10 +38,8 @@
             };
 
             var previousToast;
-
             return toastr;
 
-            ////////////////
 
             function error(message, title, optionsOverride) {
                 return notify({
@@ -79,12 +77,13 @@
                 listener = callback;
             }
 
-            function success(message, title, optionsOverride) {
+            function success(message, title, optionsOverride, defaultMessage) {
                 return notify({
                     type: toastType.success,
                     iconClass: getOptions().iconClasses.success,
                     message: message,
                     optionsOverride: optionsOverride,
+                    defaultMessage: defaultMessage,
                     title: title
                 });
             }
@@ -143,9 +142,8 @@
 
             function createContainer(options) {
                 $container = $('<div/>')
-                    .attr('id', options.containerId)
-                    .addClass(options.positionClass);
-
+                .attr('id', options.containerId)
+                .addClass(options.positionClass);
                 $container.appendTo($(options.target));
                 return $container;
             }
@@ -202,18 +200,17 @@
             function notify(map) {
                 var options = getOptions();
                 var iconClass = map.iconClass || options.iconClass;
-
-                if (typeof (map.optionsOverride) !== 'undefined') {
+                if (typeof map.optionsOverride !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
                     iconClass = map.optionsOverride.iconClass || iconClass;
                 }
-
-                if (shouldExit(options, map)) { return; }
-
+                
+                
+                if (shouldExit(options, map)) { return}
+                
                 toastId++;
-
+                
                 $container = getContainer(options, true);
-
                 var intervalId = null;
                 var $toastElement = $('<div/>');
                 var $titleElement = $('<div/>');
@@ -240,10 +237,6 @@
                 handleEvents();
 
                 publish(response);
-
-                if (options.debug && console) {
-                    console.log(response);
-                }
 
                 return $toastElement;
 
@@ -273,13 +266,19 @@
 
                 function setAria() {
                     var ariaValue = '';
+                    $toastElement.removeClass(`polite assertive ${options.positionClass}`);
                     switch (map.iconClass) {
-                        case 'toast-success':
-                        case 'toast-info':
+                        case (`toast-${toastType.success}`):
+                        case (`toast-${toastType.info}`):
                             ariaValue =  'polite';
+                            $toastElement.addClass('polite');
                             break;
                         default:
+                            $container.removeClass(options.positionClass) // this line remove class of container
                             ariaValue = 'assertive';
+                            $toastElement.addClass('assertive');
+                            $container.addClass('toast-top-full-width'); // this line add class into container
+                        
                     }
                     $toastElement.attr('aria-live', ariaValue);
                 }
@@ -289,8 +288,18 @@
                         $toastElement.hover(stickAround, delayedHideToast);
                     }
 
+                  
                     if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(hideToast);
+                        // Don't attach tap-to-dismiss handler
+                    } else if (!options.onclick && !options.tapToDismiss) {
+                        // Nothing happen on this event
+                    }
+
+                    if (options.onclick) {
+                        $toastElement.click(function (event) {
+                            options.onclick(event);
+                            hideToast();
+                        });
                     }
 
                     if (options.closeButton && $closeElement) {
@@ -309,17 +318,10 @@
                         });
                     }
 
-                    if (options.onclick) {
-                        $toastElement.click(function (event) {
-                            options.onclick(event);
-                            hideToast();
-                        });
-                    }
                 }
 
                 function displayToast() {
                     $toastElement.hide();
-
                     $toastElement[options.showMethod](
                         {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
                     );
@@ -345,6 +347,7 @@
                         $container.prepend($toastElement);
                     } else {
                         $container.append($toastElement);
+                    
                     }
                 }
 
@@ -391,21 +394,31 @@
                 }
 
                 function shouldExit(options, map) {
-                    if (options.preventDuplicates) {
-                        if (map.message === previousToast) {
-                            return true;
-                        } else {
-                            previousToast = map.message;
+                    if(map.message && options.preventDuplicates)
+                    {
+                        if(map.defaultMessage && previousToast != undefined)
+                        {
+                            const $toast = $container.children('.toast');
+                            if ($toast.length) {
+                                $toast.find('.toast-message').text(map.message);
+                                return true;
+                            }
+                        }
+                        else
+                            {
+                            if(map.message == previousToast) return true;
+                            else previousToast = map.message;
                         }
                     }
                     return false;
                 }
 
                 function hideToast(override) {
-                    var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
+                    var method = override && options.closeMethod !== false ? options.closeButton : options.hideMethod;
                     var duration = override && options.closeDuration !== false ?
                         options.closeDuration : options.hideDuration;
                     var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
+        
                     if ($(':focus', $toastElement).length && !override) {
                         return;
                     }
@@ -457,6 +470,7 @@
                 if ($toastElement.is(':visible')) {
                     return;
                 }
+
                 $toastElement.remove();
                 $toastElement = null;
                 if ($container.children().length === 0) {
