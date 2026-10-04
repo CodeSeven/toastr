@@ -199,7 +199,7 @@
     </footer>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="toastr.js"></script>
+    <script src="toastr.js" defer></script>
 
     <script type="text/javascript">
         $(function () {
@@ -239,7 +239,6 @@
             });
 
             $('#showtoast').click(function () {
-      
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
                 var msg = $('#message').val();
                 var title = $('#title').val() || '';
@@ -262,7 +261,8 @@
                     rtl: $('#rtl').prop('checked'),
                     positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
                     preventDuplicates: $('#preventDuplicates').prop('checked'),
-                    onclick: null
+                    onclick: null,
+                    onShown: false
                 };
 
                 if ($('#addBehaviorOnToastClick').prop('checked')) {
@@ -352,6 +352,7 @@
                 }
             });
 
+    
             function getLastToast() {
                 return $toastlast;
             }
@@ -363,6 +364,10 @@
             });
         })
     </script>
+
+    <div id="toast-container">
+
+    </div>
 </body>
 
 </html>
