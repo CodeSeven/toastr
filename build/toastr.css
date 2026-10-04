@@ -133,6 +133,39 @@ button.toast-close-button {
   filter: alpha(opacity=100);
   cursor: pointer;
 }
+#toast-container > .toast-success.polite,
+#toast-container > .toast-info.polite {
+  background-color: #f0fdf4 !important;      /* Soft pastel green tint */
+  color: #166534 !important;                 /* Deep, friendly dark green text */
+  background-image: none !important;         /* Removes default Toastr icon */                  
+  border: 1px solid #bbf7d0 !important;      /* Subtle, non-aggressive border */       
+  border-radius: 12px !important;            /* Smooth, rounded corners */             
+  padding: 14px 20px !important;
+  font-weight: 500 !important;               /* Clean, highly readable text weight */               
+  box-shadow: 0 4px 12px rgba(22, 101, 52, 0.06) !important; /* Soft, tinted shadow */ 
+  font-family: system-ui, -apple-system, sans-serif !important;
+  opacity: 1 !important;      
+}
+
+#toast-container > .toast-error.assertive,
+#toast-container > .toast-warning.assertive {
+  background-color: #7f1d1d !important;      /* Deep, urgent crimson red background */
+  color: #ffffff !important;                 /* Crisp, crisp high-contrast white text */ 
+  background-image: none !important;         /* Removes default Toastr icon */                
+  border-left: 6px solid #ef4444 !important; /* Bright red accent bar to draw instant attention */  
+  border-radius: 6px !important;                           
+  padding: 16px 20px !important;
+  font-weight: 600 !important;                               
+  box-shadow: 0 10px 25px rgba(127, 29, 29, 0.35) !important;    
+  font-family: system-ui, -apple-system, sans-serif !important;
+  opacity: 1 !important;
+}
+
+#toast-container .toast-top-left{
+  top: 12px;
+  left: 12px;
+}
+
 #toast-container > .toast-info {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVEhLtZa9SgNBEMc9sUxxRcoUKSzSWIhXpFMhhYWFhaBg4yPYiWCXZxBLERsLRS3EQkEfwCKdjWJAwSKCgoKCcudv4O5YLrt7EzgXhiU3/4+b2ckmwVjJSpKkQ6wAi4gwhT+z3wRBcEz0yjSseUTrcRyfsHsXmD0AmbHOC9Ii8VImnuXBPglHpQ5wwSVM7sNnTG7Za4JwDdCjxyAiH3nyA2mtaTJufiDZ5dCaqlItILh1NHatfN5skvjx9Z38m69CgzuXmZgVrPIGE763Jx9qKsRozWYw6xOHdER+nn2KkO+Bb+UV5CBN6WC6QtBgbRVozrahAbmm6HtUsgtPC19tFdxXZYBOfkbmFJ1VaHA1VAHjd0pp70oTZzvR+EVrx2Ygfdsq6eu55BHYR8hlcki+n+kERUFG8BrA0BwjeAv2M8WLQBtcy+SD6fNsmnB3AlBLrgTtVW1c2QN4bVWLATaIS60J2Du5y1TiJgjSBvFVZgTmwCU+dAZFoPxGEEs8nyHC9Bwe2GvEJv2WXZb0vjdyFT4Cxk3e/kIqlOGoVLwwPevpYHT+00T+hWwXDf4AJAOUqWcDhbwAAAAASUVORK5CYII=") !important;
 }

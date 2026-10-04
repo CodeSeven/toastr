@@ -1,20 +1,23 @@
 /*
- * Toastr
- * Copyright 2012-2015
- * Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
- * All Rights Reserved.
- * Use, reproduction, distribution, and modification of this code is subject to the terms and
+* Toastr
+* Copyright 2012-2015
+* Authors: John Papa, Hans Fjällemark, and Tim Ferrell.
+* All Rights Reserved.
+* Use, reproduction, distribution, and modification of this code is subject to the terms and
  * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
  *
  * ARIA Support: Greta Krafsig
  *
  * Project: https://github.com/CodeSeven/toastr
  */
+
+
+const toastContainer = document.getElementById('toast-container');
+
 /* global define */
 (function (define) {
     define(['jquery'], function ($) {
         return (function () {
-            var $container;
             var listener;
             var toastId = 0;
             var toastType = {
@@ -23,12 +26,11 @@
                 success: 'success',
                 warning: 'warning'
             };
-
+            
             var toastr = {
                 clear: clear,
                 remove: remove,
                 error: error,
-                getContainer: getContainer,
                 info: info,
                 options: {},
                 subscribe: subscribe,
@@ -38,10 +40,8 @@
             };
 
             var previousToast;
-
             return toastr;
-
-            ////////////////
+            
 
             function error(message, title, optionsOverride) {
                 return notify({
@@ -52,18 +52,7 @@
                     title: title
                 });
             }
-
-            function getContainer(options, create) {
-                if (!options) { options = getOptions(); }
-                $container = $('#' + options.containerId);
-                if ($container.length) {
-                    return $container;
-                }
-                if (create) {
-                    $container = createContainer(options);
-                }
-                return $container;
-            }
+        
 
             function info(message, title, optionsOverride) {
                 return notify({
@@ -74,17 +63,18 @@
                     title: title
                 });
             }
-
+            
             function subscribe(callback) {
                 listener = callback;
             }
 
-            function success(message, title, optionsOverride) {
+            function success(message, title, optionsOverride, defaultMessage) {
                 return notify({
                     type: toastType.success,
                     iconClass: getOptions().iconClasses.success,
                     message: message,
                     optionsOverride: optionsOverride,
+                    defaultMessage: defaultMessage,
                     title: title
                 });
             }
@@ -101,28 +91,21 @@
 
             function clear($toastElement, clearOptions) {
                 var options = getOptions();
-                if (!$container) { getContainer(options); }
                 if (!clearToast($toastElement, options, clearOptions)) {
                     clearContainer(options);
                 }
             }
-
             function remove($toastElement) {
-                var options = getOptions();
-                if (!$container) { getContainer(options); }
                 if ($toastElement && $(':focus', $toastElement).length === 0) {
                     removeToast($toastElement);
                     return;
                 }
-                if ($container.children().length) {
-                    $container.remove();
-                }
             }
 
             // internal functions
-
+            
             function clearContainer (options) {
-                var toastsToClear = $container.children();
+                var toastsToClear = toastContainer.children;
                 for (var i = toastsToClear.length - 1; i >= 0; i--) {
                     clearToast($(toastsToClear[i]), options);
                 }
@@ -141,26 +124,18 @@
                 return false;
             }
 
-            function createContainer(options) {
-                $container = $('<div/>')
-                    .attr('id', options.containerId)
-                    .addClass(options.positionClass);
-
-                $container.appendTo($(options.target));
-                return $container;
-            }
+         
 
             function getDefaults() {
                 return {
                     tapToDismiss: true,
                     toastClass: 'toast',
-                    containerId: 'toast-container',
                     debug: false,
-
+                    
                     showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
                     showDuration: 300,
                     showEasing: 'swing', //swing and linear are built into jQuery
-                    onShown: undefined,
+                    onShown: false,
                     hideMethod: 'fadeOut',
                     hideDuration: 1000,
                     hideEasing: 'swing',
@@ -198,25 +173,23 @@
                 if (!listener) { return; }
                 listener(args);
             }
-
+            
             function notify(map) {
                 var options = getOptions();
                 var iconClass = map.iconClass || options.iconClass;
-
-                if (typeof (map.optionsOverride) !== 'undefined') {
+                if (typeof map.optionsOverride !== 'undefined') {
                     options = $.extend(options, map.optionsOverride);
                     iconClass = map.optionsOverride.iconClass || iconClass;
                 }
-
-                if (shouldExit(options, map)) { return; }
-
+                
+                
+                if (shouldExit(options, map)) { return}
+                toastContainer.classList.length ? toastContainer.classList.replace(toastContainer.className, options.positionClass) : toastContainer.classList.add(options.positionClass);
                 toastId++;
-
-                $container = getContainer(options, true);
-
+                
                 var intervalId = null;
                 var $toastElement = $('<div/>');
-                var $titleElement = $('<div/>');
+                let $titleElement = $('<div/>');
                 var $messageElement = $('<div/>');
                 var $progressElement = $('<div/>');
                 var $closeElement = $(options.closeHtml);
@@ -241,12 +214,9 @@
 
                 publish(response);
 
-                if (options.debug && console) {
-                    console.log(response);
-                }
-
                 return $toastElement;
 
+            
                 function escapeHtml(source) {
                     if (source == null) {
                         source = '';
@@ -273,24 +243,48 @@
 
                 function setAria() {
                     var ariaValue = '';
+                    $toastElement.removeClass(`polite assertive`);
                     switch (map.iconClass) {
-                        case 'toast-success':
-                        case 'toast-info':
+                        case (`toast-${toastType.success}`):
+                        case (`toast-${toastType.info}`):
                             ariaValue =  'polite';
+                            $toastElement.addClass('polite');
                             break;
                         default:
+                            toastContainer.classList.replace(toastContainer.className, 'toast-top-full-width') // this line remove class of container
                             ariaValue = 'assertive';
+                            $toastElement.addClass('assertive');                        
                     }
                     $toastElement.attr('aria-live', ariaValue);
+                    if(options.onShown)
+                    {
+                       (function onShown()
+                        {  
+                                toastContainer.setAttribute('role','alert'); // set role alert in container
+                                toastContainer.setAttribute('aria-atomic','false'); 
+                                $($toastElement).find('.toast-title, .toast-message').each(function() {
+                                $(this).attr('aria-label', $(this).text());
+                                }); // add aria label attribute in each toast element with value of toastmessage.
+                        })();
+                    }
                 }
-
                 function handleEvents() {
                     if (options.closeOnHover) {
                         $toastElement.hover(stickAround, delayedHideToast);
                     }
 
+                  
                     if (!options.onclick && options.tapToDismiss) {
-                        $toastElement.click(hideToast);
+                        // Don't attach tap-to-dismiss handler
+                    } else if (!options.onclick && !options.tapToDismiss) {
+                        // Nothing happen on this event
+                    }
+
+                    if (options.onclick) {
+                        $toastElement.click(function (event) {
+                            options.onclick(event);
+                            hideToast();
+                        });
                     }
 
                     if (options.closeButton && $closeElement) {
@@ -309,17 +303,10 @@
                         });
                     }
 
-                    if (options.onclick) {
-                        $toastElement.click(function (event) {
-                            options.onclick(event);
-                            hideToast();
-                        });
-                    }
                 }
 
                 function displayToast() {
                     $toastElement.hide();
-
                     $toastElement[options.showMethod](
                         {duration: options.showDuration, easing: options.showEasing, complete: options.onShown}
                     );
@@ -342,10 +329,13 @@
 
                 function setSequence() {
                     if (options.newestOnTop) {
-                        $container.prepend($toastElement);
+                        toastContainer.prepend($toastElement[0]);
                     } else {
-                        $container.append($toastElement);
+                        toastContainer.append($toastElement[0]);
+                    
                     }
+                    options.onShown = true;
+                    
                 }
 
                 function setTitle() {
@@ -391,21 +381,32 @@
                 }
 
                 function shouldExit(options, map) {
-                    if (options.preventDuplicates) {
-                        if (map.message === previousToast) {
-                            return true;
-                        } else {
-                            previousToast = map.message;
+                    if(map.message && options.preventDuplicates)
+                    {
+                        if(map.defaultMessage && previousToast != undefined)
+                        {
+                            const toastCount = toastContainer.children.length;
+                                if (toastCount > 0) {
+                                    const lastToast = toastContainer.children[toastCount - 1];
+                                    lastToast.querySelector('.toast-message').textContent = map.message;
+                                    return true;
+                                }
+                        }
+                        else
+                            {
+                            if(map.message == previousToast) return true;
+                            else previousToast = map.message;
                         }
                     }
                     return false;
                 }
 
                 function hideToast(override) {
-                    var method = override && options.closeMethod !== false ? options.closeMethod : options.hideMethod;
+                    var method = override && options.closeMethod !== false ? options.closeButton : options.hideMethod;
                     var duration = override && options.closeDuration !== false ?
                         options.closeDuration : options.hideDuration;
                     var easing = override && options.closeEasing !== false ? options.closeEasing : options.hideEasing;
+        
                     if ($(':focus', $toastElement).length && !override) {
                         return;
                     }
@@ -447,24 +448,34 @@
                     $progressElement.width(percentage + '%');
                 }
             }
-
             function getOptions() {
                 return $.extend({}, getDefaults(), toastr.options);
             }
-
+            
             function removeToast($toastElement) {
-                if (!$container) { $container = getContainer(); }
                 if ($toastElement.is(':visible')) {
                     return;
                 }
+
                 $toastElement.remove();
                 $toastElement = null;
-                if ($container.children().length === 0) {
-                    $container.remove();
+                if ($(toastContainer).children().length === 0) {
+                    setTimeout(() => {
+                        // create a brand new toast HTML structure from scratch
+                        $toastElement = $('<div class="toast" role="alert" aria-live="assertive">')
+                            .append('<div class="toast-message">Saved successfully!</div>');
+                        // set the aria accessibility label on the new message div
+                        $toastElement.find('.toast-message').attr('aria-label', 'toast saved successfully!');
+                        // append the newly created jQuery element into the container
+                        $(toastContainer).append($toastElement);
+                        setTimeout(() => {
+                            $toastElement.remove();
+                        }, 1000)
+                        // reset the tracking reference
+                    }, 1500);
                     previousToast = undefined;
                 }
             }
-
         })();
     });
 }(typeof define === 'function' && define.amd ? define : function (deps, factory) {
